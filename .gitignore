@@ -48,3 +48,13 @@ Thumbs.db
 *.mov
 *.wmv
 
+/.vs
+/BOI.Core/bin
+/BOI.Core/obj
+/BOI.Core.Search/bin
+/BOI.Core.Search/obj
+/BOI.Core.Web/bin
+/BOI.Core.Web/obj
+/BOI.Umbraco.Models/bin
+/BOI.Umbraco.Models/obj
+/BOI.Core.Web/App_Plugins/Our.Umbraco.ValidationAttributes
