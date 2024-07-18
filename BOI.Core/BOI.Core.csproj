@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BOI.Umbraco.Models\BOI.Umbraco.Models.csproj" />
+  </ItemGroup>
+
 </Project>

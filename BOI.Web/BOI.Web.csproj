@@ -28,6 +28,11 @@
     <Folder Include="wwwroot" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BOI.Core.Search\BOI.Core.Search.csproj" />
+    <ProjectReference Include="..\BOI.Core.Web\BOI.Core.Web.csproj" />
+  </ItemGroup>
+
   <!-- Keep this as false if ModelsBuilder mode is InMemoryAuto -->
   <PropertyGroup>
     <RazorCompileOnBuild>false</RazorCompileOnBuild>

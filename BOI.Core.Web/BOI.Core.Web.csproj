@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Umbraco.Cms.Core" Version="13.4.1" />
+    <PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.4.1" />
+    <PackageReference Include="Umbraco.Cms.Web.Common" Version="13.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BOI.Core.Search\BOI.Core.Search.csproj" />
+    <ProjectReference Include="..\BOI.Core\BOI.Core.csproj" />
+  </ItemGroup>
+
 </Project>
