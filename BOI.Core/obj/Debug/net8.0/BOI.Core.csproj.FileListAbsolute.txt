@@ -1,0 +1,11 @@
+C:\projects\BOI .net core\BOI.Core\bin\Debug\net8.0\BOI.Core.deps.json
+C:\projects\BOI .net core\BOI.Core\bin\Debug\net8.0\BOI.Core.dll
+C:\projects\BOI .net core\BOI.Core\bin\Debug\net8.0\BOI.Core.pdb
+C:\projects\BOI .net core\BOI.Core\obj\Debug\net8.0\BOI.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\projects\BOI .net core\BOI.Core\obj\Debug\net8.0\BOI.Core.AssemblyInfoInputs.cache
+C:\projects\BOI .net core\BOI.Core\obj\Debug\net8.0\BOI.Core.AssemblyInfo.cs
+C:\projects\BOI .net core\BOI.Core\obj\Debug\net8.0\BOI.Core.csproj.CoreCompileInputs.cache
+C:\projects\BOI .net core\BOI.Core\obj\Debug\net8.0\BOI.Core.dll
+C:\projects\BOI .net core\BOI.Core\obj\Debug\net8.0\refint\BOI.Core.dll
+C:\projects\BOI .net core\BOI.Core\obj\Debug\net8.0\BOI.Core.pdb
+C:\projects\BOI .net core\BOI.Core\obj\Debug\net8.0\ref\BOI.Core.dll
