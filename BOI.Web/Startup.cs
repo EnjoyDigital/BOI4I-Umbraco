@@ -1,3 +1,6 @@
+using BOI.Core.Web.Extensions;
+using BOI.Core.Search.Extensions;
+
 namespace BOI.Web
 {
     public class Startup
@@ -33,6 +36,13 @@ namespace BOI.Web
                 .AddBackOffice()
                 .AddWebsite()
                 .AddComposers()
+                .AddServerRegistrar(_config)
+                .AddCustomServices(_config)
+                .AddCustomNotificationHandlers()
+                .AddCustomContentFinders()
+                .AddCustomWorkFlows()
+                .AddComposers()
+                .RegisterQueryHandlers(_config)
                 .Build();
         }
 

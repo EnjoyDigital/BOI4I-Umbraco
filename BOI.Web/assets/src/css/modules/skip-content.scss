@@ -1,0 +1,11 @@
+.skip-content {
+  position: absolute;
+  left: -999em;
+  width: auto;
+  z-index: 9999;
+
+  &:active,
+  &:focus {
+    left: 0;
+  }
+}

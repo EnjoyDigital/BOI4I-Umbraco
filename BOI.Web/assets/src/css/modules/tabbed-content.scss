@@ -1,0 +1,146 @@
+.tab-list .tab,
+.tab-accordion {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+
+
+    & > button {
+        background-color: $grey-2;
+        padding: 24px 56px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 32px;
+        color: $text;
+        text-align: center;
+
+        &[aria-selected='true'] {
+            background-color: $white;
+            color: $blue;
+        }
+    }
+}
+
+.tab-accordion {
+  width: 100%;
+  text-align: left;
+  padding-left: 40px;
+  margin-bottom: 4px;
+  background-color: $grey-2;
+
+  &[aria-expanded="true"] {
+    background-color: $dark-blue;
+    color: $white;
+
+    .accordion-cross {
+      border-color: $white;
+
+      &:before,
+      &:after {
+        background-color: $white;
+      }
+
+      &:before {
+        transform: translate(-50%, -50%) rotate(-90deg);
+      }
+
+      &:after {
+        transform: translate(-50%, -50%) rotate(180deg);
+      }
+    } 
+  }
+}
+
+#tabs {
+  margin-top: -130px;
+  height: 130px;
+}
+
+.tab-list {
+  margin: 0;
+  padding: 0;
+  display: block;
+  list-style-type: none;
+  font-size: 0;
+}
+
+.tab-content {
+  position: relative;
+  background-color: $white;
+  margin-bottom: 50px;
+
+  .padding {
+    padding: 25px 35px;        
+  }
+}
+
+.accordion-cross {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 50%;
+  right: 25px;
+  transform: translateY(-50%);
+  border-radius: 100%;
+  border: 1px solid $blue;
+  background-color: transparent; 
+  backface-visibility: hidden; 
+  transition: border-color 0.3s ease;
+
+  @include media($small) {
+    right: 15px;
+  }
+
+  &:before,
+  &:after {
+    content: "";
+    background-color: $blue;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+
+  &:before {
+    height: 16px;
+    width: 1px;
+  }
+
+  &:after { 
+    width: 16px;
+    height: 1px; 
+  }
+}
+
+@include media($large) {
+    .tab-list .tab > button {
+        font-size: 18px;
+        line-height: 18px;
+        padding: 24px 39px;
+    }
+}
+
+@include media($max-mobile-nav) {
+  .tabbed-content {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  .tab-accordion {
+    padding: 16px 56px 16px 20px;
+    font-size: 18px;
+    line-height: 30px;
+  }
+
+  .tab-content {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 4px;
+
+    .padding {
+      padding: 17px 22px;
+    }
+  }
+}

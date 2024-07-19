@@ -1,0 +1,56 @@
+.image-block {
+  margin: 40px auto;
+  text-align: center;
+
+  @include media($max-desktop) {
+    margin: 40px 20px;
+  }
+
+  @include media($small) {
+    margin: 20px 0;
+  }
+
+  p {
+    @include font-size(14);
+    margin: 15px 0 0;
+    font-style: italic;
+  }
+}
+
+.image-block__image {
+  position: relative;
+  overflow: hidden;
+
+  > img {
+    max-width: none;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.image-block__image-overlay {
+  position: absolute;
+  width: 190px;
+  max-width: 15%;
+  height: 100%;
+  background-color: $blue;
+  top: 0;
+  right: -2px;
+
+  > img {
+    position: absolute;
+    top: 50%;
+    left: 1px;
+    height: calc(100% + 1px);
+    transform: translate(-100%,-50%);
+  }
+}
+
+.umb-block-list {
+  .faq-block {
+    @include media($max-desktop) {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+}

@@ -6,10 +6,20 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="33.0.1" />
+    <PackageReference Include="DangEasy.Caching.MemoryCache" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
     <PackageReference Include="Umbraco.Cms.Core" Version="13.4.1" />
     <PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.4.1" />
     <PackageReference Include="Umbraco.Cms.Web.Common" Version="13.4.1" />
+    <PackageReference Include="Umbraco.Forms.Core" Version="13.1.2" />
   </ItemGroup>
 
   <ItemGroup>
