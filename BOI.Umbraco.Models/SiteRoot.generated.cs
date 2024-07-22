@@ -114,6 +114,14 @@ namespace BOI.Umbraco.Models
 		public virtual string MegaNavigation => this.Value<string>(_publishedValueFallback, "megaNavigation");
 
 		///<summary>
+		/// Navigation
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("navigation")]
+		public virtual global::System.Collections.Generic.IEnumerable<global::Our.Umbraco.Meganav.Models.IMeganavItem> Navigation => this.Value<global::System.Collections.Generic.IEnumerable<global::Our.Umbraco.Meganav.Models.IMeganavItem>>(_publishedValueFallback, "navigation");
+
+		///<summary>
 		/// Notifications
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]

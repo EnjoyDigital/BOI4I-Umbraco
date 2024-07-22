@@ -14,16 +14,14 @@ namespace BOI.Core.Web.ViewComponents.Layout
     public class HeadViewComponent : ViewComponent
     {
         private readonly IUmbracoContextAccessor umbracoContextAccessor;
-        private readonly IUmbracoHelperAccessor umbracoHelperAccessor;
         private readonly ISessionManager sessionManager;
         private readonly UmbracoHelper umbracoHelper;
         private readonly ICmsService cmsService;
 
-        public HeadViewComponent(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoHelperAccessor umbracoHelperAccessor,
+        public HeadViewComponent(IUmbracoContextAccessor umbracoContextAccessor,
             ISessionManager sessionManager, UmbracoHelper umbracoHelper, ICmsService cmsService)
         {
             this.umbracoContextAccessor = umbracoContextAccessor;
-            this.umbracoHelperAccessor = umbracoHelperAccessor;
             this.sessionManager = sessionManager;
             this.umbracoHelper = umbracoHelper;
             this.cmsService = cmsService;

@@ -53,8 +53,7 @@ namespace BOI.Umbraco.Models
 		/// Form: Please select the form you wish to use in this block
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("form")]
-		public virtual string Form => global::BOI.Umbraco.Models.FormBlock.GetForm(this, _publishedValueFallback);
+		public virtual global::System.Nullable<global::System.Guid> Form => global::BOI.Umbraco.Models.FormBlock.GetForm(this, _publishedValueFallback);
 	}
 }

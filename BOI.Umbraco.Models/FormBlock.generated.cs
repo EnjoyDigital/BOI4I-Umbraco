@@ -24,8 +24,7 @@ namespace BOI.Umbraco.Models
 	{
 		/// <summary>Form</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		string Form { get; }
+		global::System.Nullable<global::System.Guid> Form { get; }
 	}
 
 	/// <summary>Form Block</summary>
@@ -63,13 +62,11 @@ namespace BOI.Umbraco.Models
 		/// Form: Please select the form you wish to use in this block
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("form")]
-		public virtual string Form => GetForm(this, _publishedValueFallback);
+		public virtual global::System.Nullable<global::System.Guid> Form => GetForm(this, _publishedValueFallback);
 
 		/// <summary>Static getter for Form</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
-		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		public static string GetForm(IFormBlock that, IPublishedValueFallback publishedValueFallback) => that.Value<string>(publishedValueFallback, "form");
+		public static global::System.Nullable<global::System.Guid> GetForm(IFormBlock that, IPublishedValueFallback publishedValueFallback) => that.Value<global::System.Nullable<global::System.Guid>>(publishedValueFallback, "form");
 	}
 }

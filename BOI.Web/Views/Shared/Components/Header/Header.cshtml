@@ -1,0 +1,156 @@
+﻿@using BOI.Core.Web.Constants
+@using Our.Umbraco.Meganav.Models
+@using static BOI.Core.Web.Constants.SiteAliases
+@using static BOI.Core.Web.Extensions.MegaNavExtensions
+@model HeaderViewModel
+@{
+    var hideNavigation = Model.Content.Value<bool>(FieldAlias.HideMainNavigation);
+}
+
+<header>
+    <div class="header-container">
+        <div class="header-logo">
+            <a href="/">
+                <img src="~/common/images/small-logo-boi.svg" alt="Bank of Ireland for Intermediaries" class="small">
+                <img src="~/common/images/main-logo-boi.svg" alt="Bank of Ireland for Intermediaries" class="large">
+            </a>
+        </div>
+        <div class="header-top">
+            <div class="header-top__content">
+                <div class="header-top__content--text">
+                    <img src="~/common/images/icons/icon-alert.svg" alt='Alert Icon'>
+                    <p>Intermediary use only</p>
+                </div>
+                <ul class="header-top__content--links">
+                    @if (Model.SiteRoot.ContactUsLink != null)
+                    {
+                        <li class="not-bold"><a href="@Model.SiteRoot.ContactUsLink.Url" target="@Model.SiteRoot.ContactUsLink.Target">@Model.SiteRoot.ContactUsLink.Name</a></li>
+                    }
+                    @if (Model.SiteRoot.RegisterLink != null)
+                    {
+                        <li><a href="@Model.SiteRoot.RegisterLink.Url" target="@Model.SiteRoot.RegisterLink.Target">@Model.SiteRoot.RegisterLink.Name</a></li>
+                    }
+                    @if (Model.SiteRoot.LoginLink != null)
+                    {
+                        <li><a href="@Model.SiteRoot.LoginLink.Url" target="@Model.SiteRoot.LoginLink.Target">@Model.SiteRoot.LoginLink.Name</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="header-top__mobile">
+                @if (Model.SiteRoot.Navigation != null && Model.SiteRoot.Navigation.Any() && !hideNavigation)
+                {
+                    <button class="header-top__mobile--hamburger" aria-label="Open main menu" aria-haspopup="true" aria-expanded="false" aria-controls="MainMenu">
+                        <img src="~/common/images/icons/icon-hamburger.svg" alt="">
+                    </button>
+                }
+            </div>
+        </div>
+
+        @* MegaNavigation implementation *@
+        <nav id="MainMenu" class="header-bottom bottom-nav-active" aria-label="Main menu">
+            @if (Model.SiteRoot.Navigation != null && Model.SiteRoot.Navigation.Any() && !hideNavigation)
+            {
+                <ul class="header-bottom__menu">
+                    @foreach (var item in Model.SiteRoot.Navigation)
+                    {
+
+                        <li>
+                            <a href="@item.Url" title="@item.Title" @Html.Raw(item.Url == Model.Content.Url() ? "aria-current=\"page\"" : string.Empty) @Html.Raw(@item.Children.Any() ? "aria-haspopup=\"true\"" : string.Empty) aria-expanded="false">@item.GetTitleOrName()</a>
+
+                            @if (@item.Children.Any())
+                            {
+                                <div class="show-submenu"></div>
+                                <div class="header-bottom__menu--submenu listing-count-@item.Children.Count()">
+                                    @if (item.Url != null && item.Url != "#")
+                                    {
+                                        <a href="@item.Url" class="sr-only sr-only-focusable" @Html.Raw(item.Url == Model.Content.Url() ? "aria-current=\"page\"" : string.Empty)>@item.GetTitleOrName()</a>
+                                    }
+
+                                    @foreach (var child in item.Children)
+                                    {
+
+                                        <div class="submenu-listing">
+                                            @if (child.Url == "#")
+                                            {
+                                                <span class="submenu-listing__heading">@child.GetTitleOrName()</span>
+                                            }
+                                            @ChildMegaNav(child)
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                        </li>
+                    }
+                    @if (Model.SiteRoot.SearchResultsLink != null)
+                    {
+                        <button aria-label="Open site search" aria-haspopup="true" aria-expanded="false" aria-controls="SiteSearch" class="header-bottom__menu--search">
+                            <img src="~/common/images/icons/sprite-icon-search.svg" alt="" aria-role="presentation">
+                        </button>
+                    }
+                </ul>
+
+            }
+        </nav>
+
+        @if (Model.SiteRoot.SearchResultsLink != null)
+        {
+            <div id="SiteSearch" class="site-search" aria-label="Site search" aria-modal="true">
+                <form id="searchResultForm" action="@Model.SiteRoot.SearchResultsLink.Url" class="search-bar" data-autocompleteurl="@Url.RouteUrl(BOI.Core.Constants.CustomRouteNames.Autocomplete, new {controller = "SearchResult", action = "Site"})">
+                    <div class="search-bar__wrap">
+                        <div class="search-bar__search">
+                            <svg class="search-bar__search--icon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="#fff">
+                                <title>Search</title>
+                                <g>
+                                    <g>
+                                        <path d="M127.662 523.25c4.094 0 7.412 3.318 7.412 7.412 0 1.867-.69 3.573-1.83 4.876l3.22 3.218c.195.196.195.512 0 .708-.174.173-.443.192-.638.057l-.07-.057-3.218-3.22c-1.303 1.14-3.01 1.83-4.876 1.83-4.094 0-7.412-3.318-7.412-7.412 0-4.094 3.318-7.412 7.412-7.412zm0 1c-3.541 0-6.412 2.87-6.412 6.412 0 3.541 2.87 6.412 6.412 6.412 3.541 0 6.412-2.87 6.412-6.412 0-3.541-2.87-6.412-6.412-6.412z" transform="translate(-120 -523)" />
+                                    </g>
+                                </g>
+                            </svg>
+
+                            <div class="search-bar__search--input">
+                                <label id="SiteSearchLabel" for="@MainSearchBindAliases.SearchTerm" class="sr-only">Search</label>
+                                @Html.TextBox(MainSearchBindAliases.SearchTerm, null, new { placeholder = "Type to search", id = @MainSearchBindAliases.SearchTerm })
+                            </div>
+                        </div>
+                        <div class="search-bar__icons">
+                            <button class="search-bar__icons--teal">
+                                <img src="~/common/images/icons/icon-arrow-crumb.svg" alt='search'>
+                            </button>
+                            <button class="search-bar__icons--grey" aria-label="Close site search" aria-controls="SiteSearch">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+                                    <g fill="none" fill-rule="evenodd">
+                                        <g fill="#353535" fill-rule="nonzero">
+                                            <path d="M230.12 629.12c.174-.173.443-.193.638-.058l.07.058 8.172 8.173 8.173-8.173c.195-.195.512-.195.707 0 .173.174.193.443.058.638l-.058.07-8.173 8.172 8.173 8.173.058.069c.135.195.115.464-.058.638-.174.173-.443.193-.638.058l-.07-.058-8.172-8.173-8.173 8.173c-.195.195-.512.195-.707 0-.173-.174-.193-.443-.058-.638l.058-.07 8.173-8.172-8.173-8.173-.058-.069c-.135-.195-.115-.464.058-.638z" transform="translate(-230 -629)" />
+                                        </g>
+                                    </g>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        }
+
+    </div>
+</header>
+
+@functions {
+    async Task ChildMegaNav(IMeganavItem theChild)
+    {
+        if (theChild.Children.Any())
+        {
+            <ul>
+                @foreach (var child in theChild.Children)
+                {
+
+                    <li class="submenu-item">
+                        <a href="@child.Url" title="@child.Url" @Html.Raw(child.Url == Model.Content.Url() ? "aria-current=\"page\"" : string.Empty)>@child.GetTitleOrName()</a>
+
+                        @ChildMegaNav(child)
+                    </li>
+                }
+            </ul>
+        }
+    }
+}

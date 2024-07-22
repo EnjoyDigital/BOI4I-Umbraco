@@ -1,0 +1,11 @@
+﻿@model BodyScriptsViewModel
+
+@if (Model.IsUpper)
+{
+    @Html.Raw(Model.SiteScripts?.BodyTopScripts)
+
+}
+else
+{
+    @Html.Raw(Model.SiteScripts?.BodyBottomScripts)
+}

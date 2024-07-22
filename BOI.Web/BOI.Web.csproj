@@ -30,6 +30,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Folder Include="Views\Partials\blocklist\Components\" />
 		<Folder Include="wwwroot" />
 	</ItemGroup>
 
