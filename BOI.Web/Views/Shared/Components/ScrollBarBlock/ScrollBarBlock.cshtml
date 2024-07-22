@@ -1,4 +1,7 @@
-﻿@model ScrollBarBlockViewModel
+﻿@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using BOI.Umbraco.Models;
+
+@model BodyViewModel
 
 @if (Model.SiteRoot.Notifications != null && Model.SiteRoot.Notifications.Any())
 {
@@ -6,12 +9,13 @@
         <div class="scroll-bar__wrapper">
             @foreach (var notification in Model.SiteRoot.Notifications)
             {
+                @* TODO: PB to uncomment this after content models are built *@
                 @* var notificationContent = (ContentModels.RichTextBlock)notification.Content;
 
-                <div class="scroll-bar__inner">
-                    <img alt='Alert Icon' src="~/common/images/icons/icon-alert-teal.svg">
-                    <div class="scroll-bar__inner--text">@Html.Raw(notificationContent.RichText)</div>
-                </div> *@
+        <div class="scroll-bar__inner">
+        <img alt='Alert Icon' src="~/common/images/icons/icon-alert-teal.svg">
+        <div class="scroll-bar__inner--text">@Html.Raw(notificationContent.RichText)</div>
+        </div> *@
             }
         </div>
     </div>

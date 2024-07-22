@@ -1,9 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-
-        @await Component.InvokeAsync("Head")
-
+    @await Component.InvokeAsync("Head")
 </head>
 <body class="">
     @await Component.InvokeAsync("BodyScripts", new { upperScripts = true })
@@ -22,18 +20,8 @@
         @RenderBody()
     </main>
 
-@*     <section class="unsupported-browser" id="unsupportedBrowser">
-        <div class="unsupported-browser-inner">
-            @Site.UnsupportedBrowserText
-            <div class="unsupported-browser-close js-unsupported-browser-close">
-                <svg class="[ icon icon-cross ]">
-                    <title>Close</title>
-                    <use xlink:href="#sprite-icon-cross"></use>
-                </svg>
-            </div>
-        </div>
-    </section>
- *@
+    @await Component.InvokeAsync("UnsupportedBrowserBlock")
+
     <a href="#" class="back-to-top" id="backToTop">
         Back to top
         <svg class="[ icon ]" aria-hidden="true">
@@ -41,23 +29,22 @@
         </svg>
     </a>
 
-    @Html.Partial("~/Views/Partials/Footer.cshtml")
+    @await Component.InvokeAsync("Footer")
 
-    @* <link rel="stylesheet" href="@CacheBust.FingerPrint("/common/css/style.css")" /> *@
+    <link rel="stylesheet" href="/assets/dist/css/style.css" asp-append-version="true">
 
-    @Html.Partial("BackgroundCss")
+    @* TODO: PB TO CHECK IF THIS WORKS *@
+    @await Component.InvokeAsync("BackgroundCss")
 
     @RenderSection("Scripts", required: false)
-    @await Component.InvokeAsync("BodyScripts", new { upperScripts = false })
-    @* @Html.Raw(pageScripts?.MiscScripts)
-    @Html.Raw(pageScripts?.QualtricsSurveyEmbedCode) *@
+   
+    @await Component.InvokeAsync("BodyScripts",new { upperScripts = false })
 
     <script type="text/javascript" src="/App_Plugins/UmbracoForms/Assets/themes/default/umbracoForms.js"></script>
 
-    @*@Html.Action("TrackingScripts", "Layout")*@
-
     <div class="svg-sprite" style="display: none">
-        @Html.Partial("~/Views/Shared/SVG_Sprite.cshtml")
+        <partial name="SVG_Sprite" />
     </div>
+
 </body>
 </html>

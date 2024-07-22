@@ -4,16 +4,21 @@ using Umbraco.Extensions;
 
 namespace BOI.Core.Web.Models.ViewModels.Layout
 {
-    public class BodyScriptsViewModel
+    public class BodyViewModel
     {
-        public BodyScriptsViewModel(IPublishedContent currentPage)
+        public BodyViewModel(IPublishedContent currentPage)
         {
             Content = currentPage;
         }
 
         public IPublishedContent Content { get; set; }
         public SiteRoot SiteRoot { get; set; }
+
+        public IPageSettingsMixin PageSettings => Content.SafeCast<IPageSettingsMixin>();
+        public ElementSeoSettings SeoElement { get; set; }
+        public ElementShareSettings ShareElement { get; set; }
         public GlobalScripts SiteScripts { get; set; }
+        public ElementScriptSettings PageScripts { get; set; }
         public bool IsUpper { get; set; }
     }
 }

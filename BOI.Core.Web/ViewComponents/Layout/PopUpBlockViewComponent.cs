@@ -46,7 +46,7 @@ namespace BOI.Core.Web.ViewComponents.Layout
 
                 if (currentPage != null)
                 {
-                    var viewModel = new PopUpBlockViewModel(currentPage);
+                    var viewModel = new BodyViewModel(currentPage);
                     viewModel.SiteRoot = cmsService.GetSiteRoot(currentPage);
                     return View("PopUpBlock", viewModel);
                 }

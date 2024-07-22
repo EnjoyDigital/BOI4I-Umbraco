@@ -9,7 +9,7 @@ using BOI.Core.Web.Services;
 
 namespace BOI.Core.Web.ViewComponents.Layout
 {
-    public class ScrollBarBlockViewComponent : ViewComponent
+    public class FooterViewComponent : ViewComponent
     {
 
         private readonly IUmbracoContextAccessor umbracoContextAccessor;
@@ -17,7 +17,7 @@ namespace BOI.Core.Web.ViewComponents.Layout
         private readonly ISessionManager sessionManager;
         private readonly ICmsService cmsService;
 
-        public ScrollBarBlockViewComponent(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoHelperAccessor umbracoHelperAccessor, ISessionManager sessionManager,
+        public FooterViewComponent(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoHelperAccessor umbracoHelperAccessor, ISessionManager sessionManager,
             ICmsService cmsService)
         {
             this.umbracoContextAccessor = umbracoContextAccessor;
@@ -48,7 +48,7 @@ namespace BOI.Core.Web.ViewComponents.Layout
                 {
                     var viewModel = new BodyViewModel(currentPage);
                     viewModel.SiteRoot = cmsService.GetSiteRoot(currentPage);
-                    return View("ScrollBarBlock", viewModel);
+                    return View("Footer", viewModel);
                 }
             }
 

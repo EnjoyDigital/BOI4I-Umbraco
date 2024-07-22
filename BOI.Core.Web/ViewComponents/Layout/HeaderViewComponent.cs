@@ -6,6 +6,7 @@ using Umbraco.Cms.Web.Common.UmbracoContext;
 using Umbraco.Cms.Web.Common;
 using Umbraco.Extensions;
 using BOI.Core.Web.Models.ViewModels;
+using BOI.Core.Web.Models.ViewModels.Layout;
 
 namespace BOI.Core.Web.ViewComponents.Layout
 {
@@ -45,7 +46,7 @@ namespace BOI.Core.Web.ViewComponents.Layout
 
                 if (currentPage != null)
                 {
-                    var viewModel = new HeaderViewModel(currentPage);
+                    var viewModel = new BodyViewModel(currentPage);
                     viewModel.SiteRoot = cmsService.GetSiteRoot(currentPage);
 
                     return View("Header", viewModel);

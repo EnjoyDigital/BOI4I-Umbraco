@@ -1,0 +1,13 @@
+﻿@model BodyViewModel
+
+<section class="unsupported-browser" id="unsupportedBrowser">
+    <div class="unsupported-browser-inner">
+        @Model.SiteRoot.UnsupportedBrowserText
+        <div class="unsupported-browser-close js-unsupported-browser-close">
+            <svg class="[ icon icon-cross ]">
+                <title>Close</title>
+                <use xlink:href="#sprite-icon-cross"></use>
+            </svg>
+        </div>
+    </div>
+</section>

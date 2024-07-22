@@ -53,13 +53,6 @@ namespace BOI.Core.Web.ViewComponents.Layout
                     viewModel.SiteRoot = cmsService.GetSiteRoot(currentPage);
                     viewModel.SiteScripts = viewModel.SiteRoot?.SiteSettings?.GetElement<GlobalScripts>();
 
-                    if (viewModel.PageSettings?.PageSettings != null)
-                    {
-                        viewModel.SeoElement = viewModel.PageSettings.PageSettings.GetElement<ElementSeoSettings>();
-                        viewModel.ShareElement = viewModel.PageSettings.PageSettings.GetElement<ElementShareSettings>();
-                        viewModel.PageScripts = viewModel.PageSettings.PageSettings.GetElement<ElementScriptSettings>();
-                    }
-
                     viewModel.IsUpper = upperScripts;
 
                     return View("BodyScripts", viewModel);
