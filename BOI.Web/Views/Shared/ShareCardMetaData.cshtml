@@ -1,5 +1,37 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Microsoft.AspNetCore.Http.Extensions
+@model HeadViewModel
+
 @{
+    IPublishedContent shareImage = null;
+    if (Model.ShareElement?.ShareImage != null && !string.IsNullOrEmpty(Model.ShareElement?.ShareImage.Url()))
+    {
+        shareImage = Model.ShareElement?.ShareImage;
+    }
+    else if (Model.SiteRoot.DefaultSocialSharingImage != null && !string.IsNullOrEmpty(Model.SiteRoot.DefaultSocialSharingImage.Url()))
+    {
+        shareImage = Model.SiteRoot.DefaultSocialSharingImage;
+    }
 }
+
+<meta property="og:url" content="@Model.Content.Url(mode: UrlMode.Absolute)" />
+<meta property="og:site_name" content="@Model.SiteRoot.SiteName" />
+
+
+<meta property="og:title" content="@(!string.IsNullOrWhiteSpace(Model.ShareElement?.ShareTitle) ? Model.ShareElement?.ShareTitle : (!string.IsNullOrWhiteSpace(Model.SeoElement?.MetaTitle) ? Model.SeoElement?.MetaTitle : Model.Content.Name))" />
+@if (!string.IsNullOrWhiteSpace(Model.ShareElement?.ShareDescription) || !string.IsNullOrWhiteSpace(Model.SeoElement?.MetaDescription))
+{
+    <meta property="og:description" content="@(!string.IsNullOrWhiteSpace(Model.ShareElement?.ShareDescription) ? Model.ShareElement?.ShareDescription : Model.SeoElement?.MetaDescription)" />
+}
+
+@if (shareImage != null)
+{
+    <meta property="og:image" content="@string.Concat(Context.Request.Scheme,"://",Context.Request.Host,Context.Request.PathBase)@shareImage.GetCropUrl(width: 1200, height: 630)" />
+    <meta name="twitter:image:alt" content="@(shareImage.HasValue("alternativeText") ? shareImage.Value<string>("alternativeText") : Model.SiteRoot.Name)">
+}
+
+
+@* Twitter *@
+<meta name="twitter:card" content="summary_large_image">
+
+@* Author tag that LinkedIn likes *@
+<meta name="author" content="@Model.SiteRoot.SiteName">

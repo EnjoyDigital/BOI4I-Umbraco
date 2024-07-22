@@ -1,8 +1,4 @@
-﻿@using BOI.Core.Web.Models.ViewModels.Layout
-@model HeadViewModel
-@{
-    var a = Model;
-}
+﻿@model HeadViewModel
 
 <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="63e5568e-57d0-4b35-a585-c153ce63def8" data-blockingmode="auto" type="text/javascript"></script>
 <link rel="preload" as="font" href="/common/fonts/BankofIrelandSerif-Rg.woff2" type="font/woff2" crossorigin="anonymous">
@@ -50,3 +46,7 @@
 <meta name="application-name" content="Bank of Ireland for Intermediaries" />
 <meta name="msapplication-TileColor" content="#FFFFFF" />
 <meta name="theme-color" content="#FFFFFF">
+
+@RenderSection("Styles", required: false)
+
+@Html.Raw(Model.SiteScripts?.HeadScripts)

@@ -44,12 +44,15 @@ namespace BOI.Core.Web.ViewComponents.Layout
                 {
                     var viewModel = new HeadViewModel(currentPage);
                     viewModel.SiteRoot = cmsService.GetSiteRoot(currentPage);
-                    viewModel.SiteScripts = viewModel.SiteRoot?.SiteSettings?.FirstOrDefault() as GlobalScripts;
+                    viewModel.SiteScripts = viewModel.SiteRoot?.SiteSettings?.GetElement<GlobalScripts>();
 
                     if (viewModel.PageSettings?.PageSettings != null)
                     {
-                        viewModel.PageScripts = viewModel.PageSettings.PageSettings.FirstOrDefault() as ElementScriptSettings;
+                        viewModel.SeoElement = viewModel.PageSettings.PageSettings.GetElement<ElementSeoSettings>();
+                        viewModel.ShareElement = viewModel.PageSettings.PageSettings.GetElement<ElementShareSettings>();
+                        viewModel.PageScripts = viewModel.PageSettings.PageSettings.GetElement<ElementScriptSettings>();
                     }
+
 
                     return View("Head", viewModel);
                 }
