@@ -19,5 +19,6 @@ namespace BOI.Core.Web.Models.ViewModels.Layout
         public ElementShareSettings ShareElement { get; set; }
         public GlobalScripts SiteScripts { get; set; }
         public ElementScriptSettings PageScripts { get; set; }
+        public bool IsCalculatorLayout { get; set; }
     }
 }

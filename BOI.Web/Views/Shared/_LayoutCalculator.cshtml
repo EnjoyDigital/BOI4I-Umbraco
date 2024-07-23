@@ -1,86 +1,24 @@
-﻿@inherits BankOfIreland.Intermediaries.Core.Web.Models.Models.BaseTemplatePage<IPublishedContent>
-
-@{
-    var root = Model.AncestorOrSelf<SiteRoot>();
-    var rootSettings = root.SiteSettings.GetElement<GlobalScripts>();
-
-    var pageSettings = Model.Value<IEnumerable<IPublishedElement>>("pageSettings");
-    var seo = pageSettings?.GetElement<ElementSeoSettings>();
-    var pageScripts = pageSettings?.GetElement<ElementScriptSettings>();
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="@(!string.IsNullOrEmpty(seo?.MetaDescription) ? seo?.MetaDescription : $"{Model.Name} | Umbraco Base")" />
-
-    <title>@((!string.IsNullOrEmpty(seo?.MetaTitle) ? seo?.MetaTitle : Model.Name) + " | Umbraco Base")</title>
-
-    <link rel="canonical" href="@(!string.IsNullOrEmpty(seo?.CanonicalUrl) ? seo?.CanonicalUrl : Model.Url(mode: UrlMode.Absolute))" />
-
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/common/images/icons/favicon/apple-touch-icon-57x57.png?v=IWE4SXqx4i" />
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/common/images/icons/favicon/apple-touch-icon-114x114.png?v=IWE4SXqx4i" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/common/images/icons/favicon/apple-touch-icon-72x72.png?v=IWE4SXqx4i" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/common/images/icons/favicon/apple-touch-icon-144x144.png?v=IWE4SXqx4i" />
-    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/common/images/icons/favicon/apple-touch-icon-60x60.png?v=IWE4SXqx4i" />
-    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/common/images/icons/favicon/apple-touch-icon-120x120.png?v=IWE4SXqx4i" />
-    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/common/images/icons/favicon/apple-touch-icon-76x76.png?v=IWE4SXqx4i" />
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/common/images/icons/favicon/apple-touch-icon-152x152.png?v=IWE4SXqx4i" />
-    <link rel="icon" type="image/png" href="/common/images/icons/favicon/favicon-196x196.png?v=IWE4SXqx4i" sizes="196x196" />
-    <link rel="icon" type="image/png" href="/common/images/icons/favicon/favicon-96x96.png?v=IWE4SXqx4i" sizes="96x96" />
-    <link rel="icon" type="image/png" href="/common/images/icons/favicon/favicon-32x32.png?v=IWE4SXqx4i" sizes="32x32" />
-    <link rel="icon" type="image/png" href="/common/images/icons/favicon/favicon-16x16.png?v=IWE4SXqx4i" sizes="16x16" />
-    <link rel="icon" type="image/png" href="/common/images/icons/favicon/favicon-128.png?v=IWE4SXqx4i" sizes="128x128" />
-    <link rel="shortcut icon" href="/common/images/icons/favicon/favicon.ico?v=JyBJRgA0Ag" type="image/x-icon">
-    <meta name="msapplication-TileImage" content="/common/images/icons/favicon/mstile-144x144.png?v=IWE4SXqx4i" />
-    <meta name="msapplication-square70x70logo" content="/common/images/icons/favicon/mstile-70x70.png?v=IWE4SXqx4i" />
-    <meta name="msapplication-square150x150logo" content="/common/images/icons/favicon/mstile-150x150.png?v=IWE4SXqx4i" />
-    <meta name="msapplication-wide310x150logo" content="/common/images/icons/favicon/mstile-310x150.png?v=IWE4SXqx4i" />
-    <meta name="msapplication-square310x310logo" content="/common/images/icons/favicon/mstile-310x310.png?v=IWE4SXqx4i" />
-
-    <link rel="manifest" href="/common/images/icons/favicon/manifest.json?v=IWE4SXqx4i">
-
-    <meta name="application-name" content="Bank of Ireland for Intermediaries" />
-    <meta name="msapplication-TileColor" content="#FFFFFF" />
-    <meta name="theme-color" content="#FFFFFF">
-
-    <link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/13ba0f51-771e-4335-8b1f-a09cca2c222d.css" />
-
-    <link rel="stylesheet" href="~/common/css/first-paint.css" />
-
-    <script src="/common/scripts/plugins/modernizr/modernizr.js"></script>
-    <script src="/common/scripts/plugins/picturefill.min.js" async></script>
-    <!--[if lte IE 8]>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <![endif]-->
-    <!--[if gt IE 8]>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <![endif]-->
-    <!--[if !IE]> -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <!-- <![endif]-->
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js"></script>
-
-    @Html.Raw(rootSettings?.HeadScripts)
+    @await Component.InvokeAsync("Head", new { calculatorLayout = true })
 </head>
+
 <body>
-    @Html.Raw(rootSettings?.BodyTopScripts)
+    @await Component.InvokeAsync("BodyScripts", new { upperScripts = true })
 
     @RenderBody()
 
-    <link rel="stylesheet" href="@CacheBust.FingerPrint("/common/css/style.css")" />
+    @* Check - how is cacheed version displayed in Ageas?*@
 
+@*     <link rel="stylesheet" href="@CacheBust.FingerPrint("/common/css/style.css")" />
+ *@
     @RenderSection("Scripts", required: false)
-    @Html.Raw(pageScripts?.MiscScripts)
-    @Html.Raw(pageScripts?.QualtricsSurveyEmbedCode)
-
-    @*@Html.Action("TrackingScripts", "Layout")*@
+    @await Component.InvokeAsync("BodyScripts", new { upperScripts = false })
 
     <div class="svg-sprite">
-        @Html.Partial("~/Views/Shared/SVG_Sprite.cshtml")
+        <partial name="SVG_Sprite" />
     </div>
+
 </body>
 </html>

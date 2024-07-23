@@ -27,7 +27,7 @@ namespace BOI.Core.Web.ViewComponents.Layout
             this.cmsService = cmsService;
         }
 
-        public IViewComponentResult Invoke(HeadViewModel model)
+        public IViewComponentResult Invoke(bool calculatorLayout)
         {
             if (umbracoContextAccessor.GetRequiredUmbracoContext() is UmbracoContext umbracoContext)
             {
@@ -41,6 +41,7 @@ namespace BOI.Core.Web.ViewComponents.Layout
                 if (currentPage != null)
                 {
                     var viewModel = new HeadViewModel(currentPage);
+                    viewModel.IsCalculatorLayout = calculatorLayout;
                     viewModel.SiteRoot = cmsService.GetSiteRoot(currentPage);
                     viewModel.SiteScripts = viewModel.SiteRoot?.SiteSettings?.GetElement<GlobalScripts>();
 
@@ -50,7 +51,6 @@ namespace BOI.Core.Web.ViewComponents.Layout
                         viewModel.ShareElement = viewModel.PageSettings.PageSettings.GetElement<ElementShareSettings>();
                         viewModel.PageScripts = viewModel.PageSettings.PageSettings.GetElement<ElementScriptSettings>();
                     }
-
 
                     return View("Head", viewModel);
                 }
