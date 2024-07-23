@@ -1,7 +1,7 @@
 ﻿@using static BOI.Core.Web.Constants.SiteAliases
 @model BodyViewModel
 
-@if (string.IsNullOrWhiteSpace(Model.SiteRoot.PopUpText?.ToString()))
+@if (Model.SiteRoot.HasValue("popUpText"))
 {
     <div class="popup-block single-popup">
         <div class="popup-block__inner">

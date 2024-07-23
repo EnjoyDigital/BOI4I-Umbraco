@@ -1,0 +1,74 @@
+.umbraco-forms-page {
+  background-color: $white;
+  padding: 42px 80px 48px;
+  margin-top: 40px;
+
+  @include media($medium) {
+    padding: 42px 50px;
+
+    .row-fluid {
+      [class*="col-md"] {
+        width: 100%;
+      }
+     }
+  }
+
+  @include media($small) {
+    padding: 30px;
+    margin-top: 25px;
+  }
+
+  @include media($tiny) {
+    padding: 20px;
+  }
+}
+
+.umbraco-forms__form-name {
+  text-align: center;
+  
+  @include media-min($small) {
+    + fieldset {
+      margin-top: 50px;
+    }
+  }
+}
+
+.umbraco-forms-caption {
+  text-align: center;
+  font-size: 2em;
+  color: $blue;
+  margin: 20px 0;
+}
+
+.umbraco-forms-fieldset {
+  legend {
+    text-align: center;
+    font-weight: 800;
+  }
+}
+
+
+.umbraco-forms-field-wrapper {
+  margin-bottom: 24px;
+}
+
+.umbraco-forms-label {
+  margin-bottom: 16px;
+}
+
+.umbraco-forms-indicator {
+  color: $blue;
+}
+
+.umbraco-forms-tooltip.help-block {
+  @include font-size(12);
+  display: block;
+  margin-top: -5px;
+  margin-bottom: 5px;
+}
+
+.umbraco-forms-navigation {
+  .button {
+    min-width: 120px;
+  }
+}

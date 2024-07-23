@@ -3,8 +3,9 @@
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
-<partial src="/Views/Shared/Hero.cshtml" />
-<partial src="/Views/Shared/Breadcrumb.cshtml" />
+
+@* <partial src="/Views/Shared/Hero.cshtml" />
+<partial src="/Views/Shared/Breadcrumb.cshtml" /> *@
 
 
 @if (Model.Content != null)
@@ -14,9 +15,9 @@
 
 @if (Model.Pods != null)
 {
-    <partial src="/Views/Partials/Pods.cshtml" />
+   @*  <partial src="/Views/Partials/Pods.cshtml" /> *@
 }
 
 @section Scripts {
-    <script type="text/javascript" src="/common/scripts/bundles/content.bundle.js")" asp-append-version="true"></script>
+    <script type="text/javascript" src="/common/scripts/bundles/content.bundle.js" asp-append-version="true"></script>
 }

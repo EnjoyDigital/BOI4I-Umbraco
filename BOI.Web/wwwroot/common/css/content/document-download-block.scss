@@ -1,0 +1,216 @@
+.document-download-block {
+  display: flex;
+  width: 100%;
+  max-width: $max-desktop;
+  margin: 20px auto;
+  padding: 0 10px;
+  flex-wrap: wrap;
+
+  @include media($max-desktop) {
+    margin: 20px auto;
+    padding: 0 20px;
+  }
+
+  @include media($large) {
+    flex-wrap: wrap;
+  }
+
+  .campaign-landing & {
+    flex-wrap: wrap;
+  }
+}
+
+.umb-block-list {
+  > .document-download-block {
+    padding: 0;
+  
+    @include media($max-desktop) {
+      margin: 20px auto;
+      padding: 0;
+    }
+  }
+}
+
+.document-download-block-item {
+  position: relative;
+  margin: 24px 24px 0 0;
+  padding: 20px 20px 25px;
+  width: calc(25% - 24px);
+  background-color: $white;
+  border: 1px solid $teal;
+  text-align: center;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @include media($large) {
+    width: calc(50% - 12px);
+
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+
+  @include media($small) {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .icon-pdf-document-icon {
+    width: 32px;
+    height: 42px;
+    transition: fill 0.25s ease;
+  }
+
+  p {
+    display: inline-block;
+    margin-bottom: 0;
+    padding-bottom: 2px;
+    border-bottom: 2px solid rgba($blue,0.3);
+    transition: color 0.25s ease, border-color 0.25s ease;
+  }
+
+  &:not(.-no-hover):hover {
+    background-color: $blue;
+    border-color: $blue;
+
+    p,
+    .document-download-block-item__title {
+      color: $white;
+    }
+
+    p {
+      border-color: $white;
+    }
+
+    .icon-pdf-document-icon {
+      fill: $white;
+    }
+  }
+
+  .campaign-landing & {
+    @include media-min($small) {
+      width: calc(50% - 12px);
+
+      &:nth-child(2n) {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.document-download-block-item__title {
+  display: block;
+  margin: 15px 0;
+  font-weight: 600;
+  transition: color 0.25s ease;
+}
+
+/* Sidebar specific styles */
+.campaign-landing__sidebar,
+.pod-group {
+  .document-download-block {
+    display: block;
+    padding: 40px 30px 0;
+    background-color: $white;
+
+    + .document-download-block {
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 40px;
+    }
+  }
+
+  .document-download-block-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    padding: 13px 15px;
+    margin: 0;
+    border: none;
+    border-top: 1px solid $teal;
+    border-bottom: 1px solid $teal;
+    margin-bottom: -1px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    .icon {
+      margin-right: 20px;
+      flex-shrink: 0;
+    }
+
+    .icon-link {
+      width: 22px;
+      height: 22px;
+    }
+
+    .icon-pdf-document-icon {
+      fill: $text;
+      width: 22px;
+      height: 29px;
+    }
+
+    > span {
+      @include link-style();
+
+      &:after {
+        background-color: $blue;
+      }
+    }
+
+    p {
+      display: none;
+    }
+
+    &:hover {
+      background-color: $white;
+      border-color: $teal;
+
+      .document-download-block-item__title {
+        color: inherit;
+      }
+
+      .icon {
+        fill: inherit;
+      }
+
+      > span {
+        &:after {
+          transform: scaleX(1);
+        }
+      }
+    }
+  }
+
+  .document-download-block-item__title {
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .document-download-cta-block__title {
+    display: block;
+    margin: 24px auto 0;
+    padding: 30px 10px 25px;
+    background-color: $white;
+    text-align: center;
+
+    + .document-download-block {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+}
+
+.campaign-landing__sidebar {
+  .document-download-block {
+    margin: 24px 0 0;
+  }
+}

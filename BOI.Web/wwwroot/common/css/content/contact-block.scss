@@ -1,0 +1,169 @@
+.contact-block {
+  width: 100%;
+  max-width: $max-desktop;
+  margin: 0 auto;
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+
+  &__wrapper {
+    position: relative;
+    padding-bottom: 40px;
+    z-index: 1;
+
+    &:after {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 200px;
+      background-color: #eee;
+      bottom: 0;
+      z-index: -1;
+    }
+
+    @include media($max-desktop) {
+      padding-bottom: 10px;
+    }
+  }
+
+  @include media($max-desktop) {
+    padding: 0 20px;
+  }
+
+  @include media($small) {
+    margin: 20px auto;
+  }
+
+  &__text {
+    background-color: $teal;
+    padding: 30px;
+    position: relative;
+
+    &--heading {
+      color: $blue;
+      font-size: 26px;
+      line-height: 32px;
+      font-family: $BankofIreland-Bold;
+    }
+
+    &:after {
+      content: '';
+      width: 100%;
+      height: 150px;
+      left: 0;
+      top: 197px;
+      position: absolute;
+      background-position: left center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-image: url(/common/images/icons/chevron-vertical-teal.svg);
+    }
+  }
+
+  &__contact {
+    background-color: $white;
+    padding: 30px;
+    padding-top: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &--wrap {
+      display: flex;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+      position: relative;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        border-bottom: solid 1px $grey;
+      }
+
+      &:last-of-type {
+        padding-bottom: 0;
+        margin-bottom: 0;
+        &:after {
+          content: none;
+        }
+      }
+
+      .contact-icon {
+        margin: 0 10px;
+        max-width: 20px;
+        height: auto;
+        align-self: center;
+      }
+
+      .contact-link {
+        text-decoration: none;
+        color: $blue;
+        @include link-style();
+
+        &:after {
+          background-color: $blue;
+        }
+
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+
+@media(min-width: 413px) {
+  .contact-block {
+    &__text {
+      &:after {
+        height: 145px;
+      }
+    }
+  }
+}
+
+@media(min-width: $min-tablet) {
+  .contact-block {
+    &__text {
+      &:after {
+        height: 185px;
+        top: 190px;
+      }
+    }
+  }
+}
+
+@media(min-width: $max-tablet) {
+  .contact-block {
+    flex-direction: row;
+
+    &__text {
+      width: 40%;
+      
+      &:after {
+        height: 100%;
+        right: 1px;
+        top: 0;
+        transform: translateX(100%);
+        background-size: auto 100%;
+        background-image: url(/common/images/icons/chevron-overlay-hero-teal@3x.png);
+      }
+    }
+
+    &__contact {
+      width: 60%;
+      padding-top: 30px;
+      padding-left: 100px;
+
+      .contact-icon {
+        margin: 0 20px;
+      }
+    }
+  }
+}
+

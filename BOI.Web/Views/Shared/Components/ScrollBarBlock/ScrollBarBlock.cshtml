@@ -2,13 +2,12 @@
 
 @model BodyViewModel
 
-@if (Model.SiteRoot.Notifications != null && Model.SiteRoot.Notifications.Any())
+@if ((Model.SiteRoot?.Notifications.NotNullAndAny()).GetValueOrDefault())
 {
     <div class="scroll-bar">
         <div class="scroll-bar__wrapper">
             @foreach (var notification in Model.SiteRoot.Notifications)
             {
-                @*             TODO: PB to uncomment this after content models are built *@
                 var notificationContent = (ContentModels.RichTextBlock)notification.Content;
 
                 <div class="scroll-bar__inner">

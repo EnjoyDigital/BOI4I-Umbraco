@@ -1,0 +1,342 @@
+﻿.ni-calculator-header-area {
+  position: relative;
+  font-family: 'HelveticaNeueW01-55Roma', Helvetica, open-sans, sans-serif;
+  font-size: 16px;
+  color: $text-grey;
+}
+
+.ni-calculator-header {
+  height: 100px;
+  width: 100%;
+  background: linear-gradient(to bottom, #00628f 0%, #0190ba 100%);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
+
+  @include media($medium) {
+    flex-wrap: wrap;
+  }
+
+  @include media($small) {
+    padding: 0;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+
+    img {
+      height: 60px;
+    }
+
+    @include media($medium) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+
+    a {
+      text-transform: uppercase;
+      text-decoration: none;
+      color: $white;
+      @include font-size(14);
+      font-weight: bold;
+    }
+
+    @include media($medium) {
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+  }
+
+  &.results {
+    background: $white;
+    position: absolute;
+    top: -100px;
+    justify-content: flex-start;
+
+    @include media($small) {
+      justify-content: space-between;
+    }
+
+    > div {
+      margin-right: 80px;
+      padding-top: 30px;
+
+      @include media($small) {
+        margin-right: 20px;
+        margin-left: 20px;
+      }
+
+      &:first-of-type {
+        display: flex;
+        align-items: center;
+        padding-top: 0;
+
+        @include media($small) {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      &:last-of-type {
+        margin-right: 0;
+
+        @include media($small) {
+          margin-right: 20px;
+          margin-left: 20px;
+        }
+      }
+
+      p {
+        color: $text-grey;
+        @include font-size(12);
+        font-weight: bold;
+        margin-bottom: 0;
+      }
+
+      span {
+        color: $boi-bespoke-blue;
+      }
+
+      .changelink {
+        margin-left: 10px;
+        text-decoration: underline;
+        @include font-size(12);
+        color: $cyan;
+        background-color: transparent;
+      }
+    }
+
+    .title {
+      color: $text-grey-light;
+      font-style: italic;
+    }
+  }
+}
+
+section.ni-calculator {
+  font-family: 'HelveticaNeueW01-55Roma', Helvetica, open-sans, sans-serif;
+  font-size: 16px;
+  color: $text-grey;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  min-height: calc(100vh - 100px);
+  text-align: center;
+  display: inline-block;
+  padding: 0 50px;
+
+  @include media($small) {
+    padding: 0 20px;
+  }
+
+  .calculator-wrapper {
+    position: relative;
+    max-width: 600px;
+    background-color: $white;
+    margin: 150px auto;
+    padding: 75px;
+
+    @include media($medium) {
+      margin: 50px auto;
+    }
+
+    @include media($small) {
+      padding: 40px 20px;
+    }
+
+    .title {
+      @include font-size(34);
+      color: $boi-bespoke-blue;
+      margin-bottom: 30px;
+    }
+
+    .disclaimer {
+      font-style: italic;
+    }
+
+    label {
+      text-align: left;
+      color: $boi-bespoke-blue;
+      font-weight: bold;
+
+      .red {
+        color: $red;
+      }
+    }
+
+    .calc-input {
+      position: relative;
+      padding-left: 50px;
+      margin-bottom: 8px;
+
+      input {
+        border: 1px solid $silver;
+        border-radius: 0 5px 5px 0;
+        height: 38px;
+      }
+
+      &:before {
+        content: '£';
+        position: absolute;
+        background-color: $calculator-grey;
+        width: 50px;
+        height: 36px;
+        left: 0;
+        top: 0;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border: 1px solid silver;
+        color: $text-grey;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    button {
+      min-width: 0;
+      font-family: "HelveticaNeueW01-75Bold", Helvetica, open-sans, sans-serif;
+      font-size: 16px;
+      line-height: 20px;
+      background-color: $cyan;
+      padding: 8px 15px 10px 15px;
+      border-radius: 5px;
+      margin-top: 15px;
+      box-shadow: inset 0 -2px 0 0 rgba(0,0,0,0.3);
+      transition: all 0.2s ease;
+
+      &:after {
+        content: none;
+      }
+
+      &:hover {
+        box-shadow: inset 0 -4px 0 0 rgba(0,0,0,0.3);
+      }
+
+      &:active {
+        box-shadow: inset 0 0 0 0 rgba(0,0,0,0);
+      }
+    }
+
+    .error-msg {
+      display: none;
+      color: $red;
+      margin-top: 20px;
+    }
+  }
+
+  .results-wrapper {
+    display: none;
+    position: relative;
+    background-color: $white;
+    margin: 150px auto;
+    padding: 75px 50px;
+    max-width: 1000px;
+
+    @include media($medium) {
+      margin: 50px auto;
+    }
+
+    @include media($small) {
+      padding: 40px 20px;
+    }
+
+    .button-area {
+      display: none;
+    }
+
+    .button {
+      min-width: 0;
+      font-family: "HelveticaNeueW01-75Bold", Helvetica, open-sans, sans-serif;
+      font-size: 16px;
+      line-height: 20px;
+      background-color: $cyan;
+      padding: 8px 15px 10px 15px;
+      border-radius: 5px;
+      margin: 40px 10px 0;
+      box-shadow: inset 0 -2px 0 0 rgba(0,0,0,0.3);
+      transition: all 0.2s ease;
+
+      @include media($small) {
+        margin-top: 20px;
+      }
+
+      &:after {
+        content: none;
+      }
+
+      &:hover {
+        box-shadow: inset 0 -4px 0 0 rgba(0,0,0,0.3);
+      }
+
+      &:active {
+        box-shadow: inset 0 0 0 0 rgba(0,0,0,0);
+      }
+    }
+
+    .title {
+      @include font-size(22);
+      color: $cyan;
+      display: block;
+      margin-bottom: 5px;
+      font-style: italic;
+    }
+
+    .sub-title {
+      color: $boi-bespoke-blue;
+      font-weight: bold;
+    }
+
+    .results {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .result {
+        border: 2px solid $calculator-grey;
+        width: 120px;
+        height: 110px;
+        position: relative;
+        margin-left: -2px;
+        margin-top: -2px;
+
+        input[type="radio"] {
+          position: absolute;
+          left: auto;
+          right: 5px;
+          width: auto;
+          top: 5px;
+        }
+
+        label {
+          height: 100%;
+          width: 100%;
+          padding-top: 20px;
+          cursor: pointer;
+
+          span {
+            display: block;
+            color: $boi-bespoke-blue;
+            @include font-size(14);
+
+            &.price {
+              @include font-size(20);
+              font-weight: bold;
+            }
+
+            &.small {
+              @include font-size(12);
+            }
+          }
+        }
+      }
+    }
+  }
+}

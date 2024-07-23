@@ -1,0 +1,45 @@
+.campaign-landing {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: $max-desktop;
+  margin: 0 auto;
+  padding: 0 10px;
+
+  @include media($max-desktop) {
+    padding: 0 20px;
+  }
+
+  .umb-block-list {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.campaign-landing__main {
+  width: 100%;
+
+  @include media-min($medium) {
+    width: percentage(2/3);
+    padding-right: 30px;
+  }
+}
+
+.campaign-landing__sidebar {
+  width: 100%;
+  padding-bottom: 40px;
+
+  @include media-min($medium) {
+    width: percentage(1/3);
+  }
+
+  @include media($small) {
+    padding-bottom: 20px;
+  }
+}
+
+.campaign-landing__sidebar-title {
+  @include media-min($medium) {
+    margin-top: 2rem;
+  }
+}

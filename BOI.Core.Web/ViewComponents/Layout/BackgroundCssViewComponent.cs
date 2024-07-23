@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using BOI.Core.Constants;
 using BOI.Core.Extensions;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BOI.Core.Web.ViewComponents.Layout
 {
@@ -22,6 +23,7 @@ namespace BOI.Core.Web.ViewComponents.Layout
         private HtmlString RenderBackgroundCss()
         {
             var outputCss = new StringBuilder();
+            //checked-where will we get these images from
             var backgroundImages = httpContextAccessor.HttpContext.Items[HttpContextItems.BackgroundImages] as Dictionary<string, string> ?? new Dictionary<string, string>();
 
             if (backgroundImages.NotNullAndAny())

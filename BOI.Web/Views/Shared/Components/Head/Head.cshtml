@@ -1,26 +1,30 @@
 ﻿@model HeadViewModel
 
-<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="63e5568e-57d0-4b35-a585-c153ce63def8" data-blockingmode="auto" type="text/javascript"></script>
-<link rel="preload" as="font" href="/common/fonts/BankofIrelandSerif-Rg.woff2" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" as="font" href="/common/fonts/BankofIrelandSerif-Bd.woff2" type="font/woff2" crossorigin="anonymous">
+@if (!Model.IsCalculatorLayout)
+{
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="63e5568e-57d0-4b35-a585-c153ce63def8" data-blockingmode="auto" type="text/javascript"></script>
+    <link rel="preload" as="font" href="/common/fonts/BankofIrelandSerif-Rg.woff2" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" as="font" href="/common/fonts/BankofIrelandSerif-Bd.woff2" type="font/woff2" crossorigin="anonymous">
+}
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="@(!string.IsNullOrEmpty(Model.SeoElement?.MetaDescription) ? Model.SeoElement?.MetaDescription : $"{Model.Content.Name} | Bank of Ireland for Intermediaries ")" />
 
 <title>@(string.Concat((!string.IsNullOrEmpty(Model.SeoElement?.MetaTitle) ? Model.SeoElement.MetaTitle : Model.Content.Name), " | Bank of Ireland for Intermediaries "))</title>
-
-<partial name="ShareCardMetaData" model="Model" />
-
 <link rel="canonical" href="@(!string.IsNullOrEmpty(Model.SeoElement?.CanonicalUrl) ? Model.SeoElement?.CanonicalUrl : Model.Content.Url(mode: UrlMode.Absolute))" />
 
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
-      as="style" />
-<link rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
-      media="print" onload="this.media='all'" />
+@if (!Model.IsCalculatorLayout)
+{
+    <partial name="ShareCardMetaData" model="Model" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload"
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+          as="style" />
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+          media="print" onload="this.media='all'" />
+}
 
 <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/common/images/icons/favicon/apple-touch-icon-57x57.png?v=IWE4SXqx4i" />
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/common/images/icons/favicon/apple-touch-icon-114x114.png?v=IWE4SXqx4i" />
@@ -47,6 +51,28 @@
 <meta name="msapplication-TileColor" content="#FFFFFF" />
 <meta name="theme-color" content="#FFFFFF">
 
+@if (Model.IsCalculatorLayout)
+{
+    <link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/13ba0f51-771e-4335-8b1f-a09cca2c222d.css" />
+
+    <link rel="stylesheet" href="/common/css/first-paint.css"  asp-append-version="true"/>
+
+    <script src="/common/scripts/plugins/modernizr/modernizr.js" asp-append-version="true"></script>
+    <script src="/common/scripts/plugins/picturefill.min.js" async asp-append-version="true"></script>
+    <!--[if lte IE 8]>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <![endif]-->
+    <!--[if gt IE 8]>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <![endif]-->
+    <!--[if !IE]> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <!-- <![endif]-->
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js"></script>
+}
+
+@* TODO : PB TO check if this is needed *@
 @* @RenderSection("Styles", required: false)
  *@
 @Html.Raw(Model.SiteScripts?.HeadScripts)

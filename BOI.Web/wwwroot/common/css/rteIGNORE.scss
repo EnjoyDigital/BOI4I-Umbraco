@@ -1,0 +1,31 @@
+/* used by the umbraco cms rich-text editor 
+@charset "utf-8";
+@import "config/constants";	// Widths, heights etc all re-usable
+@import "config/mixins";		// Re-usable mixins - CSS3 etc..
+@import "base/typography";	// Font declarations
+@import "modules/richtext-rte";		// Richtext formatting styles
+*/
+/**umb_name:h2*/
+h2 {
+	font-size: 32px;
+	margin-bottom: 1.5rem;
+	font-weight: normal;
+	margin-top: 0;
+	font-family: 'HelveticaNeueLTStd-Lt';
+}
+
+/**umb_name:h3*/
+h3 {
+	font-size: 26px;
+	font-weight: normal;
+	margin-top: 0;
+	font-family: 'HelveticaNeueLTStd-Lt';
+}
+
+/**umb_name:h4*/
+h4 {
+	font-size: 20px;
+	font-weight: normal;
+	margin-top: 0;
+	font-family: 'HelveticaNeueLTStd-Lt';
+}
