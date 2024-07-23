@@ -1,0 +1,28 @@
+﻿@inherits UmbracoViewPage<IHowItWorksBlock>
+@{
+    if( (Model?.Steps.NullOrEmpty()).GetValueOrDefault())
+    {
+        return;
+    }
+        int i = 0;
+        <div class="how-it-works-block">
+            @Model.Title
+            @foreach (var howItWorks in Model.Steps.OfType<BlockListItem<HowItWorksItem>>())
+            {
+                var howItWorksItem = (HowItWorksItem)howItWorks.Content;
+                if (howItWorksItem ==null)
+                {
+                    continue;
+                }
+
+                i++;
+
+                <div class="how-it-works-item rich-text">
+                    <div class="how-it-works-item__step-number">@i</div>
+                    <span class="h5 how-it-works-item__title">@howItWorksItem.StepTitle</span>
+                    @howItWorksItem.SubSteps
+                </div>
+            }
+        </div>
+    
+}

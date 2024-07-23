@@ -52,6 +52,15 @@ namespace BOI.Core.Web.Extensions
             return GetImageHtml(mediaItem, classNames, fallbackAltText, ImageCropMode.Crop, lazyLoad, false, cropDefs);
         }
 
+        public static string Displayname(this IPublishedContent content, string displayTitleAlias = "displayTitle")
+        {
+            if (content == null)
+            {
+                return "";
+            }
+            return content.Value<string>(displayTitleAlias, fallback: Fallback.ToDefaultValue, defaultValue: content.Name);
+        }
+
         public static HtmlString GetImageHtml(this IPublishedContent mediaItem, string classNames, string fallbackAltText, ImageCropMode cropMode = ImageCropMode.Crop, bool lazyLoad = false, bool blurUp = false, params (string cropAlias, int screenSize)[] cropDefs)
         {
             if (mediaItem != null)

@@ -1,0 +1,26 @@
+﻿@inherits UmbracoViewPage<AwardWinningServicePodRender>
+@{
+    if (Model == null || Model.Images == null)
+    {
+        return;
+    }
+
+    if (Model.Images != null)
+    {
+        <div class="award-winning-pod">
+            <div class="award-winning-pod-inner">
+                <span class="award-winning-pod__title h2">@Model.Title</span>
+                <p><strong>@Model.SubTitle</strong></p>
+                
+                <div class="award-winning-pod__image-list @(Model.Images.Count() > 4 ? "-min-5" : "-max-4")">
+                    @foreach (var image in Model.Images)
+                    {
+                        <div class="award-winning-pod__image-item">
+                            <img data-object-fit="cover" src="@image.Url()" alt="@image.GetImageAlternativeText()" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}

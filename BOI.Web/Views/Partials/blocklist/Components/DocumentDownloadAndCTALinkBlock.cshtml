@@ -1,0 +1,18 @@
+﻿@inherits UmbracoViewPage<DocumentDownloadAndCtalinkBlock>
+@{
+    if ((Model?.DocumentsLinks .NullOrEmpty()).GetValueOrDefault())
+    {
+        return;
+    }    
+    if (Model.Title.HasValue())
+    {
+        <span class="h4 document-download-cta-block__title">@Model.Title</span>
+    }
+
+    foreach (var documentLink in Model.DocumentsLinks)
+    {
+        <partial src="@string.Format(" ~ /Views/Partials/BlockList/Components/{0}.cshtml", documentLink.Content.ContentType.Alias)" model="@documentLink.Content" />
+        
+    }
+    
+}

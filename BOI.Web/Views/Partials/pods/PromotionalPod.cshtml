@@ -1,0 +1,41 @@
+﻿@using BOI.Core.Web.Constants
+@inherits UmbracoViewPage<PromotionalPodRender>
+@{
+	if (Model == null)
+	{
+		return;
+	}
+	<div class="promotional-pod @(Model.Image != null ? "-has-image" : "")">
+		<div class="promotional-pod-inner">
+			<div class="promotional-pod__content">
+				<h2 class="promotional-pod__title">@Model.Title</h2>
+				@Model.SubText
+
+				@if ((Model.CTalink?.Url.HasValue()).GetValueOrDefault())
+				{
+					<a href="@Model.CTalink.Url" class="button -white-outline" target="@Model.CTalink.Target">
+						<span>@Model.CTalink.Name</span>
+					</a>
+				}
+			</div>
+
+			@if (Model.Image != null)
+			{
+				@* TODO: Update to use ResponsiveBackgroundImages Extension *@
+				<style>
+							.promotional-pod__image {
+						background-image: url(@Model.Image.GetCropUrl(CropAliases.PromoPodDesktop));
+							}
+
+							@@media screen and (max-width: 568px) {
+								.promotional-pod__image {
+							background-image: url(@Model.Image.GetCropUrl(CropAliases.PromoPodMobile));
+								}
+							}
+					</style>
+
+				<div class="promotional-pod__image"></div>
+			}
+		</div>
+	</div>
+}

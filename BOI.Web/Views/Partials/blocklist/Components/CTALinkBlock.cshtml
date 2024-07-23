@@ -1,0 +1,32 @@
+﻿@inherits UmbracoViewPage<CTalinkBlock>
+@{
+    if( (Model?.Links.NullOrEmpty()).GetValueOrDefault())
+    {
+        return;
+    }
+
+    
+    <div class="document-download-block">
+        @foreach (var ctaLink in Model.Links.OfType<BlockListItem<CTalinkItem>>())
+            {
+                var cTalinkItem = (CTalinkItem)ctaLink.Content;
+
+                <div class="document-download-block-item ">
+                    @if (cTalinkItem.Link != null)
+                    {
+                        <a href="@cTalinkItem.Link.Url" class="overlay-link" target="@cTalinkItem.Link.Target" title="@cTalinkItem.Link.Name"></a>
+                    }
+
+                    <svg class="[ icon icon-link -text-grey ]" aria-hidden="true">
+                        <use xlink:href="#sprite-icon-link"></use>
+                    </svg>
+
+                    @if (cTalinkItem.Link != null)
+                    {
+                        <span class="cta-link">@cTalinkItem.Link.Name</span>
+                    }
+                </div>
+            }
+        </div>
+    
+}

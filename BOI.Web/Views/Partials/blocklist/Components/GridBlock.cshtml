@@ -1,0 +1,41 @@
+﻿@inherits UmbracoViewPage<GridBlock>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+
+    <div class="grid-block">
+        @if ((Model.LeftColumnContent?.NotNullAndAny()).GetValueOrDefault())
+        {
+            <div class="grid-block__col">
+                @foreach (var block in Model.LeftColumnContent)
+                {
+                    if (block?.ContentUdi == null) { continue; }
+                    var data = block.Content;
+                    if(data == null)
+                    {
+                        continue;
+                    }
+                    <partial src="@string.Concat("BlockList/Components/" , data.ContentType.Alias)" model="@block.Content" />
+                }
+            </div>
+        }
+
+        @if( (Model.RightColumnContent?.NotNullAndAny()).GetValueOrDefault())
+        {
+            <div class="grid-block__col">
+                @foreach (var block in Model.RightColumnContent)
+                {
+                    if (block?.ContentUdi == null) { continue; }
+                    var data = block.Content;
+                    if (data == null)
+                    {
+                        continue;
+                    }
+                    <partial src="@string.Concat("BlockList/Components/" , data.ContentType.Alias)" model="@block.Content" />
+                }
+            </div>
+        }
+    </div>
+}

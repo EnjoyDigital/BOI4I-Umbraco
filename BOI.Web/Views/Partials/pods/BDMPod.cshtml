@@ -1,0 +1,26 @@
+﻿@inherits UmbracoViewPage<BDmcontact>
+
+@if (Model == null)
+{
+    return;
+}
+
+@{
+    var name = $"{(Model.Firstname.IsNullOrWhiteSpace() ? "" : Model.Firstname)} {(Model.Surname.IsNullOrWhiteSpace() ? "" : Model.Surname)} ";
+}
+<div class='bdm-pod'>
+    <div class="bdm-pod__content">
+        <div class='bdm-pod__content--text'>
+            <h3 class="hero-area-quick-links__title">Your personal BDM is @name</h3>
+            <p>If you would like to contact @name, please call on <a href="tel:@Model.ContactNumber">@Model.ContactNumber*</a> or alternativaley you can email at <a href="mailto:@Model.Email">@Model.Email<a></p>
+        </div>
+
+        @if (Model.Image != null)
+        {
+            <div class='bdm-pod__content--image'>
+                <img src="@Model.Image.Url()" alt="@Model.Image.GetImageAlternativeText()" />
+            </div>
+        }
+    </div>
+</div>
+

@@ -1,0 +1,6 @@
+{
+    "IIS-Site-Name": "boi v13",
+    "App-Pool-Name": "boi v13",
+    "IIS-App-Pool-Dot-Net-Version": "",
+    "bindings": [ "boi-net.core.local", "boi-net.core.dev.local" ]
+}

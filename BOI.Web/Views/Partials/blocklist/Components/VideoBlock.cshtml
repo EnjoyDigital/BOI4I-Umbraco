@@ -1,0 +1,61 @@
+﻿@inherits UmbracoViewPage<VideoBlock>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+
+    if (Model.Video != null)
+    {
+        var backgroundImageUrl = Model.BackgroundImage != null ? string.Concat("background-image: url(", Model.BackgroundImage.MediaUrl(mode: UrlMode.Absolute), ")") : string.Empty;
+
+        if (Model.FullScreen)
+        {
+            <div class="video-block fullscreen">
+                <div class="video-block__col video-block-video">
+                    <div class="video-block-video-inner">
+                        <div class="video-block-video-wrapper">
+                            <div class="video-block-video__overlay" style="@backgroundImageUrl">
+                                <div class="play-icon">
+                                    <span>Play</span>
+                                </div>
+                            </div>
+                            <video width="455" height="281" controls playsinline preload>
+                                <source src="@Model.Video.Url()">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="video-block">
+                <div class="video-block__col video-block-copy">
+                    @* TODO: Title is hidden using CSS when situated within the
+                        * sidebar. Need to add this note to the field within the CMS
+                        * so that the CMS User is aware.
+                    *@
+                    <span class="video-block-copy__title">@Model.Title</span>
+                    <p>@Model.Caption</p>
+                </div>
+                <div class="video-block__col video-block-video">
+                    <div class="video-block-video-inner">
+                        <div class="video-block-video-wrapper">
+                            <div class="video-block-video__overlay" style="@backgroundImageUrl">
+                                <div class="play-icon">
+                                    <span>Play</span>
+                                </div>
+                            </div>
+
+                            <video width="455" height="281" controls playsinline preload>
+                                <source src="@Model.Video.Url()">
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+}

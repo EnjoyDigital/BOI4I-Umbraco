@@ -1,0 +1,17 @@
+﻿@inherits UmbracoViewPage
+@{
+    var BreadCrumb = Model.Ancestors().Where(n => n.TemplateId != 0).OrderBy(a => a.Level);
+}
+
+<div class="breadcrumbs">
+    <ul>
+        <li><a href="/" title="Homepage">Homepage</a></li>
+        @foreach (var crumb in BreadCrumb)
+        {
+            @:<li><a href="@crumb.Url()" title="@crumb.Displayname()" />@crumb.Displayname()</a></li>
+        }
+        <li>
+            <span>@Model.Displayname()</span>
+        </li>
+    </ul>
+</div>

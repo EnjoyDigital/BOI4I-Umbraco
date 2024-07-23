@@ -1,0 +1,42 @@
+﻿@inherits UmbracoViewPage<FormsAndGuidePodRender>
+
+@{
+    if (( Model?.Documents.NotNullAndAny()).GetValueOrDefault())
+    {
+        return;
+    }
+
+    <div class="document-download-block">
+        <h2 class="h3 document-download-cta-block__title">@Model.Title</h2>
+
+        @if (Model.Documents.NotNullAndAny())
+        {
+            foreach (var document in Model.Documents.OfType<BlockListItem<DocumentUploadItem>>())
+            {
+                var documentItem = (DocumentUploadItem)document.Content;
+                if(documentItem == null)
+                {
+                    continue;
+                }
+                <div class="document-download-block-item">
+
+                    <svg class="[ icon icon-pdf-document-icon -blue ]" aria-hidden="true">
+                        <use xlink:href="#sprite-icon-pdf-document-icon"></use>
+                    </svg>
+                    <span class="document-download-block-item__title">@documentItem.Title</span>
+
+                    @if (documentItem?.Document != null)
+                    {
+                        <a href="@documentItem.Document.Url()" class="overlay-link" target="_blank" download><span class="sr-only">Download </span>@documentItem.Title</a>
+                    }
+
+                </div>
+            }
+
+            if (Model.CTalink != null)
+            {
+                <a href="@Model.CTalink.Url" target="@Model.CTalink.Target">@Model.CTalink.Name</a>
+            }
+        }
+    </div>
+}

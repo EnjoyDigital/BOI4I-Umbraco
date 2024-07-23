@@ -1,0 +1,48 @@
+﻿@inherits UmbracoViewPage<ServiceLevelItemPodRender>
+
+@{
+    if ((Model?.ServiceItems.NullOrEmpty()).GetValueOrDefault())
+    {
+        return;
+    }
+
+    <div class="service-levels-pod">
+        <h2 class="h3">@Model.Title</h2>
+        <p>@Model.SubText</p>
+
+        <ul class="hero-area-quick-links__list">
+            @foreach (var serviceItem in Model.ServiceItems.OfType<ServiceLevelItem>())
+            {
+                if(serviceItem == null)
+                {
+                    continue;
+                }
+                var serviceSubText = serviceItem.ServiceDate == DateTime.MinValue ? serviceItem.ServiceSubtitle : serviceItem.ServiceDate.ToString("ddd dd MMM yyyy");
+                <li>
+                    @if (serviceItem.ServiceIcon != null)
+                    {
+                        <div class="hero-area-quick-links__list-icon-wrap">
+                            <img data-object-fit="cover"
+                                src="@serviceItem.ServiceIcon.Url()"
+                                alt="@serviceItem.ServiceIcon.GetImageAlternativeText()" />
+                        </div>
+                    }
+                    <div class="service-levels-pod-item__copy">
+                        <span>@serviceItem.ServiceTitle</span>
+                        <time class="service-levels-pod-item__time" datetime="@serviceItem.ServiceDate.ToString("yyyy-MM-dd")">
+                            <svg class="[ icon icon-clock -white ]" aria-hidden="true">
+                                <use xlink:href="#sprite-icon-clock"></use>
+                            </svg>
+                            @serviceSubText
+                        </time>   
+                    </div>
+                </li>
+            }
+        </ul>
+
+        @if( (Model.CTalink?.Url.HasValue()).GetValueOrDefault())
+        {
+            <a href="@Model.CTalink.Url" target="@Model.CTalink.Target">@Model.CTalink.Name</a>
+        }
+    </div>
+}

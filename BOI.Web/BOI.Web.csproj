@@ -30,7 +30,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="Views\Partials\blocklist\Components\" />
 		<Folder Include="wwwroot" />
 	</ItemGroup>
 
@@ -43,5 +42,6 @@
 	<PropertyGroup>
 		<RazorCompileOnBuild>false</RazorCompileOnBuild>
 		<RazorCompileOnPublish>false</RazorCompileOnPublish>
+		<GenerateRuntimeConfigDevFile>true</GenerateRuntimeConfigDevFile>
 	</PropertyGroup>
 </Project>

@@ -1,0 +1,69 @@
+﻿@inherits UmbracoViewPage<ContactUsPodRender>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+    <div class="contact-block__wrapper">
+        <div class="contact-block">
+            <div class="contact-block__text">
+                <h2 class="contact-block__text--heading">@Model.Title</h2>
+                @Model.SubText
+
+                @if ((Model.CTalink?.Url.HasValue()).GetValueOrDefault())
+                {
+                    <a href="@Model.CTalink.Url" target="@Model.CTalink.Target" class="button">
+                        <span>@Model.CTalink.Name</span>
+                    </a>
+                }
+            </div>
+        
+            <div class="contact-block__contact">
+                @if (Model.BDmfinderLink != null)
+                {
+                    <div class="contact-block__contact--wrap">
+                        @if (Model.BDmfinderIcon != null)
+                        {
+                            <img class="contact-icon" data-object-fit="cover"
+                                src="@Model.BDmfinderIcon.Url()"
+                                alt="@Model.BDmfinderIcon.GetImageAlternativeText()" />
+                        }
+                        <a href="@Model.BDmfinderLink.Url" target="@Model.BDmfinderLink.Target" class="contact-link">
+                            @Html.Raw(Model.BDmfinderText)
+                        </a>
+                    </div>
+                }
+
+                @if (Model.PhoneLink != null)
+                {
+                    <div class="contact-block__contact--wrap">
+                        @if (Model.PhoneIcon != null)
+                        {
+                            <img class="contact-icon" data-object-fit="cover"
+                                src="@Model.PhoneIcon.Url()"
+                                alt="@Model.PhoneIcon.GetImageAlternativeText()" />
+                        }
+                        <a href="@Model.PhoneLink.Url" target="@Model.PhoneLink.Target" class="contact-link">
+                            @Html.Raw(Model.PhoneText)
+                        </a>
+                    </div>
+                }
+
+                @if (Model.EmailLink != null)
+                {
+                    <div class="contact-block__contact--wrap">
+                        @if (Model.EmailIcon != null)
+                        {
+                            <img class="contact-icon" data-object-fit="cover"
+                                src="@Model.EmailIcon.Url()"
+                                alt="@Model.EmailIcon.GetImageAlternativeText()" />
+                        }
+                        <a href="@Model.EmailLink.Url" target="@Model.EmailLink.Target" class="contact-link">
+                            @Html.Raw(Model.EmailText)
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
