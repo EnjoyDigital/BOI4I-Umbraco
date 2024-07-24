@@ -1,78 +1,48 @@
 ﻿using BOI.Core.Services;
 using BOI.Core.Extensions;
 using BOI.Core.Web.Services;
+using BOI.Core.Web.Services.CachedProxies;
+using BOI.Core.Constants.Aliases;
+using BOI.Core.Web.ContentFinders;
+using BOI.Core.Web.NotificationHandlers;
 using DangEasy.Interfaces.Caching;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using DangEasy.Caching.MemoryCache;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Extensions;
 using Umbraco.Cms.Infrastructure.Examine.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
-using DangEasy.Caching.MemoryCache;
-using BOI.Core.Web.Services.CachedProxies;
-using BOI.Core.Constants.Aliases;
 using Umbraco.Cms.Infrastructure.DependencyInjection;
+using Umbraco.Cms.Core.Routing;
+using Umbraco.Cms.Core.Notifications;
+using BOI.Core.Search.Services;
+using BOI.Core.Search.Factory;
+using Umbraco.Forms.Core.Cache;
+using Microsoft.AspNetCore.DataProtection;
+using BOI.Core.Infrastructure;
+using Lucene.Net.Search;
+using BOI.Core.Search.NotificationHandlers;
+using BOI.Core.Search.Queries.SQL;
+
 
 namespace BOI.Core.Web.Extensions
 {
     public static class IUmbracoBuilderExtensions
     {
-        public static IUmbracoBuilder AddCustomContentFinders(this IUmbracoBuilder builder)
+        public static IUmbracoBuilder AddCustomUmbracoDataContext(this IUmbracoBuilder builder)
         {
-            //builder.ContentFinders().InsertAfter<ContentFinderByUrl, ListingFiltersContentFinder>();
-            //builder.SetContentLastChanceFinder<LastChanceContentFinder>();
+            builder.Services.AddDbContext<CustomUmbracoDataContext>(options => options.UseSqlServer("name=ConnectionStrings:umbracoDbDSN"));
 
             return builder;
         }
 
-        public static IUmbracoBuilder AddCustomNotificationHandlers(this IUmbracoBuilder builder)
+        public static IUmbracoBuilder AddDataProtection(this IUmbracoBuilder builder, IConfiguration _config)
         {
-            //ContentSavedNotificationHandler is to set default values on save. Currently used for news and event dates but could be used for setting 
-            //listing summary text from the first portion of rte added through content blocks.
-            //Or other things i.e. linking data
-            //builder.AddNotificationHandler<ContentSavedNotification, ContentSavedNotificationHandler>();
-            //builder.AddNotificationHandler<ContentCacheRefresherNotification, ContentCacheRefresherNotificationHandler>();
-            //builder.AddNotificationHandler<UmbracoApplicationStartingNotification, UmbracoApplicationStartingNotificationHandler>();
-            //builder.AddNotificationHandler<FormSavingNotification, FormSavingNotificationHandler>();
-            //builder.AddNotificationHandler<MediaSavedNotification, MediaNotificationHandler>();
-            //builder.AddNotificationHandler<ContentUnpublishedNotification, ContentUnPublishedNotificationHandler>();
-            //builder.AddNotificationHandler<ContentMovedNotification, ContentMovedNotificationHandler>();
-            //builder.AddNotificationHandler<ContentMovedToRecycleBinNotification, ContentRecyledNotificationHandler>();
-
-            return builder;
-        }
-
-
-        public static IUmbracoBuilder AddCustomIndexOptions(this IUmbracoBuilder builder)
-        {
-            builder.Services.ConfigureOptions<ConfigureIndexOptions>();
-            return builder;
-        }
-
-        public static IUmbracoBuilder AddCustomServices(this IUmbracoBuilder builder, IConfiguration configuration)
-        {
-            builder.RegisterCustomCachedServices(configuration);
-            //builder.RegisterCustomServices();
-
-            return builder;
-        }
-
-        private static IUmbracoBuilder RegisterCustomCachedServices(this IUmbracoBuilder builder, IConfiguration configuration)
-        {
-            if (configuration.IsServiceCacheEnabled())
-            {
-                builder.Services.AddScoped<ICache, Cache>();
-
-                builder.Services.AddScoped<CmsService, CmsService>();
-                builder.Services.AddScoped<ICmsService, CmsServiceCachedProxy>();
-
-                builder.Services.AddScoped<SitemapXmlGenerator, SitemapXmlGenerator>();
-                builder.Services.AddScoped<ISitemapXmlGenerator, SitemapXmlGeneratorCachedProxy>();
-            }
-            else
-            {
-                builder.Services.AddScoped<ICmsService, CmsService>();
-                builder.Services.AddScoped<ISitemapXmlGenerator, SitemapXmlGenerator>();
-            }
+            var applicationName = _config.GetValue<string>("", "BOI");
+            builder.Services.AddDataProtection()
+                .SetApplicationName(applicationName);
+                //.PersistKeysToDbContext<CustomUmbracoDataContext>();
 
             return builder;
         }
@@ -95,42 +65,93 @@ namespace BOI.Core.Web.Extensions
                 }
             }
 
-
-
             return builder;
         }
 
+        public static IUmbracoBuilder AddCustomServices(this IUmbracoBuilder builder, IConfiguration configuration)
+        {
+            builder.RegisterCustomCachedServices(configuration);
+            builder.RegisterCustomServices();
+
+            return builder;
+        }  
+
+        private static IUmbracoBuilder RegisterCustomCachedServices(this IUmbracoBuilder builder, IConfiguration configuration)
+        {
+            if (configuration.IsServiceCacheEnabled())
+            {
+                builder.Services.AddScoped<ICache, Cache>();
+
+                builder.Services.AddScoped<CmsService, CmsService>();
+                builder.Services.AddScoped<ICmsService, CmsServiceCachedProxy>();
+
+                builder.Services.AddScoped<SitemapXmlGenerator, SitemapXmlGenerator>();
+                builder.Services.AddScoped<ISitemapXmlGenerator, SitemapXmlGeneratorCachedProxy>();
+            }
+            else
+            {
+                builder.Services.AddScoped<ICmsService, CmsService>();
+                builder.Services.AddScoped<ISitemapXmlGenerator, SitemapXmlGenerator>();
+            }
+
+            return builder;
+        }
 
         private static IUmbracoBuilder RegisterCustomServices(this IUmbracoBuilder builder)
         {
+            //TODO: Add edservices
             //builder.Services.AddScoped<IEdAdminService, EdAdminService>();
-            //builder.Services.AddScoped<IEncryptionService, EncryptionService>();
-            //builder.Services.AddScoped<IUserSessionService, UserSessionService>();
-
-            //builder.Services.AddScoped<IMultiLingualService, MultiLingualService>();
-            //builder.Services.AddScoped<INavigationMenuBuilderService, MenuBuilderService>();
-            //builder.Services.AddScoped<IRazorViewRenderService, RazorViewRenderService>();
-            //builder.Services.AddScoped<IEmailNotificationService, EmailNotificationService>();
-            //builder.Services.AddScoped<ICacheTagHelperService, CacheTagHelperService>();
-
-            //IProductImportService
-            //IEmailNotificationService
-            //builder.Services.AddMemoryCache();
+            builder.Services.AddScoped<IRazorViewRenderService, RazorViewRenderService>();
+            builder.Services.AddScoped<ICacheTagHelperService, CacheTagHelperService>();
+            builder.Services.AddMemoryCache();
             builder.Services.AddScoped<IOutputCacheService, OutputCacheService>();
-
             return builder;
         }
 
-        public static IUmbracoBuilder AddCustomWorkFlows(this IUmbracoBuilder builder)
+        public static IUmbracoBuilder RegisterQueryHandlers(this IUmbracoBuilder builder, IConfiguration configuration)
         {
+            builder.Services.AddScoped<IndexingService, IndexingService>();
+            builder.Services.AddSingleton(s =>
+            {
+
+                var esFactory = new EsSearchFactory(configuration);
+
+                return esFactory.CreateClient();
+            });
+
+            builder.Services.AddScoped<IGetAllMediaLogs, GetAllMediaLogs>();
 
 
-            //builder.WithCollectionBuilder<WorkflowCollectionBuilder>()
-            //    .Add<CampaignStarEmailWorkFlow>();
+            builder.AddNotificationHandler<ContentSavedNotification, ContentSavedNotificationHandler>();
+            builder.AddNotificationHandler<ContentPublishedNotification, ContentPublishedNotificationHandler>();
+            builder.AddNotificationHandler<ContentMovingToRecycleBinNotification, ContentServiceDeletingHandler>();
+            builder.AddNotificationHandler<ContentUnpublishingNotification, ContentUnPublishingNotificationHandler>();
+
+
+            //builder.Services.AddScoped<IListingQueryHandler, Queries.Examine.ListingQueryHandler>();
+            //builder.Services.AddScoped<IMediaQueryHandler, Queries.Examine.MediaQueryHandler>();
+            //builder.Services.AddScoped<ISiteSearchQueryHandler, Queries.Examine.SiteSearchQueryHandler>();
+            //builder.Services.AddScoped<IAutoCompleteQueryHandler, Queries.Examine.AutoCompleteQueryHandler>();
 
             return builder;
         }
 
-    }
+        public static IUmbracoBuilder AddCustomNotificationHandlers(this IUmbracoBuilder builder)
+        {
+            builder.AddNotificationHandler<ContentCacheRefresherNotification, ContentCacheRefresherNotificationHandler>();
+            builder.AddNotificationHandler<MediaCacheRefresherNotification, MediaCacheRefresherNotificationHandler>();
+            builder.AddNotificationHandler<FormCacheRefresherNotification, FormCacheRefresherNotificationHandler>();
 
+            return builder;
+        }
+
+        public static IUmbracoBuilder AddCustomContentFinders(this IUmbracoBuilder builder)
+        {
+            builder.ContentFinders().InsertAfter<ContentFinderByUrl, ListingFiltersContentFinder>();
+            //ToDO: PB to uncomment the following
+            //builder.SetContentLastChanceFinder<LastChanceContentFinder>();
+
+            return builder;
+        }
+    }
 }
