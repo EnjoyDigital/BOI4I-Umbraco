@@ -2,7 +2,7 @@
 
 @model BodyViewModel
 
-@if (Model.SiteRoot.Notifications != null && Model.SiteRoot.Notifications.Any())
+@if ((Model.SiteRoot?.Notifications.NotNullAndAny()).GetValueOrDefault())
 {
     <div class="scroll-bar">
         <div class="scroll-bar__wrapper">

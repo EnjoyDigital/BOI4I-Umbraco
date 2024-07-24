@@ -1,0 +1,66 @@
+﻿@inherits UmbracoViewPage<CTapopupBlock>
+@{
+    if ((Model?.PopupBlocks.NullOrEmpty()).GetValueOrDefault())
+    {
+        return;
+    }
+}
+
+
+    <section class="cta-popup-links">
+        <h3 class="-blue-text">@Model.PopupTitle</h3>
+
+        @foreach (var popupBlock in Model.PopupBlocks)
+        {
+            switch (popupBlock.Content.ContentType.Alias)
+            {
+                case CTapopupBlockItem.ModelTypeAlias:
+                    var popupBlockItem = (CTapopupBlockItem)popupBlock.Content;
+                if (popupBlockItem == null)
+                {
+                    continue;
+                }
+                var uniqueId = @Guid.NewGuid();
+
+                    <a class="button popup-open" href="#" data-popupid="@uniqueId">@popupBlockItem.PopupName</a>
+
+                    <div class="cta-popup" id="@uniqueId">
+                        <div class="cta-popup__inner">
+                            <div class="cta-popup__header">
+                                <p class="">@popupBlockItem.Title</p>
+                                <button class="button -blue-outline transparent popup-close">Close</button>
+                            </div>
+                            <div class="cta-popup__text">
+                                @Html.Raw(popupBlockItem.Description)
+                            </div>
+                            <div class="cta-popup__footer">
+                                @if (popupBlockItem.ConfirmationText.HasValue())
+                                {
+                                    <div class="checkbox-wrapper">
+                                        <input id="@uniqueId-check" type="checkbox" />
+                                        <label for="@uniqueId-check">@popupBlockItem.ConfirmationText</label>
+                                        <div id="@uniqueId-error" class="field-validation-error">
+                                            @popupBlockItem.ConfirmationErrorMessage
+                                        </div>
+                                    </div>
+                                }
+                                @if (popupBlockItem.CTalink != null)
+                                {
+                                    <a href="@popupBlockItem.CTalink.Url" class="button continue" @(!string.IsNullOrWhiteSpace(popupBlockItem.CTalink.Target) ? "target=" + popupBlockItem.CTalink.Target + "" : string.Empty)>Continue</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    break;
+                case CTapopupLinkItem.ModelTypeAlias:
+                    var popupLinkItem = (CTapopupLinkItem)popupBlock.Content;
+                if (popupLinkItem == null)
+                {
+                    continue;
+                }
+                    <a class="button" href="@popupLinkItem.CTapopupLink.Url" @(!string.IsNullOrWhiteSpace(popupLinkItem.CTapopupLink.Target) ? "target=" + popupLinkItem.CTapopupLink.Target + "" : string.Empty)>@popupLinkItem.CTapopupLink.Name</a>
+                    break;
+            }
+        }
+    </section>
+

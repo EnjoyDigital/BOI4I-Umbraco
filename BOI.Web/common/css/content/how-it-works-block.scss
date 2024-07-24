@@ -1,0 +1,99 @@
+.how-it-works-block {
+  width: 100%;
+  max-width: $max-desktop;
+  margin: 40px auto;
+  padding: 30px 10px 40px;
+  border-top: 1px solid $grey-2;
+  border-bottom: 1px solid $grey-2;
+
+  @include media($max-desktop) {
+    padding: 30px 20px 40px;
+  }
+
+  @include media($small) {
+    padding: 10px 20px 20px;
+    margin: 20px auto;
+  }
+
+  > h3 {
+    margin-bottom: 0.5rem;
+
+    + h4 {
+      margin-top: 0;
+    }
+  }
+}
+
+.umb-block-list {
+  .how-it-works-block {
+    padding: 30px 0 40px;
+
+    @include media($max-desktop) {
+      padding: 30px 0 40px;
+    }
+
+    @include media($small) {
+      padding: 10px 0 20px;
+    }
+  }
+}
+
+.how-it-works-item {
+  position: relative;
+  padding-top: 0;
+  padding-left: 90px;
+  margin-top: 30px;
+
+  @include media($tiny) {
+    padding-left: 68px;
+  }
+
+  ul {
+    li {
+      margin: 17px 0;
+
+      span.list-ticks {
+        padding-left: 32px;
+
+        &:before {
+          width: 24px;
+          height: 24px;
+          top: 0;
+          border-radius: 6px 0 6px 0;
+          background-color: $teal;
+          background-image: url(/common/images/icons/sprite-icon-tick-black.svg);
+          background-size: 15px 12px;
+        }
+      }
+    }
+  }
+}
+
+.how-it-works-item__step-number {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  background-color: $blue;
+  border-radius: 100% 100% 0 100%;
+  color: $white;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
+
+  @include media($tiny) {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
+.how-it-works-item__title {
+  display: block;
+  margin-bottom: 10px;
+}

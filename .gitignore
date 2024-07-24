@@ -58,3 +58,14 @@ Thumbs.db
 /BOI.Umbraco.Models/bin
 /BOI.Umbraco.Models/obj
 /BOI.Core.Web/App_Plugins/Our.Umbraco.ValidationAttributes
+/.vs/BOI .net core/v17/.suo
+/.vs
+/BOI.Umbraco.Models/obj
+/BOI.Umbraco.Models/bin
+/BOI.Core.Web/obj
+/BOI.Core.Web/bin
+/BOI.Core.Search/obj
+/BOI.Core.Search/bin
+/BOI.Core/bin
+/BOI.Core/obj
+/BOI.Web/Properties/launchSettings.json

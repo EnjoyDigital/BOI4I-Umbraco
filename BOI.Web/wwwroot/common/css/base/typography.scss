@@ -1,0 +1,161 @@
+/*** replace with project specific fonts ***/
+
+/*@font-face {
+  font-family: 'HelveticaNeueLTStd-Md';
+  src: url('/common/css/fonts/HelveticaNeueLTStd-Md/font.woff2') format('woff2'), url('/common/css/fonts/HelveticaNeueLTStd-Md/font.woff') format('woff');
+}*/
+
+@font-face {
+  font-family: 'BankofIrelandSerif-Regular';
+  src: url('/common/fonts/BankofIrelandSerif-Rg.woff') format('woff'),
+  url('/common/fonts/BankofIrelandSerif-Rg.woff2') format('woff2'),
+  url('/common/fonts/BankofIrelandSerif-Rg.eot') format('eot');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BankofIrelandSerif-Bold';
+  src: url('/common/fonts/BankofIrelandSerif-Bd.woff') format('woff'),
+  url('/common/fonts/BankofIrelandSerif-Bd.woff2') format('woff2'),
+  url('/common/fonts/BankofIrelandSerif-Bd.eot') format('eot');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: $text;
+}
+
+html {
+  font-size: 15px;
+  font-weight: 100;
+  line-height: 1.5rem;
+}
+
+strong,
+.bold {
+  font-weight: 700;
+}
+
+.spaced {
+  letter-spacing: 2.6px;
+}
+
+li  {
+  > a {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+  }
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, ol {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: normal;
+
+  &.blue {
+    color: $blue;
+  }
+
+  &.white {
+    color: $white;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1rem;
+  color: $text;
+}
+
+h2, h3, h4, h5, h6,
+.h2, .h3, .h4, .h5 {
+  font-weight: 700;
+}
+
+h1, .h1 {
+  @include font-size(32);
+  margin-bottom: 1.5rem;
+
+  &:not(.sans) {
+    font-family: $BankofIreland-Bold;
+  }
+
+  &.sans {
+    @include font-size(26);
+    font-weight: 600;
+  }
+}
+
+h2, .h2 {
+  @include font-size(24);
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+h3, .h3 {
+  @include font-size(22);
+}
+
+h4, .h4 {
+  @include font-size(20);
+}
+
+h5, .h5 {
+  @include font-size(16);
+}
+
+.pod-title {
+  @include font-size(24);
+}
+
+.fs-13 {
+  @include font-size(13);
+}
+
+@media(min-width: $max-tablet) {
+  h1, .h1 {
+    @include font-size(40);
+
+    &.sans {
+      @include font-size(34);
+    }
+  }
+
+  h2, .h2 {
+    @include font-size(30);
+  }
+
+  h3, .h3 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  h4, .h4 {
+    @include font-size(20);
+  }
+
+  h5, .h5 {
+   @include font-size(18);
+  }
+
+  .pod-title {
+    @include font-size(32);
+  }
+}
+
+.-blue-text {
+  color: $blue;
+}
+
+.-grey-text {
+  color: $text;
+}
+
+.-white-text {
+  color: $white;
+}

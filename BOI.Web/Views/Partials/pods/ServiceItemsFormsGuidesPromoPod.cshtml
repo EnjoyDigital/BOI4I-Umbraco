@@ -1,0 +1,41 @@
+﻿@inherits UmbracoViewPage<ServiceItemsFormsGuidesPromoPodRender>
+@{
+    if (Model == null )
+    {
+        return;
+    }
+
+    if (Model.Pods.NotNullAndAny())
+    {
+    <div class="pod-group">
+        @foreach (var pod in Model.Pods)
+        {
+            switch (pod.ContentType.Alias)
+            {
+                case ServiceLevelItemPodRender.ModelTypeAlias:
+                    var servicePod = pod as ServiceLevelItemPodRender;
+                        <partial src="/Views/Partials/Pods/ServiceLevelItemPod.cshtml" model="@servicePod" />
+                    
+                    break;
+                case FormsAndGuidePodRender.ModelTypeAlias:
+                    var formsAndGuidePod = pod as FormsAndGuidePodRender;
+                        <partial src="/Views/Partials/Pods/FormsAndGuidePod.cshtml" model="@formsAndGuidePod" />
+                    break;
+                case PopularFormsAndGuidePodAction.ModelTypeAlias:
+                    var popularFormsAndGuidePod = pod as PopularFormsAndGuidePodAction;
+
+                    // @Html.Action("popularFormsAndGuidePod", "PodSurface", new { model = popularFormsAndGuidePod })
+                    break;
+                case ChildPagePod.ModelTypeAlias:
+                    var childPagePod = pod as ChildPagePod;
+                    //TODO:THE EXPECTANT PARTIAL HERE DOES NOT EXIST IN SOURCE PROJECT
+                    //     <partial src="/Views/Partials/BlockList/Components/ChildPagePod.cshtml" model="@childPagePod" />
+                    // @Html.Partial(string.Format("~/Views/Partials/BlockList/Components/{0}.cshtml", podAlias), childPagePod)
+                    break;
+                default:
+                    break;
+            }
+        }
+    </div>
+    }
+}

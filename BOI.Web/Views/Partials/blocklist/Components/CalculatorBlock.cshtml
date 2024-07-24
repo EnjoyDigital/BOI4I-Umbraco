@@ -1,0 +1,17 @@
+﻿@inherits UmbracoViewPage<CalculatorBlock>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+
+}
+    <div class="calculator-frame">
+        <div id="calculator-container">@Html.Raw(Model.CalculatorEmbed)</div>
+        <div class="rich-text">
+            @Model.CalculatorFooterText
+        </div>
+    </div>
+    <div class="rich-text">
+        @Model.DisclaimerText
+    </div>

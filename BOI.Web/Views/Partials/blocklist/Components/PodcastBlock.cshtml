@@ -1,0 +1,16 @@
+﻿@inherits UmbracoViewPage<PodcastBlock>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+
+    if (Model.SoundFile != null)
+    {
+        <div class="podcast-block">
+            <audio controls>
+                <source src="@Model.SoundFile.Url()" type="audio/mpeg">
+            </audio>
+        </div>
+    }
+}

@@ -1,0 +1,27 @@
+@inherits UmbracoViewPage<ContactDetailBlock>
+@{
+    if ((Model?.ContactDetailList.NullOrEmpty()).GetValueOrDefault())
+    {
+        return;
+    }
+
+
+
+    foreach (var contactDetail in Model.ContactDetailList.OfType<BlockListItem<ContactDetailItem>>())
+    {
+        var contactDetailItem = (ContactDetailItem)contactDetail.Content;
+        if(contactDetailItem == null)
+        {
+            continue;
+        }
+        <div class="contact-detail-block rich-text">
+                @if (contactDetailItem.ContactIcon != null)
+                {
+                    <img src="@contactDetailItem.ContactIcon.Url()" alt="@contactDetailItem.ContactIcon.GetImageAlternativeText()" class="contact-detail-block__icon" />
+                }
+                @contactDetailItem.ContactDetailCopy
+
+            </div>
+        }
+   
+}

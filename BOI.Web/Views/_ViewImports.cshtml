@@ -13,7 +13,11 @@
 @using BOI.Core.Constants
 @using BOI.Umbraco.Models
 
+@using BOI.Core.Extensions
+@using BOI.Core.Web.Extensions
 
+@using System.Text.RegularExpressions;
+@using Umbraco.Cms.Core.Models.Blocks;
 @using Umbraco.Cms.Web.Common.PublishedModels
 @using Umbraco.Cms.Web.Common.Views
 @using Umbraco.Cms.Core.Models.PublishedContent
@@ -21,3 +25,4 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Smidge
 @inject Smidge.SmidgeHelper SmidgeHelper
+@inject Umbraco.Cms.Core.Strings.IShortStringHelper shortStringHelper;

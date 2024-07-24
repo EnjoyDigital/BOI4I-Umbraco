@@ -1,0 +1,28 @@
+﻿@inherits UmbracoViewPage<ImageBlock>
+@{
+    if( (Model?.Image == null))
+    {
+        return;
+    }
+
+    <div class="image-block">
+        @if (Model.Image != null)
+        {
+            <div class="image-block__image">
+                <img src="@Model.Image.Url()" alt="@Model.Image.GetImageAlternativeText()" />
+
+                @if (!Model.HideChevron)
+                {
+                    <div class="image-block__image-overlay">
+                        <img src="/common/images/icons/chevron-overlay.png" alt="image-overlay" />
+                    </div>
+                }
+            </div>
+        }
+
+        @if (Model.Caption != null)
+        {
+            <p>@Model.Caption</p>
+        }
+    </div>
+}

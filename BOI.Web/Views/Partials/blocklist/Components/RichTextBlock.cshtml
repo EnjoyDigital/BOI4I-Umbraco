@@ -1,0 +1,13 @@
+﻿@model RichTextBlock
+
+@if (Model.RichText != null)
+{
+    <section class="fadeUp">
+        <div class="container">
+            <div class="content">
+                @Html.Raw(Model.RichText)
+            </div>
+        </div>
+    </section>
+}
+

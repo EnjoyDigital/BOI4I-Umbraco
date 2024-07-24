@@ -1,0 +1,54 @@
+﻿@inherits UmbracoViewPage<IChildPageBlock>
+@{
+   
+    if ((Model?.ChildPages.NullOrEmpty()).GetValueOrDefault())
+    {
+        return;
+    }
+
+   
+        <div class="child-page-block">
+            <h3 class="child-page-block__title">@Model.Title</h3>
+
+            <div class="child-page-block-listing">
+                @foreach (var childPage in Model.ChildPages.OfType<BlockListItem<ChildPageItem>>())
+                {
+                    var childPageItem = (ChildPageItem)childPage?.Content;
+                    if(childPageItem == null)
+                    { continue; }
+
+                    <div class="child-page-block-item">
+                        @if (childPageItem.ChildIcon != null)
+                        {
+                            <div class="child-page-block-item__icon-wrapper">
+                                 <img data-object-fit="cover"
+                                    src="@childPageItem.ChildIcon.Url()"
+                                    alt="@childPageItem.ChildIcon.GetImageAlternativeText()" /> 
+
+                                <img src="/common/images/icons/chevron-grey.png" alt="" class="child-page-block-item__chevron" />
+                            </div>
+                        }
+
+                        <div class="child-page-block-item__content">
+                            <h2 class="child-page-block-item__title">
+                                @{
+                                    var title = childPageItem.ChildTitle.ToString().StripHTMLPTags();
+                                }
+                                @Html.Raw(title)
+                            </h2>
+                            <div class="rich-text">
+                                @Html.Raw(childPageItem.ChildSubText)
+                            </div>
+
+                            @if ((childPageItem.CTalink?.Url.HasValue()).GetValueOrDefault())
+                            {
+                                <a href="@childPageItem.CTalink.Url" target="@childPageItem.CTalink.Target" class="button">
+                                    <span>@childPageItem.CTalink.Name</span>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+}

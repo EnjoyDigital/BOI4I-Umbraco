@@ -1,0 +1,266 @@
+.accordion {
+  display: block;
+  margin-top: 16px;
+
+  /* for rich-text spacing purposes */
+  +*:not(.accordion) {
+    margin-top: 40px;
+  }
+
+  &.active {
+
+    >.accordion-heading {
+      background-color: $dark-blue;
+      color: $white;
+
+      .notice {
+        color: $white;
+        border-color: $white;
+      }
+
+      .icon {
+        fill: $white;
+      }
+
+      .toggle {
+        border-color: $white;
+
+        &:before,
+        &:after {
+          background-color: $white;
+        }
+
+        &:before {
+          transform: translate(-50%, -50%) rotate(-90deg);
+        }
+
+        &:after {
+          transform: translate(-50%, -50%) rotate(180deg);
+        }
+      }
+    }
+  }
+}
+
+.accordion-heading {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  padding: 20px 58px 21px 30px;
+  color: $text;
+  background-color: $white;
+  font-size: 15px;
+  line-height: 23px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  .notice {
+    font-size: 0.8em;
+    line-height: 1.35;
+    color: $blue;
+    padding: 4px 6px;
+    border: 1px solid $blue;
+    border-radius: 5px;
+    margin-left: 8px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .icon {
+    transform: translateY(6px);
+    display: inline-block;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(6px) scale(1.2);
+    }
+  }
+
+  @include media($small) {
+    padding: 14px 58px 12px 20px;
+    font-size: 16px; 
+    line-height: 24px; 
+  } 
+
+  &:hover,
+  &:focus-visible {
+    background-color: $blue;
+    color: $white;
+
+    .icon {
+        fill: $white;
+    }
+
+    .notice {
+      color: $white;
+      border-color: $white;
+    }
+
+    .toggle {
+      border-color: $white;
+
+      &:before,
+      &:after {
+        background-color: $white;
+      }
+    }
+  }
+
+  .toggle {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    border: 1px solid $blue;
+    top: 50%;
+    right: 25px;
+    transform: translateY(-50%);
+    background-color: transparent; 
+    backface-visibility: hidden; 
+    transition: border-color 0.3s ease;
+
+    @include media($small) {
+      right: 15px;
+    }
+
+    &:before,
+    &:after {
+      content: "";
+      background-color: $blue;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    &:before {
+      height: 16px;
+      width: 1px;
+    }
+
+    &:after { 
+      width: 16px;
+      height: 1px; 
+    }
+  }
+}
+
+.accordion-content {
+  display: none;
+  padding: 25px 30px;
+  background-color: $white;
+
+  @include media($small) {
+    padding: 15px 20px;
+  }
+
+  >* {
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  } 
+}
+
+.accordion-copylink {
+    position: relative;
+
+    button {
+        display: flex;
+        align-items: center;
+        padding: 0;
+
+        svg {
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            margin-right: 7px;
+        }
+    }
+}
+
+.accordion-copylink-alert {
+    position: absolute;
+    bottom: calc(100% + 17px);
+    left: 0;
+    display: flex;
+    align-items: center;
+    color: $white;
+    background-color: $blue;
+    padding: 10px 13px;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 10px;
+        border: 10px solid transparent;
+        border-top: 8px solid $blue;
+        border-bottom: 0;
+    }
+
+    svg {
+        flex-shrink: 0;
+        width: 18px;
+        height: 18px;
+        margin-right: 7px;
+    }
+}
+
+/* Accordions within accordions */
+
+// .accordion-content > .accordion {
+//   &.active {
+//     .toggle {
+//       &:before,
+//       &:after {
+//         background-color: $dark-blue 
+//       }
+//     }
+//   }
+
+//   .accordion-heading {
+//     background-color: transparent !important; /* override parent background colour */
+//     color: $white;
+//     border: 1px solid $dark-blue; 
+//   }
+// }
+
+/* Background-color variant */
+.results-area,
+.criteria-category,
+.accordion-content {
+    .accordion:not(.active) {
+        .accordion-heading:not(:hover):not(:focus-visible) {
+            background-color: $light-grey;
+        }
+    }
+
+    .accordion-content {
+        background-color: $light-grey;
+    }
+}
+
+.results-area,
+.criteria-category {
+  .accordion-content > {
+    .accordion:not(.active) {
+      .accordion-heading:not(:hover):not(:focus-visible){
+        background-color: $white;
+      }
+    }
+
+    .accordion {
+      .accordion-content {
+        background-color: $white;
+      }
+    }
+  }
+}

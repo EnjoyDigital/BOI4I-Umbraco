@@ -1,0 +1,44 @@
+﻿@inherits UmbracoViewPage<IImageGalleryBlock>
+@{
+    if( (Model?.Gallery.NullOrEmpty()).GetValueOrDefault())
+    {
+        return;
+    }
+
+    var firstImage = Model.Gallery.OfType<BlockListItem<ImageBlock>>().First();
+    if(firstImage == null)
+    {
+        return;
+    }
+    var firstImageBlock = (ImageBlock)firstImage.Content;
+    if (firstImageBlock == null)
+    {
+        return;
+    }
+    <div class="image-gallery-block">
+            <div class="image-gallery-block-copy">
+                <span class="video-block-copy__title">@Model.Title</span>
+                <p class="js-image-gallery-caption">@firstImageBlock.Caption</p>
+            </div>
+
+            <div class="image-gallery-slider-wrapper">
+                <div class="image-gallery-slider">
+                    @foreach (var image in Model.Gallery.OfType<BlockListItem<ImageBlock>>())
+                    {
+                        var imageBlock = (ImageBlock)image.Content;
+
+                        if (imageBlock?.Image != null)
+                        {
+                            <img data-object-fit="cover"
+                                 data-caption="@imageBlock.Caption"
+                                 src="@imageBlock.Image.Url()"
+                                 alt="@imageBlock.Image.GetImageAlternativeText()" />
+                        }
+                    }
+                </div>
+
+                <div class="image-gallery-arrows-wrapper"></div>
+            </div>
+        </div>
+    
+}

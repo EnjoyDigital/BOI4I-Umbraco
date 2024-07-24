@@ -1,0 +1,331 @@
+legend {
+  margin-bottom: 1.5rem;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+
+  &.hidden {
+    height: 0 !important;
+    width: 0 !important;
+    font-size: 0 !important; 
+    margin: 0 !important; // override custom styles
+  }
+}
+
+button {
+  border: none;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+
+  @include placeholder-styles() {
+    color: rgba(0,0,0,0.5);
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  &[type=radio],
+  &[type=checkbox] {
+    height: auto;
+  }
+
+  &[type=submit] {
+    width: auto;
+    border: none;
+  }
+}
+
+input[type=text],
+textarea {
+  border: 1px solid transparent;
+  background-color: $light-grey;
+  font-size: 16px;
+  line-height: 22px;
+  padding: 12px 40px 12px 17px;
+  transition: border-color 0.25s ease, border-width 0.25s ease background-color 0.25s ease;
+
+  &:hover:not(:focus):not(.input-validation-error) {
+    border-color: $grey-2;
+  }
+
+  &:focus {
+    border-color: $blue;
+    color: $blue;
+
+    @include placeholder-styles() {
+      color: $blue;
+      opacity: 0.5;
+    }
+  }
+
+  &.input-validation-error,
+  &.valid {
+    background-repeat: no-repeat;
+    background-position: right 23px top 17px;
+  }
+
+  &.input-validation-error {
+    border-width: 2px;
+    border-color: $red;
+    background-image: url(/common/images/icons/sprite-icon-cross-red.svg);
+    background-size: 12px;
+  }
+
+  &.valid {
+    background-image: url(/common/images/icons/sprite-icon-checkbox-tick-blue.svg);
+    background-size: 15px 11px;
+  }
+}
+
+textarea {
+  width: 100%;
+  min-height: 168px;
+  resize: none;
+}
+
+.input-wrap {
+  position: relative;
+}
+
+select {
+  width: 100%;
+}
+
+select {
+    appearance: none;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    padding: 12px 50px 12px 17px;
+    background-color: $light-grey;
+    border: 1px solid transparent;
+    margin: 0;
+    outline: none;
+    transition: border-color 0.25s ease, background-color 0.25s ease;
+
+    &::-ms-expand {
+        display: none;
+    }
+
+    &:hover {
+        border-color: $grey-2;
+    }
+
+    &:focus-within {
+        color: white;
+        background-color: blue;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    &:not([multiple]) {
+        background-image: linear-gradient(
+            45deg,
+            transparent 27%,
+            $blue 27%,
+            $blue 34%,
+            transparent 34%
+          ),
+          linear-gradient(
+            -45deg,
+            transparent 27%,
+            $blue 27%,
+            $blue 34%,
+            transparent 34%
+          );
+        background-size: 18px 12px;
+        background-position: right 22px center, right 22px center;
+        background-repeat: no-repeat;
+
+        &:focus-within {
+          background-color: blue;
+          background-image: linear-gradient(
+              45deg,
+              transparent 66%,
+              $white 66%,
+              $white 73%,
+              transparent 73%
+            ),
+            linear-gradient(
+              -45deg,
+              transparent 66%,
+              $white 66%,
+              $white 73%,
+              transparent 73%
+            );          
+        }
+
+        &:disabled {
+          background-image: linear-gradient(
+              45deg,
+              transparent 66%,
+              $grey-5 66%,
+              $grey-5 73%,
+              transparent 73%
+            ),
+            linear-gradient(
+              -45deg,
+              transparent 66%,
+              $grey-5 66%,
+              $grey-5 73%,
+              transparent 73%
+            );
+        }
+    }
+
+    select[multiple] {
+        padding-right: 17px;
+
+        option {
+            white-space: normal;
+        }
+    }
+
+    option {
+      font-size: 16px;
+      line-height: 20px;
+      background-color: $light-grey;
+      color: $black;
+
+      &:hover {
+        background-color: $grey;
+        box-shadow: 0 0 10px 100px $black inset;
+      }
+
+      &:checked {
+        background-color: $grey-2;
+      }
+    }
+}
+
+input[type=radio],
+input[type=checkbox] {
+  position: absolute;
+  left: -9999px;
+}
+
+.radio-wrapper,
+.checkbox-wrapper {
+  label {
+    @include font-size(13);
+    position: relative;
+    padding-left: 32px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    user-select: none; 
+  }
+
+  // Inline styles
+  &.inline {
+    label {
+      display: inline-block;
+      margin-right: 30px;
+    }
+  } 
+}
+
+.radio-wrapper {
+  label {
+    &:before {
+      content: '';
+      position: absolute;
+      width: 24px;  
+      height: 24px; 
+      top: -2px;
+      left: 0;
+      background-color: $white;
+      border-radius: 100%;
+      border: 6px solid $white;
+      box-shadow: 0 0 0 1px $grey-8;
+      box-sizing: border-box;
+      transition: background-color 0.2s ease;
+    }
+  }
+
+  input[type=radio]:focus-visible + label,
+  input[type=radio]:focus-visible + input + label {
+      outline: 2px solid $black;
+      outline-offset: 2px;
+  }
+
+  input[type=radio]:checked + label,
+  input[type=radio]:checked + input + label {
+    &:before {
+      background-color: $blue;
+    }
+  }
+}
+
+.checkbox-wrapper {
+    label {
+        &:before {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            top: -2px;
+            left: 0;
+            background-color: $white;
+            border: 1px solid $grey-8;
+            box-sizing: border-box;
+            background-size: 13px auto;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    }
+
+    input[type=checkbox]:focus-visible + label,
+    input[type=checkbox]:focus-visible + input + label {
+        outline: 2px solid $black;
+        outline-offset: 2px;
+    }
+
+    input[type=checkbox]:checked + label,
+    input[type=checkbox]:checked + input + label {
+        &:before {
+            background-image: url(/common/images/icons/sprite-icon-checkbox-tick-blue.svg);
+        }
+    }
+}
+
+.field-validation-error {
+  @include font-size(13);
+  display: block;
+  margin-top: 10px;
+  padding-left: 18px;
+  color: $red;
+  background-image: url(/common/images/icons/sprite-icon-alert-red.svg);
+  background-repeat: no-repeat;
+  background-position: left top 4px;
+  background-size: 12px;
+}
+
+@media(min-width:$min-desktop) {
+  .umbraco-forms-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .umbraco-forms-field {
+      width: 48%;
+    }
+
+    .multiplechoice, .radiobuttons, .singlechoice, .dataconsent {
+      width: 100%;
+    }
+  }
+}

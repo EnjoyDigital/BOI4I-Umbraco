@@ -1,0 +1,15 @@
+﻿@inherits UmbracoViewPage<IFormBlock>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+
+}
+
+@if (Model.Form != null)
+{
+    <div class="form pod">
+        @await Umbraco.RenderMacroAsync("renderUmbracoForm", new { FormGuid = Model.Form,  ExcludeScripts = "0" })
+    </div>
+}
