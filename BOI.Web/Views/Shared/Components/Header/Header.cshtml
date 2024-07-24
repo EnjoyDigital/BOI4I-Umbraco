@@ -74,7 +74,7 @@
                                             {
                                                 <span class="submenu-listing__heading">@child.GetTitleOrName()</span>
                                             }
-                                            @ChildMegaNav(child)
+                                            <partial name="ChildMegaNavItem" model="@child"/>
                                         </div>
                                     }
                                 </div>
@@ -134,23 +134,3 @@
 
     </div>
 </header>
-
-@functions {
-    async Task ChildMegaNav(IMeganavItem theChild)
-    {
-        if (theChild.Children.Any())
-        {
-            <ul>
-                @foreach (var child in theChild.Children)
-                {
-
-                    <li class="submenu-item">
-                        <a href="@child.Url" title="@child.Url" @Html.Raw(child.Url == Model.Content.Url() ? "aria-current=\"page\"" : string.Empty)>@child.GetTitleOrName()</a>
-
-                        @ChildMegaNav(child)
-                    </li>
-                }
-            </ul>
-        }
-    }
-}
