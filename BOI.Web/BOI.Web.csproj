@@ -493,7 +493,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="JonSkeet.MiscUtil" Version="0.2.0" />
 		<PackageReference Include="Our.Umbraco.Meganav" Version="4.1.0" />
 		<PackageReference Include="Umbraco.Cms" Version="13.4.1" />
 	</ItemGroup>
