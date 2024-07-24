@@ -23,12 +23,10 @@ namespace BOI.Core.Search.Factory
 
             var settings = new ConnectionSettings(searchUri)
                 .BasicAuthentication(esSettings.EsUsername, esSettings.EsPassword)
-                .DefaultMappingFor<WebContent>(i => i.IndexName(esSettings.WebContentEsIndexAlias))
+                .DefaultMappingFor<WebContent>(i => i.IndexName(esSettings.WebContentEsIndexAlias));
 
                 //TODO: PB TO REPLACE WITH SOLICITOR
-                //.DefaultMappingFor<Casualty>(m => m.IndexName(esSettings.CasualtyEsIndexAlias))
-                
-               ;
+                //.DefaultMappingFor<Casualty>(m => m.IndexName(esSettings.CasualtyEsIndexAlias));
 
             if (esSettings.EsEnableDebugMode)
             {

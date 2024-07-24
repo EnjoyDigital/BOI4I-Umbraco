@@ -1,5 +1,4 @@
 using BOI.Core.Web.Extensions;
-using BOI.Core.Search.Extensions;
 
 namespace BOI.Web
 {

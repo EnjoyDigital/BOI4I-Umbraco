@@ -1,4 +1,6 @@
-﻿using BOI.Core.Search.Services;
+﻿using BOI.Core.Search.Models.ElasticSearch;
+using BOI.Core.Search.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Models.PublishedContent;
@@ -15,19 +17,24 @@ namespace BOI.Core.Search.NotificationHandlers
         private readonly ILogger<ContentPublishedNotificationHandler> logger;
         private readonly IUmbracoContextFactory umbracoContextFactory;
         private readonly IndexingService indexingService;
+        private readonly IConfiguration configuration;
 
         public ContentPublishedNotificationHandler(ILogger<ContentPublishedNotificationHandler> logger, IUmbracoContextFactory umbracoContextFactory,
-            IndexingService indexingService)
+            IndexingService indexingService, IConfiguration configuration)
         {
             this.logger = logger;
             this.umbracoContextFactory = umbracoContextFactory;
             this.indexingService = indexingService;
+            this.configuration = configuration;
         }
+
+        private ElasticSettings EsIndexes => new(configuration);
+
 
         public void Handle(ContentPublishedNotification notification)
         {
-            logger.LogInformation("ContentServicePublished event");
-            var indexAlias = indexingService.WebContentIndexAlias;
+            logger.LogInformation("ContentServicePublished event called");
+            var indexAlias = EsIndexes.WebContentEsIndexAlias;
             var indexExists = indexingService.IndexExists(indexAlias);
 
             foreach (var c in notification.PublishedEntities)

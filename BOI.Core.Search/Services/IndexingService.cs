@@ -13,13 +13,14 @@ using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Routing;
 using Umbraco.Extensions;
 using BOI.Core.Search.Queries.SQL;
+using BOI.Core.Search.Models.ElasticSearch;
 
 namespace BOI.Core.Search.Services
 {
     public interface IIndexingService
     {
-        string WebContentIndexAlias { get; }
-        string MediaRequestLogIndexAlias { get; }
+        //string WebContentIndexAlias { get; }
+        //string MediaRequestLogIndexAlias { get; }
 
         void CheckAndCreateIndex();
 
@@ -61,12 +62,13 @@ namespace BOI.Core.Search.Services
             this.publishedUrlProvider = publishedUrlProvider;
             this.getAllMediaLogs = getAllMediaLogs;
         }
+        private ElasticSettings EsIndexes => new(config);
 
-        public string WebContentIndexAlias => config[ConfigurationConstants.WebcontentIndexAliasKey];
+        //public string WebContentIndexAlias => config[ConfigurationConstants.WebcontentIndexAliasKey];
 
-        public string SolicitorsIndexAlias => config[ConfigurationConstants.SolicitorIndexAliasKey];
+        //public string SolicitorsIndexAlias => config[ConfigurationConstants.SolicitorIndexAliasKey];
 
-        public string MediaRequestLogIndexAlias => config[ConfigurationConstants.MediaLogIndexAlias];
+        //public string MediaRequestLogIndexAlias => config[ConfigurationConstants.MediaLogIndexAlias];
         /// <summary>
         /// Creates a new index suffixed with todays date. Uses the bulk all feature of Elasticsearch to index batches of Solicitors. 
         /// It then swaps the Solicitor alias used in queries to point the new index.
@@ -75,8 +77,8 @@ namespace BOI.Core.Search.Services
         /// 
         public void IndexSolicitors(IEnumerable<Solicitor> solicitors)
         {
-            var indexName = SolicitorsIndexAlias;
-            var indexAlias = string.Format("{0}{1}", SolicitorsIndexAlias, "_index");
+            var indexName = EsIndexes.SolicitorEsIndexAlias;
+            var indexAlias = string.Format("{0}{1}", EsIndexes.SolicitorEsIndexAlias, "_index");
 
             var indexExists = client.Indices.Exists(indexAlias).Exists;
 
@@ -125,7 +127,7 @@ namespace BOI.Core.Search.Services
 
             if (!indexAlias.HasValue())
             {
-                indexAlias = WebContentIndexAlias;
+                indexAlias = EsIndexes.WebContentEsIndexAlias;
             }
 
             logger.LogInformation(string.Format("GetIndexName - {0}-{1}:yyyy.MM.dd", indexAlias, DateTime.UtcNow));
@@ -136,7 +138,7 @@ namespace BOI.Core.Search.Services
 
         public void CheckAndCreateIndex()
         {
-            var indexAlias = config["WebContentEsIndexAlias"];
+            var indexAlias = EsIndexes.WebContentEsIndexAlias;
             var indexExists = client.Indices.Exists(indexAlias).Exists;
 
             logger.LogInformation("Check and create index");
@@ -193,7 +195,7 @@ namespace BOI.Core.Search.Services
                 }
             }
 
-            var mediLogIndexAlias = MediaRequestLogIndexAlias;
+            var mediLogIndexAlias = EsIndexes.MediaEsIndexAlias;
             if (mediLogIndexAlias.HasValue())
             {
                 var mediLogIndexExists = client.Indices.Exists(mediLogIndexAlias).Exists;
@@ -252,7 +254,7 @@ namespace BOI.Core.Search.Services
                     continue;
                 }
 
-                var index = client.Index(item, i => i.Index(MediaRequestLogIndexAlias));
+                var index = client.Index(item, i => i.Index(EsIndexes.MediaEsIndexAlias));
                 if (!index.IsValid)
                 {
                     logger.LogWarning("media request log not indexed");
@@ -288,13 +290,13 @@ namespace BOI.Core.Search.Services
                 {
                     continue;
                 }
-                var docCheck = client.DocumentExists<WebContent>(item.Id, d => d.Index(WebContentIndexAlias));
+                var docCheck = client.DocumentExists<WebContent>(item.Id, d => d.Index(EsIndexes.WebContentEsIndexAlias));
 
 
 
                 if (!docCheck.Exists)
                 {
-                    var index = client.Index(item, i => i.Index(WebContentIndexAlias));
+                    var index = client.Index(item, i => i.Index(EsIndexes.WebContentEsIndexAlias));
                     if (!index.IsValid)
                     {
 
@@ -305,7 +307,7 @@ namespace BOI.Core.Search.Services
                 }
                 else
                 {
-                    var update = client.Update<WebContent>(item.Id, u => u.Doc(item).Index(WebContentIndexAlias));
+                    var update = client.Update<WebContent>(item.Id, u => u.Doc(item).Index(EsIndexes.WebContentEsIndexAlias));
                     if (!update.IsValid)
                     {
                         logger.LogWarning("Content not indexed");
@@ -326,7 +328,7 @@ namespace BOI.Core.Search.Services
         {
             logger.LogInformation("ReIndexWebContent");
 
-            var indexAlias = WebContentIndexAlias;
+            var indexAlias = EsIndexes.WebContentEsIndexAlias;
             var indexName = GetIndexName();
 
             if (createNewIndex)
@@ -390,12 +392,12 @@ namespace BOI.Core.Search.Services
         {
             foreach (var id in indexItemIds)
             {
-                var docCheck = client.DocumentExists<WebContent>(id, d => d.Index(WebContentIndexAlias));
+                var docCheck = client.DocumentExists<WebContent>(id, d => d.Index(EsIndexes.WebContentEsIndexAlias));
 
                 if (!docCheck.Exists)
                 { continue; }
 
-                var delete = client.Delete<WebContent>(id, d => d.Index(WebContentIndexAlias));
+                var delete = client.Delete<WebContent>(id, d => d.Index(EsIndexes.WebContentEsIndexAlias));
 
             }
 
@@ -731,7 +733,7 @@ namespace BOI.Core.Search.Services
         {
             if (!indexAlias.HasValue())
             {
-                indexAlias = WebContentIndexAlias;
+                indexAlias = EsIndexes.WebContentEsIndexAlias;
             }
 
             return client.Indices.Exists(indexAlias).Exists; ;
