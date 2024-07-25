@@ -71,6 +71,8 @@ namespace BOI.Web
                     u.UseBackOfficeEndpoints();
                     u.UseWebsiteEndpoints();
                 });
+
+            app.UseStaticFiles();
         }
     }
 }

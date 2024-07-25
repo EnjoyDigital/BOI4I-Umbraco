@@ -1,7 +1,7 @@
 ﻿@inherits UmbracoViewPage<FormsAndGuidePodRender>
 
 @{
-    if (( Model?.Documents.NotNullAndAny()).GetValueOrDefault())
+    if (( Model?.Documents.NullOrEmpty()).GetValueOrDefault())
     {
         return;
     }

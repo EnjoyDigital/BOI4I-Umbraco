@@ -1,0 +1,34 @@
+﻿@inherits UmbracoViewPage<IEnumerable<IPublishedContent>>
+@{
+    
+
+    if (Model.NullOrEmpty())
+    {
+        return;
+    }
+
+    foreach (var pod in Model)
+    {
+        string podAlias = pod.ContentType.Alias;
+        string viewPath = "";
+
+        if (podAlias.EndsWith("Pod", StringComparison.InvariantCultureIgnoreCase))
+        {
+            podAlias = podAlias.Replace("Pod", "Block");
+            viewPath = string.Concat(viewPath, "BlockList/Components/");
+        }
+        if (podAlias.EndsWith("Render", StringComparison.InvariantCultureIgnoreCase))
+        {
+            podAlias = podAlias.TrimEnd("Render");
+            viewPath = string.Concat(viewPath, "pods/");
+        }
+        if (podAlias.EndsWith("Action", StringComparison.InvariantCultureIgnoreCase))
+        {
+            @await Component.InvokeAsync("Pods",new{publishedContent= pod})
+            continue;
+        }
+        var fullViewPath = string.Format("{0}{1}", viewPath, podAlias);
+
+        <partial name="@fullViewPath" model="pod" />
+    }
+}

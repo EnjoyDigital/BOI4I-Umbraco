@@ -1,13 +1,10 @@
 ﻿@model RichTextBlock
 
-@if (Model.RichText != null)
+@if (Model.HasValue("richText"))
 {
-    <section class="fadeUp">
-        <div class="container">
-            <div class="content">
+    <div class="rich-text">
                 @Html.Raw(Model.RichText)
-            </div>
-        </div>
-    </section>
+    </div>
+      
 }
 

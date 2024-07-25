@@ -11,7 +11,7 @@
 
     foreach (var documentLink in Model.DocumentsLinks)
     {
-        <partial src="@string.Format(" ~ /Views/Partials/BlockList/Components/{0}.cshtml", documentLink.Content.ContentType.Alias)" model="@documentLink.Content" />
+        <partial name="@string.Format(" ~ /Views/Partials/BlockList/Components/{0}.cshtml", documentLink.Content.ContentType.Alias)" model="@documentLink.Content" />
         
     }
     

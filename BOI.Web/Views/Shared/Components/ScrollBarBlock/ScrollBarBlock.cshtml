@@ -1,6 +1,4 @@
-﻿@using ContentModels = BOI.Umbraco.Models;
-
-@model BodyViewModel
+﻿@model BodyViewModel
 
 @if ((Model.SiteRoot?.Notifications.NotNullAndAny()).GetValueOrDefault())
 {
@@ -8,7 +6,7 @@
         <div class="scroll-bar__wrapper">
             @foreach (var notification in Model.SiteRoot.Notifications)
             {
-                var notificationContent = (ContentModels.RichTextBlock)notification.Content;
+                var notificationContent = (RichTextBlock)notification.Content;
 
                 <div class="scroll-bar__inner">
                     <img alt='Alert Icon' src="~/common/images/icons/icon-alert-teal.svg">

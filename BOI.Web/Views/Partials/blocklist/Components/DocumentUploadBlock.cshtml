@@ -1,6 +1,6 @@
 ﻿@inherits UmbracoViewPage<IDocumentUploadBlock>
 @{
-    if ((Model?.Documents.NotNullAndAny()).GetValueOrDefault())
+    if ((Model?.Documents.NullOrEmpty()).GetValueOrDefault())
     {
         return;
     }
