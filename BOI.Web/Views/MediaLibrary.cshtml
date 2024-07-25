@@ -1,0 +1,88 @@
+﻿@inherits UmbracoViewPage<MediaLibrary>
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+
+
+    var videos = Model.Children<Video>().OrderByDescending(o => o.ArticleDate).Take(3).ToList();
+    var videoCount = Model.Children<Video>().Count();
+
+    var articles = Model.Children<Article>().OrderByDescending(o => o.ArticleDate).Take(3).ToList();
+    var articleCount = Model.Children<Article>().Count();
+
+    var podcasts = Model.Children<Podcast>().OrderByDescending(o => o.ArticleDate).Take(3).ToList();
+    var podcastCount = Model.Children<Podcast>().Count();
+
+}
+
+<partial name="~/Views/Shared/Hero.cshtml" />
+<partial name="~/Views/Shared/Breadcrumb.cshtml" />
+
+@if (videos.NotNullAndAny())
+{
+
+    <section class="container media-group">
+        <div class="media-description">
+            <h3 class="-blue-text">Videos</h3>
+            <p>@videoCount Videos</p>
+        </div>
+        <div class="group-container video-container">
+            <partial name="~/Views/Partials/MediaLibrary/Videos.cshtml" model=@videos />
+        </div>
+        <div class="load-more">
+            <button class="button @(videoCount <= 3 ? "hidden" : string.Empty)" id="more-videos" data-listing="1" data-count="@videoCount" data-container=".video-container">View more videos</button>
+        </div>
+    </section>
+}
+
+@if (articles.NotNullAndAny())
+{
+    <section class="container media-group">
+        <div class="media-description">
+            <h3 class="-blue-text">Articles</h3>
+            <p>@articleCount Articles</p>
+        </div>
+        <div class="group-container article-container">
+            <partial name="~/Views/Partials/MediaLibrary/Articles.cshtml" model=@articles />
+        </div>
+        <div class="load-more">
+            <button class="button @(articleCount <= 3 ? "hidden" : string.Empty)" id="more-articles" data-listing="1" data-count="@articleCount" data-container=".article-container">View more articles</button>
+        </div>
+    </section>
+}
+
+@if (Model.Documents.NotNullAndAny())
+{
+    <section class="container media-group">
+        <div class="media-description">
+            <h3 class="-blue-text">PDF Documents</h3>
+            <p>@Model.Documents.Count() PDF Documents</p>
+        </div>
+        <div class="group-container documents-container">
+            <partial name="~/Views/Partials/MediaLibrary/Documents.cshtml" model=@Model.Documents.Take(3) />
+        </div>
+        <div class="load-more">
+            <button class="button @(Model.Documents.Count() <= 3 ? "hidden" : string.Empty)" id="more-documents" data-listing="1" data-count="@Model.Documents.Count()" data-container=".documents-container">View more PDF Documents</button>
+        </div>
+    </section>
+}
+
+@if (podcasts.NotNullAndAny())
+{
+    <section class="container media-group">
+        <div class="media-description">
+            <h3 class="-blue-text">Podcasts</h3>
+            <p>@podcastCount Podcasts</p>
+        </div>
+        <div class="group-container podcast-container">
+            <partial name="~/Views/Partials/MediaLibrary/Podcasts.cshtml" Model=@podcasts />
+        </div>
+        <div class="load-more">
+            <button class="button @(podcastCount <= 3 ? "hidden" : string.Empty)" id="more-podcasts" data-listing="1" data-count="@podcastCount" data-container=".podcast-container">View more podcasts</button>
+        </div>
+    </section>
+}
+
+@section Scripts {
+    <script type="text/javascript" src="/common/scripts/bundles/mediaLibrary.bundle.js" asp-append-version="true"></script>
+}
+

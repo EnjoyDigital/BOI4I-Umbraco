@@ -1,0 +1,21 @@
+﻿@model IEnumerable<MediaDocumentUpload>
+@foreach (var document in Model)
+{
+    <div class="document media-listing">
+        <div class="listing-text">
+            <div>
+                <svg class="[ icon icon-pdf-document-icon -blue ]" aria-hidden="true">
+                    <use xlink:href="#sprite-icon-pdf-document-icon"></use>
+                </svg>
+                <h5 class="-blue-text">@document.Title</h5>
+                @if (!string.IsNullOrWhiteSpace(document.Description))
+                {
+                    <p>@document.Description</p>
+                }
+            </div>
+            <div>
+                <a href="@document.Document.Url()" target="_blank" download>Download</a>
+            </div>
+        </div>
+    </div>
+}

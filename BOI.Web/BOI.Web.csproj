@@ -5,6 +5,12 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="Views\MacroPartials\**" />
+	  <Content Remove="Views\MacroPartials\**" />
+	  <EmbeddedResource Remove="Views\MacroPartials\**" />
+	  <None Remove="Views\MacroPartials\**" />
+	</ItemGroup>
+	<ItemGroup>
 	  <Content Remove="wwwroot\common\css\base\base.scss" />
 	  <Content Remove="wwwroot\common\css\base\reset.scss" />
 	  <Content Remove="wwwroot\common\css\base\typography.scss" />
