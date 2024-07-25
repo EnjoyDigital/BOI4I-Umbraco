@@ -33,8 +33,12 @@ namespace BankOfIreland.Intermediaries.Core.Web.Controllers.Hijacks
             this.publishedValueFallback = publishedValueFallback;
         }
 
-        public async Task<IActionResult> Index(BdmFinderSearch model)
+        [NonAction]
+        public sealed override IActionResult Index() => throw new NotImplementedException();
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
+            var model = new BdmFinderSearch();
+            await TryUpdateModelAsync(model);
 
             if (model.Postcode.HasValue() || model.FCANumber.HasValue())
             {

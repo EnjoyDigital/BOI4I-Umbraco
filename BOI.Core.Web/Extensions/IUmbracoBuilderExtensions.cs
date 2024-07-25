@@ -24,6 +24,7 @@ using BOI.Core.Infrastructure;
 using Lucene.Net.Search;
 using BOI.Core.Search.NotificationHandlers;
 using BOI.Core.Search.Queries.SQL;
+using BOI.Core.Search.Queries.Elastic;
 
 
 namespace BOI.Core.Web.Extensions
@@ -105,6 +106,7 @@ namespace BOI.Core.Web.Extensions
             builder.Services.AddScoped<ICacheTagHelperService, CacheTagHelperService>();
             builder.Services.AddMemoryCache();
             builder.Services.AddScoped<IOutputCacheService, OutputCacheService>();
+            builder.Services.AddScoped<IBdmFinderSearcher, BdmFinderSearcher>();
             return builder;
         }
 

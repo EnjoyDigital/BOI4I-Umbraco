@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Video>
+@foreach (var video in Model)
+{
+    <div class="video media-listing">
+        @if (video.ListingImage != null)
+        {
+            <div class="listing-image">
+                <picture>
+                    <img src="@video.ListingImage.GetCropUrl("ListingImage")" alt="@video.ListingImage.GetImageAlternativeText(video.Name)"/>
+                </picture>
+            </div>
+        }
+        <div class="listing-text">
+            <div>
+                <h5 class="-blue-text">@video.Name</h5>
+                @if (!string.IsNullOrWhiteSpace(video.ListingSummary))
+                {
+                    <p>@video.ListingSummary</p>
+                }
+            </div>
+            <div>
+                <a href="@video.Url()">Watch Video</a>
+            </div>
+        </div>
+    </div>
+}

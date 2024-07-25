@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Http.Extensions
+@inherits UmbracoViewPage<IArticleDetailsMixin>
+@{
+    var currentUrl = ViewContext.HttpContext.Request.GetDisplayUrl();
+}
+
+    <div class="container">
+        <section class="social-container">
+            <a href="@Model.Parent.Url()" class="media-library-back-button">
+                <p class="-blue-text">
+                    Back to Media Library
+                </p>
+            </a>
+            @if (!Model.HideShareIcons)
+            {
+            <div class="article-social__share">
+                <div class="article-social__wrapper">
+                    <span>Share </span>
+                    <ul>
+                        <li>
+                            <a target="_blank" href="https://twitter.com/intent/tweet?url=@currentUrl&amp;text=@Model.Name&amp;hashtags=BOI">
+                                <svg class="desktop [ icon icon-twitter ]">
+                                    <title>Share on Twitter</title>
+                                    <use xlink:href="#sprite-icon-twitter"></use>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@currentUrl&quote=@Model.Name">
+                                <svg class="desktop [ icon icon-facebook ]">
+                                    <title>Share on Facebook</title>
+                                    <use xlink:href="#sprite-icon-facebook"></use>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=@currentUrl&title=@Model.Name">
+                                <svg class="desktop [ icon icon-linkedin ]">
+                                    <title>Share on LinkedIn</title>
+                                    <use xlink:href="#sprite-icon-linkedin"></use>
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="mailto:?subject=@Model.Name&body=@currentUrl">
+                                <svg class="desktop [ icon icon-email ]">
+                                    <title>Share via email</title>
+                                    <use xlink:href="#sprite-icon-email"></use>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            }           
+        </section>
+    </div>
+
+
+
+

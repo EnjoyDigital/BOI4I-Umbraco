@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Podcast>
+@foreach (var podcast in Model)
+{
+    <div class="podcast media-listing">
+        @if (podcast.ListingImage != null)
+        {
+            <div class="listing-image">
+                <picture>
+                    <img src="@podcast.ListingImage.GetCropUrl("ListingImage")" alt="@podcast.ListingImage.GetImageAlternativeText(podcast.Name)"/>
+                </picture>
+            </div>
+        }
+        <div class="listing-text article-text">
+            <div>
+                <h5 class="-blue-text">@podcast.Name</h5>
+                <p class="article-date">@podcast.FormattedDate</p>
+                @if (!string.IsNullOrWhiteSpace(podcast.ListingSummary))
+                {
+                    <p>@podcast.ListingSummary</p>
+                }
+            </div>
+            <div>
+                <a href="@podcast.Url()">Listen to podcast</a>
+            </div>
+        </div>
+    </div>
+}

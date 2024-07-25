@@ -1,0 +1,39 @@
+﻿@inherits UmbracoViewPage<Article>
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="~/Views/Shared/Hero.cshtml" />
+<partial name="~/Views/Shared/Breadcrumb.cshtml" />
+
+<div class="container">
+    <section class="article-header">
+        <h3 class="-blue-text">
+            @Model.Name
+        </h3>
+        @if (Model.ArticleDate != null)
+        {
+            <div>
+                @Model.FormattedDate
+            </div>
+        }
+    </section>
+</div>
+
+@if (Model.Content != null)
+{
+    @Html.GetBlockListHtml(Model, "content")
+}
+
+<partial name="~/Views/Partials/MediaLibrary/ShareIcons.cshtml" />
+
+@if (Model.Pods != null)
+{
+    <partial name="~/Views/Partials/Pods.cshtml" />
+}
+
+
+@section Scripts {
+    <script type="text/javascript" src="/common/scripts/bundles/content.bundle.js" asp-append-version="true"></script>
+}
+
