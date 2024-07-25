@@ -1,0 +1,26 @@
+﻿@inherits UmbracoViewPage<Error>
+@{
+	Layout = "/Views/Shared/_Layout.cshtml";
+	Context.Response.StatusCode = Model.StatusCode;
+}
+
+<section class="error-container container-chevron-bg-grey">
+	<partial name="~/Views/Shared/Breadcrumb.cshtml" />
+
+	<div class="umb-block-list">
+		<div class="rich-text">
+
+			@if (Model.ErrorContent != null)
+			{
+				@Model.ErrorContent
+			}
+
+			@if (Model.RedirectCta != null)
+			{
+				<a href="@Model.RedirectCta.Url" target="@Model.RedirectCta.Target" title="@Model.RedirectCta.Name" class="button error-redirect-cta">
+					<span>@Model.RedirectCta.Name</span>
+				</a>
+			}
+		</div>
+	</div>
+</section>
