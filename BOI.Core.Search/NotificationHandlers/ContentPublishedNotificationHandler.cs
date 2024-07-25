@@ -45,7 +45,7 @@ namespace BOI.Core.Search.NotificationHandlers
                 {
                     continue;
                 }
-                if (!indexExists && c.ContentType.Alias.Equals(DocTypeConstants.Siteroot,StringComparison.InvariantCultureIgnoreCase))
+                if (!indexExists && c.ContentType.Alias.Equals(DocTypeConstants.Siteroot, StringComparison.InvariantCultureIgnoreCase))
                 {
                     var results = new List<IPublishedContent>();
 
@@ -62,12 +62,8 @@ namespace BOI.Core.Search.NotificationHandlers
                     }
 
                     var documents = results.Select(indexingService.DocBuilder).ToList();
-
-                    //TODO: interface the following and use DI
-                    //As is, object is newed up on every loop
-                    //  var indexingService = new IndexingService(config, esClient);
-
-                    indexingService.ReIndexWebContent(documents.WhereNotNull());
+                    
+                    indexingService.CheckAndCreateIndex(documents.WhereNotNull());
 
                     continue;
                 }
@@ -76,7 +72,7 @@ namespace BOI.Core.Search.NotificationHandlers
 
                 logger.LogInformation("ContentServicePublished Indexing service called to build doc");
                 var doc = indexingService.DocBuilder(content);
-                logger.LogInformation( "ContentServicePublished Indexing service called to index doc");
+                logger.LogInformation("ContentServicePublished Indexing service called to index doc");
                 indexingService.IndexWebContent(doc);
 
             }

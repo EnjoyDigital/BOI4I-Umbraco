@@ -19,7 +19,7 @@ namespace BOI.Core.Search.Services
 {
     public interface IIndexingService
     {
-        void CheckAndCreateIndex();
+        void CheckAndCreateIndex(IEnumerable<WebContent> content);
 
         void DeleteItemsFromIndex(params int[] indexItems);
 
@@ -29,7 +29,7 @@ namespace BOI.Core.Search.Services
         void IndexMediaViewLog(params MediaRequestLog[] mediaRequestLogs);
         void IndexSolicitors(IEnumerable<Solicitor> solicitors);
         void IndexWebContent(params WebContent[] indexItem);
-        void ReIndexWebContent(IEnumerable<WebContent> content, bool createNewIndex = true);
+        void ReIndexWebContent(IEnumerable<WebContent> content);
     }
 
     public class IndexingService : IIndexingService
@@ -128,7 +128,7 @@ namespace BOI.Core.Search.Services
         }
 
 
-        public void CheckAndCreateIndex()
+        public void CheckAndCreateIndex(IEnumerable<WebContent> content)
         {
             var indexAlias = EsIndexes.WebContentEsIndexAlias;
             var indexExists = client.Indices.Exists(indexAlias).Exists;
@@ -181,9 +181,17 @@ namespace BOI.Core.Search.Services
                 {
                     client.Indices.BulkAlias(aliases =>
                     {
-
                         return aliases.Add(a => a.Alias(indexAlias).Index(indexName));
                     });
+                }
+
+                try
+                {
+                    ReIndexWebContent(content);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "media request log index not rebuilt");
                 }
             }
 
@@ -220,6 +228,7 @@ namespace BOI.Core.Search.Services
                             return aliases.Add(a => a.Alias(mediLogIndexAlias).Index(indexName));
                         });
                     }
+
                     try
                     {
                         ReIndexMediaViewLogs(mediLogIndexAlias);
@@ -316,57 +325,24 @@ namespace BOI.Core.Search.Services
         /// <summary>
         /// Used to index web content from the site
         /// </summary>
-        public void ReIndexWebContent(IEnumerable<WebContent> content, bool createNewIndex = true)
+        public void ReIndexWebContent(IEnumerable<WebContent> content)
         {
             logger.LogInformation("ReIndexWebContent");
 
             var indexAlias = EsIndexes.WebContentEsIndexAlias;
             var indexName = GetIndexName();
 
-            if (createNewIndex)
-            {
-                logger.LogInformation("createNewIndex");
+            logger.LogInformation("ReIndexWebContent - index content");
 
-                var createIndexResponse = client.Indices.Create(indexName, c => c.Map<WebContent>(m => m
-                        .AutoMap()
-                        .Properties(ps => ps
-                            .Nested<Tags>(f => f.Name(p => p.Tags))
-                            .Text(t => t.Name(n => n.Content)
-                            //.Analyzer("search")
-                            //.SearchAnalyzer("search")
-                            )
-                        )
-                    )
-                );
-
-                var bulkAllObservable = client.BulkAll(content.RemoveNulls(), b => b
-                    .Index(indexName)
-                    .BackOffTime("30s")
-                    .BackOffRetries(2)
-                    .RefreshOnCompleted(true)
-                    .MaxDegreeOfParallelism(Environment.ProcessorCount)
-                    .Size(10000)
-                )
-                .Wait(TimeSpan.FromMinutes(15), next => { });
-
-            }
-            else
-            {
-                logger.LogInformation("createNewIndex - else");
-
-                var bulkAllObservable = client.BulkAll(content.RemoveNulls(), b => b
-                    .Index(indexName)
-                    .BackOffTime("30s")
-                    .BackOffRetries(2)
-                    .RefreshOnCompleted(true)
-                    .MaxDegreeOfParallelism(Environment.ProcessorCount)
-                    .Size(10000)
-                )
-                .Wait(TimeSpan.FromMinutes(15), next => { });
-
-            }
-
-
+            var bulkAllObservable = client.BulkAll(content.RemoveNulls(), b => b
+                .Index(indexName)
+                .BackOffTime("30s")
+                .BackOffRetries(2)
+                .RefreshOnCompleted(true)
+                .MaxDegreeOfParallelism(Environment.ProcessorCount)
+                .Size(10000)
+            )
+            .Wait(TimeSpan.FromMinutes(15), next => { });
 
             var indexExistsWithAlias = client.Indices.Exists(indexAlias).Exists;
 
