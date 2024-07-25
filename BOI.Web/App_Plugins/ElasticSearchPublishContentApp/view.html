@@ -1,0 +1,21 @@
+﻿<div ng-controller="Enjoy.ElasticSearchPublishController as vm" >
+    <umb-box>
+        <umb-box-header title="Content Indexing" />
+        <umb-box-content>
+            <div ng-show="vm.processing">
+                Indexing content
+            </div>
+            <div ng-show="vm.processingComplete">
+                Indexing complete
+            </div>
+            <div ng-show="vm.indexingFailed">
+                {{vm.errorMessage}}
+            </div>
+
+            <button ng-click="vm.indexItem()" ng-show="!vm.processing" type="button" class="btn">Reindex page</button>
+
+
+            <button ng-click="vm.indexItemAndDescendants()" ng-show="!vm.processing" type="button" class="btn">Reindex page and descendants</button>
+        </umb-box-content>
+    </umb-box>
+</div>

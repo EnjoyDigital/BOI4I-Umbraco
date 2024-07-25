@@ -10,6 +10,7 @@ namespace BOI.Web
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureUmbracoDefaults()
+                .ConfigureLogging(x => x.ClearProviders())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStaticWebAssets();

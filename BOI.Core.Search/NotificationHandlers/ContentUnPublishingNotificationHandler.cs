@@ -1,0 +1,88 @@
+﻿using BOI.Core.Search.Services;
+using Umbraco.Cms.Core.Events;
+using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.Notifications;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.Web;
+using Umbraco.Extensions;
+
+namespace BOI.Core.Search.NotificationHandlers
+{
+    public class ContentUnPublishingNotificationHandler : INotificationHandler<ContentUnpublishingNotification>
+    {
+        private readonly IUmbracoContextFactory umbracoContextFactory;
+        private readonly IIndexingService indexingService;
+        private readonly IContentService contentService;
+        private readonly IVariationContextAccessor variationContextAccessor;
+
+        public ContentUnPublishingNotificationHandler(IUmbracoContextFactory umbracoContextFactory, IIndexingService indexingService,
+            IContentService contentService, IVariationContextAccessor variationContextAccessor)
+        {
+            this.umbracoContextFactory = umbracoContextFactory;
+            this.indexingService = indexingService;
+            this.contentService = contentService;
+            this.variationContextAccessor = variationContextAccessor;
+        }
+
+        public void Handle(ContentUnpublishingNotification notification)
+        {
+            foreach (var c in notification.UnpublishedEntities)
+            {
+                UnpublishFromIndex(c.Id);
+            }
+        }
+
+        private void UnpublishFromIndex(int id)
+        {
+            DeleteDoc(id);
+        }
+
+        private void DeleteDoc(int id)
+        {
+            indexingService.DeleteItemsFromIndex(id);
+
+            var content = GetPublishedContentFromCache(id);
+            if (content != null)
+            {
+                var descendants = content.Descendants(variationContextAccessor).Select(x => x.Id).ToArray();
+                if (descendants.Any())
+                {
+                    indexingService.DeleteItemsFromIndex(descendants);
+                }
+            }
+            else
+            {
+                var contentItem = contentService.GetById(id);
+                var descendantsCount = contentService.CountDescendants(id);
+                const int pageSize = 10000;
+                var pageIndex = 0;
+                var currentPageResultSize = 0;
+                IContent[] descendantContent;
+                do
+                {
+                    descendantContent = contentService.GetPagedDescendants(id, pageIndex, pageSize, out _).ToArray();
+                    currentPageResultSize = descendantContent.Length;
+
+                    if (descendantContent.Length > 0)
+                    {
+                        indexingService.DeleteItemsFromIndex(descendantContent.Select(x => x.Id).ToArray());
+                    }
+
+                } while (currentPageResultSize == pageSize);
+
+
+            }
+        }
+
+        private IPublishedContent GetPublishedContentFromCache(int id)
+        {
+            using (var cref = umbracoContextFactory.EnsureUmbracoContext())
+            {
+
+                return cref.UmbracoContext.Content.GetById(id);
+            }
+        }
+
+    }
+}

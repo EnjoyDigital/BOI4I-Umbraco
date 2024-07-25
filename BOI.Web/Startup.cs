@@ -1,5 +1,4 @@
 using BOI.Core.Web.Extensions;
-using BOI.Core.Search.Extensions;
 
 namespace BOI.Web
 {
@@ -35,12 +34,12 @@ namespace BOI.Web
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
                 .AddWebsite()
-                .AddComposers()
+                .AddCustomUmbracoDataContext()
                 .AddServerRegistrar(_config)
                 .AddCustomServices(_config)
+                .AddDataProtection(_config)
                 .AddCustomNotificationHandlers()
                 .AddCustomContentFinders()
-                .AddCustomWorkFlows()
                 .AddComposers()
                 .RegisterQueryHandlers(_config)
                 .Build();

@@ -13,13 +13,20 @@
 	<ItemGroup>
 		<PackageReference Include="CsvHelper" Version="33.0.1" />
 		<PackageReference Include="DangEasy.Caching.MemoryCache" Version="2.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="8.0.7" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
 		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\BOI.Umbraco.Models\BOI.Umbraco.Models.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Models\Attributes\" />
 	</ItemGroup>
 
 </Project>

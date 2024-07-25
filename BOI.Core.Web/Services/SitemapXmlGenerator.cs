@@ -16,11 +16,13 @@ namespace BOI.Core.Web.Services
     {
         private readonly ICmsService cmsService;
         private readonly IUmbracoContextFactory umbracoContextFactory;
+        private readonly IUmbracoContextAccessor umbracoContextAccessor;
 
-        public SitemapXmlGenerator(ICmsService cmsService, IUmbracoContextFactory umbracoContextFactory)
+        public SitemapXmlGenerator(ICmsService cmsService, IUmbracoContextFactory umbracoContextFactory, IUmbracoContextAccessor umbracoContextAccessor)
         {
             this.cmsService = cmsService;
             this.umbracoContextFactory = umbracoContextFactory;
+            this.umbracoContextAccessor = umbracoContextAccessor;
         }
 
         public List<SitemapXmlItem> GetSitemap(int nodeId, string baseUrl)
@@ -28,11 +30,7 @@ namespace BOI.Core.Web.Services
             using (var umbContextRef = umbracoContextFactory.EnsureUmbracoContext())
             {
                 var sitemapItems = new List<SitemapXmlItem>();
-
-                //var home = cmsService.GetHome(nodeId);
-
                 var home = umbContextRef.UmbracoContext.Content.GetById(nodeId);
-
                 var siteRoot = home.AncestorOrSelf<SiteRoot>();
 
                 sitemapItems.Add(CreateSitemapItem(baseUrl, home, defaultPath: "/"));
