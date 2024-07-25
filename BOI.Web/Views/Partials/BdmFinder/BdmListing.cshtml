@@ -1,0 +1,96 @@
+﻿@using BankOfIreland.Intermediaries.Core.Web.Models.ViewModels
+@inherits UmbracoViewPage<BdmFinderViewModel>
+
+<div class="results-area">
+    <div class="product-table-caption">
+        <span class="h5 product-table-caption__title">Your contact</span>
+        <a class="print-products js-print-products" href="" title="Click to print results">
+            <svg class="[ icon icon-print -blue ]" aria-hidden="true">
+                <use xlink:href="#sprite-icon-print"></use>
+            </svg>
+            <span>Print results</span>
+        </a>
+    </div>
+    <div class="bdm-item-listing">
+        @if (Model.BDM != null)
+        {
+
+        <div class="bdm-item">
+            <div class="bdm-item-detail">
+                <div class="bdm-item-detail__profile-image">
+                    @if (Model.BDM.Image != null)
+                        {
+                    <img src='@Model.BDM.Image.GetCropUrl("BDMImage")' alt="@(Model.BDM.Image.GetImageAlternativeText().IsNullOrWhiteSpace() ? $"{Model.BDM.FullName} profile image" : Model.BDM.Image.GetImageAlternativeText() )" />
+                        }
+                        else
+                        {
+                            //fallback
+                    <img src="/common/images/static-only/bdm-profile-image-1.jpg" alt="@($"{Model.BDM.FullName} profile image ")" />
+                        }
+
+                </div>
+
+                <span class="bdm-item-detail__name">@Model.BDM.Name</span>
+                <span class="bdm-item-detail__role">@Model.BDM.JobTitle</span>
+
+                <div class="bdm-item-detail__contact-info">
+                    <span><strong>Phone:</strong> <a href="tel:@(Model.BDM.ContactNumber)">@(Model.BDM.ContactNumber)</a></span>
+                    <span><strong>Email: </strong> <a href="mailto:@(Model.BDM.Email)">@(Model.BDM.Email)</a></span>
+                </div>
+            </div>
+            @if (Model.BDM.ShortBio().HasValue())
+                {
+            <p class="js-bdm-text" data-short-text="@(Model.BDM.ShortBio())" data-full-text="@(Model.BDM.Bio)" data-toggle="more">@(Model.BDM.ShortBio())</p>
+                }
+        </div>
+
+        }
+        @if (Model.TBDM != null)
+        {
+
+        <div class="bdm-item">
+            <div class="bdm-item-detail">
+                <div class="bdm-item-detail__profile-image">
+                    @if (Model.TBDM.Image != null)
+                        {
+                    <img src='@Model.TBDM.Image.GetCropUrl("BDMImage")' alt="@(Model.TBDM.Image.GetImageAlternativeText().IsNullOrWhiteSpace() ? $"{Model.TBDM.FullName} profile image" : Model.TBDM.Image.GetImageAlternativeText() )" />
+                        }
+                        else
+                        {
+                            //fallback
+                    <img src="/common/images/static-only/bdm-profile-image-1.jpg" alt="@($"{Model.TBDM.FullName} profile image ")" />
+                        }
+
+                </div>
+
+                <span class="bdm-item-detail__name">@Model.TBDM.Name</span>
+                <span class="bdm-item-detail__role">@Model.TBDM.JobTitle</span>
+
+                <div class="bdm-item-detail__contact-info">
+                    <span><strong>Phone:</strong> <a href="tel:@(Model.TBDM.ContactNumber.IsNullOrWhiteSpace() ? "" : Model.TBDM.ContactNumber)">@(Model.TBDM.ContactNumber.IsNullOrWhiteSpace() ? "" : Model.TBDM.ContactNumber)</a></span>
+                    <span><strong>Email: </strong> <a href="mailto:@(Model.TBDM.Email.IsNullOrWhiteSpace() ? "" : Model.TBDM.Email)">@(Model.TBDM.Email.IsNullOrWhiteSpace() ? "" : Model.TBDM.Email)</a></span>
+                </div>
+            </div>
+            @if (Model.TBDM.ShortBio().HasValue())
+                {
+            <p class="js-bdm-text" data-short-text="@(Model.TBDM.ShortBio())" data-full-text="@(Model.TBDM.Bio)" data-toggle="more">@(Model.TBDM.ShortBio())</p>
+                }
+        </div>
+
+        }
+
+        @if( Model.TBDM ==null)
+        { //fallback
+        var fullWidthClass = Model.BDM == null ? "no-results" : "";
+
+        <div class="bdm-item  @fullWidthClass">
+            <div class="bdm-item-detail">
+                <h3 class="bdm-item-detail__name">@Model.IElcallPrompt</h3>
+                @Model.IEloptionsContent
+            </div>
+        </div>
+
+
+        }
+    </div>
+    </div>

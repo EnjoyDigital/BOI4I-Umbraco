@@ -11,10 +11,12 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
 		<PackageReference Include="NEST" Version="7.17.4" />
 		<PackageReference Include="Umbraco.Cms.Core" Version="13.4.1" />
+		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.4.1" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\BOI.Core\BOI.Core.csproj" />
+		<ProjectReference Include="..\BOI.Umbraco.Models\BOI.Umbraco.Models.csproj" />
 	</ItemGroup>
 
 </Project>

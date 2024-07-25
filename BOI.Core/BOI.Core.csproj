@@ -22,10 +22,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\BOI.Umbraco.Models\BOI.Umbraco.Models.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Folder Include="Models\Attributes\" />
 	</ItemGroup>
 

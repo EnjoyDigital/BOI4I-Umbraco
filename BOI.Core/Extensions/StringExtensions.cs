@@ -1,9 +1,10 @@
-﻿using System.Globalization;
+﻿using Microsoft.AspNetCore.Html;
+using System.Globalization;
 using System.Net;
 using System.Text.RegularExpressions;
-using Umbraco.Extensions;
+using System.Web;
 
-namespace BOI.Core.Web.Extensions
+namespace BOI.Core.Extensions
 {
     public static class StringExtensions
     {
@@ -13,6 +14,22 @@ namespace BOI.Core.Web.Extensions
         public static bool HasValue(this string value)
             => !string.IsNullOrEmpty(value) || !string.IsNullOrWhiteSpace(value);
 
+       
+
+        public static string PostcodeOutCode(this string value, bool justLetters = true)
+        {
+            if (!value.HasValue())
+            {
+                return "";
+            }
+            value = value.Replace(" ", "");
+            var lastDigit = justLetters ? value.IndexOfAny("123456789".ToCharArray()) : value.LastIndexOfAny("123456789".ToCharArray());
+            if (lastDigit < 0)
+            {
+                return value;
+            }
+            return value.Substring(0, lastDigit);
+        }
 
         public static string MakeValidFileName(this string value)
         {
@@ -53,31 +70,13 @@ namespace BOI.Core.Web.Extensions
         public static string ToSentenceCase(this string input)
         {
 
-            if (input.IsNullOrWhiteSpace()) return string.Empty;
+            if (!input.HasValue()) return string.Empty;
 
             var lowerCase = input.ToLower();
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(lowerCase);
 
         }
 
-        public static string GetDaySuffix(this int day)
-        {
-            switch (day)
-            {
-                case 1:
-                case 21:
-                case 31:
-                    return "st";
-                case 2:
-                case 22:
-                    return "nd";
-                case 3:
-                case 23:
-                    return "rd";
-                default:
-                    return "th";
-            }
-        }
 
         public static string StripHTML(this string input)
         {

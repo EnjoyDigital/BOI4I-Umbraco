@@ -491,13 +491,13 @@ namespace BOI.Core.Search.Services
                 }
             }
 
-            var searchTitle = content.HasValue("searchTitle") ? content.Value<string>(publishedValueFallback, "searchTitle") : content.Name;
-            var searchDescription = content.HasValue("searchDescription") ? content.Value<string>(publishedValueFallback, "searchDescription") : "";
-            var searchKeywords = content.HasValue("searchKeywords") ? content.Value<string>(publishedValueFallback, "searchKeywords") : "";
-            var searchImage = content.HasValue("searchImage") ? content.Value<IPublishedContent>(publishedValueFallback, "searchImage")?.Url(publishedUrlProvider) : "";
-            var searchExclude = content.HasProperty("excludeFromSearch") ? content.Value<bool>(publishedValueFallback, "excludeFromSearch") : true;
+            var searchTitle =  content.Value<string>(publishedValueFallback, "searchTitle", fallback: Fallback.ToDefaultValue, defaultValue: content.Name) ;
+            var searchDescription = content.Value<string>(publishedValueFallback, "searchDescription", fallback: Fallback.ToDefaultValue, defaultValue: content.Name);
+            var searchKeywords = content.Value<string>(publishedValueFallback, "searchKeywords", fallback: Fallback.ToDefaultValue, defaultValue: "");
+            var searchImage = (content.Value<IPublishedContent>(publishedValueFallback, "searchImage")?.Url(publishedUrlProvider)) ?? "";
+            var searchExclude =  content.Value<bool>(publishedValueFallback, "excludeFromSearch", fallback: Fallback.ToDefaultValue, defaultValue: true);
 
-            var metaTitle = content.HasValue("metaTitle") ? content.Value<string>(publishedValueFallback, "metaTitle") : "";
+            var metaTitle = content.Value<string>(publishedValueFallback, "metaTitle", fallback: Fallback.ToDefaultValue, defaultValue: "");
             var metaDescription = content.HasValue("metaDescription") ? content.Value<IPublishedContent>(publishedValueFallback, "metaDescription")?.Url(publishedUrlProvider) : "";
             var canonicalURL = content.HasProperty("canonicalURL") ? content.Value<bool>(publishedValueFallback, "canonicalURL") : true;
 
@@ -512,7 +512,7 @@ namespace BOI.Core.Search.Services
             string criteriaName = "";
             string criteriaCategory = "";
 
-            if (string.Equals(content.ContentType.Alias, "criteria", StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(content.ContentType.Alias,Criteria.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
             {
                 if (content.HasValue("criteriaName") && !string.IsNullOrEmpty(content.Value<string>(publishedValueFallback, "criteriaName")))
                 {
@@ -550,7 +550,7 @@ namespace BOI.Core.Search.Services
 
             string bodyText = null, criteriaUpdateDate = null, criteriaTabUpdateDate = null;
 
-            if (string.Equals(content.ContentType.Alias, "criteria", StringComparison.InvariantCultureIgnoreCase) || string.Equals(content.ContentType.Alias, "criteriaTab", StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(content.ContentType.Alias, Criteria.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase) || string.Equals(content.ContentType.Alias, "criteriaTab", StringComparison.InvariantCultureIgnoreCase))
             {
                 bodyText = content.HasValue("bodyText") ? content.Value<string>(publishedValueFallback, "bodyText") : "";
                 criteriaUpdateDate = content.HasValue("criteriaUpdatedDate") ? content.Value<DateTime>(publishedValueFallback, "criteriaUpdatedDate").ToString("yyyy-MM-ddTHH:mm:sszzz") : string.Empty;
@@ -560,7 +560,7 @@ namespace BOI.Core.Search.Services
             string productType = null, category = null, lTVTitle = null, lTVFilterText = null, term = null, rate = null, description = null, overallCost = null, productFees = null, features = null, earlyRepaymentCharges = null, code = null, productVariant = null, withdrawalDateTime = null, aIPDeadlineDateTime = null, launchDateTime = null;
             bool interestOnly = false, isNew = false, isFixedRate = false;
 
-            if (string.Equals(content.ContentType.Alias, "product", StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(content.ContentType.Alias, Product.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
             {
                 productType = content.Value<IPublishedContent>(publishedValueFallback, "productType")?.Name ?? "";
                 category = content.Value<IPublishedContent>(publishedValueFallback, "category")?.Name ?? "";
@@ -583,7 +583,7 @@ namespace BOI.Core.Search.Services
                 productVariant = content.HasValue("productVariant") ? content.Value<string>(publishedValueFallback, "productVariant") : "";
             }
 
-            if (string.Equals(content.ContentType.Alias, "productsLanding", StringComparison.InvariantCultureIgnoreCase) || string.Equals(content.ContentType.Alias, "withdrawalProductsLanding", StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(content.ContentType.Alias, ProductsLanding.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase) || string.Equals(content.ContentType.Alias, "withdrawalProductsLanding", StringComparison.InvariantCultureIgnoreCase))
             {
                 productVariant = content.HasValue("productVariant") ? content.Value<string>(publishedValueFallback, "productVariant") : "";
             }
@@ -599,7 +599,7 @@ namespace BOI.Core.Search.Services
 
             string regionsList = null, bio = null, bdmId = null, fCANumberList = null, postcodeOutcodes = null, bdmType = null;
             bool active = true, requireFcaAndpc = false;
-            if (string.Equals(content.ContentType.Alias, "bDMContact", StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(content.ContentType.Alias, BDmcontact.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
             {
                 var rawPostCodes = content.Value(publishedValueFallback, "regions", fallback: Fallback.ToDefaultValue, defaultValue: "").Replace(" ", "").ToUpperInvariant();
                 postcodeOutcodes = string.Join(" ", rawPostCodes.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
@@ -607,8 +607,7 @@ namespace BOI.Core.Search.Services
 
                 regionsList = rawPostCodes.Replace(",", " ");
 
-
-                logger.LogInformation(content.Name);
+                logger.LogInformation("BDM Contact indexed:" + content.Name);
 
 
                 fCANumberList = content.Value(publishedValueFallback, "fCANumber", fallback: Fallback.ToDefaultValue, defaultValue: "").Replace(",", " ");
@@ -616,7 +615,7 @@ namespace BOI.Core.Search.Services
                 bdmType = content.Value<string>(publishedValueFallback, BdmContactConstants.BDMType);
                 bio = content.Value<string>(publishedValueFallback, BdmContactConstants.Bio);
                 active = content.Value<bool>(publishedValueFallback, BdmContactConstants.Active);
-                bdmId = content.Value<string>(publishedValueFallback, "email");
+                bdmId = content.Value<string>(publishedValueFallback, BdmContactConstants.Email);
                 requireFcaAndpc = content.Value<bool>(publishedValueFallback, BdmContactConstants.RequireFCAAndPostcodeMatch, fallback: Fallback.ToDefaultValue, defaultValue: false);
             }
 

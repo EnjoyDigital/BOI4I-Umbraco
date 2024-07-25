@@ -1,4 +1,4 @@
-﻿using BOI.Umbraco.Models;
+﻿
 
 namespace BOI.Core.Search.Models
 {

@@ -1,4 +1,5 @@
 ﻿using Our.Umbraco.Meganav.Models;
+using BOI.Core.Extensions;
 
 namespace BOI.Core.Web.Extensions
 {

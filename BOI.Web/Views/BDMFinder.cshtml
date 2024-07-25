@@ -1,0 +1,78 @@
+﻿@using BankOfIreland.Intermediaries.Core.Web.Models.ViewModels
+@inherits UmbracoViewPage<BdmFinderViewModel>
+
+<partial name="/Views/Shared/Hero.cshtml" />
+<partial name="/Views/Shared/Breadcrumb.cshtml" />
+
+
+@if (Model.HasValue("content"))
+{
+    @await Html.GetBlockListHtmlAsync(Model, "content")
+}
+
+
+<div class="umb-block-list">
+    <div class="lookup-form-block bdm-finder">
+        <div class="lookup-form-block-content bdm-finder-content">
+            <h2 class="lookup-form-block__title">Find your dedicated contact</h2>
+
+            <form id="bdm-finder" action="@Model.Url()" class="lookup-form bdm-finder-form">
+                <fieldset>
+                    <div class="lookup-form-inner bdm-finder-form-inner">
+                        <div class="product-filters-input-wrap bdm-finder-inputs">
+                            <div class="product-filters-input-wrap -search-term">
+                                <label for="fcaNumber">FCA Number</label>
+                                <input type="text" name="fcaNumber" id="fcaNumber" placeholder="Eg. 123456" value="@Model.FcaNumber" />
+                                <span id="fca-message" class="field-validation-error ">@Model.FCacodeValidationMessage@*Please enter FCA Number*@</span>
+                            </div>
+                            <div class="product-filters-input-wrap -search-term">
+                                <label for="postcode">Your Postcode</label>
+                                <input type="text" name="postcode" id="postcode" placeholder="Eg. LS2 7EH" value="@Model.Postcode" />
+                                <span id="postcode-message" class="field-validation-error ">@Model.PostcodeValidationMessage@*Please enter a valid postcode*@</span>
+                            </div>
+                        </div>
+                        <div class="product-filters-input-wrap -button-wrap">
+                            <button class="button">
+                                <svg class="[ icon icon-search -white ]" aria-hidden="true">
+                                    <use xlink:href="#sprite-icon-search"></use>
+                                </svg>
+                                <span>Find your contact</span>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            @if (Model.ContactUsLink != null)
+            {
+                <p>
+                    <svg class="[ icon icon-phone -black ]" aria-hidden="true">
+                        <use xlink:href="#sprite-icon-phone"></use>
+                    </svg>
+                    <strong>Any questions?</strong> <a href='@Model.ContactUsLink.Url'>@Model.ContactUsLink.Name</a>
+                </p>
+            }
+
+        </div>
+
+        @if (Model.LookupIcon != null)
+        {
+            <div class="bdm-finder-icon-wrap">
+                <img src="@Model.LookupIcon.GetCropUrl()" class="icon-bdm-finder" alt="@Model.LookupIcon.GetImageAlternativeText()" />
+            </div>
+        }
+    </div>
+
+    <div id="bdm-listing">
+        <partial name="/Views/Partials/BdmFinder/BdmListing.cshtml" />        
+    </div>
+
+</div>
+
+@if (Model.Pods != null)
+{
+    <partial name="/Views/Partials/Pods.cshtml" />
+}
+
+@section Scripts {
+    <script type="text/javascript" src="/common/scripts/bundles/bdmFinder.bundle.js" asp-append-version="true"></script>
+}

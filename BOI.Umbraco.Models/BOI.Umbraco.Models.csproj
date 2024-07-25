@@ -12,4 +12,8 @@
     <PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.4.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BOI.Core\BOI.Core.csproj" />
+  </ItemGroup>
+
 </Project>

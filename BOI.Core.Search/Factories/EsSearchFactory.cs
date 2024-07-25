@@ -1,7 +1,6 @@
 ﻿using BOI.Core.Search.Models;
 using BOI.Core.Search.Models.ElasticSearch;
 using BOI.Core.Search.Services;
-using BOI.Umbraco.Models;
 using Microsoft.Extensions.Configuration;
 using Nest;
 

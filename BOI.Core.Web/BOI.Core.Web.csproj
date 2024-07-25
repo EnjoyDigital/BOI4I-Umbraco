@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\CmsModels\**" />
+    <Compile Remove="Models\Extended\**" />
+    <EmbeddedResource Remove="Models\CmsModels\**" />
+    <EmbeddedResource Remove="Models\Extended\**" />
+    <None Remove="Models\CmsModels\**" />
+    <None Remove="Models\Extended\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Controllers\Backoffice\Api\EdAdminApiController.cs" />
     <Compile Remove="Controllers\Backoffice\BdmUploadApiController.cs" />
     <Compile Remove="Controllers\Backoffice\BdmUploadTreeController.cs" />
@@ -42,6 +51,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BOI.Core.Search\BOI.Core.Search.csproj" />
     <ProjectReference Include="..\BOI.Core\BOI.Core.csproj" />
+    <ProjectReference Include="..\BOI.Umbraco.Models\BOI.Umbraco.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

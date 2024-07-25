@@ -1,10 +1,7 @@
-﻿@inherits UmbracoViewPage<StandardContent>
-
-
+﻿@inherits UmbracoViewPage<CalculatorLanding>
 
 <partial name="/Views/Shared/Hero.cshtml" />
 <partial name="/Views/Shared/Breadcrumb.cshtml" />
-
 
 @if (Model.HasValue("content"))
 {
@@ -17,5 +14,5 @@
 }
 
 @section Scripts {
-    <script type="text/javascript" src="/common/scripts/bundles/content.bundle.js" asp-append-version="true"></script>
+	<script type="text/javascript" src="/common/scripts/bundles/content.bundle.js" asp-append-version="true"></script>
 }

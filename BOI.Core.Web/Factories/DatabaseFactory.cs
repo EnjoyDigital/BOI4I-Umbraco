@@ -1,7 +1,7 @@
 ﻿using NPoco;
 using System.Data.Common;
 
-namespace BOI.Core.Factories
+namespace BOI.Core.Web.Factories
 {
     public interface IDatabaseFactory
     {
