@@ -485,7 +485,20 @@
 		<_ContentIncludedByDefault Remove="appsettings.Test.json" />
 	</ItemGroup>
 	<ItemGroup>
-	  
+	  <Content Include="App_Plugins\ElasticSearchPublishContentApp\view.html" />
+	  <Content Include="App_Plugins\Meganav\backoffice\components\meganavActions.html" />
+	  <Content Include="App_Plugins\Meganav\backoffice\components\meganavAdd.html" />
+	  <Content Include="App_Plugins\Meganav\backoffice\components\meganavItemType.html" />
+	  <Content Include="App_Plugins\Meganav\backoffice\components\meganavPreview.html" />
+	  <Content Include="App_Plugins\Meganav\backoffice\dialogs\itemTypeDialog.html" />
+	  <Content Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.html" />
+	  <Content Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.link.html" />
+	  <Content Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.settings.html" />
+	  <Content Include="App_Plugins\Meganav\backoffice\meganav.css" />
+	  <Content Include="App_Plugins\Meganav\backoffice\propertyeditors\configuration.html" />
+	  <Content Include="App_Plugins\Meganav\backoffice\propertyeditors\editor.html" />
+	  <Content Include="App_Plugins\Meganav\lang\en.xml" />
+	  <Content Include="App_Plugins\Meganav\lib\angular-ui-tree.min.css" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -510,6 +523,23 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Include="App_Plugins\ElasticSearchPublishContentApp\controller.js" />
+	  <None Include="App_Plugins\ElasticSearchPublishContentApp\ElasticSearchPublish.resource.js" />
+	  <None Include="App_Plugins\ElasticSearchPublishContentApp\package.manifest" />
+	  <None Include="App_Plugins\Meganav\backoffice\components\meganavActions.component.js" />
+	  <None Include="App_Plugins\Meganav\backoffice\components\meganavAdd.component.js" />
+	  <None Include="App_Plugins\Meganav\backoffice\components\meganavItemType.component.js" />
+	  <None Include="App_Plugins\Meganav\backoffice\components\meganavPreview.component.js" />
+	  <None Include="App_Plugins\Meganav\backoffice\dialogs\itemTypeDialog.controller.js" />
+	  <None Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.controller.js" />
+	  <None Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.link.controller.js" />
+	  <None Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.settings.controller.js" />
+	  <None Include="App_Plugins\Meganav\backoffice\helpers\dialogHelper.service.js" />
+	  <None Include="App_Plugins\Meganav\backoffice\helpers\localizationHelper.service.js" />
+	  <None Include="App_Plugins\Meganav\backoffice\propertyeditors\configuration.controller.js" />
+	  <None Include="App_Plugins\Meganav\backoffice\propertyeditors\editor.controller.js" />
+	  <None Include="App_Plugins\Meganav\lib\angular-ui-tree.min.js" />
+	  <None Include="App_Plugins\Meganav\package.manifest" />
 	  <None Include="wwwroot\common\css\base\base.scss" />
 	  <None Include="wwwroot\common\css\base\reset.scss" />
 	  <None Include="wwwroot\common\css\base\typography.scss" />

@@ -1,0 +1,9 @@
+﻿{
+  // define the content apps you want to create
+
+  // array of files we want to inject into the application on app_start
+  "javascript": [
+    "~/App_Plugins/ElasticSearchPublishContentApp/controller.js",
+    "~/App_Plugins/ElasticSearchPublishContentApp/ElasticSearchPublish.resource.js"
+  ]
+}
