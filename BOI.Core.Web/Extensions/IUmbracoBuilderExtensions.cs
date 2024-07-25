@@ -110,17 +110,14 @@ namespace BOI.Core.Web.Extensions
 
         public static IUmbracoBuilder RegisterQueryHandlers(this IUmbracoBuilder builder, IConfiguration configuration)
         {
-            builder.Services.AddScoped<IndexingService, IndexingService>();
+            builder.Services.AddScoped<IIndexingService, IndexingService>();
             builder.Services.AddSingleton(s =>
             {
-
                 var esFactory = new EsSearchFactory(configuration);
-
                 return esFactory.CreateClient();
             });
 
             builder.Services.AddScoped<IGetAllMediaLogs, GetAllMediaLogs>();
-
 
             builder.AddNotificationHandler<ContentSavedNotification, ContentSavedNotificationHandler>();
             builder.AddNotificationHandler<ContentPublishedNotification, ContentPublishedNotificationHandler>();

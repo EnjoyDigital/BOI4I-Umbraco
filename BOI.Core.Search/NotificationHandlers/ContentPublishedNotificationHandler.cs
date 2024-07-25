@@ -1,4 +1,5 @@
-﻿using BOI.Core.Search.Models.ElasticSearch;
+﻿using BOI.Core.Search.Constants;
+using BOI.Core.Search.Models.ElasticSearch;
 using BOI.Core.Search.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -16,11 +17,11 @@ namespace BOI.Core.Search.NotificationHandlers
     {
         private readonly ILogger<ContentPublishedNotificationHandler> logger;
         private readonly IUmbracoContextFactory umbracoContextFactory;
-        private readonly IndexingService indexingService;
+        private readonly IIndexingService indexingService;
         private readonly IConfiguration configuration;
 
         public ContentPublishedNotificationHandler(ILogger<ContentPublishedNotificationHandler> logger, IUmbracoContextFactory umbracoContextFactory,
-            IndexingService indexingService, IConfiguration configuration)
+            IIndexingService indexingService, IConfiguration configuration)
         {
             this.logger = logger;
             this.umbracoContextFactory = umbracoContextFactory;
@@ -44,7 +45,7 @@ namespace BOI.Core.Search.NotificationHandlers
                 {
                     continue;
                 }
-                if (!indexExists && c.ContentType.Alias == "siteRoot")
+                if (!indexExists && c.ContentType.Alias.Equals(DocTypeConstants.Siteroot,StringComparison.InvariantCultureIgnoreCase))
                 {
                     var results = new List<IPublishedContent>();
 
@@ -71,7 +72,7 @@ namespace BOI.Core.Search.NotificationHandlers
                     continue;
                 }
 
-                if (content.Ancestor("siteRoot") == null && !content.ContentType.Alias.Equals("product", StringComparison.InvariantCultureIgnoreCase) && !content.ContentType.Alias.Equals("productLTV", StringComparison.InvariantCultureIgnoreCase)) continue;
+                if (content.Ancestor(DocTypeConstants.Siteroot) == null && !content.ContentType.Alias.Equals(DocTypeConstants.Product, StringComparison.InvariantCultureIgnoreCase) && !content.ContentType.Alias.Equals(FieldConstants.ProductLTV, StringComparison.InvariantCultureIgnoreCase)) continue;
 
                 logger.LogInformation("ContentServicePublished Indexing service called to build doc");
                 var doc = indexingService.DocBuilder(content);
@@ -105,9 +106,9 @@ namespace BOI.Core.Search.NotificationHandlers
             //TODO: case statements can be combined
             switch (alias)
             {
-                case "product":
-                case "error":
-                case "mainSearchResults":
+                case DocTypeConstants.Product:
+                case DocTypeConstants.Error:
+                case DocTypeConstants.MainSearchResults:
                     return true;
 
             }

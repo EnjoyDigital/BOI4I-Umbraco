@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BOI.Core.Search.Constants;
+using Newtonsoft.Json;
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Notifications;
 using Umbraco.Extensions;
@@ -11,15 +12,15 @@ namespace BOI.Core.Search.NotificationHandlers
         {
             foreach (var content in notification.SavedEntities)
             {
-                if (content.HasProperty("productVariant"))
+                if (content.HasProperty(FieldConstants.ProductVariant))
                 {
-                    if (content.GetValue<string>("productVariant").IsNullOrWhiteSpace())
+                    if (content.GetValue<string>(FieldConstants.ProductVariant).IsNullOrWhiteSpace())
                     {
-                        content.SetValue("productVariant", JsonConvert.SerializeObject(new[] { "NC" }));
+                        content.SetValue(FieldConstants.ProductVariant, JsonConvert.SerializeObject(new[] { "NC" }));
                     }
                     else
                     {
-                        content.SetValue("productVariant", content.GetValue<string>("productVariant"));
+                        content.SetValue(FieldConstants.ProductVariant, content.GetValue<string>(FieldConstants.ProductVariant));
                     }
                 }
             }

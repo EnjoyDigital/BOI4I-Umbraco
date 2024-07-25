@@ -1,5 +1,7 @@
 ﻿using BOI.Core.Search.Models;
 using BOI.Core.Search.Models.ElasticSearch;
+using BOI.Core.Search.Services;
+using BOI.Umbraco.Models;
 using Microsoft.Extensions.Configuration;
 using Nest;
 
@@ -23,10 +25,8 @@ namespace BOI.Core.Search.Factory
 
             var settings = new ConnectionSettings(searchUri)
                 .BasicAuthentication(esSettings.EsUsername, esSettings.EsPassword)
-                .DefaultMappingFor<WebContent>(i => i.IndexName(esSettings.WebContentEsIndexAlias));
-
-                //TODO: PB TO REPLACE WITH SOLICITOR
-                //.DefaultMappingFor<Casualty>(m => m.IndexName(esSettings.CasualtyEsIndexAlias));
+                .DefaultMappingFor<WebContent>(i => i.IndexName(esSettings.WebContentEsIndexAlias))
+                .DefaultMappingFor<Solicitor>(m => m.IndexName(esSettings.SolicitorEsIndexAlias));
 
             if (esSettings.EsEnableDebugMode)
             {

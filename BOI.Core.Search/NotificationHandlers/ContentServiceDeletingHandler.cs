@@ -12,11 +12,11 @@ namespace BOI.Core.Search.NotificationHandlers
     public class ContentServiceDeletingHandler : INotificationHandler<ContentMovingToRecycleBinNotification>
     {
         private readonly IUmbracoContextFactory umbracoContextFactory;
-        private readonly IndexingService indexingService;
+        private readonly IIndexingService indexingService;
         private readonly IContentService contentService;
         private readonly IVariationContextAccessor variationContextAccessor;
 
-        public ContentServiceDeletingHandler(IUmbracoContextFactory umbracoContextFactory, IndexingService indexingService,
+        public ContentServiceDeletingHandler(IUmbracoContextFactory umbracoContextFactory, IIndexingService indexingService,
             IContentService contentService, IVariationContextAccessor variationContextAccessor)
         {
             this.umbracoContextFactory = umbracoContextFactory;

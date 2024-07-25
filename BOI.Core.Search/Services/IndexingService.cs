@@ -19,9 +19,6 @@ namespace BOI.Core.Search.Services
 {
     public interface IIndexingService
     {
-        //string WebContentIndexAlias { get; }
-        //string MediaRequestLogIndexAlias { get; }
-
         void CheckAndCreateIndex();
 
         void DeleteItemsFromIndex(params int[] indexItems);
@@ -64,11 +61,6 @@ namespace BOI.Core.Search.Services
         }
         private ElasticSettings EsIndexes => new(config);
 
-        //public string WebContentIndexAlias => config[ConfigurationConstants.WebcontentIndexAliasKey];
-
-        //public string SolicitorsIndexAlias => config[ConfigurationConstants.SolicitorIndexAliasKey];
-
-        //public string MediaRequestLogIndexAlias => config[ConfigurationConstants.MediaLogIndexAlias];
         /// <summary>
         /// Creates a new index suffixed with todays date. Uses the bulk all feature of Elasticsearch to index batches of Solicitors. 
         /// It then swaps the Solicitor alias used in queries to point the new index.
@@ -230,7 +222,7 @@ namespace BOI.Core.Search.Services
                     }
                     try
                     {
-                        ReIndexMediaViewLogsAsync(mediLogIndexAlias);
+                        ReIndexMediaViewLogs(mediLogIndexAlias);
                     }
                     catch (Exception ex)
                     {
@@ -265,7 +257,7 @@ namespace BOI.Core.Search.Services
         }
 
         //TODO:reindex all media log DB entries
-        private async Task ReIndexMediaViewLogsAsync(string mediaLogIndexAlias)
+        private async Task ReIndexMediaViewLogs(string mediaLogIndexAlias)
         {
             const int pageSize = 10000;
             var pageIndex = 1;

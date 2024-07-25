@@ -12,11 +12,11 @@ namespace BOI.Core.Search.NotificationHandlers
     public class ContentUnPublishingNotificationHandler : INotificationHandler<ContentUnpublishingNotification>
     {
         private readonly IUmbracoContextFactory umbracoContextFactory;
-        private readonly IndexingService indexingService;
+        private readonly IIndexingService indexingService;
         private readonly IContentService contentService;
         private readonly IVariationContextAccessor variationContextAccessor;
 
-        public ContentUnPublishingNotificationHandler(IUmbracoContextFactory umbracoContextFactory, IndexingService indexingService,
+        public ContentUnPublishingNotificationHandler(IUmbracoContextFactory umbracoContextFactory, IIndexingService indexingService,
             IContentService contentService, IVariationContextAccessor variationContextAccessor)
         {
             this.umbracoContextFactory = umbracoContextFactory;
