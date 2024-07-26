@@ -1033,6 +1033,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Update="Views\Shared\_LayoutPayAsYouGrowCalculator.cshtml">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
 	  <Content Update="wwwroot\common\images\icons\favicon\manifest.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>

@@ -1,51 +1,11 @@
-@inherits BankOfIreland.Intermediaries.Core.Web.Models.Models.BaseTemplatePage<IPublishedContent>
-
-@{
-    var root = Model.AncestorOrSelf<SiteRoot>();
-    var rootSettings = root.SiteSettings.GetElement<GlobalScripts>();
-
-    var pageSettings = Model.Value<IEnumerable<IPublishedElement>>("pageSettings");
-    var seo = pageSettings?.GetElement<ElementSeoSettings>();
-    var pageScripts = pageSettings?.GetElement<ElementScriptSettings>();
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="@(!string.IsNullOrEmpty(seo?.MetaDescription) ? seo?.MetaDescription : $"{Model.Name} | Umbraco Base")" />
-
-    <title>@((!string.IsNullOrEmpty(seo?.MetaTitle) ? seo?.MetaTitle : Model.Name) + " | Umbraco Base")</title>
-
-    <link rel="canonical" href="@(!string.IsNullOrEmpty(seo?.CanonicalUrl) ? seo?.CanonicalUrl : Model.Url(mode: UrlMode.Absolute))" />
-
-    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
-
-    <link type="text/css" rel="stylesheet" href="https://fast.fonts.net/cssapi/13ba0f51-771e-4335-8b1f-a09cca2c222d.css" />
-
-    <link rel="stylesheet" href="~/common/css/first-paint.css" />
-
-    <link rel="stylesheet" href="~/common/css/style.css" />
-
-    <script src="/common/scripts/plugins/modernizr/modernizr.js"></script>
-    <script src="/common/scripts/plugins/picturefill.min.js" async></script>
-    <!--[if lte IE 8]>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <![endif]-->
-    <!--[if gt IE 8]>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <![endif]-->
-    <!--[if !IE]> -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <!-- <![endif]-->
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js"></script>
-
-    @Html.Raw(rootSettings?.HeadScripts)
+    @await Component.InvokeAsync("Head", new { calculatorLayout = true })
 </head>
 <body>
-    @Html.Raw(rootSettings?.BodyTopScripts)
+    @await Component.InvokeAsync("BodyScripts", new { upperScripts = true })
+    <link rel="stylesheet" href="~/common/css/style.css" asp-append-version="true" />
 
     @RenderBody()
 
@@ -53,13 +13,11 @@
     <script src="@("https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js")"></script>
 
     @RenderSection("Scripts", required: false)
-    @Html.Raw(pageScripts?.MiscScripts)
-    @Html.Raw(pageScripts?.QualtricsSurveyEmbedCode)
 
-    @*@Html.Action("TrackingScripts", "Layout")*@
+    @await Component.InvokeAsync("BodyScripts", new { upperScripts = false })
 
     <div class="svg-sprite">
-        @Html.Partial("~/Views/Shared/SVG_Sprite.cshtml")
+        <partial name="SVG_Sprite" />
     </div>
 </body>
 </html>
