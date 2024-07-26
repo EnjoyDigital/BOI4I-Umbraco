@@ -1,0 +1,138 @@
+﻿@inherits UmbracoViewPage<PayAsYouGrowCalculator>
+@{
+	Layout = "~/Views/Shared/_LayoutPayAsYouGrowCalculator.cshtml";
+}
+
+<header class="external-calculator-header">
+	<svg class="[ icon icon-small-logo-boi ]">
+		<title>Bank of Ireland for Intermediaries</title>
+		<use xlink:href="#sprite-small-logo-boi"></use>
+	</svg>
+</header>
+
+<section class="calculator-container">
+	<div class="payg-calculator-wrapper">
+		<div class="payg-calculator-inner">
+			<span class="payg-calculator-title">Pay As You Grow Calculator</span>
+			<p>Use our calculator to understand the impact each Pay As You Grow option has on your monthly repayments, and on the overall cost of your loan.</p>
+
+			<form id="PaygCalculator" class="payg-calculator">
+				<fieldset>
+					<label>What is the current value of your Bounce Back Loan (including any top-up amount)?</label>
+					<div class="payg-calc-input">
+						<input type="number" min="2000" max="50000" id="LoanAmount" value="2000" />
+					</div>
+					<span class="payg-calc-error-message" id="PaygCalcErrorMessage">Please enter an amount between &pound;2,000 and &pound;50,000</span>
+
+					<button class="button -teal" id="CalculatePayg" type="submit" value="Calculate">Calculate</button>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</section>
+
+<section class="options-container">
+	<div class="payg-options-wrapper">
+		<span class="payg-calculator-title">Pay As You Grow Options</span>
+		<div class="payg-options-table-wrapper">
+			<table class="payg-options-table" border="0" cellspacing="0" cellpadding="0">
+				<thead>
+					<tr>
+						<th></th>
+						<th>First Repayment</th>
+						<th>Repayment Amount after 6 months</th>
+						<th>Total Loan Term (months)</th>
+						<th>Total Amount You Will Repay</th>
+						<th>Cost increase over NO PAYG option</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="NoPaygOptions">
+						<td>If you don't use any Pay As You Grow options</td>
+						<td><span data-first-repayment data-currency="£">xx</span></td>
+						<td><span data-repayment-after-6-months data-currency="£">xx</span></td>
+						<td>72</td>
+						<td><span data-total-amount-repayable>xx</td>
+						<td>N/A</td>
+					</tr>
+					<tr id="TermExtensionTenYears">
+						<td class="tippy-tooltip" data-tippy-content="Extend your 6-year BBL term to 10 years, at the same interest rate of 2.5%.">
+							<span class="help-toggle">i</span>
+							Term extension to 10 years
+						</td>
+						<td><span data-first-repayment data-currency="£">xx</span></td>
+						<td><span data-repayment-after-6-months data-currency="£">xx</span></td>
+						<td>120</td>
+						<td><span data-total-amount-repayable>xx</span></td>
+						<td><span data-cost-increase>xx</span></td>
+					</tr>
+					<tr id="InterestOnlySixMonths">
+						<td class="tippy-tooltip" data-tippy-content="Reduce your mthly repayments for 6 mths by paying interest only.">
+							<span class="help-toggle">i</span>
+							Interest only<br />(6 months)
+						</td>
+						<td><span data-first-repayment data-currency="£">xx</span></td>
+						<td><span data-repayment-after-6-months data-currency="£">xx</span></td>
+						<td>78*</td>
+						<td><span data-total-amount-repayable>xx</span></td>
+						<td><span data-cost-increase>xx</span></td>
+					</tr>
+					<tr id="FullRepaymentHolidaySixMonths">
+						<td class="tippy-tooltip" data-tippy-content="Request a 6-mth full repayment holiday (both capital and interest).">
+							<span class="help-toggle">i</span>
+							Full Repayment Holiday (6 months)
+						</td>
+						<td>N/A</td>
+						<td><span data-repayment-after-6-months data-currency="£">xx</span></td>
+						<td>78*</td>
+						<td><span data-total-amount-repayable>xx</span></td>
+						<td><span data-cost-increase>xx</span></td>
+					</tr>
+					<tr id="TermExtensionTenYearsPlusInterestOnly">
+						<td class="tippy-tooltip" data-tippy-content="Extend your loan term to 10 years & reduce your mthly repayments for 6 mths by paying interest only.">
+							<span class="help-toggle">i</span>
+							Term Extension to 10 years + Interst Only (6 months)
+						</td>
+						<td><span data-first-repayment data-currency="£">xx</span></td>
+						<td><span data-repayment-after-6-months data-currency="£">xx</span></td>
+						<td>120</td>
+						<td><span data-total-amount-repayable>xx</span></td>
+						<td><span data-cost-increase>xx</span></td>
+					</tr>
+					<tr id="TermExtensionTenYearsPlusFullRepaymentHoliday">
+						<td class="tippy-tooltip" data-tippy-content="Extend your loan term to 10 years & request a 6-mth full repayment holiday before your first repayment is due.">
+							<span class="help-toggle">i</span>
+							Term Extension to 10 years + Full Repayment Holiday (6 months)
+						</td>
+						<td>N/A</td>
+						<td><span data-repayment-after-6-months data-currency="£">xx</span></td>
+						<td>120</td>
+						<td><span data-total-amount-repayable>xx</span></td>
+						<td><span data-cost-increase>xx</span></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="mobile-scroll-icon"><img src="/common/images/icons/horizontal-scroll.svg"></div>
+		</div>
+
+		<a href="#" class="button -teal recalculate-button" id="Recalculate">Recalculate</a>
+		
+		<p>
+			<strong>Important Information</strong>
+			<br />
+			Interest Rate: 2.5% (fixed) per annum
+			<br />
+			The amounts shown are indicative and could vary from your actual repayment amount
+			<br />
+			This calculator assumes no repayments have been made and you have not already chosen any Pay As You Grow options
+			<br />
+			Your first monthly repayment will be taken 13 months after you opened your loan. For the first 12 months of your loan, no capital repayments are required and interest payments are covered by the UK Government's Business Interruption Payment.
+		</p>
+		<p>To avail of one of the Pay As You Grow options, please refer back to our Pay As You Grow webpage for more information on How to Apply.</p>
+		<p>*The above illustration defaults to 78 months (original 6yr term loan + 6 months), however you can choose not to extend your loan by 6 months. This will increase monthly repayments, and will decrease the total amount you repay.</p>
+	</div>
+</section>
+
+@section Scripts {
+    <script type="text/javascript" src="/common/scripts/bundles/paygCalculator.bundle.js" asp-append-version="true"></script>
+}
