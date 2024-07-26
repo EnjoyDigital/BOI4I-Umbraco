@@ -1,0 +1,50 @@
+﻿@inherits UmbracoViewPage<ServiceUpdates>
+
+<partial name="~/Views/Shared/Hero.cshtml" />
+<partial name="~/Views/Shared/Breadcrumb.cshtml" />
+
+<div class="umb-block-list">
+    @Html.GetBlockListHtml(Model, "content")
+
+    @if (Model.ServiceItemPicker.Any())
+    {
+        <div class="service-levels-listing">
+            @foreach (ServiceLevelItem service in Model.ServiceItemPicker)
+            {
+                var serviceSubText = service.ServiceDate == DateTime.MinValue ? service.ServiceSubtitle : service.ServiceDate.ToString("ddd dd MMM yyyy");
+
+                <div class="service-levels-item">
+                    <div class="service-levels-item__header">
+                        @if (service.ServiceIcon != null)
+                        {
+                            <img src="@service.ServiceIcon.GetCropUrl()" alt="@service.ServiceIcon.GetImageAlternativeText()" />
+                        }
+
+                        <div>
+                            <span class="service-levels-item__title h5">@(service.ServiceTitle.IsNullOrWhiteSpace() ? service.Name : service.ServiceTitle)</span>
+
+                            <p>
+                                <svg class="[ icon icon-clock -white ]" aria-hidden="true">
+                                    <use xlink:href="#sprite-icon-clock"></use>
+                                </svg>
+                                @serviceSubText
+                            </p>
+                        </div>
+                    </div>
+                    <div class="service-levels-item__body">
+                        <p>@(service.ServiceBodyText.IsNullOrWhiteSpace() ? "" : service.ServiceBodyText)</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@if (Model.Pods != null)
+{
+    <partial name="~/Views/Partials/Pods.cshtml" />
+}
+
+@section Scripts {
+    <script type="text/javascript" src="/common/scripts/bundles/solicitorLanding.bundle.js" asp-append-version="true"></script>
+}
