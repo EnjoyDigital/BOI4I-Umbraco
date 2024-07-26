@@ -1,0 +1,261 @@
+﻿@inherits UmbracoViewPage<OverdraftCalculator>
+
+@{
+	Layout = "~/Views/Shared/_LayoutCalculator.cshtml";
+
+	var backgroundImage = Model.BackgroundImage;
+	var buttonTxt = Model.ButtonText;
+
+	if (string.IsNullOrWhiteSpace(buttonTxt))
+	{
+		buttonTxt = "Calculate";
+	}
+}
+
+<div class="overdraft-calculator-header-area">
+	<div class="overdraft-calculator-header">
+		<div class="logo">
+			<img src="/common/images/logos/bank-of-ireland-logo-default.svg" alt="">
+		</div>
+		<div class="link">
+			<a href="https://www.bankofirelanduk.com/personal/current-account/overdrafts/">Return to Bank of Ireland UK</a>
+		</div>
+	</div>
+
+	<div class="overdraft-calculator-header results">
+		<div>
+			<span class="title">Summary of overdraft</span>
+		</div>
+		<div>
+			<p>No. of Days within overdraft</p>
+			<span id="headerdays"></span><button class="changelink">Change</button>
+		</div>
+		<div>
+			<p>Total Borrowing</p>
+			<span id="headeramount"></span><button class="changelink">Change</button>
+		</div>
+	</div>
+</div>
+<section class="overdraft-calculator" @Html.Raw(backgroundImage == null ? string.Empty : string.Format("style=\"background-image: url('{0}')\"", backgroundImage.GetCropUrl(1920, 1080)))>
+	<div class="calculator-wrapper">
+		@if (!String.IsNullOrWhiteSpace(Model.IntroTitle))
+		{
+			<span class="title">@Model.IntroTitle</span>
+		}
+
+		@if (Model.HasProperty("introText"))
+		{
+			@Model.IntroText
+		}
+
+		<label>
+			Account type <span class="red">*</span>
+			@if (Model.HasProperty("AccountTypeHelpMessage") && Model.HasValue("AccountTypeHelpMessage") && !string.IsNullOrWhiteSpace(Model.AccountTypeHelpMessage))
+			{
+				<span class="calc-help">
+					<svg><use xlink:href="#sprite-icon-info"></use></svg>
+					<span class="calc-help-message">
+						@Model.AccountTypeHelpMessage
+					</span>
+				</span>
+			}
+		</label>
+		<select id="account-type" class="form-field-required">
+			<option value="" selected disabled>Please select</option>
+			@if (Model.HasValue("overdraftRates"))
+			{
+				foreach (var overdraftRate in Model.OverdraftRates.Select(x => x.Content).OfType<OverdraftRate>())
+				{
+					<option data-arr-rate="@overdraftRate.ArrangedOverdraftRate" data-arr-ear="@overdraftRate.ArrangedOverdraftRateEar" data-unarr-rate="@overdraftRate.UnarrangedOverdraftRateWith" data-unarr-ear="@overdraftRate.UnarrangedOverdraftRateEarwith" data-unarr-rate-wo="@overdraftRate.UnarrangedOverdraftRateWithout" data-unarr-ear-wo="@overdraftRate.UnarrangedOverdraftRateEarwithout" data-show-course-length="@overdraftRate.ShowCourseLength" data-show-arr-interest-rate="@overdraftRate.ShowArrangedOverdraftInterestRate" data-hide-arr="@overdraftRate.HideArrangedOverdraft" data-jurisdiction="@overdraftRate.Jurisdiction" data-exclude-surcharges="@overdraftRate.ExcludeSurcharges" value="@overdraftRate.AccountName">
+						@overdraftRate.AccountName
+					</option>
+				}
+			}
+		</select>
+
+		<div class="course-length-section">
+			<label>
+				How long was your undergraduate course? <span class="red">*</span>
+				@if (Model.HasProperty("LengthOfUndergradCourseHelpMessage") && Model.HasValue("LengthOfUndergradCourseHelpMessage") && !string.IsNullOrWhiteSpace(Model.LengthOfUndergradCourseHelpMessage))
+				{
+					<span class="calc-help">
+						<svg><use xlink:href="#sprite-icon-info"></use></svg>
+						<span class="calc-help-message">
+							@Model.LengthOfUndergradCourseHelpMessage
+						</span>
+					</span>
+				}
+			</label>
+			<select id="course-length">
+				<option value="" selected disabled>Please select</option>
+				@if (Model.HasValue("gradAccountRates"))
+				{
+					foreach (var gradRate in Model.GradAccountRates.Select(x => x.Content).OfType<GradAccountRate>())
+					{
+						<option data-arr-rate="@gradRate.ArrangedOverdraftRate" data-arr-ear="@gradRate.ArrangedOverdraftRateEar" data-unarr-rate="@gradRate.UnarrangedOverdraftRateWith" data-unarr-ear="@gradRate.UnarrangedOverdraftRateEarwith" data-unarr-rate-wo="@gradRate.UnarrangedOverdraftRateWithout" data-unarr-ear-wo="@gradRate.UnarrangedOverdraftRateEarwithout" value="@gradRate.OverdraftLimit">
+							@gradRate.YearsOfFullTime3rdLevelEducation
+						</option>
+					}
+				}
+			</select>
+			<div class="hidden" id="course-length-over-limit" data-arr-rate="@Model.OverInterestFreeLimitArrangedOverdraftRate" data-arr-ear="@Model.OverInterestFreeLimitArrangedOverdraftRateEar" data-unarr-rate="@Model.OverInterestFreeLimitUnarrangedOverdraftRateWith" data-unarr-ear="@Model.OverInterestFreeLimitUnarrangedOverdraftRateEarwith" data-unarr-rate-wo="@Model.OverInterestFreeLimitUnarrangedOverdraftRateWithout" data-unarr-ear-wo="@Model.OverInterestFreeLimitUnarrangedOverdraftRateEarwithout">Over interest free limit</div>
+		</div>
+
+		<div class="arranged-overdraft-section">
+			<label>
+				Arranged overdraft limit on the account <span class="red">*</span>
+				@if (Model.HasProperty("ArragedOverdraftLimitHelpMessage") && Model.HasValue("ArragedOverdraftLimitHelpMessage") && !string.IsNullOrWhiteSpace(Model.ArragedOverdraftLimitHelpMessage))
+				{
+					<span class="calc-help">
+						<svg><use xlink:href="#sprite-icon-info"></use></svg>
+						<span class="calc-help-message">
+							@Model.ArragedOverdraftLimitHelpMessage
+						</span>
+					</span>
+				}
+			</label>
+			<div class="calc-input">
+				<input id="arranged-overdraft-input" class="form-field-required" type="number" min="0" max="25000" value="0">
+			</div>
+			<p class="error-msg arranged-field">Must be between £0 and £25000</p>
+		</div>
+
+		<label>
+			Overdraft Amount <span class="red">*</span>
+			@if (Model.HasProperty("OverdraftAmountHelpMessage") && Model.HasValue("OverdraftAmountHelpMessage") && !string.IsNullOrWhiteSpace(Model.OverdraftAmountHelpMessage))
+			{
+				<span class="calc-help">
+					<svg><use xlink:href="#sprite-icon-info"></use></svg>
+					<span class="calc-help-message">
+						@Model.OverdraftAmountHelpMessage
+					</span>
+				</span>
+			}
+		</label>
+		<div class="calc-input">
+			<input id="overdraft-input" class="form-field-required" type="number" min="1" max="25000">
+		</div>
+		<p class="error-msg overdraft-field">Must be between £1 and £25000</p>
+
+		<label>
+			Number of days in overdraft within each month <span class="red">*</span>
+			@if (Model.HasProperty("DaysInOverdraftHelpMessage") && Model.HasValue("DaysInOverdraftHelpMessage") && !string.IsNullOrWhiteSpace(Model.DaysInOverdraftHelpMessage))
+			{
+				<span class="calc-help">
+					<svg><use xlink:href="#sprite-icon-info"></use></svg>
+					<span class="calc-help-message">
+						@Model.DaysInOverdraftHelpMessage
+					</span>
+				</span>
+			}
+		</label>
+		<select id="days-input" class="form-field-required">
+			<option value="" selected disabled>Please select</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+			<option value="11">11</option>
+			<option value="12">12</option>
+			<option value="13">13</option>
+			<option value="14">14</option>
+			<option value="15">15</option>
+			<option value="16">16</option>
+			<option value="17">17</option>
+			<option value="18">18</option>
+			<option value="19">19</option>
+			<option value="20">20</option>
+			<option value="21">21</option>
+			<option value="22">22</option>
+			<option value="23">23</option>
+			<option value="24">24</option>
+			<option value="25">25</option>
+			<option value="26">26</option>
+			<option value="27">27</option>
+			<option value="28">28</option>
+			<option value="29">29</option>
+			<option value="30">30</option>
+			<option value="31">31</option>
+		</select>
+
+		<div class="arranged-interest-section">
+			<label>
+				What is your arranged overdraft interest rate <span class="red">*</span>
+				@if (Model.HasProperty("arrangedOverdraftInterestRateHelpMessage") && Model.HasValue("arrangedOverdraftInterestRateHelpMessage") && !string.IsNullOrWhiteSpace(Model.ArrangedOverdraftInterestRateHelpMessage))
+				{
+					<span class="calc-help">
+						<svg><use xlink:href="#sprite-icon-info"></use></svg>
+						<span class="calc-help-message">
+							@Model.ArrangedOverdraftInterestRateHelpMessage
+						</span>
+					</span>
+				}
+			</label>
+			<div class="calc-input percent">
+				<input id="arranged-interest-input" type="number">
+			</div>
+			<div class="hidden" id="base-account-rates" data-base-rate="@Model.BaseRate" data-surcharge-ni="@Model.SurchargeNI" data-surcharge-gb="@Model.SurchargeGB" data-clear-ni="@Model.ClearAccountNiarrangeOverdraftRate"></div>
+		</div>
+
+		<button class="button blue center" id="loan-calc-button">@buttonTxt</button>
+		<p class="error-msg error-main">Please complete all required fields</p>
+	</div>
+</section>
+<section class="overdraft-calculator results" @*style="background-image: url(@backgroundImage.GetCropUrl(1920,1080))*@">
+	<div class="results-wrapper">
+		<p class="error-msg error-main">Please complete all required fields and ensure Overdraft Amount is between £1 and £25000 and Arranged Overdraft is not greater than £25000</p>
+		<p class="re-calculate-error">Values have changed without re-calculating. Please click the Calculate button.</p>
+		<div class="contents">
+			<div class="contents__inner">
+				<div class="title-area">
+					<p class="title">Total overdraft cost:</p><span id="result-overdraft-cost"></span>
+				</div>
+				<div class="overdraft-details">
+					<p class="sub-title">Arranged Overdraft</p>
+					<div>
+						<p>Interest cost:</p><span id="arranged-interest-cost"></span>
+					</div>
+					<div>
+						<p>Interest rate:</p><span id="arranged-interest-rate"></span>
+					</div>
+					<div>
+						<p>Amount Overdrawn:</p><span id="arranged-amount-overdrawn"></span>
+					</div>
+				</div>
+
+				<div class="overdraft-details">
+					<p class="sub-title">Unarranged Overdraft</p>
+					<div>
+						<p>Interest cost:</p><span id="unarranged-interest-cost"></span>
+					</div>
+					<div>
+						<p>Interest rate:</p><span id="unarranged-interest-rate"></span>
+					</div>
+					<div>
+						<p>Amount Overdrawn:</p><span id="unarranged-amount-overdrawn"></span>
+					</div>
+				</div>
+			</div>
+@if (Model.HasProperty("disclaimerText"))
+{
+				<div class="disclaimer">
+		@(Model.DisclaimerText)
+				</div>
+}
+
+			<div class="button-area">
+				<a href="https://www.bankofirelanduk.com/personal/current-account/overdrafts/" class="button blue center" id="#close-window">Close Calculator</a>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	<script type="text/javascript" src="/common/scripts/bundles/overdraftCalculator.bundle.js" asp-append-version="true"></script>
+}

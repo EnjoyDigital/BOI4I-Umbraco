@@ -1,0 +1,71 @@
+﻿@inherits UmbracoViewPage<LoansCalculator>
+
+@{
+	Layout = "~/Views/Shared/_LayoutCalculator.cshtml";
+
+	var backgroundImage = Model.BackgroundImage;
+	var buttonTxt = Model.ButtonText;
+
+	if (string.IsNullOrWhiteSpace(buttonTxt))
+	{
+		buttonTxt = "Calculate";
+	}
+}
+<div class="ni-calculator-header-area">
+	<div class="ni-calculator-header">
+		<div class="logo">
+			<img src="/common/images/logos/bank-of-ireland-logo-default.svg" alt="">
+		</div>
+		<div class="link">
+			<a href="https://www.bankofirelanduk.com/personal/personal-loans/details/">Return to Bank of Ireland UK</a>
+		</div>
+	</div>
+
+	<div class="ni-calculator-header results">
+		<div>
+			<span class="title">Summary of your loan</span>
+		</div>
+		<div>
+			<p>APR</p>
+			<span id="apr"></span>
+		</div>
+		<div>
+			<p>LOAN AMOUNT</p>
+			<span id="loanamount"></span><button class="changelink">Change</button>
+		</div>
+	</div>
+</div>
+
+<section class="ni-calculator" @Html.Raw(backgroundImage == null ? string.Empty : string.Format("style=\"background-image: url('{0}')\"", backgroundImage.GetCropUrl(1920, 1080)))>
+	<div class="calculator-wrapper">
+		@if (Model.HasValue("introTitle"))
+		{
+			<span class="title">@Model.IntroTitle</span>
+		}
+		@Model.IntroText
+
+		<label>Loan Amount <span class="red">*</span></label>
+		<div class="calc-input">
+			<input id="loan-input" type="number" min="1000" max="40000" required="required" step="100">
+		</div>
+		@if (Model.HasValue("disclaimerText"))
+		{
+			<span class="disclaimer">@Model.DisclaimerText</span>
+		}
+		<button class="button blue center" id="loan-calc-button">@buttonTxt</button>
+		<p class="error-msg">Please enter an amount between £1000 and £40,000</p>
+	</div>
+	<div class="results-wrapper">
+		<span class="title">Repayment Options</span>
+		<p class="sub-title">Select a repayment option below</p>
+		<div class="results">
+		</div>
+		<div class="button-area">
+			<a href="" class="button blue center" id="apply-now-button" target="_blank">Check your eligibility</a>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	<script type="text/javascript" src="/common/scripts/bundles/loansCalculator.bundle.js" asp-append-version="true"></script>
+}
