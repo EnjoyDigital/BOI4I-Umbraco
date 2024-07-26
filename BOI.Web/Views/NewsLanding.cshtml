@@ -1,0 +1,20 @@
+﻿@inherits UmbracoViewPage<NewsLandingResultsViewModel>
+@using BOI.Core.Web.Constants
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="~/Views/Shared/Hero.cshtml" />
+<partial name="~/Views/Shared/Breadcrumb.cshtml" />
+
+@if (Model.Content != null)
+{
+    @Html.GetBlockListHtml(Model, "content")
+}
+
+@{ Html.RenderPartial("partials/NewsLanding/NewsLandingResults", Model);}
+
+@if (Model.Pods != null)
+{
+    <partial name="/Views/Partials/Pods.cshtml" />
+}

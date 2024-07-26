@@ -7,7 +7,7 @@ namespace BOI.Core.Search.Queries.SQL
 {
     public interface IGetAllMediaLogs
     {
-        Task<Page<MediaRequestLog>> Execute(long page);
+        Task<NPoco.Page<MediaRequestLog>> Execute(long page);
     }
 
     public class GetAllMediaLogs : IGetAllMediaLogs
@@ -23,7 +23,7 @@ namespace BOI.Core.Search.Queries.SQL
             this.configuration = configuration;
         }
         
-        public async Task<Page<MediaRequestLog>> Execute(long page)
+        public async Task<NPoco.Page<MediaRequestLog>> Execute(long page)
         {
             var connectionString = configuration.GetConnectionString("cdb");
 
@@ -32,12 +32,12 @@ namespace BOI.Core.Search.Queries.SQL
 
             var db = new Database(connection) { OneTimeCommandTimeout = 3600 };
 
-            var casualties = await db.PageAsync<MediaRequestLog>(page, 100000,
+            var mediaLogs = await db.PageAsync<MediaRequestLog>(page, 100000,
                 @"SELECT [id],[MediaUrl],[DateViewed], mediaItemId FROM [MediaRequestLog]");
 
             connection.Close();
 
-            return casualties;
+            return mediaLogs;
         }
     }
 }

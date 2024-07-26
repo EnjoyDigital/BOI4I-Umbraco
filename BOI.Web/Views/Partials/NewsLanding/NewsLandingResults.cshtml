@@ -1,0 +1,43 @@
+﻿@inherits UmbracoViewPage<NewsLandingResultsViewModel>
+
+<div id="news-results">
+    @if (Model.Results != null)
+    {
+        <div class="">
+
+            @if (Model.Results.QueryResults != null && Model.Results.QueryResults.Any())
+            {
+                <div class="news-article-block">
+
+                    @foreach (var result in Model.Results.QueryResults)
+                    {
+                        <div class="news-article-block-item">
+                            <p class="news-article-block-item__title -blue-text">@result.ArticleName</p>
+                            @*<p class="title -blue-text">@result.ArticleName</p>*@
+                            <p class="">@result.ArticleListingSummary</p>
+
+                            @if (!string.IsNullOrEmpty(result.ArticleUrl))
+                            {
+                                <a href="@result.ArticleUrl" class="overlay-link">Download<span class="sr-only"> @result.ArticleName</span></a>
+
+                                <p class="news-article-block-item__cta"><strong>Read more</strong></p>
+                            }
+
+                        </div>
+                    }
+                </div>
+
+                if (Model.Paging.HasPages)
+                {
+                    @Html.Partial("../Shared/Pagination", Model)
+                }
+            }
+            else
+            {
+                <div class="product-table-caption">
+                    <span class="h5 product-table-caption__title">@Model.NoResultMessage</span>
+                </div>
+            }
+        </div>
+    }
+</div>
