@@ -19,7 +19,5 @@ namespace BOI.Core.Search.Extensions
         {
             return new HtmlString(str == null ? string.Empty : ToDescription(str.ToString(), length, addEllipsis));
         }
-
-        
     }
 }
