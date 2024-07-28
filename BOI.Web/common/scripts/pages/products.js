@@ -31,6 +31,8 @@ $(document).on('click', '#productUpdate', function (e) {
 
 $(document).on('click', '#productClear', function (e) {
 
+    console.log('fasdf');
+
     var formUrl = $(this).data('ajaxurl');
     var pageId = $(this).data('pageid');
 
