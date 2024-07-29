@@ -1,0 +1,30 @@
+﻿@model dynamic
+<div class="pagination">
+    <ul>
+        @if (!Model.Paging.IsFirstPage)
+        {
+            <li><a href="@Model.Paging.FirstPageUrl.Href" class="pagination-button pagination-button--start">Go to first page</a></li>
+            <li><a href="@Model.Paging.PrevPageUrl.Href" class="pagination-button pagination-button--prev">Go to previous page</a></li>
+        }
+
+        @foreach (var page in Model.Paging.Links)
+        {
+            if (page.Page.Equals(0))
+            {
+                <li><span>...</span></li>
+            }
+            else
+            {
+                <li>
+                    <a href="@page.Href" title="go to page @page.Text" class="@(page.Text == Model.Paging.CurrentPage.ToString() ? "active" : "")">@page.Text</a>
+                </li>
+            }
+        }
+
+        @if (!Model.Paging.IsLastPage)
+        {
+            <li><a href="@Model.Paging.NextPageUrl.Href" class="pagination-button pagination-button--next">Go to next page</a></li>
+            <li><a href="@Model.Paging.LastPageUrl.Href" class="pagination-button pagination-button--end">Go to last page</a></li>
+        }
+    </ul>
+</div>

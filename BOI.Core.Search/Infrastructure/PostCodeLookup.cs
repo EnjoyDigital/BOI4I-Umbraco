@@ -1,6 +1,7 @@
 ﻿using BOI.Core.Constants;
 using Microsoft.Extensions.Configuration;
 using Nest;
+using Newtonsoft.Json;
 using System.Net.Http.Json;
 
 namespace BOI.Core.Search.Infrastructure
@@ -22,17 +23,17 @@ namespace BOI.Core.Search.Infrastructure
         public IEnumerable<BulkPostcodesResponseResult> PostCodeLookup(IEnumerable<string> postCodes)
         {
             var client = new HttpClient { BaseAddress = new Uri(configuration[ConfigurationConstants.PostcodeLookupBaseAddress]) };
-
             var chunks = postCodes.Chunk(100);
 
-            return chunks.SelectMany(chunk => DoBulkLookup(client, chunk).Result).Where(result => result.Result != null);
+            return chunks.SelectMany(chunk => DoBulkLookup(client, chunk).Result);
         }
 
         private static BulkPostcodesResponse DoBulkLookup(HttpClient client, IEnumerable<string> chunk)
         {
             var response = client.PostAsJsonAsync("postcodes", new { postcodes = chunk }).Result;
+            var jsonResult = response.Content.ReadAsStringAsync();
 
-            return response.Content.ReadFromJsonAsync<BulkPostcodesResponse>().Result;
+            return JsonConvert.DeserializeObject<BulkPostcodesResponse>(jsonResult.Result);
         }
 
     }

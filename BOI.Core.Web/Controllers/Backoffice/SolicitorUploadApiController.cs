@@ -26,7 +26,7 @@ namespace BOI.Core.Web.Controllers.Backoffice
         private readonly IFileUploadService fileUploadService;
         private readonly IIndexingService indexingService;
 
-        public SolicitorUploadApiController( IConfiguration config, ILogger<SolicitorUploadApiController> logger,
+        public SolicitorUploadApiController(IConfiguration config, ILogger<SolicitorUploadApiController> logger,
             IFileUploadService fileUploadService, IIndexingService indexingService)
         {
             geocoder = new PostcodeGeocoder(config);
@@ -54,7 +54,7 @@ namespace BOI.Core.Web.Controllers.Backoffice
                 logger.LogInformation("Solicitor upload starts");
                 var solicitorsData = fileUploadService.GetFileData<Search.Models.Solicitor>(response.FilePath).RemoveNulls().Where(x => x.PostCode != null).ToList();
 
-                var postCodeLocations = geocoder.PostCodeLookup(solicitorsData.RemoveNulls().Select(x => x.PostCode)).ToList();
+                var postCodeLocations = geocoder.PostCodeLookup(solicitorsData.RemoveNulls().Select(x => x.PostCode)).Where(x => x.Result != null).ToList();
 
                 foreach (var solicitor in solicitorsData)
                 {

@@ -1,0 +1,51 @@
+﻿@inherits UmbracoViewPage<SolicitorResultsViewModel>
+<div id="solicitor-results">
+    @if (Model.Results != null)
+    {
+        <div class="results-area solicitor-results-area">
+
+            @if (Model.Results.QueryResults != null && Model.Results.QueryResults.Any())
+            {
+                var resultText = Model.Paging.TotalItems == 1 ? "result" : "results";
+
+                <div class="product-table-caption">
+                    <span class="h5 product-table-caption__title">@Model.Paging.TotalItems @resultText <span class="results-page-number">Page <strong>@Model.Paging.CurrentPage</strong> of @Model.Paging.PageCount</span></span>
+                    <a class="print-products js-print-products" href="" title="Click to print products">
+                        <svg class="[ icon icon-print -blue ]" aria-hidden="true">
+                            <use xlink:href="#sprite-icon-print"></use>
+                        </svg>
+                        <span>Print results</span>
+                    </a>
+                </div>
+
+                foreach (var result in Model.Results.QueryResults)
+                {
+                    var address = string.Join(", ", new[] { result.Address1.ToSentenceCase(), result.Address2.ToSentenceCase(), result.Address3.ToSentenceCase(), result.Address4.ToSentenceCase(), result.Address5.ToSentenceCase(), result.PostCode.ToUpper() }.Where(x => x.HasValue() && !x.IsNullOrWhiteSpace()));
+                    <div class="accordion">
+
+                        <button id="Accordion-@result.SolicitorName.ToLower().Replace(" ", "-")-heading" class="accordion-heading" aria-controls="Accordion-@result.SolicitorName.ToLower().Replace(" ", "-")-content">
+                            @result.SolicitorName.ToSentenceCase()
+                            <span class="solicitor-distance">@result.Distance</span>
+                            <i class="toggle"></i>
+                        </button>
+                        <div id="Accordion-@result.SolicitorName-content" class="accordion-content rich-text" role="region" aria-labelledby="Accordion-@result.SolicitorName.ToLower().Replace(" ", "-")-heading">
+                            <address><strong>Address:</strong> @address</address>
+                            <p><strong>Phone: </strong>@result.Telephone</p>
+                        </div>
+                    </div>
+                }
+
+                if (Model.Paging.HasPages)
+                {
+                    @Html.Partial("../Shared/Pagination", Model)
+                }
+            }
+            else
+            {
+                <div class="product-table-caption">
+                    <span class="h5 product-table-caption__title">@Model.NoResultsMessage</span>
+                </div>
+            }
+        </div>
+    }
+</div>
