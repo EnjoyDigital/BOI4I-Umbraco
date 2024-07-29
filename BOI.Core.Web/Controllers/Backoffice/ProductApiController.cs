@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Globalization;
+using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
@@ -304,21 +305,23 @@ namespace BOI.Core.Web.Controllers.Backoffice
         }
 
         [HttpGet]
-        public HttpResponseMessage ExportProducts()
+        public IActionResult ExportProducts()
         {
-            var response = new HttpResponseMessage
+            try
             {
-                StatusCode = HttpStatusCode.OK,
-                Content = new ByteArrayContent(ExportProductsData())
-            };
-            var fileName = string.Format("Products-{0:dd-MMM-yy}.csv", DateTime.Now);
-            response.Headers.Add("x-filename", fileName);
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                var stream = new MemoryStream(ExportProductsData());
+
+                return new FileStreamResult(stream, "text/csv")
+                {
+                    FileDownloadName = $"MetaData-{DateTime.Now:dd-MMM-yy}.csv"
+                };
+            }
+
+            catch (Exception ex)
             {
-                FileName = fileName
-            };
-            return response;
+                logger.LogError($"Error - Exporting Meta: {ex.Message}");
+                return new StatusCodeResult(500);
+            }
         }
 
         public byte[] ExportProductsData()
