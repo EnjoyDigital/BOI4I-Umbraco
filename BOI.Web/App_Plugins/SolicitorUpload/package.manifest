@@ -1,0 +1,12 @@
+{
+"sections": [
+    {
+      "alias": "solicitorUpload",
+      "name": "Solicitor Upload"
+    }
+  ],
+  javascript: [
+    "~/App_Plugins/SolicitorUpload/backoffice/SolicitorUpload/dataViewer.controller.js",
+    "~/App_Plugins/SolicitorUpload/solicitorUpload.resource.js"
+  ]
+}

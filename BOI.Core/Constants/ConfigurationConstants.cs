@@ -10,5 +10,7 @@
         public const string EsUsername = "ElasticSettings:EsUsername";
         public const string EsPassword = "ElasticSettings:EsPassword";
         public const string EsEnableDebugMode = "ElasticSettings:EsEnableDebugMode";
+        public const string PostcodeLookupBaseAddress = "CustomSettings:PostcodeLookupBaseAddress";
     }
 }
+    

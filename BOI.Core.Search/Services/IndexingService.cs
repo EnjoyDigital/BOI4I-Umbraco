@@ -27,7 +27,7 @@ namespace BOI.Core.Search.Services
         string GetIndexName(string indexAlias);
         bool IndexExists(string? indexAlias = null);
         void IndexMediaViewLog(params MediaRequestLog[] mediaRequestLogs);
-        void IndexSolicitors(IEnumerable<Solicitor> solicitors);
+        void IndexSolicitors(IEnumerable<BOI.Core.Search.Models.Solicitor> solicitors);
         void IndexWebContent(params WebContent[] indexItem);
         void ReIndexWebContent(IEnumerable<WebContent> content);
     }
@@ -67,7 +67,7 @@ namespace BOI.Core.Search.Services
         /// </summary>
         /// <param name="solicitors"> A collection of Solicitors</param>
         /// 
-        public void IndexSolicitors(IEnumerable<Solicitor> solicitors)
+        public void IndexSolicitors(IEnumerable<Models.Solicitor> solicitors)
         {
             var indexName = EsIndexes.SolicitorEsIndexAlias;
             var indexAlias = string.Format("{0}{1}", EsIndexes.SolicitorEsIndexAlias, "_index");
@@ -79,7 +79,7 @@ namespace BOI.Core.Search.Services
                 client.Indices.Delete(indexName);
             }
 
-            var createIndexResponse = client.Indices.Create(indexName, c => c.Map<Solicitor>(m => m
+            var createIndexResponse = client.Indices.Create(indexName, c => c.Map<Models.Solicitor>(m => m
                     .AutoMap()
                 )
             );

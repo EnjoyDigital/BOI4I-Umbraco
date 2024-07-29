@@ -1,19 +1,15 @@
 using BOI.Core.Extensions;
 using BOI.Core.Web.Constants;
-using BOI.Core.Web.Models.Dtos;
+using BOI.Core.Web.Services;
 using BOI.Umbraco.Models;
 using CsvHelper;
-using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Globalization;
-using System.IO;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -36,67 +32,26 @@ namespace BOI.Core.Web.Controllers.Backoffice
     public class ProductApiController : UmbracoAuthorizedApiController
     {
         private static readonly IEnumerable<string> AllowedExtension = new List<string>() { ".csv", ".json" };
-        private static string FileName { get; set; }
         private static string FileUploadPath = "App_Data\\TEMP\\CSVUploads";
         private static readonly Regex CsvRegex = new Regex(@"(?x)\s*,\s*(?=(?:[^""]*""[^""]*"")*[^""]*$)");
 
         private readonly IContentService contentService;
         private readonly ILogger<ProductApiController> logger;
-        private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IUmbracoHelperAccessor umbracoHelperAccessor;
+        private readonly IFileUploadService fileUploadService;
 
-        public ProductApiController(IContentService contentService, ILogger<ProductApiController> logger,
-            IWebHostEnvironment webHostEnvironment, IUmbracoHelperAccessor umbracoHelperAccessor)
+        public ProductApiController(IContentService contentService, ILogger<ProductApiController> logger, IUmbracoHelperAccessor umbracoHelperAccessor, IFileUploadService fileUploadService)
         {
             this.contentService = contentService;
             this.logger = logger;
-            this.webHostEnvironment = webHostEnvironment;
             this.umbracoHelperAccessor = umbracoHelperAccessor;
-        }
-
-
-        private async Task<SaveResponseDto> SaveFile(IFormFile file)
-        {
-            try
-            {
-                var uploadFolder = Path.Combine(webHostEnvironment.ContentRootPath, FileUploadPath);
-                FileName = file.FileName;
-                var filePath = Path.Combine(uploadFolder, file.FileName);
-
-                if (!Directory.Exists(uploadFolder))
-                {
-                    Directory.CreateDirectory(uploadFolder);
-                }
-
-                using (Stream fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(fileStream);
-                }
-
-                return new SaveResponseDto { FilePath = filePath };
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Error saving file: {FileName}", file.FileName);
-                return new SaveResponseDto { Errors = new List<string> { "Error saving file: " + file.FileName } };
-            }
-        }
-
-        public async Task<SaveResponseDto> ValidateAndSaveFile(IFormFile file)
-        {
-            if (file == null)
-                return new SaveResponseDto { Errors = new List<string> { "File cannot be null." } };
-
-            if (!AllowedExtension.Any(x => x.Equals(Path.GetExtension(file.FileName).ToLower())))
-                return new SaveResponseDto { Errors = new List<string> { "File must be a valid csv or json file" } };
-
-            return await SaveFile(file);
+            this.fileUploadService = fileUploadService;
         }
 
         [HttpPost]
         public async Task<HttpResponseMessage> ProcessFile()
         {
-            var response = await ValidateAndSaveFile(Request?.Form.Files[0]);
+            var response = await fileUploadService.ValidateAndSaveFile(Request?.Form.Files[0], "Product");
 
             if (response.Errors.NotNullAndAny())
             {
@@ -109,7 +64,7 @@ namespace BOI.Core.Web.Controllers.Backoffice
 
             try
             {
-                var productsData = GetFileData(response.FilePath).RemoveNulls().Where(x => x.Code.HasValue()).ToList();
+                var productsData = fileUploadService.GetFileData<Search.Models.Product>(response.FilePath).RemoveNulls().Where(x => x.Code.HasValue()).ToList();
 
                 CreateNodes(productsData);
 
@@ -122,8 +77,8 @@ namespace BOI.Core.Web.Controllers.Backoffice
             {
                 return new HttpResponseMessage
                 {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(string.Join(Environment.NewLine, response.Errors))
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    Content = new StringContent(string.Join(Environment.NewLine, response.Errors, ex.Message))
                 };
             }
         }
@@ -261,47 +216,6 @@ namespace BOI.Core.Web.Controllers.Backoffice
                 return node;
             }
             return null;
-        }
-
-        private IEnumerable<Search.Models.Product> GetFileData(string path)
-        {
-            using var stream = System.IO.File.OpenText(path);
-            switch (Path.GetExtension(path))
-            {
-                case ".csv":
-                    try
-                    {
-                        var csvConfig =
-                       new CsvConfiguration(CultureInfo.InvariantCulture)
-                       {
-                           Delimiter = ",",
-                           IgnoreBlankLines = true,
-                           HeaderValidated = null,
-                           HasHeaderRecord = true
-                       };
-                        using var csv = new CsvReader(stream, csvConfig);
-                        return csv.GetRecords<Search.Models.Product>().ToList();
-                    }
-                    catch (Exception e)
-                    {
-                        throw e;
-                    }
-                case ".json":
-                    try
-                    {
-                        StreamReader r = new StreamReader(path);
-                        string jsonString = r.ReadToEnd();
-                        var records = JsonConvert.DeserializeObject<List<Search.Models.Product>>(jsonString);
-                        return records;
-                    }
-                    catch (Exception e)
-                    {
-                        throw e;
-                    }
-                default:
-                    return Enumerable.Empty<Search.Models.Product>();
-            }
-            return Enumerable.Empty<Search.Models.Product>();
         }
 
         [HttpGet]

@@ -512,6 +512,9 @@
 	  <Content Include="App_Plugins\Product\backoffice\Product\import.html" />
 	  <Content Include="App_Plugins\Product\lang\en-GB.xml" />
 	  <Content Include="App_Plugins\Product\lang\en-US.xml" />
+	  <Content Include="App_Plugins\SolicitorUpload\backoffice\SolicitorUpload\import.html" />
+	  <Content Include="App_Plugins\SolicitorUpload\lang\en-GB.xml" />
+	  <Content Include="App_Plugins\SolicitorUpload\lang\en-US.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -557,6 +560,9 @@
 	  <None Include="App_Plugins\Product\backoffice\Product\productExport.controller.js" />
 	  <None Include="App_Plugins\Product\package.manifest" />
 	  <None Include="App_Plugins\Product\Product.resource.js" />
+	  <None Include="App_Plugins\SolicitorUpload\backoffice\SolicitorUpload\dataViewer.controller.js" />
+	  <None Include="App_Plugins\SolicitorUpload\package.manifest" />
+	  <None Include="App_Plugins\SolicitorUpload\SolicitorUpload.resource.js" />
 	  <None Include="Views\Partials\BdmFinder\BdmListing.cshtml" />
 	  <None Include="wwwroot\common\css\base\base.scss" />
 	  <None Include="wwwroot\common\css\base\reset.scss" />

@@ -105,6 +105,7 @@ namespace BOI.Core.Web.Extensions
             builder.Services.AddMemoryCache();
             builder.Services.AddScoped<IOutputCacheService, OutputCacheService>();
             builder.Services.AddScoped<IBdmFinderSearcher, BdmFinderSearcher>();
+            builder.Services.AddScoped<IFileUploadService, FileUploadService>();
             return builder;
         }
 
