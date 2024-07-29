@@ -560,7 +560,7 @@ namespace BOI.Core.Search.Services
             string productType = null, category = null, lTVTitle = null, lTVFilterText = null, term = null, rate = null, description = null, overallCost = null, productFees = null, features = null, earlyRepaymentCharges = null, code = null, productVariant = null, withdrawalDateTime = null, aIPDeadlineDateTime = null, launchDateTime = null;
             bool interestOnly = false, isNew = false, isFixedRate = false;
 
-            if (string.Equals(content.ContentType.Alias, Product.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(content.ContentType.Alias, Umbraco.Models.Product.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
             {
                 productType = content.Value<IPublishedContent>(publishedValueFallback, "productType")?.Name ?? "";
                 category = content.Value<IPublishedContent>(publishedValueFallback, "category")?.Name ?? "";

@@ -1,0 +1,25 @@
+﻿<div class="umb-dashboard__content" ng-controller="Product.Controllers.ProductExportController as pec" ng-cloak>
+    <div class="clearfix">
+        <div class="umb-box">
+            <div class="umb-box-content ng-scope">
+                <div ng-hide="pec.exportProcessing">
+                    <h3>Export Products</h3>
+                    <p>Export all products</p>
+                    <div class="btn-group">
+                        <a prevent-default ng-click="pec.export()" class="btn btn-success">Export Products</a>
+                    </div>
+                </div>
+
+                <div ng-show="pec.exportProcessing">
+                    <div class="alert alert-info">Processing export</div>
+                    <umb-load-indicator ng-if="pec.exportProcessing"></umb-load-indicator>
+                </div>
+
+                <div ng-show="pec.exportError">
+                    <h5>An error has occured see the details below:</h5>
+                    {{error}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

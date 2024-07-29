@@ -1,0 +1,120 @@
+﻿<div ng-cloak ng-controller="ProductImportController as ivm">
+    <umb-editor-view>
+        <umb-editor-container>
+            <umb-box>
+                <umb-box-content>
+                    <h3 class="bold ng-scope"> Upload a product file in csv or json format</h3>
+                    <p>Upload a .csv or .json file with the product data.</p>
+                    <p class="bold ng-scope">Please ensure the upload is in the correct format</p>
+                    <div ng-show="ivm.invalidFileFormat" class="alert alert-error property-error" style="display: none;">The uploaded file must be in either <b>.csv</b> or <b>.json</b> format.</div>
+                    <div ng-show="ivm.noFile" class="alert alert-error property-error" style="display: none;">A .csv or .json file must be selected.</div>
+                    <div class="umb-panel-group__details-status-actions ng-scope" ng-hide="ivm.processing || ivm.processed">
+                        <div class="input-group">
+                            <label class="input-group-btn">
+                                <span class="btn btn-info" style="margin-bottom: 10px; text-align: center;">
+                                    Select file<input type="file" accept=".csv, .json" umb-file-upload ngf-multiple="false" class="ng-scope" style="display: none;">
+                                </span>
+                            </label>
+                            <input type="text" id="fileName" class="form-control" readonly style="text-align: center; width: 300px;" value="{{ivm.fileName}}">
+                        </div>
+                        <input ng-if="ivm.fileName" type="submit" ng-click="ivm.upload()" class="btn btn-success" value="Upload file" style="text-align: center; width: 200px;">
+                    </div>
+                    <div class="umb-panel-group__details-status-actions ng-scope" ng-show="ivm.processing">
+                        <div class="clearfix ng-scope">
+                            <div class="alert alert-info">Processing file<strong> {{ivm.fileName}} </strong></div>
+                        </div>
+                        <umb-load-indicator></umb-load-indicator>
+                    </div>
+                    <div class="umb-panel-group__details-status-actions ng-scope" ng-show="ivm.processed">
+                        <div class="span12 clearfix ng-scope">
+                            <div ng-show="ivm.success" class="alert alert-success"><b>Success - </b>{{ivm.success}}</div>
+                            <div ng-show="ivm.error" class="alert alert-error"><b>Error processing file {{ivm.fileName}} - </b>{{ivm.error}}</div>
+                            <div class="btn-group">
+                                <input ng-preventdefault ng-click="ivm.back()" class="btn btn-info" value="Back to file upload" style="width: 200px;">
+                            </div>
+                        </div>
+                    </div>
+                </umb-box-content>
+            </umb-box>
+            <umb-box>
+                <umb-box-content>
+                    <h3 class="bold ng-scope"> Help Text</h3>
+                    <p>
+                        In case of a <b>.csv </b>file, please follow the following instructions <br />
+                        Ensure the csv has a header row.<br />
+                        9 columns > ProductType, Category, LTVTitle, LTVFilterText, InterestOnly, LaunchDateTime, IsNew, Term, Rate, IsFixedRate, Description, OverallCost, ProductFees, Features, EarlyRepaymentCharges, Code, ProductVariant, AIPDeadlineDateTime, WithdrawalDateTime <br />
+                        The column headers are case sensitive, Order of the columns may vary. <br />
+                        All fields are mandatory, There should not be any empty row or column. <br /> <br />
+                        E.g. of values each column can have are following:<br />
+                        ProductType: Residential <br />
+                        Category: Fixed <br />
+                        LTVTitle: 70% LTV - Residential Fixed Rates <br />
+                        LTVFilterText: 70% <br />
+                        InterestOnly: 1 for True/Yes and 0 for False/No <br />
+                        LaunchDateTime: 2021-01-25 11:30 (YYYY-MM-DD HH:MM:SS) <br />
+                        IsNew: 1 for True/Yes and 0 for False/No <br />
+                        Term: 2 (Value should either be numbers (3/2/5) without word 'year/years' or 'Standard Variable' etc without the word 'rate'. Year/Years/Rate would be added through code accordingly) <br />
+                        Rate: 5 (Just need numbers, % would be added through code) <br />
+                        IsFixedRate: 1 for True/Yes and 0 for False/No <br />
+                        Description: Until 30/11/2022 followed by our Standard Variable Rate for the rest of the mortgage term. This is currently 4.09% variable <br />
+                        OverallCost: 3.3 (Values should be just numbers without % sign. The sign would be added through code) <br />
+                        ProductFees: 25 (Values should be just numbers without £ sign. The sign would be added through code) <br />
+                        Features (Using ';' between text automatically creates a list on import): Repayment Methods: Capital Repayment; Part & Part (Interest Only element maximum 60% LTV) <br />
+                        EarlyRepaymentCharges: 3% until 31/01/2022, then 2% until 31/01/2023 <br />
+                        Code: LKG <br />
+                        ProductVariant: NC (New Customer) / PT (Product Transfer) / FA (Further Advance) / BS (BeSpoke) <br />
+                        AIPDeadlineDateTime: 2021-01-25 11:30 (YYYY-MM-DD HH:MM:SS) <br />
+                        WithdrawalDateTime: 2021-01-25 11:30 (YYYY-MM-DD HH:MM:SS) <br /> <br />
+
+                        In case of a <b>.json </b>file, please follow the following instructions. <br />
+                        17 fields > ProductType, Category, LTVTitle, LTVFilterText, InterestOnly, LaunchDateTime, IsNew, Term, Rate, IsFixedRate, Description, OverallCost, ProductFees, Features, EarlyRepaymentCharges, Code, ProductVariant. <br />
+                        The field names are case sensitive. <br />
+                        All fields are mandatory. <br />
+                        Seperate each field with comma. <br />
+                        Each field name and field value should be enclosed within "". <br /> <br />
+                        E.g. of how the file should look like: <br />
+                        [ <br />
+                        {<br />
+                        "ProductType": "Residential",<br />
+                        "Category": "Fixed",<br />
+                        "LTVTitle": "70% LTV | Residential Fixed Rates",<br />
+                        "LTVFilterText": 0.7,<br />
+                        "InterestOnly": true,<br />
+                        "LaunchDateTime": "1899-12-30T00:00:00.000Z",<br />
+                        "IsNew": true,<br />
+                        "Term": "2",<br />
+                        "Rate": 1.85,<br />
+                        "IsFixedRate": true,<br />
+                        "Description": " until 30/09/2023 followed by our Standard Variable Rate for the rest of the mortgage term. This is currently 4.09% variable",<br />
+                        "OverallCost": 3.82485759413468,<br />
+                        "ProductFees": "995",<br />
+                        "Features": "Repayment Methods: Capital Repayment, Part & Part (Interest Only element maximum 60% LTV)",<br />
+                        "EarlyRepaymentCharges": "3% until 30/09/2022, then 2% until 30/09/2023",<br />
+                        "Code": "2BJ",<br />
+                        "ProductVariant": "NC"<br />
+                        },<br />
+                        {<br />
+                        "ProductType": "Residential",<br />
+                        "Category": "Fixed",<br />
+                        "LTVTitle": "70% LTV | Residential Fixed Rates",<br />
+                        "LTVFilterText": 0.7,<br />
+                        "InterestOnly": true,<br />
+                        "LaunchDateTime": "1899-12-30T00:00:00.000Z",<br />
+                        "IsNew": true,<br />
+                        "Term": "5",<br />
+                        "Rate": 2.26,<br />
+                        "IsFixedRate": true,<br />
+                        "Description": " until 30/09/2026 followed by our Standard Variable Rate for the rest of the mortgage term. This is currently 4.09% variable",<br />
+                        "OverallCost": 3.51358231856596,<br />
+                        "ProductFees": "995",<br />
+                        "Features": "Repayment Methods: Capital Repayment, Part & Part (Interest Only element maximum 60% LTV)",<br />
+                        "EarlyRepaymentCharges": "4% until 30/09/2023, then 3% until 30/09/2025, then 2% until 30/09/2026",<br />
+                        "Code": "2BK",<br />
+                        "ProductVariant": "NC"<br />
+                        }<br />
+                        ]
+</umb-box-content>
+            </umb-box>
+        </umb-editor-container>
+    </umb-editor-view>
+</div>
