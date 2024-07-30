@@ -99,5 +99,18 @@ namespace BOI.Core.Extensions
             }
             return originalStr;
         }
-    }
+            
+		public static HtmlString SurroundWith(this string value, string insertBefore = "", string insertAfter = "", string fallbackText = "")
+		{
+			if (!value.HasValue() && !fallbackText.HasValue())
+			{
+				return new HtmlString("");
+			}
+			if (!value.HasValue())
+			{
+				value = fallbackText;
+			}
+			return new HtmlString(string.Concat(insertBefore, value, insertAfter));
+		}
+	}
 }

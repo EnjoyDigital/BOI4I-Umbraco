@@ -1,5 +1,8 @@
-﻿namespace BOI.Core.Search.Models
+﻿using System.Collections.Generic;
+
+namespace BOI.Core.Search.Models
 {
+
     public class SolicitorsResults
     {
         public int Page { get; set; }

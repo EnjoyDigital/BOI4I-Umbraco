@@ -1,6 +1,6 @@
 ﻿using BOI.Core.Extensions;
 using Nest;
-
+using BOI.Core.Extensions;
 namespace BOI.Core.Search.Models
 {
     public class Solicitor

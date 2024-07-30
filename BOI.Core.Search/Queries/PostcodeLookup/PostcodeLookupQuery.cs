@@ -9,7 +9,12 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization.Json;
+using Microsoft.Extensions.Logging;
+using BOI.Core.Constants;
+using BingMapsRESTToolkit;
+using Location = BingMapsRESTToolkit.Location;
+using Response = BingMapsRESTToolkit.Response;
 
 namespace BOI.Core.Search.Queries.PostcodeLookup
 {
@@ -21,15 +26,17 @@ namespace BOI.Core.Search.Queries.PostcodeLookup
 
         }
 
-        public class RequestHandler
+        public class RequestHandler : IRequestHandler
         {
             private readonly IConfiguration config;
 
-            public RequestHandler(IConfiguration config)
+            public RequestHandler(IConfiguration config, ILogger<PostcodeLookupQuery.RequestHandler> logger)
             {
                 this.config = config;
+                Logger = logger;
             }
 
+            public ILogger Logger { get; }
 
             public Result Execute(Request request)
             {
@@ -42,11 +49,11 @@ namespace BOI.Core.Search.Queries.PostcodeLookup
                         string response = client.DownloadString(url);
 
                         //Would have said use newtonsoft for the deserialisation, but the location doesnt then convert
-                        DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(BingMapsRESTToolkit.Response));
+                        DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(Response));
                         using (var es = new MemoryStream(Encoding.Unicode.GetBytes(response)))
                         {
-                            var mapResponse = (ser.ReadObject(es) as BingMapsRESTToolkit.Response);
-                            BingMapsRESTToolkit.Location location = (BingMapsRESTToolkit.Location)mapResponse.ResourceSets.First().Resources.First();
+                            var mapResponse = ser.ReadObject(es) as Response;
+                            Location location = (Location)mapResponse.ResourceSets.First().Resources.First();
                             return new Result()
                             {
                                 Latitude = location.Point.Coordinates[0],
@@ -57,6 +64,8 @@ namespace BOI.Core.Search.Queries.PostcodeLookup
                 }
                 catch (Exception ex)
                 {
+                    Logger.LogError(ex, "Error retrieving latlng based on postcode");
+                    
                 }
 
                 return result;

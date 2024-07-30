@@ -1,4 +1,9 @@
-﻿using BOI.Core.Constants;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using BOI.Core.Constants;
+using BOI.Core.Extensions;
 using BOI.Core.Search.Extensions;
 using BOI.Core.Search.Models;
 using Microsoft.Extensions.Configuration;
@@ -6,11 +11,58 @@ using Microsoft.Extensions.Logging;
 using Nest;
 using System.ComponentModel.DataAnnotations;
 using Umbraco.Extensions;
+using GeoLocation = Nest.GeoLocation;
 
 namespace BOI.Core.Search.Queries.Elastic
 {
     public class SolicitorSearch
     {
+
+        //This structure isnt really neccesary
+        //public IEnumerable<SearchFilter> Filters
+        //{
+        //    get
+        //    {
+        //        var filters = new List<SearchFilter>();
+
+        //        if (!string.IsNullOrWhiteSpace(SolicitorName))
+        //        {
+        //            filters.Add(new SearchFilter
+        //            {
+        //                Name = "SolicitorName",
+        //                Label = "SolicitorName",
+        //                Value = SolicitorName,
+        //            });
+        //        }
+
+        //        if (!string.IsNullOrWhiteSpace(Postcode))
+        //        {
+        //            filters.Add(new SearchFilter
+        //            {
+        //                Name = "Postcode",
+        //                Label = "Postcode",
+        //                Value = Postcode,
+        //            });
+        //        }
+
+        //        var additionalParams = "";
+
+        //        if (Page > 0)
+        //        {
+        //            additionalParams = $"&Page={Page}";
+        //        }
+
+        //        if (Size > 10)
+        //        {
+        //            additionalParams += $"&Size={Size}";
+        //        }
+
+        //        filters = filters.Select(f => f.UpdateQueryString(string.Join("&", filters.Where(ff => ff.Name != f.Name).Select(fs => $"{fs.Name}={fs.Value}")) + additionalParams)).ToList();
+
+        //        return filters;
+        //    }
+        //}
+
         public int Page { get; set; }
 
         public int Size { get; set; }
@@ -23,22 +75,19 @@ namespace BOI.Core.Search.Queries.Elastic
         public float Lat { get; set; }
     }
 
-    public class SolicitorSearcher
+    public class SolicitorSearcher : ISolicitorSearcher
     {
         private readonly IConfiguration configuration;
 
         private readonly IElasticClient esClient;
+        private readonly ILogger<SolicitorSearcher> logger;
         private IConfigurationRoot configuration1;
 
-        public SolicitorSearcher(IConfiguration configuration, IElasticClient esClient)
+        public SolicitorSearcher(IConfiguration configuration, IElasticClient esClient, ILogger<SolicitorSearcher> logger)
         {
             this.configuration = configuration;
             this.esClient = esClient;
-        }
-
-        public SolicitorSearcher(IConfigurationRoot configuration1)
-        {
-            this.configuration1 = configuration1;
+            this.logger = logger;
         }
 
         public SolicitorsResults Execute(SolicitorSearch model)
@@ -56,7 +105,7 @@ namespace BOI.Core.Search.Queries.Elastic
 
             var search = esClient
                 .Search<Solicitor>(s => s
-                    .Index(string.Format("{0}{1}", configuration[ConfigurationConstants.SolicitorIndexAliasKey], "_index"))
+                    .Index(configuration[ConfigurationConstants.SolicitorIndexAliasKey])
                     .TrackTotalHits()
                     .From((model.Page - 1) * model.Size)
                     .Size(model.Size)
@@ -98,7 +147,7 @@ namespace BOI.Core.Search.Queries.Elastic
                             return so.GeoDistance(g => g
                                 .Field(f => f.Location)
                                 .Unit(DistanceUnit.Miles)
-                                .Points(new Nest.GeoLocation(model.Lat, model.Lon))
+                                .Points(new GeoLocation(model.Lat, model.Lon))
                                 .DistanceType(GeoDistanceType.Arc)
                                 .IgnoreUnmapped()
                                 .Order(SortOrder.Ascending)
@@ -116,6 +165,7 @@ namespace BOI.Core.Search.Queries.Elastic
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, "bdm search");
             }
 
             if (search == null)
@@ -126,7 +176,7 @@ namespace BOI.Core.Search.Queries.Elastic
             var resultsHits = search.Hits;
             List<SolicitorResult> queryResults;
 
-            if (!model.Postcode.IsNullOrWhiteSpace())
+            if (model.Postcode.HasValue())
             {
                 var hits = resultsHits.Select(solicitor =>
                 {

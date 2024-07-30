@@ -50,7 +50,7 @@
 
 		<label>
 			Account type <span class="red">*</span>
-			@if (Model.HasProperty("AccountTypeHelpMessage") && Model.HasValue("AccountTypeHelpMessage") && !string.IsNullOrWhiteSpace(Model.AccountTypeHelpMessage))
+        @if (Model.HasValue("accountTypeHelpMessage") )
 			{
 				<span class="calc-help">
 					<svg><use xlink:href="#sprite-icon-info"></use></svg>
@@ -64,7 +64,7 @@
 			<option value="" selected disabled>Please select</option>
 			@if (Model.HasValue("overdraftRates"))
 			{
-				foreach (var overdraftRate in Model.OverdraftRates.Select(x => x.Content).OfType<OverdraftRate>())
+				foreach (var overdraftRate in Model.OverdraftRates?.Select(x => x.Content).OfType<OverdraftRate>().RemoveNulls())
 				{
 					<option data-arr-rate="@overdraftRate.ArrangedOverdraftRate" data-arr-ear="@overdraftRate.ArrangedOverdraftRateEar" data-unarr-rate="@overdraftRate.UnarrangedOverdraftRateWith" data-unarr-ear="@overdraftRate.UnarrangedOverdraftRateEarwith" data-unarr-rate-wo="@overdraftRate.UnarrangedOverdraftRateWithout" data-unarr-ear-wo="@overdraftRate.UnarrangedOverdraftRateEarwithout" data-show-course-length="@overdraftRate.ShowCourseLength" data-show-arr-interest-rate="@overdraftRate.ShowArrangedOverdraftInterestRate" data-hide-arr="@overdraftRate.HideArrangedOverdraft" data-jurisdiction="@overdraftRate.Jurisdiction" data-exclude-surcharges="@overdraftRate.ExcludeSurcharges" value="@overdraftRate.AccountName">
 						@overdraftRate.AccountName
@@ -76,7 +76,7 @@
 		<div class="course-length-section">
 			<label>
 				How long was your undergraduate course? <span class="red">*</span>
-				@if (Model.HasProperty("LengthOfUndergradCourseHelpMessage") && Model.HasValue("LengthOfUndergradCourseHelpMessage") && !string.IsNullOrWhiteSpace(Model.LengthOfUndergradCourseHelpMessage))
+				@if (Model.HasValue("lengthOfUndergradCourseHelpMessage"))
 				{
 					<span class="calc-help">
 						<svg><use xlink:href="#sprite-icon-info"></use></svg>
@@ -90,7 +90,7 @@
 				<option value="" selected disabled>Please select</option>
 				@if (Model.HasValue("gradAccountRates"))
 				{
-					foreach (var gradRate in Model.GradAccountRates.Select(x => x.Content).OfType<GradAccountRate>())
+					foreach (var gradRate in Model.GradAccountRates?.Select(x => x.Content).OfType<GradAccountRate>().RemoveNulls())
 					{
 						<option data-arr-rate="@gradRate.ArrangedOverdraftRate" data-arr-ear="@gradRate.ArrangedOverdraftRateEar" data-unarr-rate="@gradRate.UnarrangedOverdraftRateWith" data-unarr-ear="@gradRate.UnarrangedOverdraftRateEarwith" data-unarr-rate-wo="@gradRate.UnarrangedOverdraftRateWithout" data-unarr-ear-wo="@gradRate.UnarrangedOverdraftRateEarwithout" value="@gradRate.OverdraftLimit">
 							@gradRate.YearsOfFullTime3rdLevelEducation
@@ -104,7 +104,7 @@
 		<div class="arranged-overdraft-section">
 			<label>
 				Arranged overdraft limit on the account <span class="red">*</span>
-				@if (Model.HasProperty("ArragedOverdraftLimitHelpMessage") && Model.HasValue("ArragedOverdraftLimitHelpMessage") && !string.IsNullOrWhiteSpace(Model.ArragedOverdraftLimitHelpMessage))
+				@if (Model.HasValue("arragedOverdraftLimitHelpMessage"))
 				{
 					<span class="calc-help">
 						<svg><use xlink:href="#sprite-icon-info"></use></svg>
@@ -122,7 +122,7 @@
 
 		<label>
 			Overdraft Amount <span class="red">*</span>
-			@if (Model.HasProperty("OverdraftAmountHelpMessage") && Model.HasValue("OverdraftAmountHelpMessage") && !string.IsNullOrWhiteSpace(Model.OverdraftAmountHelpMessage))
+			@if (Model.HasValue("overdraftAmountHelpMessage"))
 			{
 				<span class="calc-help">
 					<svg><use xlink:href="#sprite-icon-info"></use></svg>
@@ -139,7 +139,7 @@
 
 		<label>
 			Number of days in overdraft within each month <span class="red">*</span>
-			@if (Model.HasProperty("DaysInOverdraftHelpMessage") && Model.HasValue("DaysInOverdraftHelpMessage") && !string.IsNullOrWhiteSpace(Model.DaysInOverdraftHelpMessage))
+			@if (Model.HasValue("daysInOverdraftHelpMessage"))
 			{
 				<span class="calc-help">
 					<svg><use xlink:href="#sprite-icon-info"></use></svg>
@@ -187,7 +187,7 @@
 		<div class="arranged-interest-section">
 			<label>
 				What is your arranged overdraft interest rate <span class="red">*</span>
-				@if (Model.HasProperty("arrangedOverdraftInterestRateHelpMessage") && Model.HasValue("arrangedOverdraftInterestRateHelpMessage") && !string.IsNullOrWhiteSpace(Model.ArrangedOverdraftInterestRateHelpMessage))
+                @if ( Model.HasValue("arrangedOverdraftInterestRateHelpMessage") )
 				{
 					<span class="calc-help">
 						<svg><use xlink:href="#sprite-icon-info"></use></svg>
@@ -242,7 +242,7 @@
 					</div>
 				</div>
 			</div>
-@if (Model.HasProperty("disclaimerText"))
+			@if (Model.HasValue("disclaimerText"))
 {
 				<div class="disclaimer">
 		@(Model.DisclaimerText)

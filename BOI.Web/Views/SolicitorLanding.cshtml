@@ -1,16 +1,13 @@
 ﻿@inherits UmbracoViewPage<SolicitorResultsViewModel>
 @using BOI.Core.Web.Constants
 
-@{
-    Layout = "/Views/Shared/_Layout.cshtml";
-}
-
 <partial name="/Views/Shared/Hero.cshtml" />
 <partial name="/Views/Shared/Breadcrumb.cshtml" />
 
-@if (Model.Content != null)
+
+@if (Model.HasValue("content"))
 {
-    @Html.GetBlockListHtml(Model, "content")
+    @await Html.GetBlockListHtmlAsync(Model, "content")
 }
 
 <div class="umb-block-list">
@@ -46,7 +43,8 @@
         </div>
     </div>
 
-    <partial name="/Views/Partials/SolicitorLookup/SolicitorLookUpResultList.cshtml" />
+    <partial name="/Views/partials/SolicitorLookup/SolicitorLookUpResultList.cshtml" />
+    
 
 </div>
 
@@ -56,5 +54,5 @@
 }
 
 @section Scripts {
-    <script type="text/javascript" src="/common/scripts/bundles/solicitorLanding.bundle.js" asp-asp-append-version="true"></script>
+    <script type="text/javascript" src="/common/scripts/bundles/solicitorLanding.bundle.js" asp-append-version="true"></script>
 }

@@ -3,6 +3,7 @@ using BOI.Core.Search.Models;
 using BOI.Core.Search.Queries.Elastic;
 using BOI.Core.Search.Queries.PostcodeLookup;
 using BOI.Core.Web.Models.ViewModels;
+using BOI.Core.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.Extensions.Configuration;
@@ -12,22 +13,22 @@ using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Web.Common.Controllers;
 using Umbraco.Extensions;
+using BOI.Core.Search.Queries.Elastic;
+using BOI.Core.Search.Queries.PostcodeLookup;
 
 namespace BOI.Core.Web.Controllers.Hijack
 {
     public class SolicitorLandingController : RenderController
     {
-        private readonly IConfiguration config;
-        private readonly ILogger<SolicitorLandingController> logger;
+        private readonly IRequestHandler requesthandler;
+        private readonly ISolicitorSearcher solicitorSearcher;
         private readonly IPublishedValueFallback publishedValueFallback;
         private readonly IElasticClient esClient;
 
-        public SolicitorLandingController(IConfiguration config, ILogger<SolicitorLandingController> logger,
-            IPublishedValueFallback publishedValueFallback,ICompositeViewEngine compositeViewEngine, IElasticClient esClient,
-            IUmbracoContextAccessor umbracoContextAccessor) : base(logger, compositeViewEngine, umbracoContextAccessor)
+        public SolicitorLandingController(IRequestHandler requesthandler,ISolicitorSearcher solicitorSearcher , IPublishedValueFallback publishedValueFallback,ILogger<SolicitorLandingController> logger, ICompositeViewEngine compositeViewEngine, IUmbracoContextAccessor umbracoContextAccessor) : base(logger, compositeViewEngine, umbracoContextAccessor)
         {
-            this.config = config;
-            this.logger = logger;
+            this.requesthandler = requesthandler;
+            this.solicitorSearcher = solicitorSearcher;
             this.publishedValueFallback = publishedValueFallback;
             this.esClient = esClient;
         }
@@ -37,6 +38,8 @@ namespace BOI.Core.Web.Controllers.Hijack
 
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
+
+            //    var model = new SolicitorResultsViewModel(CurrentPage, publishedValueFallback);
             var model = new SolicitorSearch();
             await TryUpdateModelAsync(model);
 
@@ -49,10 +52,10 @@ namespace BOI.Core.Web.Controllers.Hijack
                 {
                     var lookupQuery = new PostcodeLookupQuery.Request();
                     lookupQuery.Postcode = model.Postcode;
-                    var requestHandler = new PostcodeLookupQuery.RequestHandler(config);
+                   
 
 
-                    var coordinates = requestHandler.Execute(lookupQuery);// GetLatLong(model.Postcode);
+                    var coordinates = requesthandler.Execute(lookupQuery);// GetLatLong(model.Postcode);
                     if (coordinates.Latitude != 0.0 && coordinates.Longitude != 0.0)
                     {
                         model.Lat = float.Parse(coordinates.Latitude.ToString());
@@ -60,7 +63,7 @@ namespace BOI.Core.Web.Controllers.Hijack
                     }
                     else
                     {
-                        viewModel = new SolicitorResultsViewModel(CurrentPage, publishedValueFallback)
+                        viewModel = new SolicitorResultsViewModel(CurrentPage,publishedValueFallback)
                         {
                             Results = new SolicitorsResults()
                         };
@@ -69,13 +72,13 @@ namespace BOI.Core.Web.Controllers.Hijack
 
                 }
 
-                var solicitorSearcher = new SolicitorSearcher(config, esClient);
+               
 
                 var results = solicitorSearcher.Execute(model);
 
                 if (results.Total != 0)
                 {
-                    TryUpdateModelAsync(results);
+                  await  TryUpdateModelAsync(results);
                 }
                 viewModel = new SolicitorResultsViewModel(CurrentPage, publishedValueFallback)
                 {
@@ -89,6 +92,9 @@ namespace BOI.Core.Web.Controllers.Hijack
             {
                 return CurrentTemplate(new SolicitorResultsViewModel(CurrentPage, publishedValueFallback) { ListingUrl = CurrentPage.Url() });
             }
+
         }
+
+
     }
 }

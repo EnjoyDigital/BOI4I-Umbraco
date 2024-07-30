@@ -23,6 +23,7 @@ using BOI.Core.Infrastructure;
 using BOI.Core.Search.NotificationHandlers;
 using BOI.Core.Search.Queries.SQL;
 using BOI.Core.Search.Queries.Elastic;
+using BOI.Core.Search.Queries.PostcodeLookup;
 
 
 namespace BOI.Core.Web.Extensions
@@ -105,6 +106,9 @@ namespace BOI.Core.Web.Extensions
             builder.Services.AddMemoryCache();
             builder.Services.AddScoped<IOutputCacheService, OutputCacheService>();
             builder.Services.AddScoped<IBdmFinderSearcher, BdmFinderSearcher>();
+            builder.Services.AddScoped<ISolicitorSearcher, SolicitorSearcher>();
+            //left fulled qualified 
+            builder.Services.AddScoped<BOI.Core.Search.Queries.PostcodeLookup.IRequestHandler, PostcodeLookupQuery.RequestHandler>();
             builder.Services.AddScoped<IFileUploadService, FileUploadService>();
             return builder;
         }

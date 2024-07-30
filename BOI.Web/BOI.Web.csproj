@@ -564,6 +564,7 @@
 	  <None Include="App_Plugins\SolicitorUpload\package.manifest" />
 	  <None Include="App_Plugins\SolicitorUpload\SolicitorUpload.resource.js" />
 	  <None Include="Views\Partials\BdmFinder\BdmListing.cshtml" />
+	  <None Include="Views\Partials\SolicitorLookup\SolicitorLookUpResultList.cshtml" />
 	  <None Include="wwwroot\common\css\base\base.scss" />
 	  <None Include="wwwroot\common\css\base\reset.scss" />
 	  <None Include="wwwroot\common\css\base\typography.scss" />
