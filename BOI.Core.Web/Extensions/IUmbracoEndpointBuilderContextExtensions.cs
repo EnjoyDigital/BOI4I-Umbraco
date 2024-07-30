@@ -34,20 +34,20 @@ namespace BOI.Core.Web.Extensions
 
             context.EndpointRouteBuilder.MapControllerRoute(
                 CustomRouteNames.CriteriaLookupAjax,
-                "/findResidentialCriteria",
+                "/findResidentialCriteria/",
                 new
                 {
-                    controller = "CriteriaLookupLanding",
-                    action = "FindResidentialCriteria",
+                    controller = "CustomRouteAction",
+                    action = "FindResidentialCriteria"
                 }
             );
 
             context.EndpointRouteBuilder.MapControllerRoute(
                 CustomRouteNames.AutoCompleteCriteriaLookupAjax,
-                "/autoCompleteResidentialCriteria",
+                "/autoCompleteResidentialCriteria/",
                 new
                 {
-                    controller = "CriteriaLookupLanding",
+                    controller = "CustomRouteAction",
                     action = "AutoCompleteCriteriaLookup",
                     criteriaType = FieldConstants.ResidentialProductType
                 }
@@ -55,20 +55,20 @@ namespace BOI.Core.Web.Extensions
 
             context.EndpointRouteBuilder.MapControllerRoute(
                 CustomRouteNames.CriteriaLookupAjaxBuyToLet,
-                "/findBuyToLetCriteria",
+                "/findBuyToLetCriteria/",
                 new
                 {
-                    controller = "CriteriaLookupLanding",
+                    controller = "CustomRouteAction",
                     action = "FindBuyToLetCriteria",
                 }
             );
 
             context.EndpointRouteBuilder.MapControllerRoute(
                 CustomRouteNames.AutoCompleteCriteriaLookupAjax,
-                "/autoCompleteBuyToLetCriteria",
+                "/autoCompleteBuyToLetCriteria/",
                 new
                 {
-                    controller = "CriteriaLookupLanding",
+                    controller = "CustomRouteAction",
                     action = "AutoCompleteCriteriaLookup",
                     criteriaType = FieldConstants.BuyToLetProductType
                 }
@@ -76,20 +76,20 @@ namespace BOI.Core.Web.Extensions
 
             context.EndpointRouteBuilder.MapControllerRoute(
                 CustomRouteNames.CriteriaLookupAjaxBespoke,
-                "/findBespokeCriteria",
+                "/findBespokeCriteria/",
                 new
                 {
-                    controller = "CriteriaLookupLanding",
+                    controller = "CustomRouteAction",
                     action = "FindBespokeCriteria",
                 }
             );
 
             context.EndpointRouteBuilder.MapControllerRoute(
                 CustomRouteNames.AutoCompleteCriteriaLookupBespokeAjax,
-                "/autoCompleteBespokeCriteria",
+                "/autoCompleteBespokeCriteria/",
                 new
                 {
-                    controller = "CriteriaLookupLanding",
+                    controller = "CustomRouteAction",
                     action = "AutoCompleteCriteriaLookup",
                     criteriaType = FieldConstants.BespokeProductType
                 }
