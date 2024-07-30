@@ -72,7 +72,7 @@ namespace BOI.Core.Web.Controllers.Hijack
 
                 }
 
-                var solicitorSearcher = new SolicitorSearcher(config, esClient);
+               
 
                 var results = solicitorSearcher.Execute(model);
 

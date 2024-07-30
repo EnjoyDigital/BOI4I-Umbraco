@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Nest;
 using System.ComponentModel.DataAnnotations;
 using Umbraco.Extensions;
+using GeoLocation = Nest.GeoLocation;
 
 namespace BOI.Core.Search.Queries.Elastic
 {

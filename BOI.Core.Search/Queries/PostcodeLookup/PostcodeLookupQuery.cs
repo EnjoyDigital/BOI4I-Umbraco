@@ -13,6 +13,8 @@ using System.Runtime.Serialization.Json;
 using Microsoft.Extensions.Logging;
 using BOI.Core.Constants;
 using BingMapsRESTToolkit;
+using Location = BingMapsRESTToolkit.Location;
+using Response = BingMapsRESTToolkit.Response;
 
 namespace BOI.Core.Search.Queries.PostcodeLookup
 {
