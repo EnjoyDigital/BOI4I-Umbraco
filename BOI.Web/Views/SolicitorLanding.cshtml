@@ -1,0 +1,57 @@
+﻿@using BOI.Core.Web.Constants
+@inherits UmbracoViewPage<SolicitorResultsViewModel>
+<partial name="/Views/Shared/Hero.cshtml" />
+<partial name="/Views/Shared/Breadcrumb.cshtml" />
+
+
+@if (Model.HasValue("content"))
+{
+    @await Html.GetBlockListHtmlAsync(Model, "content")
+}
+
+<div class="umb-block-list">
+    <div class="lookup-form-block solicitor-lookup">
+        <div class="lookup-form-block-content solicitor-lookup-content">
+            <h2 class="lookup-form-block__title">@Model.FormTitle</h2>
+
+            <form id="solicitor-lookup" action="@Model.ListingUrl" class="lookup-form solicitor-lookup-form">
+                <fieldset>
+                    <div class="lookup-form-inner solicitor-lookup-form-inner">
+                        <div class="product-filters-input-wrap -search-term">
+                            <label for="Postcode">@Model.SearchPostcodeText</label>
+                            @Html.TextBox(SolicitorSearchBindAliases.Postcode, null, new { placeholder = "Eg, LS2 7EH", id = "Postcode" })
+                            <span id="postcode-message" class="field-validation-error" style="display:none;">Please enter a valid postcode</span>
+                        </div>
+
+                        <div class="product-filters-input-wrap -search-term">
+                            <label for="SolicitorName">@Model.SearchNameText</label>
+                            @Html.TextBox(SolicitorSearchBindAliases.SolicitorName, null, new { id = "SolicitorName" })
+                        </div>
+
+                        <div class="product-filters-input-wrap -button-wrap">
+                            <button class="button">
+                                <svg class="[ icon icon-search -white ]" aria-hidden="true">
+                                    <use xlink:href="#sprite-icon-search"></use>
+                                </svg>
+                                <span>Find Solicitor</span>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <partial name="/Views/partials/SolicitorLookup/SolicitorLookUpResultList.cshtml" />
+    
+
+</div>
+
+@if (Model.Pods != null)
+{
+    <partial name="/Views/Partials/Pods.cshtml" />
+}
+
+@section Scripts {
+    <script type="text/javascript" src="/common/scripts/bundles/solicitorLanding.bundle.js" asp-append-version="true"></script>
+}

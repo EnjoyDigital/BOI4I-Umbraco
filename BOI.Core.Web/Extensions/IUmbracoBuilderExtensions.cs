@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using DangEasy.Caching.MemoryCache;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Extensions;
-using Umbraco.Cms.Infrastructure.Examine.DependencyInjection;
 using Umbraco.Cms.Infrastructure.DependencyInjection;
 using Umbraco.Cms.Core.Routing;
 using Umbraco.Cms.Core.Notifications;
@@ -21,10 +20,10 @@ using BOI.Core.Search.Factory;
 using Umbraco.Forms.Core.Cache;
 using Microsoft.AspNetCore.DataProtection;
 using BOI.Core.Infrastructure;
-using Lucene.Net.Search;
 using BOI.Core.Search.NotificationHandlers;
 using BOI.Core.Search.Queries.SQL;
 using BOI.Core.Search.Queries.Elastic;
+using BOI.Core.Search.Queries.PostcodeLookup;
 
 
 namespace BOI.Core.Web.Extensions
@@ -107,6 +106,9 @@ namespace BOI.Core.Web.Extensions
             builder.Services.AddMemoryCache();
             builder.Services.AddScoped<IOutputCacheService, OutputCacheService>();
             builder.Services.AddScoped<IBdmFinderSearcher, BdmFinderSearcher>();
+            builder.Services.AddScoped<ISolicitorSearcher, SolicitorSearcher>();
+            //left fulled qualified 
+            builder.Services.AddScoped<BOI.Core.Search.Queries.PostcodeLookup.IRequestHandler, PostcodeLookupQuery.RequestHandler>();
             return builder;
         }
 

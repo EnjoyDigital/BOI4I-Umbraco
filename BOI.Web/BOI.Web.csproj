@@ -550,6 +550,7 @@
 	  <None Include="App_Plugins\Meganav\lib\angular-ui-tree.min.js" />
 	  <None Include="App_Plugins\Meganav\package.manifest" />
 	  <None Include="Views\Partials\BdmFinder\BdmListing.cshtml" />
+	  <None Include="Views\Partials\SolicitorLookup\SolicitorLookUpResultList.cshtml" />
 	  <None Include="wwwroot\common\css\base\base.scss" />
 	  <None Include="wwwroot\common\css\base\reset.scss" />
 	  <None Include="wwwroot\common\css\base\typography.scss" />
@@ -1033,6 +1034,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Update="Views\Shared\_LayoutPayAsYouGrowCalculator.cshtml">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
 	  <Content Update="wwwroot\common\images\icons\favicon\manifest.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>

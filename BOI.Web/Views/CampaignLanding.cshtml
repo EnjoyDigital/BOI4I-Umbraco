@@ -1,0 +1,30 @@
+﻿@inherits UmbracoViewPage<CampaignLanding>
+<partial name="/Views/Shared/Hero.cshtml" />
+<partial name="/Views/Shared/Breadcrumb.cshtml" />
+
+<section class="campaign-landing">
+	<div class="campaign-landing__main">
+		@if (Model.HasValue("content"))
+		{
+			@await Html.GetBlockListHtmlAsync(Model, "content")
+		}
+
+    </div>
+
+	@if (Model.SidebarResources != null)
+	{
+		<div class="campaign-landing__sidebar">
+			@Model.SidebarTitle.SurroundWith(@"<h2 class=""h3 campaign-landing__sidebar-title"">","</h2>")
+			@await Html.GetBlockListHtmlAsync(Model, "sidebarResources")
+		</div>
+	}
+</section>
+
+@if (Model.Pods != null)
+{
+	<partial name="/Views/Partials/Pods.cshtml" />
+}
+
+@section Scripts {
+	<script type="text/javascript" src="/common/scripts/bundles/campaignLanding.bundle.js"></script>
+}

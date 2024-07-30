@@ -9,10 +9,8 @@
 
     @RenderBody()
 
-    @* Check - how is cacheed version displayed in Ageas?*@
+    <link rel="stylesheet" href="/common/css/style.css" asp-append-version="true" />
 
-@*     <link rel="stylesheet" href="@CacheBust.FingerPrint("/common/css/style.css")" />
- *@
     @RenderSection("Scripts", required: false)
     @await Component.InvokeAsync("BodyScripts", new { upperScripts = false })
 

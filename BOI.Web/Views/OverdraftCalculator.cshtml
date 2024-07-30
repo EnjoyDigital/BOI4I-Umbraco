@@ -48,18 +48,18 @@
 			@Model.IntroText
 		}
 
-    <label>
-        Account type <span class="red">*</span>
-        @if (Model.HasValue("AccountTypeHelpMessage") )
-        {
-            <span class="calc-help">
-                <svg><use xlink:href="#sprite-icon-info"></use></svg>
-                <span class="calc-help-message">
-                    @Model.AccountTypeHelpMessage
-                </span>
-            </span>
-        }
-    </label>
+		<label>
+			Account type <span class="red">*</span>
+        @if (Model.HasValue("accountTypeHelpMessage") )
+			{
+				<span class="calc-help">
+					<svg><use xlink:href="#sprite-icon-info"></use></svg>
+					<span class="calc-help-message">
+						@Model.AccountTypeHelpMessage
+					</span>
+				</span>
+			}
+		</label>
 		<select id="account-type" class="form-field-required">
 			<option value="" selected disabled>Please select</option>
 			@if (Model.HasValue("overdraftRates"))
@@ -74,18 +74,18 @@
 		</select>
 
 		<div class="course-length-section">
-            <label>
-                How long was your undergraduate course? <span class="red">*</span>
-                @if ( Model.HasValue("LengthOfUndergradCourseHelpMessage") )
-                {
-                    <span class="calc-help">
-                        <svg><use xlink:href="#sprite-icon-info"></use></svg>
-                        <span class="calc-help-message">
-                            @Model.LengthOfUndergradCourseHelpMessage
-                        </span>
-                    </span>
-                }
-            </label>
+			<label>
+				How long was your undergraduate course? <span class="red">*</span>
+				@if (Model.HasValue("lengthOfUndergradCourseHelpMessage"))
+				{
+					<span class="calc-help">
+						<svg><use xlink:href="#sprite-icon-info"></use></svg>
+						<span class="calc-help-message">
+							@Model.LengthOfUndergradCourseHelpMessage
+						</span>
+					</span>
+				}
+			</label>
 			<select id="course-length">
 				<option value="" selected disabled>Please select</option>
 				@if (Model.HasValue("gradAccountRates"))
@@ -102,53 +102,53 @@
 		</div>
 
 		<div class="arranged-overdraft-section">
-            <label>
-                Arranged overdraft limit on the account <span class="red">*</span>
-                @if (Model.HasValue("ArragedOverdraftLimitHelpMessage") )
-                {
-                    <span class="calc-help">
-                        <svg><use xlink:href="#sprite-icon-info"></use></svg>
-                        <span class="calc-help-message">
-                            @Model.ArragedOverdraftLimitHelpMessage
-                        </span>
-                    </span>
-                }
-            </label>
+			<label>
+				Arranged overdraft limit on the account <span class="red">*</span>
+				@if (Model.HasValue("arragedOverdraftLimitHelpMessage"))
+				{
+					<span class="calc-help">
+						<svg><use xlink:href="#sprite-icon-info"></use></svg>
+						<span class="calc-help-message">
+							@Model.ArragedOverdraftLimitHelpMessage
+						</span>
+					</span>
+				}
+			</label>
 			<div class="calc-input">
 				<input id="arranged-overdraft-input" class="form-field-required" type="number" min="0" max="25000" value="0">
 			</div>
 			<p class="error-msg arranged-field">Must be between £0 and £25000</p>
 		</div>
 
-        <label>
-            Overdraft Amount <span class="red">*</span>
-            @if (Model.HasValue("OverdraftAmountHelpMessage") )
-            {
-                <span class="calc-help">
-                    <svg><use xlink:href="#sprite-icon-info"></use></svg>
-                    <span class="calc-help-message">
-                        @Model.OverdraftAmountHelpMessage
-                    </span>
-                </span>
-            }
-        </label>
+		<label>
+			Overdraft Amount <span class="red">*</span>
+			@if (Model.HasValue("overdraftAmountHelpMessage"))
+			{
+				<span class="calc-help">
+					<svg><use xlink:href="#sprite-icon-info"></use></svg>
+					<span class="calc-help-message">
+						@Model.OverdraftAmountHelpMessage
+					</span>
+				</span>
+			}
+		</label>
 		<div class="calc-input">
 			<input id="overdraft-input" class="form-field-required" type="number" min="1" max="25000">
 		</div>
 		<p class="error-msg overdraft-field">Must be between £1 and £25000</p>
 
-        <label>
-            Number of days in overdraft within each month <span class="red">*</span>
-            @if ( Model.HasValue("DaysInOverdraftHelpMessage") )
-            {
-                <span class="calc-help">
-                    <svg><use xlink:href="#sprite-icon-info"></use></svg>
-                    <span class="calc-help-message">
-                        @Model.DaysInOverdraftHelpMessage
-                    </span>
-                </span>
-            }
-        </label>
+		<label>
+			Number of days in overdraft within each month <span class="red">*</span>
+			@if (Model.HasValue("daysInOverdraftHelpMessage"))
+			{
+				<span class="calc-help">
+					<svg><use xlink:href="#sprite-icon-info"></use></svg>
+					<span class="calc-help-message">
+						@Model.DaysInOverdraftHelpMessage
+					</span>
+				</span>
+			}
+		</label>
 		<select id="days-input" class="form-field-required">
 			<option value="" selected disabled>Please select</option>
 			<option value="1">1</option>
@@ -185,18 +185,18 @@
 		</select>
 
 		<div class="arranged-interest-section">
-            <label>
-                What is your arranged overdraft interest rate <span class="red">*</span>
+			<label>
+				What is your arranged overdraft interest rate <span class="red">*</span>
                 @if ( Model.HasValue("arrangedOverdraftInterestRateHelpMessage") )
-                {
-                    <span class="calc-help">
-                        <svg><use xlink:href="#sprite-icon-info"></use></svg>
-                        <span class="calc-help-message">
-                            @Model.ArrangedOverdraftInterestRateHelpMessage
-                        </span>
-                    </span>
-                }
-            </label>
+				{
+					<span class="calc-help">
+						<svg><use xlink:href="#sprite-icon-info"></use></svg>
+						<span class="calc-help-message">
+							@Model.ArrangedOverdraftInterestRateHelpMessage
+						</span>
+					</span>
+				}
+			</label>
 			<div class="calc-input percent">
 				<input id="arranged-interest-input" type="number">
 			</div>
@@ -243,11 +243,11 @@
 				</div>
 			</div>
 			@if (Model.HasValue("disclaimerText"))
-			{
+{
 				<div class="disclaimer">
-					@(Model.DisclaimerText)
+		@(Model.DisclaimerText)
 				</div>
-			}
+}
 
 			<div class="button-area">
 				<a href="https://www.bankofirelanduk.com/personal/current-account/overdrafts/" class="button blue center" id="#close-window">Close Calculator</a>

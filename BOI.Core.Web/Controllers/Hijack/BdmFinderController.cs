@@ -18,16 +18,15 @@ namespace BankOfIreland.Intermediaries.Core.Web.Controllers.Hijacks
 {
     public class BdmFinderController : RenderController
     {
-        private readonly IConfiguration config;
+
 
         private readonly IBdmFinderSearcher bdmFinderSearcher;
         private readonly UmbracoHelper umbracoHelper;
         private readonly IPublishedValueFallback publishedValueFallback;
 
-        public BdmFinderController(IConfiguration config, IBdmFinderSearcher bdmFinderSearcher,UmbracoHelper umbracoHelper, IPublishedValueFallback publishedValueFallback,ILogger<RenderController> logger, ICompositeViewEngine compositeViewEngine, IUmbracoContextAccessor umbracoContextAccessor) : base(logger, compositeViewEngine, umbracoContextAccessor)
+        public BdmFinderController( IBdmFinderSearcher bdmFinderSearcher,UmbracoHelper umbracoHelper, IPublishedValueFallback publishedValueFallback,ILogger<RenderController> logger, ICompositeViewEngine compositeViewEngine, IUmbracoContextAccessor umbracoContextAccessor) : base(logger, compositeViewEngine, umbracoContextAccessor)
         {
 
-            this.config = config;
             this.bdmFinderSearcher = bdmFinderSearcher;
             this.umbracoHelper = umbracoHelper;
             this.publishedValueFallback = publishedValueFallback;

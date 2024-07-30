@@ -14,6 +14,7 @@ using Umbraco.Cms.Core.Routing;
 using Umbraco.Extensions;
 using BOI.Core.Search.Queries.SQL;
 using BOI.Core.Search.Models.ElasticSearch;
+using Solicitor = BOI.Core.Search.Models.Solicitor;
 
 namespace BOI.Core.Search.Services
 {
