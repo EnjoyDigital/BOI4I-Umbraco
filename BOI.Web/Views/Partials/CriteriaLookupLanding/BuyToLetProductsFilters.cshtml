@@ -1,0 +1,54 @@
+﻿@inherits UmbracoViewPage<CriteriaLookupResultsViewModel>
+
+<div class="tab-content rich-text" @(Model.isBuyToLet ? "data-tab-active" : "") data-tab-title="Buy To Let Criteria" id="BuyToLetCriteria" data-isbuytolet="true">
+    @Model.BuyToLetCategorySubText
+    <form action="" class="product-filters criteria-filters" data-autocompleteurl="@Url.RouteUrl(CustomRouteNames.AutoCompleteCriteriaLookupBuyToLetAjax, new {controller = "CriteriaLookupLanding", action = "AutoCompleteCriteriaLookup"})" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBuyToLet, new {controller = "CriteriaLookupLanding", action = "FindBuyToLetCriteria"})" data-pageid="@Model.Id">
+        <fieldset>
+            <legend class="h3 product-filters__title js-toggle-product-filters">Filter Criteria</legend>
+
+            <div class="product-filters-inner js-product-filters">
+
+                <div class="product-filters-input-wrap -select-wrap">
+                    <label for="BuyToLetCriteriaCategory">@Model.BuyToLetSearchCategoryText</label>
+                    @Html.DropDownListFor(m => Model.BuyToLetCriteriaCategory, Model.BuyToLetCategoryList, new { id = "BuyToLetCriteriaCategory" })
+                </div>
+
+                <div class="product-filters-input-wrap -search-term">
+                    <label for="BuyToLetCriteriaName">@Model.BuyToLetSearchNameText</label>
+                    @Html.TextBoxFor(m => Model.BuyToLetCriteriaName, new { id = "BuyToLetCriteriaName", placeholder = "Enter your search" })
+                </div>
+
+                <div class="product-filters-input-wrap">
+                    <button class="button" id="BuyToLetSearch" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBuyToLet, new { controller = "CriteriaLookupLanding", action = "FindBuyToLetCriteria" })" data-pageid="@Model.Id"><span>Search</span></button>
+                </div>
+
+                <div class="product-filters-input-wrap">
+                    <button class="button -blue-outline js-form-clear" id="BuyToLetClear" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBuyToLet, new { controller = "CriteriaLookupLanding", action = "FindBuyToLetCriteria" })" data-pageid="@Model.Id"><span>Clear</span></button>
+                </div>
+
+                <input type="text" value="@Model.isBuyToLet" hidden />
+
+                @if (Model.BuyToLetPopularSearches != null && Model.BuyToLetPopularSearches.Any())
+                {
+                    <div class="product-filters-popular-searches">
+                        <label>Popular searches</label>
+                        @foreach (var search in Model.BuyToLetPopularSearches.OfType<Criteria>())
+                        {
+                            var criteriaName = search.CriteriaName.IsNullOrWhiteSpace() ? search.Name : search.CriteriaName;
+
+                            <button id="searchBuyToLetCriteriaOnly" class="button -light-grey -no-radius js-popular-criterea-search" data-search-term="@search.Name" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBuyToLet, new {controller = "CriteriaLookupLanding", action = "FindBuyToLetCriteria"})" data-pageid="@Model.Id">
+                                <span>
+                                    @criteriaName
+                                </span>
+                            </button>
+                        }
+                    </div>
+                }
+            </div>
+        </fieldset>
+    </form>
+
+
+    <partial name="/Views/Partials/CriteriaLookupLanding/BuyToLetProducts.cshtml" />
+
+</div>

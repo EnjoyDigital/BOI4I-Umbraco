@@ -1,0 +1,53 @@
+﻿@inherits UmbracoViewPage<CriteriaLookupResultsViewModel>
+
+<div class="tab-content rich-text" @(Model.isBespoke ? "data-tab-active" : "") data-tab-title="Bespoke Criteria" id="BespokeCriteria" data-isbespoke="true">
+    @Model.BespokeCategorySubText
+    <form action="" class="product-filters criteria-filters" data-autocompleteurl="@Url.RouteUrl(CustomRouteNames.AutoCompleteCriteriaLookupBespokeAjax, new {controller = "CriteriaLookupLanding", action = "AutoCompleteCriteriaLookup"})" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBespoke, new {controller = "CriteriaLookupLanding", action = "FindBespokeCriteria"})" data-pageid="@Model.Id">
+        <fieldset>
+            <legend class="h3 product-filters__title js-toggle-product-filters">Filter Criteria</legend>
+
+            <div class="product-filters-inner js-product-filters">
+
+                <div class="product-filters-input-wrap -select-wrap">
+                    <label for="BespokeCriteriaCategory">@Model.BespokeSearchCategoryText</label>
+                    @Html.DropDownListFor(m => Model.BespokeCriteriaCategory, Model.BespokeCategoryList, new { id = "BespokeCriteriaCategory" })
+                </div>
+
+                <div class="product-filters-input-wrap -search-term">
+                    <label for="BespokeCriteriaName">@Model.BespokeSearchNameText</label>
+                    @Html.TextBoxFor(m => Model.BespokeCriteriaName, new { id = "BespokeCriteriaName", placeholder = "Enter your search" })
+                </div>
+
+                <div class="product-filters-input-wrap">
+                    <button class="button" id="BespokeSearch" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBespoke, new { controller = "CriteriaLookupLanding", action = "FindBespokeCriteria" })" data-pageid="@Model.Id"><span>Search</span></button>
+                </div>
+
+                <div class="product-filters-input-wrap">
+                    <button class="button -blue-outline js-form-clear" id="BespokeClear" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBespoke, new { controller = "CriteriaLookupLanding", action = "FindBespokeCriteria" })" data-pageid="@Model.Id"><span>Clear</span></button>
+                </div>
+
+                <input type="text" value="@Model.isBespoke" hidden />
+
+                @if (Model.BespokePopularSearches != null && Model.BespokePopularSearches.Any())
+                {
+                    <div class="product-filters-popular-searches">
+                        <label>Popular searches</label>
+                        @foreach (var search in Model.BespokePopularSearches.OfType<Criteria>())
+                        {
+                            var criteriaName = search.CriteriaName.IsNullOrWhiteSpace() ? search.Name : search.CriteriaName;
+
+                            <button id="searchBespokeCriteriaOnly" class="button -light-grey -no-radius js-popular-criterea-search" data-search-term="@search.Name" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBespoke, new { controller = "CriteriaLookupLanding", action = "FindBespokeCriteria" })" data-pageid="@Model.Id">
+                                <span>
+                                    @criteriaName
+                                </span>
+                            </button>
+                        }
+                    </div>
+                }
+            </div>
+        </fieldset>
+    </form>
+
+    <partial name="~/Views/Partials/CriteriaLookupLanding/BespokeProducts.cshtml" />
+</div>
+

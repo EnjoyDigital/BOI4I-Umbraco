@@ -1,0 +1,105 @@
+﻿@inherits UmbracoViewPage<CriteriaLookupResultsViewModel>
+@using Umbraco.Cms.Core.Strings
+@inject IShortStringHelper shortStringHelper;
+
+@if (Model.BuyToLetResults != null && Model.BuyToLetResults.QueryResults != null && Model.BuyToLetResults.QueryResults.Any(x => x.IsBuyToLetProduct))
+{
+    var BuyToLetProducts = Model.BuyToLetResults.QueryResults.Where(x => x.IsBuyToLetProduct).OrderBy(y => y.CriteriaName);
+    var GroupedBuyToLetProducts = BuyToLetProducts.GroupBy(y => y.CriteriaName[0].ToString().ToUpper());
+    var BuyToLetProductsResultText = BuyToLetProducts.Count() > 1 ? "results" : "result";
+    var charAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+    var BuyToLetProductsChars = BuyToLetProducts.Select(x => x.CriteriaName[0]);
+
+    <div id="buyToLetResult">
+
+        <div class="product-table-caption">
+            <h3 class="product-table-caption__title">@BuyToLetProducts.Count() @BuyToLetProductsResultText</h3>
+            <a class="print-products js-print-products" href="" title="Click to download criteria PDF">
+                <svg class="[ icon icon-print -blue ]" aria-hidden="true">
+                    <use xlink:href="#sprite-icon-pdf-document-icon"></use>
+                </svg>
+                <span>Download Criteria PDF</span>
+            </a>
+        </div>
+
+        <div class="alphabet-list">
+            <ul>
+                @foreach (var alpha in charAlpha)
+                {
+                    if (BuyToLetProductsChars.Contains(alpha))
+                    {
+                        <li>
+                            <a href="#CritereaCategory_@alpha" data-letter="@alpha"><span class="sr-only">Skip to criterea beginning with the letter </span>@alpha</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li aria-hidden="true">
+                            @alpha
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+
+        @foreach (var groupedBuyToLetProduct in GroupedBuyToLetProducts)
+        {
+            <div id="CritereaCategory_@groupedBuyToLetProduct.Key" class="criteria-category" data-letter="@groupedBuyToLetProduct.Key">
+                <h3>@groupedBuyToLetProduct.Key</h3>
+
+                @foreach (var criteria in groupedBuyToLetProduct.OrderBy(y => y.SortOrder))
+                {
+                    <div class="accordion" id="@criteria.NameId">
+                        <button id="Accordion-@criteria.NameId-heading" class="accordion-heading" aria-controls="Accordion-@criteria.NameId-content">
+                            @criteria.CriteriaName
+
+                            @if (!string.IsNullOrWhiteSpace(criteria.CriteriaUpdatedDate))
+                            {
+                                if (DateTime.Now <= Convert.ToDateTime(criteria.CriteriaUpdatedDate))
+                                {
+                                    <span class="notice">Updated</span>
+                                }
+                            }
+
+                            <i class="toggle"></i>
+                        </button>
+                        <div id="Accordion-@criteria.NameId-content" class="accordion-content rich-text" role="region" aria-labelledby="Accordion-@criteria.NameId-heading">
+                            @Html.Raw(criteria.BodyText)
+
+                            @if (criteria.CriteriaTabs != null && criteria.CriteriaTabs.Any())
+                            {
+                                foreach (var tab in criteria.CriteriaTabs)
+                                {
+                                    <div class="accordion" id="@string.Concat(criteria.NameId, "_", @tab.CriteriaTabName.ToLower().ToCleanString(shortStringHelper, CleanStringType.UrlSegment))">
+                                        <button id="Accordion-@tab.CriteriaTabName.ToLower().Replace(" ", "-")-heading" class="accordion-heading" aria-controls="Accordion-@tab.CriteriaTabName.ToLower().Replace(" ", "-")-content">
+                                            @tab.CriteriaTabName
+                                            @if (!string.IsNullOrWhiteSpace(tab.CriteriaTabUpdatedDate))
+                                            {
+                                                if (DateTime.Now <= Convert.ToDateTime(tab.CriteriaTabUpdatedDate))
+                                                {
+                                                    <span class="notice">Updated</span>
+                                                }
+                                            }
+                                            <i class="toggle"></i>
+                                        </button>
+                                        <div id="Accordion-@criteria.NameId-content" class="accordion-content rich-text" role="region" aria-labelledby="Accordion-@tab.CriteriaTabName.ToLower().Replace(" ", "-")-heading">
+                                            @Html.Raw(tab.BodyText)
+                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>@Model.BuyToLetNoResultFoundText</p>
+}

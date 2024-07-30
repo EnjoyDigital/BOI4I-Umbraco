@@ -1,0 +1,44 @@
+﻿@inherits UmbracoViewPage<CriteriaLookupResultsViewModel>
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="~/Views/Shared/Hero.cshtml" />
+<partial name="~/Views/Shared/Breadcrumb.cshtml" />
+
+
+@if (Model.Content != null)
+{
+    @Html.GetBlockListHtml(Model, "content")
+}
+
+<div id="tabs"></div>
+<section class="criteria-lookup-container">
+    <div class="umb-block-list">
+        <div class="tabbed-content">
+
+            @* Residential Products *@
+            <partial name="~/Views/Partials/CriteriaLookupLanding/ResidentialProductsFilters.cshtml" />
+
+            @* Buy To Let Products *@
+
+            <partial name="~/Views/Partials/CriteriaLookupLanding/BuyToLetProductsFilters.cshtml" />
+
+            @*Bespoke Produts*@
+
+            <partial name="~/Views/Partials/CriteriaLookupLanding/BespokeProductsFilters.cshtml" />
+
+        </div>
+    </div>
+</section>
+
+@if (Model.Pods != null)
+{
+    <div class="umb-block-list">
+        <partial name="~/Views/Partials/Pods.cshtml" />
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript" src="/common/scripts/bundles/criteriaLookup.bundle.js" asp-append-version="true"></script>
+}
