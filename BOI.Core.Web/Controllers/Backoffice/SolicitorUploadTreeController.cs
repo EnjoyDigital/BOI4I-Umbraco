@@ -1,16 +1,25 @@
-﻿using System.Net.Http.Formatting;
-using Umbraco.Web.Models.Trees;
-using Umbraco.Web.Mvc;
-using Umbraco.Web.Trees;
+﻿using Umbraco.Cms.Core.Events;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Trees;
+using Umbraco.Cms.Web.BackOffice.Trees;
+using Umbraco.Cms.Web.Common.Attributes;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
-namespace BankOfIreland.Intermediaries.Core.Web.Controllers.Backoffice
+namespace BOI.Core.Web.Controllers.Backoffice
 {
     [PluginController("SolicitorUpload")]
     [Tree(SolicitorUploadSection, "SolicitorUpload", TreeTitle = "Solicitor Upload", TreeGroup = "solicitorUploadGroup", SortOrder = 5)]
     public class SolicitorUploadTreeController : TreeController
     {
         public const string SolicitorUploadSection = "solicitorUpload";
-        protected override TreeNodeCollection GetTreeNodes(string id, FormDataCollection queryStrings)
+
+        public SolicitorUploadTreeController(ILocalizedTextService localizedTextService, UmbracoApiControllerTypeCollection umbracoApiControllerTypeCollection, IEventAggregator eventAggregator) : base(localizedTextService, umbracoApiControllerTypeCollection, eventAggregator)
+        {
+        }
+
+        protected override ActionResult<TreeNodeCollection> GetTreeNodes(string id, FormCollection queryStrings)
         {
             var tree = new TreeNodeCollection();
             var import = CreateTreeNode("1", "-1", queryStrings, "Upload Solicitor file");
@@ -27,9 +36,9 @@ namespace BankOfIreland.Intermediaries.Core.Web.Controllers.Backoffice
             return tree;
         }
 
-        protected override MenuItemCollection GetMenuForNode(string id, FormDataCollection queryStrings)
+        protected override ActionResult<MenuItemCollection> GetMenuForNode(string id, FormCollection queryStrings)
         {
-            return new MenuItemCollection();
+            throw new NotImplementedException();
         }
     }
 }

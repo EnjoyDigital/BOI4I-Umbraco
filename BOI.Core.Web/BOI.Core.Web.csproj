@@ -16,13 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Composers\ProductComposer.cs" />
     <Compile Remove="Controllers\Backoffice\Api\EdAdminApiController.cs" />
     <Compile Remove="Controllers\Backoffice\BdmUploadApiController.cs" />
     <Compile Remove="Controllers\Backoffice\BdmUploadTreeController.cs" />
-    <Compile Remove="Controllers\Backoffice\ProductApiController.cs" />
-    <Compile Remove="Controllers\Backoffice\ProductTreeController.cs" />
-    <Compile Remove="Controllers\Backoffice\SolicitorUploadApiController.cs" />
-    <Compile Remove="Controllers\Backoffice\SolicitorUploadTreeController.cs" />
     <Compile Remove="Controllers\Backoffice\Trees\EdAdminTreeController.cs" />
   </ItemGroup>
 

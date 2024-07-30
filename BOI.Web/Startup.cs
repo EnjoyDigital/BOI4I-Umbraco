@@ -65,7 +65,7 @@ namespace BOI.Web
                 })
                 .WithEndpoints(u =>
                 {
-                   // u.UseCustomRoutes();
+                    u.UseCustomRoutes();
                     u.UseInstallerEndpoints();
                     u.UseBackOfficeEndpoints();
                     u.UseWebsiteEndpoints();

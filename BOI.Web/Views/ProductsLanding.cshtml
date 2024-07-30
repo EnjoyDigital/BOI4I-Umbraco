@@ -1,0 +1,42 @@
+﻿@inherits UmbracoViewPage<ProductsLandingResultsViewModel>
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="/Views/Shared/Hero.cshtml" />
+<partial name="/Views/Shared/Breadcrumb.cshtml" />
+
+<section class="umb-block-list">
+    <div class="rich-text products-intro">
+        @if (Model.Content != null)
+        {
+            <div class="umb-block-list">
+                @Html.GetBlockListHtml(Model, "content")
+            </div>
+        }
+
+        @if (Model.HelpToBuyLogos != null)
+        {
+            foreach (var logo in Model.HelpToBuyLogos)
+            {
+                <img src="@logo.GetCropUrl("HelpToBuyLogoDesktop")" alt="@logo.GetImageAlternativeText()" />
+            }
+        }
+
+    </div>
+</section>
+
+<section class="products-section">
+    <div class="products-section-inner">
+        <partial name="/Views/Partials/ProductsLanding/ProductsLandingFilters.cshtml" />
+    </div>
+</section>
+
+@if (Model.Pods != null)
+{
+    <partial name="/Views/Partials/Pods.cshtml" />
+}
+
+@section Scripts {
+    <script type="text/javascript" src="/common/scripts/bundles/products.bundle.js" asp-append-version="true"></script>
+}

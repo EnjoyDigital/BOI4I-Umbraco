@@ -1,4 +1,5 @@
 ﻿using BOI.Core.Constants;
+using BOI.Core.Search.Constants;
 using Microsoft.AspNetCore.Builder;
 using Umbraco.Cms.Web.Common.ApplicationBuilder;
 
@@ -32,14 +33,98 @@ namespace BOI.Core.Web.Extensions
             );
 
             context.EndpointRouteBuilder.MapControllerRoute(
-                CustomRouteNames.Autocomplete,
-                "/api/autocomplete/{action}",
+                CustomRouteNames.CriteriaLookupAjax,
+                "/findResidentialCriteria",
                 new
                 {
-                    controller = "AutoComplete",
-                    action = "product"
+                    controller = "CriteriaLookupLanding",
+                    action = "FindResidentialCriteria",
                 }
             );
+
+            context.EndpointRouteBuilder.MapControllerRoute(
+                CustomRouteNames.AutoCompleteCriteriaLookupAjax,
+                "/autoCompleteResidentialCriteria",
+                new
+                {
+                    controller = "CriteriaLookupLanding",
+                    action = "AutoCompleteCriteriaLookup",
+                    criteriaType = FieldConstants.ResidentialProductType
+                }
+            );
+
+            context.EndpointRouteBuilder.MapControllerRoute(
+                CustomRouteNames.CriteriaLookupAjaxBuyToLet,
+                "/findBuyToLetCriteria",
+                new
+                {
+                    controller = "CriteriaLookupLanding",
+                    action = "FindBuyToLetCriteria",
+                }
+            );
+
+            context.EndpointRouteBuilder.MapControllerRoute(
+                CustomRouteNames.AutoCompleteCriteriaLookupAjax,
+                "/autoCompleteBuyToLetCriteria",
+                new
+                {
+                    controller = "CriteriaLookupLanding",
+                    action = "AutoCompleteCriteriaLookup",
+                    criteriaType = FieldConstants.BuyToLetProductType
+                }
+            );
+
+            context.EndpointRouteBuilder.MapControllerRoute(
+                CustomRouteNames.CriteriaLookupAjaxBespoke,
+                "/findBespokeCriteria",
+                new
+                {
+                    controller = "CriteriaLookupLanding",
+                    action = "FindBespokeCriteria",
+                }
+            );
+
+            context.EndpointRouteBuilder.MapControllerRoute(
+                CustomRouteNames.AutoCompleteCriteriaLookupBespokeAjax,
+                "/autoCompleteBespokeCriteria",
+                new
+                {
+                    controller = "CriteriaLookupLanding",
+                    action = "AutoCompleteCriteriaLookup",
+                    criteriaType = FieldConstants.BespokeProductType
+                }
+            );
+
+
+            context.EndpointRouteBuilder.MapControllerRoute(
+                CustomRouteNames.ProductLandingAjax,
+                "/findProductsLanding",
+                new
+                {
+                    controller = "ProductsLanding",
+                    action = "FindProductsLanding"
+                }
+            );
+
+            context.EndpointRouteBuilder.MapControllerRoute(
+               CustomRouteNames.AutoCompleteSearchAjax,
+               "/site",
+               new
+               {
+                   controller = "SearchResult",
+                   action = "site"
+               }
+           );
+
+            context.EndpointRouteBuilder.MapControllerRoute(
+               CustomRouteNames.Autocomplete,
+               "/api/autocomplete/{action}",
+               new
+               {
+                   controller = "AutoComplete",
+                   action = "product"
+               }
+           );
             return context;
         }
     }

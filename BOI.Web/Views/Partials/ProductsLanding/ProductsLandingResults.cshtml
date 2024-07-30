@@ -1,0 +1,78 @@
+﻿@using System.Text.RegularExpressions
+@inherits UmbracoViewPage<ProductsLandingResultsViewModel>
+
+@if (Model.Results != null && Model.Results.QueryResults.Any())
+{
+    <div class="rich-text" id="productsResult">
+        @{
+            var groupedByLTVResults = Model.Results.QueryResults.OfType<BOI.Core.Search.Models.ProductResult>().OrderBy(x => x.LTVSortOrder).GroupBy(x => x.LTVTitle);
+            foreach (var groupedByLTVResult in groupedByLTVResults)
+            {
+                <table class="product-table">
+                    <caption class="product-table-caption">
+                        <h3 class="product-table-caption__title">@groupedByLTVResult.Key</h3>
+                        <a class="print-products js-print-products" href="" title="Click to print products">
+                            <svg class="[ icon icon-print -blue ]" aria-hidden="true">
+                                <use xlink:href="#sprite-icon-print"></use>
+                            </svg>
+                            <span>Print products</span>
+                        </a>
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th class="term">Term</th>
+                            <th class="rate">Rate</th>
+                            <th class="description">Description</th>
+                            <th class="overall-cost">Overall cost of comparison</th>
+                            <th class="product-fee">Product Fee</th>
+                            <th class="features">Features</th>
+                            <th class="early-repayment-charge">Early Repayment Charges (% of the sum repaid)</th>
+                            <th class="code">Code</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var resultItem in groupedByLTVResult.OrderBy(x => x.Term).ThenBy(x => x.Rate).ThenByDescending(x => x.ProductFees).ThenBy(x => x.Code))
+                        {
+                            if (resultItem.WithdrawalDateTime.HasValue() && DateTime.Compare(DateTime.Parse(resultItem.WithdrawalDateTime), DateTime.Now) < 0) { continue; }
+                            <tr id="@resultItem.Code">
+                                <td data-name="Term">
+                                    @if (resultItem.IsNew && !string.IsNullOrWhiteSpace(resultItem.LaunchDateTime))
+                                    {
+                                        if (DateTime.Now <= Convert.ToDateTime(resultItem.LaunchDateTime).AddDays(7))
+                                        {
+                                            <svg class="[ icon icon-new -blue ]" aria-hidden="true">
+                                                <use xlink:href="#sprite-icon-new"></use>
+                                            </svg>
+                                        }
+                                    }
+                                    @if (resultItem.WithdrawalDateTime.HasValue() && DateTimeOffset.Parse(resultItem.WithdrawalDateTime) > DateTime.Now)
+                                    {
+                                        <svg class="[ icon icon-closing icon-new -blue ]" aria-hidden="true">
+                                            <use xlink:href="#sprite-icon-closing-soon"></use>
+                                        </svg>
+                                    }
+                                    @Html.Raw(resultItem.Term)
+                                </td>
+                                <td data-name="Rate">@resultItem.FormattedRate% @resultItem.Category</td>
+                                <td data-name="Description">@Html.Raw(resultItem.Description)</td>
+                                <td class="overall-cost" data-name="Overall cost of comparison">@resultItem.FormattedOverallCost% APRC</td>
+                                <td data-name="Product Fee">&pound;@resultItem.ProductFees</td>
+                                <td data-name="Features" class="features-text">@Html.Raw(resultItem.Features)</td>
+                                <td class="early-repayment-charge" data-name="Early Repayment Charges (% of the sum repaid)">@Html.Raw(resultItem.EarlyRepaymentCharges)</td>
+                                <td data-name="Code">@resultItem.Code</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+        }
+    </div>
+}
+else
+{
+    <div class="rich-text">
+        <span class="h2 -blue-text">@Model.NoResultFoundMessage</span>
+    </div>
+}

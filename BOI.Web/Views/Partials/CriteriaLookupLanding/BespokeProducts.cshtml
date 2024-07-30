@@ -1,0 +1,106 @@
+﻿@using Umbraco.Cms.Core.Strings
+@inject IShortStringHelper shortStringHelper;
+@inherits UmbracoViewPage<CriteriaLookupResultsViewModel>
+
+@if (Model.BespokeResults != null && Model.BespokeResults.QueryResults != null && Model.BespokeResults.QueryResults.Any(x => x.IsBespokeProduct))
+{
+    var BespokeProducts = Model.BespokeResults.QueryResults.Where(x => x.IsBespokeProduct).OrderBy(y => y.CriteriaName);
+    var GroupedBespokeProducts = BespokeProducts.GroupBy(y => y.CriteriaName[0].ToString().ToUpper());
+    var BespokeProductsResultText = BespokeProducts.Count() > 1 ? "results" : "result";
+    var charAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+    var BespokeProductsChars = BespokeProducts.Select(x => x.CriteriaName[0]);
+
+    <div id="bespokeResult">
+
+        <div class="product-table-caption">
+            <span class="h3 product-table-caption__title">@BespokeProducts.Count() @BespokeProductsResultText</span>
+            <a class="print-products js-print-products" href="" title="Click to download criteria PDF">
+                <svg class="[ icon icon-print -blue ]">
+                    <use xlink:href="#sprite-icon-pdf-document-icon"></use>
+                </svg>
+                <span>Download Criteria PDF</span>
+            </a>
+        </div>
+
+        <div class="alphabet-list">
+            <ul>
+                @foreach (var alpha in charAlpha)
+                {
+                    <li>
+                        @if (BespokeProductsChars.Contains(alpha))
+                        {
+                            <a href="" data-letter="@alpha">@alpha</a>
+                        }
+                        else
+                        {
+                            @alpha
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
+
+        @foreach (var groupedBespokeProduct in GroupedBespokeProducts)
+        {
+            <div class="criteria-category" data-letter="@groupedBespokeProduct.Key">
+                <h3>@groupedBespokeProduct.Key</h3>
+
+                @foreach (var criteria in groupedBespokeProduct.OrderBy(y => y.SortOrder))
+                {
+                    <div class="accordion" id="@criteria.NameId">
+                        <div class="accordion-heading">
+                            @criteria.CriteriaName
+
+                            @if (!string.IsNullOrWhiteSpace(criteria.CriteriaUpdatedDate))
+                            {
+                                if (DateTime.Now <= Convert.ToDateTime(criteria.CriteriaUpdatedDate))
+                                {
+                                    <span class="notice">Updated</span>
+                                }
+                            }
+
+                            <i class="toggle"></i>
+                        </div>
+                        <div class="accordion-content rich-text">
+                            @Html.Raw(criteria.BodyText)
+
+                            @if (criteria.CriteriaTabs != null && criteria.CriteriaTabs.Any())
+                            {
+                                foreach (var tab in criteria.CriteriaTabs)
+                                {
+                                    <div class="accordion" id="@tab.CriteriaTabName.ToLower().ToCleanString(shortStringHelper, CleanStringType.UrlSegment)">
+                                        <div class="accordion-heading">
+                                            @tab.CriteriaTabName
+                                            @if (!string.IsNullOrWhiteSpace(tab.CriteriaTabUpdatedDate))
+                                            {
+                                                if (DateTime.Now <= Convert.ToDateTime(tab.CriteriaTabUpdatedDate))
+                                                {
+                                                    <span class="notice">Updated</span>
+                                                }
+                                            }
+                                            <i class="toggle"></i>
+                                        </div>
+                                        <div class="accordion-content rich-text">
+                                            @Html.Raw(tab.BodyText)
+
+                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+@*                                             @{ Html.RenderPartial("AccordionLink", "Link to this criteria"); } *@
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+
+@*                             @{ Html.RenderPartial("AccordionLink", "Link to this criteria"); }
+ *@
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>@Model.BespokeNoResultFoundText</p>
+}

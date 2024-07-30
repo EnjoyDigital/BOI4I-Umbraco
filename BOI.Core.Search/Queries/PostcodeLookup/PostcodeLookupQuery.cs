@@ -1,5 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Azure;
+using BOI.Core.Constants;
+using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using BingMapsRESTToolkit;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Runtime.Serialization.Json;
 using Microsoft.Extensions.Logging;
@@ -72,4 +80,5 @@ namespace BOI.Core.Search.Queries.PostcodeLookup
 
 
     }
+
 }

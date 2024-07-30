@@ -109,6 +109,7 @@ namespace BOI.Core.Web.Extensions
             builder.Services.AddScoped<ISolicitorSearcher, SolicitorSearcher>();
             //left fulled qualified 
             builder.Services.AddScoped<BOI.Core.Search.Queries.PostcodeLookup.IRequestHandler, PostcodeLookupQuery.RequestHandler>();
+            builder.Services.AddScoped<IFileUploadService, FileUploadService>();
             return builder;
         }
 

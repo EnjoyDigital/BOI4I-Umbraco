@@ -4,15 +4,15 @@ using Umbraco.Cms.Core.Models.PublishedContent;
 
 namespace BOI.Core.Web.Models.ViewModels
 {
-	public class SolicitorResultsViewModel : SolicitorLanding
-	{
-		public SolicitorResultsViewModel(IPublishedContent content, IPublishedValueFallback publishedValueFallback) : base(content, publishedValueFallback) { }
+    public class SolicitorResultsViewModel : SolicitorLanding
+    {
+        public SolicitorResultsViewModel(IPublishedContent content, IPublishedValueFallback publishedValueFallback) : base(content, publishedValueFallback) { }
 
-		public SolicitorsResults Results;
+        public SolicitorsResults Results;
 
-		public string ListingUrl { get; set; }
+        public string ListingUrl { get; set; }
 
-		public Page<SolicitorResult> Paging { get; set; }
+        public Page<SolicitorResult> Paging { get; set; }
 
-	}
+    }
 }

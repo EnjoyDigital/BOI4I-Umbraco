@@ -508,6 +508,13 @@
 	  <Content Include="App_Plugins\Meganav\backoffice\propertyeditors\editor.html" />
 	  <Content Include="App_Plugins\Meganav\lang\en.xml" />
 	  <Content Include="App_Plugins\Meganav\lib\angular-ui-tree.min.css" />
+	  <Content Include="App_Plugins\Product\backoffice\Product\exports.html" />
+	  <Content Include="App_Plugins\Product\backoffice\Product\import.html" />
+	  <Content Include="App_Plugins\Product\lang\en-GB.xml" />
+	  <Content Include="App_Plugins\Product\lang\en-US.xml" />
+	  <Content Include="App_Plugins\SolicitorUpload\backoffice\SolicitorUpload\import.html" />
+	  <Content Include="App_Plugins\SolicitorUpload\lang\en-GB.xml" />
+	  <Content Include="App_Plugins\SolicitorUpload\lang\en-US.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -549,6 +556,13 @@
 	  <None Include="App_Plugins\Meganav\backoffice\propertyeditors\editor.controller.js" />
 	  <None Include="App_Plugins\Meganav\lib\angular-ui-tree.min.js" />
 	  <None Include="App_Plugins\Meganav\package.manifest" />
+	  <None Include="App_Plugins\Product\backoffice\Product\dataViewer.controller.js" />
+	  <None Include="App_Plugins\Product\backoffice\Product\productExport.controller.js" />
+	  <None Include="App_Plugins\Product\package.manifest" />
+	  <None Include="App_Plugins\Product\Product.resource.js" />
+	  <None Include="App_Plugins\SolicitorUpload\backoffice\SolicitorUpload\dataViewer.controller.js" />
+	  <None Include="App_Plugins\SolicitorUpload\package.manifest" />
+	  <None Include="App_Plugins\SolicitorUpload\SolicitorUpload.resource.js" />
 	  <None Include="Views\Partials\BdmFinder\BdmListing.cshtml" />
 	  <None Include="Views\Partials\SolicitorLookup\SolicitorLookUpResultList.cshtml" />
 	  <None Include="wwwroot\common\css\base\base.scss" />

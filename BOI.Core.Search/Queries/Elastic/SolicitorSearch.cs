@@ -9,6 +9,8 @@ using BOI.Core.Search.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Nest;
+using System.ComponentModel.DataAnnotations;
+using Umbraco.Extensions;
 
 namespace BOI.Core.Search.Queries.Elastic
 {

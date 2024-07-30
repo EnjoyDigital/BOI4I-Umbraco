@@ -28,7 +28,7 @@ namespace BOI.Core.Search.Services
         string GetIndexName(string indexAlias);
         bool IndexExists(string? indexAlias = null);
         void IndexMediaViewLog(params MediaRequestLog[] mediaRequestLogs);
-        void IndexSolicitors(IEnumerable<Solicitor> solicitors);
+        void IndexSolicitors(IEnumerable<BOI.Core.Search.Models.Solicitor> solicitors);
         void IndexWebContent(params WebContent[] indexItem);
         void ReIndexWebContent(IEnumerable<WebContent> content);
     }
@@ -68,7 +68,7 @@ namespace BOI.Core.Search.Services
         /// </summary>
         /// <param name="solicitors"> A collection of Solicitors</param>
         /// 
-        public void IndexSolicitors(IEnumerable<Solicitor> solicitors)
+        public void IndexSolicitors(IEnumerable<Models.Solicitor> solicitors)
         {
             var indexName = EsIndexes.SolicitorEsIndexAlias;
             var indexAlias = string.Format("{0}{1}", EsIndexes.SolicitorEsIndexAlias, "_index");
@@ -80,7 +80,7 @@ namespace BOI.Core.Search.Services
                 client.Indices.Delete(indexName);
             }
 
-            var createIndexResponse = client.Indices.Create(indexName, c => c.Map<Solicitor>(m => m
+            var createIndexResponse = client.Indices.Create(indexName, c => c.Map<Models.Solicitor>(m => m
                     .AutoMap()
                 )
             );
@@ -561,7 +561,7 @@ namespace BOI.Core.Search.Services
             string productType = null, category = null, lTVTitle = null, lTVFilterText = null, term = null, rate = null, description = null, overallCost = null, productFees = null, features = null, earlyRepaymentCharges = null, code = null, productVariant = null, withdrawalDateTime = null, aIPDeadlineDateTime = null, launchDateTime = null;
             bool interestOnly = false, isNew = false, isFixedRate = false;
 
-            if (string.Equals(content.ContentType.Alias, Product.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(content.ContentType.Alias, Umbraco.Models.Product.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
             {
                 productType = content.Value<IPublishedContent>(publishedValueFallback, "productType")?.Name ?? "";
                 category = content.Value<IPublishedContent>(publishedValueFallback, "category")?.Name ?? "";

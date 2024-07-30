@@ -1,9 +1,14 @@
-﻿using BOI.Core.Search.Models;
+﻿using BOI.Core.Extensions;
+using BOI.Core.Search.Models;
+using BOI.Core.Search.Queries.Elastic;
+using BOI.Core.Search.Queries.PostcodeLookup;
 using BOI.Core.Web.Models.ViewModels;
 using BOI.Core.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Nest;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Web.Common.Controllers;
@@ -18,12 +23,14 @@ namespace BOI.Core.Web.Controllers.Hijack
         private readonly IRequestHandler requesthandler;
         private readonly ISolicitorSearcher solicitorSearcher;
         private readonly IPublishedValueFallback publishedValueFallback;
+        private readonly IElasticClient esClient;
 
         public SolicitorLandingController(IRequestHandler requesthandler,ISolicitorSearcher solicitorSearcher , IPublishedValueFallback publishedValueFallback,ILogger<SolicitorLandingController> logger, ICompositeViewEngine compositeViewEngine, IUmbracoContextAccessor umbracoContextAccessor) : base(logger, compositeViewEngine, umbracoContextAccessor)
         {
             this.requesthandler = requesthandler;
             this.solicitorSearcher = solicitorSearcher;
             this.publishedValueFallback = publishedValueFallback;
+            this.esClient = esClient;
         }
 
         [NonAction]
@@ -64,6 +71,9 @@ namespace BOI.Core.Web.Controllers.Hijack
                     }
 
                 }
+
+                var solicitorSearcher = new SolicitorSearcher(config, esClient);
+
                 var results = solicitorSearcher.Execute(model);
 
                 if (results.Total != 0)
@@ -86,5 +96,5 @@ namespace BOI.Core.Web.Controllers.Hijack
         }
 
 
-        }
+    }
 }

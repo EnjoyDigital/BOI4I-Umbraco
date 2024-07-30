@@ -1,0 +1,13 @@
+{
+  "sections": [
+    {
+      "alias": "product",
+      "name": "Product"
+    }
+  ],
+  "javascript": [
+    "~/App_Plugins/Product/backoffice/Product/dataViewer.controller.js",
+    "~/App_Plugins/Product/backoffice/Product/productExport.controller.js",
+    "~/App_Plugins/Product/product.resource.js"
+  ]
+}

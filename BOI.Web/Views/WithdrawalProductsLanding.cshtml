@@ -1,0 +1,135 @@
+﻿@inherits UmbracoViewPage<ProductsLandingResultsViewModel>
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="/Views/Shared/Hero.cshtml" />
+<partial name="/Views/Shared/Breadcrumb.cshtml" />
+
+@if (Model.Content != null || Model.HelpToBuyLogos != null)
+{
+    <section class="rich-text products-intro">
+        @if (Model.Content != null)
+        {
+            @Html.GetBlockListHtml(Model, "content")
+        }
+
+        @if (Model.HelpToBuyLogos != null)
+        {
+            foreach (var logo in Model.HelpToBuyLogos)
+            {
+                <img src="@logo.GetCropUrl("HelpToBuyLogoDesktop")" alt="@logo.GetImageAlternativeText()" />
+            }
+        }
+    </section>
+}
+
+@if (Model.Results != null && Model.Results.QueryResults.Any())
+{
+    <section class="products-section">
+        <div class="products-section-inner">
+            <div class="rich-text" id="productsResult">
+                @{
+                    var groupedByLTVResults = Model.Results.QueryResults.OfType<BOI.Core.Search.Models.ProductResult>().Where(x => x.WithdrawalDateTime.HasValue()).OrderBy(x => x.LTVSortOrder).GroupBy(x => x.LTVTitle);
+                    if (groupedByLTVResults != null && groupedByLTVResults.Any())
+                    {
+                        foreach (var groupedByLTVResult in groupedByLTVResults)
+                        {
+                            <table class="product-table -withdrawn">
+                                <caption class="product-table-caption">
+                                    <h3 class="product-table-caption__title">Withdrawing - @groupedByLTVResult.Key</h3>
+                                    <a class="print-products js-print-products" href="" title="Click to print products">
+                                        <svg class="[ icon icon-print -blue ]" aria-hidden="true">
+                                            <use xlink:href="#sprite-icon-print"></use>
+                                        </svg>
+                                        <span>Print products</span>
+                                    </a>
+                                </caption>
+                                <thead>
+                                    <tr>
+                                        <th class="withdrawal-date">Withdrawal Date</th>
+                                        <th class="accepted-aip">Accepted AIP to be converted to full app. by </th>
+                                        <th class="term">Term</th>
+                                        <th class="rate">Rate</th>
+                                        <th class="description">Description</th>
+                                        <th class="overall-cost">Overall cost of comparison</th>
+                                        <th class="product-fee">Product Fee</th>
+                                        <th class="features">Features</th>
+                                        <th class="early-repayment-charge">Early Repayment Charges (% of the sum repaid)</th>
+                                        <th class="code">Code</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var resultItem in groupedByLTVResult.OrderBy(x => x.Term).ThenBy(x => x.Rate).ThenByDescending(x => x.ProductFees).ThenBy(x => x.Code))
+                                    {
+                                        var withdrawalDateTime = resultItem.WithdrawalDateTime.HasValue() ? resultItem.WithdrawalDateTime : "";
+                                        var aipDeadlineDateTime = resultItem.AIPDeadlineDateTime.HasValue() ? resultItem.AIPDeadlineDateTime : "";
+                                        <tr id="@resultItem.Code">
+                                            <td data-name="Withdrawing">
+                                                @DateTime.Parse(withdrawalDateTime).ToShortDateString() at @DateTimeOffset.Parse(withdrawalDateTime).ToString("hh:mm") @DateTimeOffset.Parse(withdrawalDateTime).ToString("tt", System.Globalization.CultureInfo.InvariantCulture)
+                                            </td>
+
+                                            <td data-name="AIPDeadline">
+                                                @if (aipDeadlineDateTime.HasValue())
+                                                {
+                                                    @Html.Raw(string.Concat(DateTime.Parse(aipDeadlineDateTime).ToShortDateString(), " at ", DateTimeOffset.Parse(aipDeadlineDateTime).ToString("hh:mm"), DateTimeOffset.Parse(aipDeadlineDateTime).ToString("tt", System.Globalization.CultureInfo.InvariantCulture)))
+                                                }
+                                            </td>
+                                            <td data-name="Term">
+                                                @if (resultItem.IsNew && !string.IsNullOrWhiteSpace(resultItem.LaunchDateTime))
+                                                {
+                                                    if (DateTime.Now <= Convert.ToDateTime(resultItem.LaunchDateTime).AddDays(7))
+                                                    {
+                                                        <svg class="[ icon icon-new -blue ]">
+                                                            <title>New</title>
+                                                            <use xlink:href="#sprite-icon-new"></use>
+                                                        </svg>
+                                                    }
+                                                }
+                                                @Html.Raw(resultItem.Term)
+                                            </td>
+                                            <td data-name="Rate">@resultItem.FormattedRate% @resultItem.Category</td>
+                                            <td data-name="Description">@Html.Raw(resultItem.Description)</td>
+                                            <td class="overall-cost" data-name="Overall cost of comparison">@resultItem.FormattedOverallCost% APRC</td>
+                                            <td data-name="Product Fee">&pound;@resultItem.ProductFees</td>
+                                            <td data-name="Features" class="features-text">@Html.Raw(resultItem.Features)</td>
+                                            <td class="early-repayment-charge" data-name="Early Repayment Charges (% of the sum repaid)">@Html.Raw(resultItem.EarlyRepaymentCharges)</td>
+                                            <td data-name="Code">@resultItem.Code</td>
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        }
+                    }
+                    else
+                    {
+                        <div class="rich-text">
+                            <span class="h2 -blue-text">@Model.NoResultFoundMessage</span>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+
+}
+else
+{
+    <section class="no-products-section">
+        <div class="rich-text">
+            <span class="h2 -blue-text">@Model.NoResultFoundMessage</span>
+        </div>
+    </section>
+}
+
+@if (Model.Pods != null)
+{
+    <partial name="/Views/Partials/Pods.cshtml" />
+}
+
+@section Scripts {
+    <script type="text/javascript" src="/common/scripts/bundles/products.bundle.js" asp-append-version="true"></script>
+}

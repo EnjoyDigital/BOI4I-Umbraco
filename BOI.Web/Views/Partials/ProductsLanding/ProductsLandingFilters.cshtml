@@ -1,0 +1,48 @@
+﻿@inherits UmbracoViewPage<ProductsLandingResultsViewModel>
+
+<form action="@Model.ListingUrl" class="product-filters">
+    <fieldset>
+        <legend class="h3 product-filters__title js-toggle-product-filters">@Model.FiltersTitle</legend>
+
+        <div class="product-filters-inner js-product-filters">
+
+            <div class="product-filters-input-wrap -select-wrap">
+                <label for="ProductType">@Model.FilterProductsTitle</label>
+                @Html.DropDownListFor(m => Model.ProductType, Model.ProductTypeList, new { id = "ProductType" })
+            </div>
+
+            <div class="product-filters-input-wrap -select-wrap">
+                <label for="ProductTerm">@Model.FilterTermsTitle</label>
+                @Html.DropDownListFor(m => Model.ProductTerm, Model.ProductTermList, new { id = "ProductTerm" })
+            </div>
+
+            <div class="product-filters-input-wrap -select-wrap">
+                <label for="ProductCategory">@Model.FilterCategoriesTitle</label>
+                @Html.DropDownListFor(m => Model.ProductCategory, Model.ProductCategoryList, new { id = "ProductCategory" })
+            </div>
+
+            <div class="product-filters-input-wrap -select-wrap">
+                <label for="ProductLTV">@Model.FilterLtvsTitle</label>
+                @Html.DropDownListFor(m => Model.ProductLTV, Model.ProductLTVList, new { id = "ProductLTV" })
+            </div>
+
+            <div class="product-filters-input-wrap -checkbox-wrap">
+                <div class="checkbox-wrapper">
+                    @Html.CheckBoxFor(m => Model.InterestOnly, new { id = "InterestOnly" })
+                    <label for="InterestOnly">Interest only</label>
+                </div>
+            </div>
+
+            <div class="product-filters-input-wrap">
+                <button class="button" id=""><span>Update</span></button>
+            </div>
+
+            <div class="product-filters-input-wrap">
+                <button class="button -blue-outline" id="productClear"><span>Clear</span></button>
+            </div>
+
+        </div>
+    </fieldset>
+</form>
+
+<partial name="~/Views/Partials/ProductsLanding/ProductsLandingResults.cshtml" />
