@@ -91,45 +91,15 @@ namespace BOI.Core.Search.Queries.Elastic
             return aggDict;
         }
 
-        public QueryContainer BuildQueryContainer(CriteriaLookupSearch model)
+        public QueryContainer BuildQueryContainer(string criteriaName)
         {
             var query = new QueryContainerDescriptor<WebContent>();
 
             var queryContainer =
-                (query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Name).Query(model.CriteriaName).Boost(20))))
+                (query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Name).Query(criteriaName).Boost(20))))
                  ||
-                 query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Content).Query(model.CriteriaName).Operator(Operator.And).Analyzer("ignore_html_tags")))
+                 query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Content).Query(criteriaName).Operator(Operator.And).Analyzer("ignore_html_tags")))
                  ))
-                &&
-                query.Bool(b => b.Must(m => m.Terms(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Terms("criteria", "criteriaTab"))));
-
-            return queryContainer;
-        }
-
-        public QueryContainer BuildBuyToLetQueryContainer(CriteriaLookupSearch model)
-        {
-            var query = new QueryContainerDescriptor<WebContent>();
-
-            var queryContainer =
-                (query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Name).Query(model.BuyToLetCriteriaName).Boost(20))))
-                 ||
-                 query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Content).Query(model.BuyToLetCriteriaName).Operator(Operator.And).Analyzer("ignore_html_tags"))))
-                 )
-                &&
-                query.Bool(b => b.Must(m => m.Terms(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Terms("criteria", "criteriaTab"))));
-
-            return queryContainer;
-        }
-
-        public QueryContainer BuildBespokeQueryContainer(CriteriaLookupSearch model)
-        {
-            var query = new QueryContainerDescriptor<WebContent>();
-
-            var queryContainer =
-                (query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Name).Query(model.BespokeCriteriaName).Boost(20))))
-                 ||
-                 query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Content).Query(model.BespokeCriteriaName).Operator(Operator.And).Analyzer("ignore_html_tags"))))
-                 )
                 &&
                 query.Bool(b => b.Must(m => m.Terms(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Terms("criteria", "criteriaTab"))));
 
@@ -143,7 +113,7 @@ namespace BOI.Core.Search.Queries.Elastic
                     .Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
                     .TrackTotalHits()
                     .Size(10000)
-                    .Query(q => BuildQueryContainer(model))
+                    .Query(q => BuildQueryContainer(model.CriteriaName))
                     .Aggregations(agg => agg
                         .Terms("criteriaCategoryFilter", t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Size(1000))
                     )
@@ -203,7 +173,7 @@ namespace BOI.Core.Search.Queries.Elastic
                     .Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
                     .TrackTotalHits()
                     .Size(10000)
-                    .Query(q => BuildBuyToLetQueryContainer(model))
+                    .Query(q => BuildQueryContainer(model.BuyToLetCriteriaName))
                     .Aggregations(agg => agg
                         .Terms("buyToLetCriteriaCategoryFilter", t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Size(1000))
                     )
@@ -264,7 +234,7 @@ namespace BOI.Core.Search.Queries.Elastic
                     .Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
                     .TrackTotalHits()
                     .Size(10000)
-                    .Query(q => BuildBespokeQueryContainer(model))
+                    .Query(q => BuildQueryContainer(model.BespokeCriteriaName))
                     .Aggregations(agg => agg
                         .Terms("bespokeCriteriaCategoryFilter", t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Size(1000))
                     )
