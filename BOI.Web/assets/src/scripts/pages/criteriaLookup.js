@@ -10,8 +10,6 @@ TabbedContent()
 ProductFilters()
 AutoCompleteCriterea()
 
-console.log('criteria');
-
 $(document).on('click', '#ResidentialSearch', function (e) {
     e.preventDefault();
     var formUrl = $(this).data('ajaxaddurl');

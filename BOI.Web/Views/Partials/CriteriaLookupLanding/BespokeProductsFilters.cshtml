@@ -2,7 +2,7 @@
 
 <div class="tab-content rich-text" @(Model.isBespoke ? "data-tab-active" : "") data-tab-title="Bespoke Criteria" id="BespokeCriteria" data-isbespoke="true">
     @Model.BespokeCategorySubText
-    <form action="" class="product-filters criteria-filters" data-autocompleteurl="@Url.RouteUrl(CustomRouteNames.AutoCompleteCriteriaLookupBespokeAjax, new {controller = "CriteriaLookupLanding", action = "AutoCompleteCriteriaLookup"})" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBespoke, new {controller = "CriteriaLookupLanding", action = "FindBespokeCriteria"})" data-pageid="@Model.Id">
+    <form action="" class="product-filters criteria-filters" data-autocompleteurl="@Url.RouteUrl(CustomRouteNames.AutoCompleteCriteriaLookupBespokeAjax, new {controller = "CustomRouteAction", action = "AutoCompleteCriteriaLookup"})" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBespoke, new {controller = "CustomRouteAction", action = "FindBespokeCriteria"})" data-pageid="@Model.Id">
         <fieldset>
             <legend class="h3 product-filters__title js-toggle-product-filters">Filter Criteria</legend>
 
@@ -19,11 +19,11 @@
                 </div>
 
                 <div class="product-filters-input-wrap">
-                    <button class="button" id="BespokeSearch" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBespoke, new { controller = "CriteriaLookupLanding", action = "FindBespokeCriteria" })" data-pageid="@Model.Id"><span>Search</span></button>
+                    <button class="button" id="BespokeSearch" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBespoke, new { controller = "CustomRouteAction", action = "FindBespokeCriteria" })" data-pageid="@Model.Id"><span>Search</span></button>
                 </div>
 
                 <div class="product-filters-input-wrap">
-                    <button class="button -blue-outline js-form-clear" id="BespokeClear" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBespoke, new { controller = "CriteriaLookupLanding", action = "FindBespokeCriteria" })" data-pageid="@Model.Id"><span>Clear</span></button>
+                    <button class="button -blue-outline js-form-clear" id="BespokeClear" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBespoke, new { controller = "CustomRouteAction", action = "FindBespokeCriteria" })" data-pageid="@Model.Id"><span>Clear</span></button>
                 </div>
 
                 <input type="text" value="@Model.isBespoke" hidden />
@@ -36,7 +36,7 @@
                         {
                             var criteriaName = search.CriteriaName.IsNullOrWhiteSpace() ? search.Name : search.CriteriaName;
 
-                            <button id="searchBespokeCriteriaOnly" class="button -light-grey -no-radius js-popular-criterea-search" data-search-term="@search.Name" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBespoke, new { controller = "CriteriaLookupLanding", action = "FindBespokeCriteria" })" data-pageid="@Model.Id">
+                            <button id="searchBespokeCriteriaOnly" class="button -light-grey -no-radius js-popular-criterea-search" data-search-term="@search.Name" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBespoke, new { controller = "CustomRouteAction", action = "FindBespokeCriteria" })" data-pageid="@Model.Id">
                                 <span>
                                     @criteriaName
                                 </span>

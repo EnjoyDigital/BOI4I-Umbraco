@@ -2,7 +2,7 @@
 
 <div class="tab-content rich-text" @(!Model.isBuyToLet && !Model.isBespoke ? "" : "data-tab-active") data-tab-title="Residential Criteria" id="ResidentialCriteria" data-isresidential="true">
     @Model.ResidentialCategorySubtext
-    <form action="" class="product-filters criteria-filters" data-autocompleteurl="@Url.RouteUrl(CustomRouteNames.AutoCompleteCriteriaLookupAjax, new {controller = "CriteriaLookupLanding", action = "AutoCompleteCriteriaLookup"})" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjax, new {controller = "CriteriaLookupLanding", action = "FindResidentialCriteria"})" data-pageid="@Model.Id">
+    <form action="" class="product-filters criteria-filters" data-autocompleteurl="@Url.RouteUrl(CustomRouteNames.AutoCompleteCriteriaLookupAjax, new {controller = "CustomRouteAction", action = "AutoCompleteCriteriaLookup"})" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjax, new {controller = "CustomRouteAction", action = "FindResidentialCriteria"})" data-pageid="@Model.Id">
         <fieldset>
             <legend class="h3 product-filters__title js-toggle-product-filters">Filter Criteria</legend>
 
@@ -19,11 +19,11 @@
                 </div>
 
                 <div class="product-filters-input-wrap">
-                    <button class="button" id="ResidentialSearch" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjax, new { controller = "CriteriaLookupLanding", action = "FindResidentialCriteria" })" data-pageid="@Model.Id"><span>Search</span></button>
+                    <button class="button" id="ResidentialSearch" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjax, new { controller = "CustomRouteAction", action = "FindResidentialCriteria" })" data-pageid="@Model.Id"><span>Search</span></button>
                 </div>
 
                 <div class="product-filters-input-wrap">
-                    <button class="button -blue-outline js-form-clear" id="ResidentialClear" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjax, new { controller = "CriteriaLookupLanding", action = "FindResidentialCriteria" })" data-pageid="@Model.Id"><span>Clear</span></button>
+                    <button class="button -blue-outline js-form-clear" id="ResidentialClear" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjax, new { controller = "CustomRouteAction", action = "FindResidentialCriteria" })" data-pageid="@Model.Id"><span>Clear</span></button>
                 </div>
 
                 <input type="text" value="@Model.isBuyToLet" hidden />
@@ -35,7 +35,7 @@
                         @foreach (var search in Model.ResidentialPopularSearches.OfType<Criteria>())
                         {
                             var criteriaName = search.CriteriaName.IsNullOrWhiteSpace() ? search.Name : search.CriteriaName;
-                            <button id="searchResidentialCriteriaOnly" class="button -light-grey -no-radius js-popular-criterea-search" data-search-term="@search.Name" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjax, new { controller = "CriteriaLookupLanding", action = "FindResidentialCriteria" })" data-pageid="@Model.Id">
+                            <button id="searchResidentialCriteriaOnly" class="button -light-grey -no-radius js-popular-criterea-search" data-search-term="@search.Name" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjax, new { controller = "CustomRouteAction", action = "FindResidentialCriteria" })" data-pageid="@Model.Id">
                                 <span>
                                     @criteriaName
                                 </span>

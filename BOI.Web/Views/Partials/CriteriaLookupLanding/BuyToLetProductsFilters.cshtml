@@ -2,7 +2,7 @@
 
 <div class="tab-content rich-text" @(Model.isBuyToLet ? "data-tab-active" : "") data-tab-title="Buy To Let Criteria" id="BuyToLetCriteria" data-isbuytolet="true">
     @Model.BuyToLetCategorySubText
-    <form action="" class="product-filters criteria-filters" data-autocompleteurl="@Url.RouteUrl(CustomRouteNames.AutoCompleteCriteriaLookupBuyToLetAjax, new {controller = "CriteriaLookupLanding", action = "AutoCompleteCriteriaLookup"})" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBuyToLet, new {controller = "CriteriaLookupLanding", action = "FindBuyToLetCriteria"})" data-pageid="@Model.Id">
+    <form action="" class="product-filters criteria-filters" data-autocompleteurl="@Url.RouteUrl(CustomRouteNames.AutoCompleteCriteriaLookupBuyToLetAjax, new {controller = "CustomRouteAction", action = "AutoCompleteCriteriaLookup"})" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBuyToLet, new {controller = "CustomRouteAction", action = "FindBuyToLetCriteria"})" data-pageid="@Model.Id">
         <fieldset>
             <legend class="h3 product-filters__title js-toggle-product-filters">Filter Criteria</legend>
 
@@ -19,11 +19,11 @@
                 </div>
 
                 <div class="product-filters-input-wrap">
-                    <button class="button" id="BuyToLetSearch" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBuyToLet, new { controller = "CriteriaLookupLanding", action = "FindBuyToLetCriteria" })" data-pageid="@Model.Id"><span>Search</span></button>
+                    <button class="button" id="BuyToLetSearch" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBuyToLet, new { controller = "CustomRouteAction", action = "FindBuyToLetCriteria" })" data-pageid="@Model.Id"><span>Search</span></button>
                 </div>
 
                 <div class="product-filters-input-wrap">
-                    <button class="button -blue-outline js-form-clear" id="BuyToLetClear" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBuyToLet, new { controller = "CriteriaLookupLanding", action = "FindBuyToLetCriteria" })" data-pageid="@Model.Id"><span>Clear</span></button>
+                    <button class="button -blue-outline js-form-clear" id="BuyToLetClear" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBuyToLet, new { controller = "CustomRouteAction", action = "FindBuyToLetCriteria" })" data-pageid="@Model.Id"><span>Clear</span></button>
                 </div>
 
                 <input type="text" value="@Model.isBuyToLet" hidden />
@@ -36,7 +36,7 @@
                         {
                             var criteriaName = search.CriteriaName.IsNullOrWhiteSpace() ? search.Name : search.CriteriaName;
 
-                            <button id="searchBuyToLetCriteriaOnly" class="button -light-grey -no-radius js-popular-criterea-search" data-search-term="@search.Name" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBuyToLet, new {controller = "CriteriaLookupLanding", action = "FindBuyToLetCriteria"})" data-pageid="@Model.Id">
+                            <button id="searchBuyToLetCriteriaOnly" class="button -light-grey -no-radius js-popular-criterea-search" data-search-term="@search.Name" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.CriteriaLookupAjaxBuyToLet, new {controller = "CustomRouteAction", action = "FindBuyToLetCriteria"})" data-pageid="@Model.Id">
                                 <span>
                                     @criteriaName
                                 </span>

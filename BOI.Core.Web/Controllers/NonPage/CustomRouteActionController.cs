@@ -14,10 +14,13 @@ using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
 using Nest;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Umbraco.Cms.Core.Web;
+using BOI.Umbraco.Models;
 
 namespace BOI.Core.Web.Controllers.NonPage
 {
-    public class CustomRouteActionController : UmbracoPageController
+    public class CustomRouteActionController : UmbracoPageController, IVirtualPageController
     {
         private readonly IDomainService domainService;
         private readonly UmbracoHelper umbracoHelper;
@@ -25,10 +28,11 @@ namespace BOI.Core.Web.Controllers.NonPage
         private readonly IConfiguration config;
         private readonly IShortStringHelper shortStringHelper;
         private readonly IPublishedValueFallback publishedValueFallback;
+        private readonly IUmbracoContextAccessor umbracoContextAccessor;
 
         public CustomRouteActionController(IDomainService domainService, UmbracoHelper umbracoHelper, IElasticClient esClient,
             ILogger<CustomRouteActionController> logger, ICompositeViewEngine compositeViewEngine, IConfiguration config,
-            IShortStringHelper shortStringHelper, IPublishedValueFallback publishedValueFallback)
+            IShortStringHelper shortStringHelper, IPublishedValueFallback publishedValueFallback, IUmbracoContextAccessor umbracoContextAccessor)
             : base(logger, compositeViewEngine)
         {
             this.domainService = domainService;
@@ -37,9 +41,10 @@ namespace BOI.Core.Web.Controllers.NonPage
             this.config = config;
             this.shortStringHelper = shortStringHelper;
             this.publishedValueFallback = publishedValueFallback;
+            this.umbracoContextAccessor = umbracoContextAccessor;
         }
 
-        [HttpGet]
+        [HttpPost]
         public ActionResult FindResidentialCriteria(string criteriaName, string criteriaCategory, int pageId, string searchCriteriaOnly)
         {
             var currentPage = umbracoHelper.Content(pageId);
@@ -62,10 +67,57 @@ namespace BOI.Core.Web.Controllers.NonPage
             });
         }
 
+        [HttpPost]
+
+        public ActionResult FindBuyToLetCriteria(string criteriaName, string criteriaCategory, int pageId, string searchCriteriaOnly)
+        {
+            var currentPage = umbracoHelper.Content(pageId);
+
+            CriteriaLookupsResults results = new CriteriaLookupsResults();
+
+            if (searchCriteriaOnly == null || !bool.Parse(searchCriteriaOnly))
+            {
+                results = SearchCriteriaWithCriteriaTab(criteriaName, criteriaCategory, FieldConstants.BuyToLetProductType, currentPage);
+            }
+            else
+            {
+                results = SearchCriteriaOnly(criteriaName, FieldConstants.BuyToLetProductType, currentPage);
+            }
+
+            return PartialView("~/Views/Partials/CriteriaLookupLanding/BuyToLetProducts.cshtml", new CriteriaLookupResultsViewModel(currentPage, publishedValueFallback)
+            {
+                ListingUrl = currentPage.Url(),
+                BuyToLetResults = results
+            });
+        }
+
+        [HttpPost]
+
+        public ActionResult FindBespokeCriteria(string criteriaName, string criteriaCategory, int pageId, string searchCriteriaOnly)
+        {
+            var currentPage = umbracoHelper.Content(pageId);
+            CriteriaLookupsResults results = new CriteriaLookupsResults();
+
+            if (searchCriteriaOnly == null || !bool.Parse(searchCriteriaOnly))
+            {
+                results = SearchCriteriaWithCriteriaTab(criteriaName, criteriaCategory, FieldConstants.BespokeProductType, currentPage);
+            }
+            else
+            {
+                results = SearchCriteriaOnly(criteriaName, FieldConstants.BespokeProductType, currentPage);
+            }
+
+            return PartialView("~/Views/Partials/CriteriaLookupLanding/BespokeProducts.cshtml", new CriteriaLookupResultsViewModel(currentPage, publishedValueFallback)
+            {
+                ListingUrl = currentPage.Url(),
+                BespokeResults = results
+            });
+        }
+
         private CriteriaLookupsResults SearchCriteriaWithCriteriaTab(string criteriaName, string criteriaCategory, string productType, IPublishedContent currentPage)
         {
             var wordsToIgnore = currentPage.Value<string>("wordsToIgnore")?.Split(' ');
-            if (wordsToIgnore != null)
+            if (wordsToIgnore != null && criteriaName != null)
                 criteriaName = string.Join(" ", criteriaName.Split(' ').Except(wordsToIgnore));
 
             var criteriaLookupSearcher = new CriteriaLookupSearcher(config, esClient, shortStringHelper);
@@ -110,5 +162,30 @@ namespace BOI.Core.Web.Controllers.NonPage
             };
         }
 
+        public IPublishedContent? FindContent(ActionExecutingContext actionExecutingContext)
+        {
+            if (umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext))
+            {
+                var casualtyDetail = umbracoContext.Content?.GetAtRoot().DescendantsOrSelf<CriteriaLookupLanding>().FirstOrDefault();
+
+                if (casualtyDetail != null)
+                {
+                    return casualtyDetail;
+                }
+            }
+            throw new NotImplementedException();
+        }
+
+        public JsonResult AutoCompleteCriteriaLookup(string queryString, string criteriaType)
+        {
+            var query = new AutocompleteQuery(esClient, config)
+            {
+                QueryString = queryString,
+                CriteriaType = criteriaType
+            };
+
+            var response = query.SearchCriteriaLookup();
+            return Json(new AutocompleteSuggestion { suggestions = response });
+        }
     }
 }
