@@ -1,7 +1,9 @@
 ﻿using BOI.Core.Constants;
 using BOI.Core.Extensions;
+using BOI.Core.Search.Constants;
 using BOI.Core.Search.Extensions;
 using BOI.Core.Search.Models;
+using BOI.Umbraco.Models;
 using Microsoft.Extensions.Configuration;
 using Nest;
 using System.ComponentModel.DataAnnotations;
@@ -41,8 +43,9 @@ namespace BOI.Core.Search.Queries.Elastic
             this.shortStringHelper = shortStringHelper;
         }
 
-        public AggregateDictionary CriteriaLookupFormValues()
+        public AggregateDictionary CriteriaLookupFormValues(string criteriaType)
         {
+            string criteriaField = string.Empty;
             var results = esClient.Search<WebContent>(s => s
                     .Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
                     .Size(0)
@@ -51,64 +54,41 @@ namespace BOI.Core.Search.Queries.Elastic
                             .Must(
                                 a =>
                                 {
-                                    return a.Term(t => t.Field(tf => tf.ResidentialProduct).Value(true));
+                                    switch(criteriaType)
+                                    {
+                                        case FieldConstants.ResidentialProductType:
+                                            criteriaField = FieldConstants.ResidentialCriteriaField;
+                                            return a.Term(t => t.Field(tf => tf.ResidentialProduct).Value(true));
+                                        case FieldConstants.BuyToLetProductType:
+                                            criteriaField = FieldConstants.BuyToLetCriteriaField;
+                                            return a.Term(t => t.Field(tf => tf.BuyToLetProduct).Value(true));
+                                        case FieldConstants.BespokeProductType:
+                                            criteriaField = FieldConstants.BespokeCriteriaField;
+                                            return a.Term(t => t.Field(tf => tf.BespokeProduct).Value(true));
+                                        default:
+                                            return null;
+                                    }
+
                                 }
                             )
                         )
                     )
-                    .Aggregations(agg => agg
-                        .Terms("CriteriaCategory", t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Size(10000))
-                    )
+                .Aggregations(BuildAggregationQuery(criteriaField))
                 )
                 .EnsureSuccess();
 
             return results.Aggregations;
         }
-        public AggregateDictionary BuyToLetCriteriaLookupFormValues()
-        {
-            var results = esClient.Search<WebContent>(s => s
-                    .Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
-                    .Size(0)
-                    .Query(q => q
-                        .Bool(b => b
-                            .Must(
-                                a =>
-                                {
-                                    return a.Term(t => t.Field(tf => tf.BuyToLetProduct).Value(true));
-                                }
-                            )
-                        )
-                    )
-                    .Aggregations(agg => agg
-                        .Terms("BuyToLetCriteriaCategory", t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Size(10000))
-                    )
-                )
-                .EnsureSuccess();
 
-            return results.Aggregations;
-        }
-        public AggregateDictionary BespokeCriteriaLookupFormValues()
+        private Dictionary<string, IAggregationContainer> BuildAggregationQuery(string criteriaField)
         {
-            var results = esClient.Search<WebContent>(s => s
-                    .Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
-                    .Size(0)
-                    .Query(q => q
-                        .Bool(b => b
-                            .Must(
-                                a =>
-                                {
-                                    return a.Term(t => t.Field(tf => tf.BespokeProduct).Value(true));
-                                }
-                            )
-                        )
-                    )
-                    .Aggregations(agg => agg
-                        .Terms("BespokeCriteriaCategory", t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Size(10000))
-                    )
-                )
-                .EnsureSuccess();
+            var aggDict = new Dictionary<string, IAggregationContainer>();
+            var terms = new TermsAggregation(criteriaField);
+            terms.Size = 10000;
+            terms.Field = new Field("criteriaCategory.keyword");
+            aggDict[criteriaField] = new AggregationContainer { Terms = terms };
 
-            return results.Aggregations;
+            return aggDict;
         }
 
         public QueryContainer BuildQueryContainer(CriteriaLookupSearch model)
@@ -362,7 +342,7 @@ namespace BOI.Core.Search.Queries.Elastic
                     parentCriteriaList.Add(new CriteriaLookupResult()
                     {
                         Id = parentCriteria.Source.Id,
-                        NameId = parentCriteria.Source.Name.ToCleanString(shortStringHelper,CleanStringType.UrlSegment),
+                        NameId = parentCriteria.Source.Name.ToCleanString(shortStringHelper, CleanStringType.UrlSegment),
                         CriteriaName = parentCriteria.Source.CriteriaName,
                         SortOrder = parentCriteria.Source.SortOrder,
                         CriteriaCategory = parentCriteria.Source.CriteriaCategory,

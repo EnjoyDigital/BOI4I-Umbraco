@@ -11,6 +11,8 @@
 	  <None Remove="Views\MacroPartials\**" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Content Remove="wwwroot\assets\dist\css\style.css" />
+	  <Content Remove="wwwroot\assets\dist\css\style.scss" />
 	  <Content Remove="wwwroot\assets\dist\images\icons\background-chevron.png" />
 	  <Content Remove="wwwroot\assets\dist\images\icons\chevron-grey.png" />
 	  <Content Remove="wwwroot\assets\dist\images\icons\chevron-overlay-hero-teal@3x.png" />
@@ -244,6 +246,8 @@
 	  <None Include="App_Plugins\SolicitorUpload\SolicitorUpload.resource.js" />
 	  <None Include="Views\Partials\BdmFinder\BdmListing.cshtml" />
 	  <None Include="Views\Partials\SolicitorLookup\SolicitorLookUpResultList.cshtml" />
+	  <None Include="wwwroot\assets\dist\css\style.css" />
+	  <None Include="wwwroot\assets\dist\css\style.scss" />
 	  <None Include="wwwroot\assets\dist\images\icons\background-chevron.png" />
 	  <None Include="wwwroot\assets\dist\images\icons\chevron-grey.png" />
 	  <None Include="wwwroot\assets\dist\images\icons\chevron-overlay-hero-teal@3x.png" />

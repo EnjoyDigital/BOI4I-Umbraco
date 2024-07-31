@@ -47,9 +47,9 @@ namespace BOI.Core.Web.Controllers.Hijacks
             await TryUpdateModelAsync(model);
            
             var criteriaLookupSearcher = new CriteriaLookupSearcher(config, esClient,shortStringHelper);
-            var search = criteriaLookupSearcher.CriteriaLookupFormValues();
-            var buyToLetSearch = criteriaLookupSearcher.BuyToLetCriteriaLookupFormValues();
-            var bespokeSearch = criteriaLookupSearcher.BespokeCriteriaLookupFormValues();
+            var search = criteriaLookupSearcher.CriteriaLookupFormValues(FieldConstants.ResidentialProductType);
+            var buyToLetSearch = criteriaLookupSearcher.CriteriaLookupFormValues(FieldConstants.BuyToLetProductType);
+            var bespokeSearch = criteriaLookupSearcher.CriteriaLookupFormValues(FieldConstants.BespokeProductType);
 
             var categoryList = new List<SelectListItem>();
             categoryList.AddRange(search.Terms("CriteriaCategory").Buckets.Where(x => x.Key.HasValue()).Select(c => new SelectListItem
