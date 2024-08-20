@@ -38,7 +38,7 @@ namespace BOI.Core.Web.ContentFinders
             {
                 return false;
             }
-            var siteRoot = umbracoContext.Content.GetById(false, siteId ?? -1);
+            var siteRoot = umbracoContext.Content.GetById(false, siteId ?? -1) as SiteRoot;
 
             if (siteRoot is null)
             {
@@ -46,8 +46,9 @@ namespace BOI.Core.Web.ContentFinders
             }
 
             //TODO: add 404 page handler
-            var notFoundNode = (siteRoot as SiteRoot).FirstChildOfType(Error.ModelTypeAlias);
-
+            var notFoundNode = siteRoot.ErrorPage404;
+                
+               
             if (notFoundNode == null)
             {
                 notFoundNode =

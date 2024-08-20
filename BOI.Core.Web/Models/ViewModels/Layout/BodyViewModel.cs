@@ -1,6 +1,7 @@
 ﻿using BOI.Umbraco.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Extensions;
+using static BOI.Core.Web.Constants.SiteAliases;
 
 namespace BOI.Core.Web.Models.ViewModels.Layout
 {
@@ -20,5 +21,10 @@ namespace BOI.Core.Web.Models.ViewModels.Layout
         public GlobalScripts SiteScripts { get; set; }
         public ElementScriptSettings PageScripts { get; set; }
         public bool IsUpper { get; set; }
+
+        public bool HideNavigation => (Content?.Value<bool>(FieldAlias.HideMainNavigation)).GetValueOrDefault();
+
+        public string SearcjAjaxUrl { get; set; }
+
     }
 }

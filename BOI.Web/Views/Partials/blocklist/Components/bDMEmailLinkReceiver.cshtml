@@ -1,0 +1,14 @@
+﻿@inherits UmbracoViewPage<BDmemailLinkReceiver>
+
+<div class="rich-text">
+
+    @await Component.InvokeAsync("BDMEmailLink")
+    @if (bdmFound)
+    {
+        @Model.BDmfound
+    }
+    else
+    {
+        @Model.BDmnotFound
+    }
+</div>

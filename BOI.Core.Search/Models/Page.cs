@@ -70,6 +70,11 @@ namespace BOI.Core.Search.Models
         public PaginationLink NextPageUrl { get; set; }
         public PaginationLink LastPageUrl { get; set; }
 
+        //public static implicit operator Page<T>(Page<MainSearchResult> v)
+        //{
+        //    return v;
+        //}
+
         //public void GenerateLinks()
         //{
         //    var links = new List<PaginationLink>();

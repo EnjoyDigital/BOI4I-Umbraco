@@ -3,9 +3,7 @@
 @using static BOI.Core.Web.Constants.SiteAliases
 @using static BOI.Core.Web.Extensions.MegaNavExtensions
 @model BodyViewModel
-@{
-    var hideNavigation = Model.Content.Value<bool>(FieldAlias.HideMainNavigation);
-}
+
 
 <header>
     <div class="header-container">
@@ -37,7 +35,7 @@
                 </ul>
             </div>
             <div class="header-top__mobile">
-                @if (Model.SiteRoot.Navigation != null && Model.SiteRoot.Navigation.Any() && !hideNavigation)
+                @if (Model.SiteRoot.Navigation != null && Model.SiteRoot.Navigation.Any() && !Model.HideNavigation)
                 {
                     <button class="header-top__mobile--hamburger" aria-label="Open main menu" aria-haspopup="true" aria-expanded="false" aria-controls="MainMenu">
                         <img src="~/assets/dist/images/icons/icon-hamburger.svg" alt="">
@@ -48,7 +46,7 @@
 
         @* MegaNavigation implementation *@
         <nav id="MainMenu" class="header-bottom bottom-nav-active" aria-label="Main menu">
-            @if (Model.SiteRoot.Navigation != null && Model.SiteRoot.Navigation.Any() && !hideNavigation)
+            @if (Model.SiteRoot.Navigation != null && Model.SiteRoot.Navigation.Any() && !Model.HideNavigation)
             {
                 <ul class="header-bottom__menu">
                     @foreach (var item in Model.SiteRoot.Navigation)
@@ -102,7 +100,7 @@
         @if (Model.SiteRoot.SearchResultsLink != null)
         {
             <div id="SiteSearch" class="site-search" aria-label="Site search" aria-modal="true">
-                <form id="searchResultForm" action="@Model.SiteRoot.SearchResultsLink.Url" class="search-bar" data-autocompleteurl="@Url.RouteUrl(BOI.Core.Constants.CustomRouteNames.Autocomplete, new {controller = "SearchResult", action = "Site"})">
+                <form id="searchResultForm" action="@Model.SiteRoot.SearchResultsLink.Url" class="search-bar" data-autocompleteurl="@Model.SearcjAjaxUrl">
                     <div class="search-bar__wrap">
                         <div class="search-bar__search">
                             <svg class="search-bar__search--icon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="#fff">

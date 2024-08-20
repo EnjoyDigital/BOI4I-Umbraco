@@ -1,0 +1,40 @@
+﻿@inherits UmbracoViewPage<SearchResultsViewModel>
+
+@if (Model.Results != null && Model.Results.QueryResults.Any())
+{
+    <h1>
+        @Model.Results.Total search @(Model.Results.QueryResults.Count() > 1 ? "results" : "result") for "@Model.SearchTerm"
+    </h1>
+
+    foreach (var result in Model.Results.QueryResults)
+    {
+        <div class="span9 item">
+            <a href="@result.SearchLink" class="">
+                <h2>@result.SearchTitle</h2>
+                @if (result.SearchDescription.HasValue())
+                {
+                    <p> @Html.Raw(result.SearchDescription) </p>
+                }
+            </a>
+        </div>
+    }
+
+    if (Model.Paging.HasPages)
+    {
+        <div class="" id="load-more-results">
+            <partial name="/Views/partials/SearchResult/Pagination.cshtml"  model="Model.Paging"/>
+        </div>
+    }
+}
+else
+{
+    <div class="no-results product-table-caption">
+        <span class="h5 product-table-caption__title">@Model.Content.NoResultFoundMessage</span>
+    </div>
+    if (Model.Content.NoResultFoundCta != null)
+    {
+        <a href="@Model.Content.NoResultFoundCta.Url" target="@Model.Content.NoResultFoundCta.Target" title="@Model.Content.NoResultFoundCta.Name" class="button error-redirect-cta">
+            <span>@Model.Content.NoResultFoundCta.Name</span>
+        </a>
+    }
+}

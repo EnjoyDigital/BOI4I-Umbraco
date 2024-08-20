@@ -17,28 +17,30 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Umbraco.Cms.Core.Web;
 using BOI.Umbraco.Models;
+using System.Text;
 
 namespace BOI.Core.Web.Controllers.NonPage
 {
     public class CustomRouteActionController : UmbracoPageController, IVirtualPageController
     {
         private readonly IDomainService domainService;
+        private readonly IAutocompleteQuery autocomplete;
         private readonly UmbracoHelper umbracoHelper;
-        private readonly IElasticClient esClient;
-        private readonly IConfiguration config;
+        private readonly ICriteriaLookupSearcher criteriaLookupSearcher;
+        //private readonly IElasticClient esClient;
+        //private readonly IConfiguration config;
         private readonly IShortStringHelper shortStringHelper;
         private readonly IPublishedValueFallback publishedValueFallback;
         private readonly IUmbracoContextAccessor umbracoContextAccessor;
 
-        public CustomRouteActionController(IDomainService domainService, UmbracoHelper umbracoHelper, IElasticClient esClient,
-            ILogger<CustomRouteActionController> logger, ICompositeViewEngine compositeViewEngine, IConfiguration config,
-            IShortStringHelper shortStringHelper, IPublishedValueFallback publishedValueFallback, IUmbracoContextAccessor umbracoContextAccessor)
+        public CustomRouteActionController(IDomainService domainService, IAutocompleteQuery autocomplete, UmbracoHelper umbracoHelper, ICriteriaLookupSearcher criteriaLookupSearcher, IShortStringHelper shortStringHelper,
+            ILogger<CustomRouteActionController> logger, ICompositeViewEngine compositeViewEngine, IPublishedValueFallback publishedValueFallback, IUmbracoContextAccessor umbracoContextAccessor)
             : base(logger, compositeViewEngine)
         {
             this.domainService = domainService;
+            this.autocomplete = autocomplete;
             this.umbracoHelper = umbracoHelper;
-            this.esClient = esClient;
-            this.config = config;
+            this.criteriaLookupSearcher = criteriaLookupSearcher;
             this.shortStringHelper = shortStringHelper;
             this.publishedValueFallback = publishedValueFallback;
             this.umbracoContextAccessor = umbracoContextAccessor;
@@ -114,13 +116,22 @@ namespace BOI.Core.Web.Controllers.NonPage
             });
         }
 
+        [HttpGet]
+        public ActionResult Site(string queryString)
+        {
+            autocomplete.QueryString = queryString;
+
+            var response = autocomplete.Execute();
+            return Json(new AutocompleteSuggestion { suggestions = response });
+        }
+
         private CriteriaLookupsResults SearchCriteriaWithCriteriaTab(string criteriaName, string criteriaCategory, string productType, IPublishedContent currentPage)
         {
             var wordsToIgnore = currentPage.Value<string>("wordsToIgnore")?.Split(' ');
             if (wordsToIgnore != null && criteriaName != null)
                 criteriaName = string.Join(" ", criteriaName.Split(' ').Except(wordsToIgnore));
 
-            var criteriaLookupSearcher = new CriteriaLookupSearcher(config, esClient, shortStringHelper);
+           // var criteriaLookupSearcher = new CriteriaLookupSearcher(config, esClient, shortStringHelper);
 
             if (productType == FieldConstants.ResidentialProductType)
                 return criteriaLookupSearcher.Execute(new CriteriaLookupSearch() { CriteriaCategory = criteriaCategory, CriteriaName = criteriaName });
@@ -132,14 +143,17 @@ namespace BOI.Core.Web.Controllers.NonPage
 
         private CriteriaLookupsResults SearchCriteriaOnly(string criteriaName, string productType, IPublishedContent currentPage)
         {
-            var query = new AutocompleteQuery(esClient, config)
-            {
-                QueryString = criteriaName,
-                CriteriaType = productType
-            };
-            var response = query.SearchCriteria();
+            //var query = new AutocompleteQuery(esClient, config)
+            //{
+            //    QueryString = criteriaName,
+            //    CriteriaType = productType
+            //};
+            autocomplete.QueryString = criteriaName;
+            autocomplete.CriteriaType = productType;
+            //var response = query.SearchCriteria();
+            var response = autocomplete.SearchCriteria();
 
-            var criteriaLookupSearcher = new CriteriaLookupSearcher(config, esClient, shortStringHelper);
+            // var criteriaLookupSearcher = new CriteriaLookupSearcher(config, esClient, shortStringHelper);
             var criteria = response.Documents.FirstOrDefault();
             var result = new CriteriaLookupResult()
             {
@@ -178,13 +192,15 @@ namespace BOI.Core.Web.Controllers.NonPage
 
         public JsonResult AutoCompleteCriteriaLookup(string queryString, string criteriaType)
         {
-            var query = new AutocompleteQuery(esClient, config)
-            {
-                QueryString = queryString,
-                CriteriaType = criteriaType
-            };
-
-            var response = query.SearchCriteriaLookup();
+            //var query = new AutocompleteQuery(esClient, config)
+            //{
+            //    QueryString = queryString,
+            //    CriteriaType = criteriaType
+            //};
+            autocomplete.QueryString = queryString;
+            autocomplete.CriteriaType = criteriaType;
+            //var response = query.SearchCriteria();
+            var response = autocomplete.SearchCriteriaLookup();
             return Json(new AutocompleteSuggestion { suggestions = response });
         }
     }

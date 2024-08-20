@@ -39,22 +39,20 @@ namespace BOI.Umbraco.Models
 #pragma warning restore 0109
 
 		private IPublishedValueFallback _publishedValueFallback;
-        private IPublishedContent content;
 
-        // ctor
-        public BDmfinder(IPublishedContent content, IPublishedValueFallback publishedValueFallback)
+		// ctor
+		public BDmfinder(IPublishedContent content, IPublishedValueFallback publishedValueFallback)
 			: base(content, publishedValueFallback)
 		{
 			_publishedValueFallback = publishedValueFallback;
 		}
 
+		// properties
 
-        // properties
-
-        ///<summary>
-        /// Contact us link
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
+		///<summary>
+		/// Contact us link
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("contactUsLink")]
 		public virtual global::Umbraco.Cms.Core.Models.Link ContactUsLink => this.Value<global::Umbraco.Cms.Core.Models.Link>(_publishedValueFallback, "contactUsLink");

@@ -1,0 +1,12 @@
+{
+"sections": [
+    {
+      "alias": "BdmUpload",
+      "name": "BdmUpload"
+    }
+  ],
+  "javascript": [
+    "~/App_Plugins/BdmUpload/backoffice/BdmUpload/dataViewer.controller.js",
+    "~/App_Plugins/BdmUpload/bdmUpload.resource.js"
+  ]
+}

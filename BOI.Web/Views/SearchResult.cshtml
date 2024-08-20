@@ -1,0 +1,27 @@
+﻿@inherits UmbracoViewPage<SearchResultsViewModel>
+
+
+<div class="search-results">
+    <partial name="/Views/Shared/Breadcrumb.cshtml" model="Model.Content" />
+
+    @if (Model.Content.HasValue("content"))
+    {
+        @await Html.GetBlockListHtmlAsync(Model.Content, "content")
+    }
+
+    <section class="content">
+        <div class="search-results__wrap" id="search-section">
+            <partial name="/Views/Partials/SearchResult/SearchResultsListing.cshtml" />
+            
+        </div>
+    </section>
+</div>
+
+@if (Model.Content.Pods != null)
+{
+    <partial name="/Views/Partials/Pods.cshtml" />
+}
+
+@section Scripts {
+    <script type="text/javascript" src="/assets/dist/js/searchResults.bundle.js" asp-append-version="true"></script>
+}

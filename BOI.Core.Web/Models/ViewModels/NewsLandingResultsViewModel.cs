@@ -12,6 +12,6 @@ namespace BOI.Core.Web.Models.ViewModels
 
         public string ListingUrl { get; set; }
 
-        public Page<NewsArticleResult> Paging { get; set; }
+        public Page<IPagedResult> Paging { get; set; }
     }
 }

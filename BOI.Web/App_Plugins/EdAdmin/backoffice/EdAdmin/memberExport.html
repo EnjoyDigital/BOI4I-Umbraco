@@ -1,0 +1,21 @@
+﻿<div ng-controller="EdAdmin.Controllers.MemberExportController as mec">
+    <umb-editor-view footer="false">
+        <umb-editor-header name="mec.name" description="mec.description" hide-description="false" name-locked="true" description-locked="true" hide-alias="true" hide-icon="true"></umb-editor-header>
+        <umb-editor-container class="form-horizontal">
+            <umb-box>
+                <umb-box-content>
+                    <div ng-hide="mec.exportProcessing">
+                        <div class="btn-group">
+                            <a prevent-default ng-click="mec.export()" class="btn btn-success">Export Members</a>
+                        </div>
+                    </div>
+
+                    <div ng-show="mec.exportProcessing">
+                        <div class="alert alert-info">Processing export</div>
+                        <umb-load-indicator ng-if="mec.exportProcessing"></umb-load-indicator>
+                    </div>
+                </umb-box-content>
+            </umb-box>
+        </umb-editor-container>
+    </umb-editor-view>
+</div>

@@ -12,25 +12,31 @@ namespace BOI.Core.Web.Extensions
             //Constants should be used for the route name
             //then Url.RouteUrl can be called in views to generate the url.
             //please dont hard code the url in views, or use magic strings for the route names
-            context.EndpointRouteBuilder.MapControllerRoute(
-                CustomRouteNames.RobotsTxt,
-                "/robots.txt",
-                new
-                {
-                    controller = "RobotsTxt",
-                    action = "Index"
-                }
-            );
+            //context.EndpointRouteBuilder.MapControllerRoute(
+            //    CustomRouteNames.RobotsTxt,
+            //    "/robots.txt",
+            //    new
+            //    {
+            //        controller = "RobotsTxt",
+            //        action = "Robots"
+            //    }
+                //  "/robots/",
+                //new
+                //{
+                //    controller = "CustomRouteAction",
+                //    action = "RobotsTxt"
+                //}
+           // );
 
-            context.EndpointRouteBuilder.MapControllerRoute(
-                CustomRouteNames.SitemapXml,
-                "/sitemap.xml",
-                new
-                {
-                    controller = "SitemapXml",
-                    action = "Index"
-                }
-            );
+            //context.EndpointRouteBuilder.MapControllerRoute(
+            //    CustomRouteNames.SitemapXml,
+            //    "/sitemap.xml",
+            //    new
+            //    {
+            //        controller = "SitemapXml",
+            //        action = "Index"
+            //    }
+            //);
 
             context.EndpointRouteBuilder.MapControllerRoute(
                 CustomRouteNames.CriteriaLookupAjax,
@@ -108,11 +114,11 @@ namespace BOI.Core.Web.Extensions
 
             context.EndpointRouteBuilder.MapControllerRoute(
                CustomRouteNames.AutoCompleteSearchAjax,
-               "/site",
+               CustRouePaths.AutoCompleteSearchAjax,
                new
                {
-                   controller = "SearchResult",
-                   action = "site"
+                   controller = "CustomRouteAction",
+                   action = "Site"
                }
            );
 

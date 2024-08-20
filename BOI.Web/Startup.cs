@@ -1,3 +1,4 @@
+using BOI.Core.Middleware;
 using BOI.Core.Web.Extensions;
 
 namespace BOI.Web
@@ -56,6 +57,10 @@ namespace BOI.Web
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+				app.UseExceptionHandler(err => err.UseCustomErrors(env));
+			}
 
             app.UseUmbraco()
                 .WithMiddleware(u =>

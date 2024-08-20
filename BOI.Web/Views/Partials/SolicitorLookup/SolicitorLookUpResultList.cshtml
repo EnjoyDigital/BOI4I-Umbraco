@@ -37,7 +37,7 @@
 
                 if (Model.Paging.HasPages)
                 {
-                    @* @Html.Partial("../Shared/Pagination", Model) *@
+                    <partial name="/Views/partials/SearchResult/Pagination.cshtml" model="Model.Paging" />
                 }
             }
             else

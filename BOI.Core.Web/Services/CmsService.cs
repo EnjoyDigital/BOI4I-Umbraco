@@ -1,7 +1,9 @@
 ﻿using BOI.Umbraco.Models;
 using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Extensions;
 
@@ -14,6 +16,8 @@ namespace BOI.Core.Web.Services
         SiteRoot GetSiteRoot(IPublishedContent content);
 
         IPublishedContent GetHome(IPublishedContent content);
+        Tuple<IPublishedContent, IDomain> GetNodeAndDomainForUrl(string fullUrlOfNode);
+
 
         DataRepositories GetSiteDataRepositories(int currentNodeId);
     }
@@ -21,11 +25,13 @@ namespace BOI.Core.Web.Services
     public class CmsService : ICmsService
     {
         private readonly ILogger<CmsService> logger;
+        private readonly IDomainService domainService;
         private readonly IUmbracoContextFactory umbracoContextFactory;
 
-        public CmsService(IUmbracoContextFactory umbracoContextFactory, ILogger<CmsService> logger)
+        public CmsService(IUmbracoContextFactory umbracoContextFactory, ILogger<CmsService> logger, IDomainService domainService)
         {
             this.logger = logger;
+            this.domainService = domainService;
             this.umbracoContextFactory = umbracoContextFactory;
         }
 
@@ -47,6 +53,7 @@ namespace BOI.Core.Web.Services
             using (UmbracoContextReference umbContextRef = umbracoContextFactory.EnsureUmbracoContext())
             {
                 node = umbContextRef.UmbracoContext.Content.GetById(currentNodeId);
+
             }
 
             if (node == null)
@@ -64,6 +71,45 @@ namespace BOI.Core.Web.Services
 
             return siteNode;
         }
+
+        public Tuple<IPublishedContent, IDomain> GetNodeAndDomainForUrl(string fullUrlOfNode)
+        {
+            using (UmbracoContextReference umbContextRef = umbracoContextFactory.EnsureUmbracoContext())
+            {
+                var allDomains = domainService.GetAll(false);
+                string domainName = allDomains.OrderByDescending(x => x.DomainName.Length).FirstOrDefault(d => fullUrlOfNode.Contains(d.DomainName)).DomainName;
+                var domain = allDomains.FirstOrDefault(d => d.DomainName == domainName);
+                if (domain == null)
+                {
+                    logger.LogInformation("Domain not found for {ullUrlOfNode}", fullUrlOfNode);
+                    logger.LogInformation("Domain list :{Domains}", string.Join(",", allDomains.Select(x => x.DomainName)));
+                    return null;
+                }
+                else
+                {
+                    logger.LogInformation("Domain resolved as {DomainName} for {FullUrlOfNode}", domain.DomainName, fullUrlOfNode);
+                }
+
+                try
+                {
+                    var fullPathUri = new Uri(fullUrlOfNode);
+                    var isoPath = string.Concat("/", domain.LanguageIsoCode.ToLower(), "/");
+                    var pathToNode = string.Concat(domain.RootContentId, "/", fullPathUri.AbsolutePath.Replace(isoPath, ""));
+
+                    var node = umbContextRef.UmbracoContext.Content.GetByRoute(false, pathToNode, culture: domain.LanguageIsoCode);
+
+                    return new Tuple<IPublishedContent, IDomain>(node, domain);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Error retreiving node and domain for {FullUrlOfNode}", fullUrlOfNode);
+
+                    return null;
+                }
+
+            }
+        }
+
 
         public IPublishedContent GetHome(IPublishedContent content)
         {

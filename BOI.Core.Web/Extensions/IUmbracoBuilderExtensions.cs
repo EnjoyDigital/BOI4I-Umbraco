@@ -24,6 +24,11 @@ using BOI.Core.Search.NotificationHandlers;
 using BOI.Core.Search.Queries.SQL;
 using BOI.Core.Search.Queries.Elastic;
 using BOI.Core.Search.Queries.PostcodeLookup;
+using BankOfIreland.Intermediaries.Feature.Search.Queries.Elastic;
+using BOI.Core.Search.Models;
+using BOI.Core.Web.Commands;
+using Microsoft.AspNetCore.Routing;
+using Umbraco.Cms.Core.Services;
 
 
 namespace BOI.Core.Web.Extensions
@@ -107,7 +112,12 @@ namespace BOI.Core.Web.Extensions
             builder.Services.AddScoped<IOutputCacheService, OutputCacheService>();
             builder.Services.AddScoped<IBdmFinderSearcher, BdmFinderSearcher>();
             builder.Services.AddScoped<ISolicitorSearcher, SolicitorSearcher>();
-            //left fulled qualified 
+            builder.Services.AddScoped<ISearchResultSearcher, SearchResultSearcher>();
+            builder.Services.AddScoped<IAutocompleteQuery, AutocompleteQuery>();
+            builder.Services.AddScoped<IContentImporter, ContentImporter>();
+            builder.Services.AddScoped<ICriteriaLookupSearcher, CriteriaLookupSearcher>();
+            
+            //left fulled qualified for clarity
             builder.Services.AddScoped<BOI.Core.Search.Queries.PostcodeLookup.IRequestHandler, PostcodeLookupQuery.RequestHandler>();
             builder.Services.AddScoped<IFileUploadService, FileUploadService>();
             return builder;
@@ -150,8 +160,7 @@ namespace BOI.Core.Web.Extensions
         public static IUmbracoBuilder AddCustomContentFinders(this IUmbracoBuilder builder)
         {
             builder.ContentFinders().InsertAfter<ContentFinderByUrl, ListingFiltersContentFinder>();
-            //ToDO: PB to uncomment the following
-            //builder.SetContentLastChanceFinder<LastChanceContentFinder>();
+            builder.SetContentLastChanceFinder<LastChanceContentFinder>();
 
             return builder;
         }

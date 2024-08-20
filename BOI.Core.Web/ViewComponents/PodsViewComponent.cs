@@ -1,4 +1,5 @@
 ﻿using BOI.Core.Constants;
+using BOI.Core.Extensions;
 using BOI.Core.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using Umbraco.Cms.Core.Web;
@@ -14,21 +15,19 @@ namespace BOI.Core.Web.ViewComponents.Layout
     public class PodsViewComponent : ViewComponent
     {
 
-        private readonly IUmbracoContextAccessor umbracoContextAccessor;
         private readonly IUmbracoHelperAccessor umbracoHelperAccessor;
-        private readonly ICmsService cmsService;
-        private readonly ISessionManager sessionManager;
+      
+        public const string bdmCookieKey = "bdm";
 
         public PodsViewComponent(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoHelperAccessor umbracoHelperAccessor, ICmsService cmsService, ISessionManager sessionManager)
         {
-            this.umbracoContextAccessor = umbracoContextAccessor;
+           
             this.umbracoHelperAccessor = umbracoHelperAccessor;
-            this.cmsService = cmsService;
-            this.sessionManager = sessionManager;
+           
         }
 
 
-        public IViewComponentResult Invoke(IPublishedContent publishedContent, bool isHeroPod =false)
+        public IViewComponentResult Invoke(IPublishedContent publishedContent, bool isHeroPod = false)
         {
             var alias = publishedContent.ContentType.Alias;
 
@@ -36,53 +35,59 @@ namespace BOI.Core.Web.ViewComponents.Layout
 
             return alias switch
             {
-
+                BDmpodAction.ModelTypeAlias => BDMPod(publishedContent, isHeroPod),
 
                 _ => View(partialPath, publishedContent)
             };
 
-            return Content("");
+
         }
 
-        private const string bdmCookieKey = "bdm";
-
-        //private BDmcontact BDMPod(IPublishedContent publishedContent)
-    //    {
-
-    //        //check and retrieve the specific BDM if has been set
-    //        // If no BDM is found use the fallback in the pod, change to suit
-    //        var bdmCookie = string.Empty;
-    //        if( Request.Cookies.TryGetValue(bdmCookieKey, out bdmCookie))
-    //        { 
-    //        }
-    //        if (bdmCookie != null && bdmCookie.Value.HasValue())
-    //        {
-    //            model.BDMDetails = Umbraco.Content(bdmCookie.Value) as BDmcontact;
-    //        }
 
 
-    //        if (!model.BDMFound)
-    //        {
-    //            if (heroPod)
-    //            {
-    //                return PartialView("~/Views/Partials/Pods/HeroBdmPod.cshtml", model.BDmfallbackContact);
-    //            }
+        private IViewComponentResult BDMPod(IPublishedContent publishedContent, bool isHeroPod)
+        {
+            var model = publishedContent as BDmpodAction;
 
-    //            return PartialView("~/Views/Partials/Pods/BDMPod.cshtml", model.BDmfallbackContact);
-    //        }
-    //        else
-    //        {
-    //            if (heroPod)
-    //            {
-    //                return PartialView("~/Views/Partials/Pods/HeroBdmPod.cshtml", model.BDMDetails);
-    //            }
+            //check and retrieve the specific BDM if has been set
+            // If no BDM is found use the fallback in the pod, change to suit
+            var bdmCookie = string.Empty;
+            if (Request.Cookies.TryGetValue(bdmCookieKey, out bdmCookie))
+            {
 
-    //            return PartialView("~/Views/Partials/Pods/BDMPod.cshtml", model.BDMDetails);
-    //        }
+                if (umbracoHelperAccessor.TryGetUmbracoHelper(out var umbracoHelper))
+                {
+                    if (bdmCookie != null && bdmCookie.HasValue())
+                    {
+                        model.BDMDetails = umbracoHelper.Content(bdmCookie.TryParseInt32().GetValueOrDefault()) as BDmcontact;
+                    }
+                }
+
+            }
+
+            if (!model.BDMFound)
+            {
+                if (isHeroPod)
+                {
+                    return View("~/Views/Partials/Pods/HeroBdmPod.cshtml", model.BDmfallbackContact);
+                }
+
+                return View("~/Views/Partials/Pods/BDMPod.cshtml", model.BDmfallbackContact);
+            }
+            else
+            {
+                if (isHeroPod)
+                {
+                    return View("~/Views/Partials/Pods/HeroBdmPod.cshtml", model.BDMDetails);
+                }
+
+                return View("~/Views/Partials/Pods/BDMPod.cshtml", model.BDMDetails);
+            }
 
 
-    //    }
+        }
 
     }
-
 }
+
+

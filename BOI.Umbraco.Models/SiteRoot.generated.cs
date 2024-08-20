@@ -66,6 +66,29 @@ namespace BOI.Umbraco.Models
 		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent DefaultSocialSharingImage => this.Value<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(_publishedValueFallback, "defaultSocialSharingImage");
 
 		///<summary>
+		/// Disallow Robots
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
+		[ImplementPropertyType("disallowRobots")]
+		public virtual bool DisallowRobots => this.Value<bool>(_publishedValueFallback, "disallowRobots");
+
+		///<summary>
+		/// 404 Error page
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("errorPage404")]
+		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent ErrorPage404 => this.Value<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(_publishedValueFallback, "errorPage404");
+
+		///<summary>
+		/// 500 Error page
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("errorPage500")]
+		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent ErrorPage500 => this.Value<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(_publishedValueFallback, "errorPage500");
+
+		///<summary>
 		/// Global Contact CTA: This link will be used for the BDM CTA, unless the item being viewed has a specific one chosen.
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
@@ -152,6 +175,14 @@ namespace BOI.Umbraco.Models
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("registerLink")]
 		public virtual global::Umbraco.Cms.Core.Models.Link RegisterLink => this.Value<global::Umbraco.Cms.Core.Models.Link>(_publishedValueFallback, "registerLink");
+
+		///<summary>
+		/// Robots meta
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("robotsMeta")]
+		public virtual string RobotsMeta => this.Value<string>(_publishedValueFallback, "robotsMeta");
 
 		///<summary>
 		/// Search Results Link

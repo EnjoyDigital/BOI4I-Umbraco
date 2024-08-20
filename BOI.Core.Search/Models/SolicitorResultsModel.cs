@@ -3,7 +3,7 @@
 namespace BOI.Core.Search.Models
 {
 
-    public class SolicitorsResults
+    public class SolicitorsResults 
     {
         public int Page { get; set; }
 
@@ -16,7 +16,7 @@ namespace BOI.Core.Search.Models
         public IEnumerable<SearchFilter> Filters { get; set; }
     }
 
-    public class SolicitorResult
+    public class SolicitorResult : IPagedResult
     {
         public string SolicitorName { get; set; }
 

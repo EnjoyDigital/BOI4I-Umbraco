@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using NUglify;
 using System.Globalization;
 using System.Net;
 using System.Text;
@@ -22,6 +23,7 @@ using Umbraco.Cms.Web.Common.Attributes;
 using Umbraco.Cms.Web.Common.Authorization;
 using Umbraco.Cms.Web.Common.Filters;
 using Umbraco.Extensions;
+using static BOI.Core.Web.Services.FileUploadService;
 
 namespace BOI.Core.Web.Controllers.Backoffice
 {
@@ -51,7 +53,7 @@ namespace BOI.Core.Web.Controllers.Backoffice
         [HttpPost]
         public async Task<HttpResponseMessage> ProcessFile()
         {
-            var response = await fileUploadService.ValidateAndSaveFile(Request?.Form.Files[0], "Product");
+            var response = await fileUploadService.ValidateAndSaveFile(Request?.Form.Files[0], FileSaveType.Product);
 
             if (response.Errors.NotNullAndAny())
             {

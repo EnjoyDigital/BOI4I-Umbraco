@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Globalization;
+using static BOI.Core.Web.Services.FileUploadService;
 
 namespace BOI.Core.Web.Services
 {
     public interface IFileUploadService
     {
         Task<SaveResponseDto> SaveFile(IFormFile file);
-        Task<SaveResponseDto> ValidateAndSaveFile(IFormFile file, string modelType);
+        Task<SaveResponseDto> ValidateAndSaveFile(IFormFile file, FileSaveType modelType);
         IEnumerable<T> GetFileData<T>(string path);
-
     }
     public class FileUploadService : IFileUploadService
     {
@@ -23,6 +23,7 @@ namespace BOI.Core.Web.Services
         private static string FileUploadPath = "App_Data\\TEMP\\CSVUploads";
         private static readonly IEnumerable<string> AllowedExtensionProduct = new List<string>() { ".csv", ".json" };
         private static readonly IEnumerable<string> AllowedExtensionSolicitor = new List<string>() { ".csv" };
+        private IEnumerable<string> AllowedExtensionsBDM = new[] { ".csv", ".xlsx" };
 
 
         public FileUploadService(IWebHostEnvironment webHostEnvironment, ILogger<FileUploadService> logger)
@@ -57,22 +58,35 @@ namespace BOI.Core.Web.Services
             }
         }
 
-        public async Task<SaveResponseDto> ValidateAndSaveFile(IFormFile file, string modelType)
+
+        public enum FileSaveType
+        {
+            Product=1,Solicitor=2,BDM=3,CSV=4//,XLS=5,XLSX=6,XML=7
+        }
+        public async Task<SaveResponseDto> ValidateAndSaveFile(IFormFile file, FileSaveType modelType)
         {
             if (file == null)
                 return new SaveResponseDto { Errors = new List<string> { "File cannot be null." } };
 
-            switch (modelType.ToLower())
+            switch (modelType)
             {
-                case "product":
+                case FileSaveType.CSV:
+                    if (string.Equals(Path.GetExtension(file.FileName), ".csv", StringComparison.InvariantCultureIgnoreCase))
+                        return new SaveResponseDto { Errors = new List<string> { "File must be a valid csv" } };
+                    break;
+                case FileSaveType.Product:
                     if (!AllowedExtensionProduct.Any(x => x.Equals(Path.GetExtension(file.FileName).ToLower())))
                         return new SaveResponseDto { Errors = new List<string> { "File must be a valid csv or json file" } };
                     break;
-                case "solicitor":
+                case FileSaveType.Solicitor:
                     if (!AllowedExtensionSolicitor.Any(x => x.Equals(Path.GetExtension(file.FileName).ToLower())))
                         return new SaveResponseDto { Errors = new List<string> { "File must be a valid csv file" } };
                     break;
-                case "bdm":
+                case FileSaveType.BDM:
+                    
+                    if (!AllowedExtensionsBDM.Any(x => x.Equals(Path.GetExtension(file.FileName).ToLower())))
+                        return new SaveResponseDto { Errors = new List<string> { "File must be a valid csv file" } };
+
                     break;
                 default:
                     break;

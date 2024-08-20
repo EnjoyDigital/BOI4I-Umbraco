@@ -4,7 +4,7 @@ using Nest;
 
 namespace BOI.Core.Search.Models
 {
-    public class AutocompleteQuery
+    public class AutocompleteQuery : IAutocompleteQuery
     {
         private readonly IElasticClient esClient;
         private readonly IConfiguration configuration;
@@ -102,7 +102,7 @@ namespace BOI.Core.Search.Models
                    const int boost = 3;
                    QueryContainer container = null;
 
-                   if (CriteriaType.Equals(FieldConstants.BespokeProductType,StringComparison.InvariantCultureIgnoreCase))
+                   if (CriteriaType.Equals(FieldConstants.BespokeProductType, StringComparison.InvariantCultureIgnoreCase))
                    {
                        container = (query.Bool(match => match.Must(qs => qs.MatchPhrasePrefix(c => c.Field(a => a.Name).Query(QueryString)))))
                                            && query.Bool(b => b.MustNot(m => m.Term(ma => ma.Field(f => f.SearchExclude).Value(true))))
@@ -123,7 +123,7 @@ namespace BOI.Core.Search.Models
                                            && query.Bool(b => b.Must(m => m.Terms(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Terms("criteria"))))
                                            && query.Bool(b => b.Must(m => m.Term(t => t.Field(f => f.ResidentialProduct).Value(true))));
                    }
-                                      
+
                    return container;
                })
                .Size(5);

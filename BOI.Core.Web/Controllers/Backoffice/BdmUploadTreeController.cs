@@ -1,35 +1,41 @@
-﻿using System.Net.Http.Formatting;
-using Umbraco.Web.Models.Trees;
-using Umbraco.Web.Mvc;
-using Umbraco.Web.Trees;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Events;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Core.Trees;
+using Umbraco.Cms.Web.BackOffice.Trees;
+using Umbraco.Cms.Web.Common.Attributes;
+using Umbraco.Extensions;
 
-namespace BankOfIreland.Intermediaries.Core.Web.Controllers.Backoffice
+namespace BOI.Core.Web.Controllers.Backoffice
 {
     [PluginController("BdmUpload")]
-    [Tree(BdmUploadSection, "BdmUpload", TreeTitle = "Bdm Upload", TreeGroup = "bdmUploadGroup", SortOrder = 6)]
+    [Tree(BDMSection, "BdmUpload", TreeTitle = "BdmUpload", TreeGroup = "bdmGroup", SortOrder = 6)]
     public class BdmUploadTreeController : TreeController
     {
-        public const string BdmUploadSection = "bdmUpload";
-        protected override TreeNodeCollection GetTreeNodes(string id, FormDataCollection queryStrings)
+        public const string BDMSection = "BdmUpload"; 
+
+        public BdmUploadTreeController(ILocalizedTextService localizedTextService, UmbracoApiControllerTypeCollection umbracoApiControllerTypeCollection, IEventAggregator eventAggregator) : base(localizedTextService, umbracoApiControllerTypeCollection, eventAggregator)
         {
-            var tree = new TreeNodeCollection();
-            var import = CreateTreeNode("1", "-1", queryStrings, "Upload Bdm file");
-
-            import.Icon = "icon-cloud-upload";
-            // set to false for a custom tree with a single node.
-            import.HasChildren = false;
-            //url for menu
-            import.MenuUrl = null;
-            import.RoutePath = string.Format("{0}/{1}/{2}", BdmUploadSection, "bdmUpload", "import");
-
-            tree.Add(import);
-
-            return tree;
         }
 
-        protected override MenuItemCollection GetMenuForNode(string id, FormDataCollection queryStrings)
+        protected override ActionResult<TreeNodeCollection> GetTreeNodes(string id, FormCollection queryStrings)
         {
-            return new MenuItemCollection();
+            return new TreeNodeCollection
+            {
+                CreateTreeNode("0", string.Empty, queryStrings, "Upload BDM file", "icon-cloud-upload", false, MenuRoutePath("import", queryStrings, "0")),
+            };
+        }
+
+        private static string MenuRoutePath(string viewName, FormCollection queryStrings, string id)
+        {
+            return string.Concat(queryStrings.GetValue<string>("application"), BDMSection.EnsureStartsWith('/'), "/", viewName, "/", id);
+        }
+
+        protected override ActionResult<MenuItemCollection> GetMenuForNode(string id, FormCollection queryStrings)
+        {
+            throw new NotImplementedException();
         }
     }
 }

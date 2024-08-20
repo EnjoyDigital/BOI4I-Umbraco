@@ -84,12 +84,14 @@ namespace BOI.Core.Web.Controllers.Hijack
                 {
                     Results = results,
                     ListingUrl = CurrentPage.Url(),
-                    Paging = new Page<SolicitorResult>(resultItems: results.QueryResults, totalItems: results.Total, currentPage: model.Page, pagesize: model.Size, activeClass: "-active")
+                    Paging = new Page<IPagedResult>(resultItems: results.QueryResults, totalItems: results.Total, currentPage: model.Page, pagesize: model.Size, activeClass: "-active")
                 };
                 return Request.IsAjaxRequest() ? PartialView("partials/SolicitorLookup/SolicitorLookUpResultList", viewModel) : CurrentTemplate(viewModel);
             }
             else
             {
+                //TODO: find out why having to add this to stop the filter loading with error state
+                ModelState.Clear();
                 return CurrentTemplate(new SolicitorResultsViewModel(CurrentPage, publishedValueFallback) { ListingUrl = CurrentPage.Url() });
             }
 

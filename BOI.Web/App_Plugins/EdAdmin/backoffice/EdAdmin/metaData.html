@@ -1,0 +1,69 @@
+﻿<div ng-controller="EdAdmin.Controllers.MetaDataController as mdc">
+    <umb-editor-view footer="false">
+        <umb-editor-header name="mdc.name" description="mdc.description" hide-description="false" name-locked="true" description-locked="true" hide-alias="true" hide-icon="true"></umb-editor-header>
+        <umb-editor-container class="form-horizontal">
+            <umb-box>
+                <umb-box-content>
+                    <p class="bold ng-scope">Please ensure the upload is in the correct format - check the help text to ensure you have the correct format</p>
+                    <div ng-show="mdc.invalidFileFormat" class="alert alert-error property-error" style="display: none;">The uploaded file must be in <b>.csv</b> format.</div>
+                    <div ng-show="mdc.noFile" class="alert alert-error property-error" style="display: none;">A .csv file must be selected.</div>
+                    <div class="umb-panel-group__details-status-actions ng-scope" ng-hide="mdc.processing || mdc.processed">
+                        <div class="input-group">
+                            <label class="input-group-btn">
+                                <span class="btn btn-info" style="margin-bottom: 10px; text-align: center;">
+                                    Select .csv <input type="file" accept=".csv" umb-file-upload ngf-multiple="false" class="ng-scope" style="display: none;">
+                                </span>
+                            </label>
+                            <input type="text" id="fileName" class="form-control" readonly style="text-align: center; width: 300px;" value="{{mdc.fileName}}">
+                        </div>
+                        <input ng-if="mdc.fileName" type="submit" ng-click="mdc.upload()" class="btn btn-success" value="Upload file" style="text-align: center; width: 200px;">
+                    </div>
+                    <div class="umb-panel-group__details-status-actions ng-scope" ng-show="mdc.processing">
+                        <div class="clearfix ng-scope">
+                            <div class="alert alert-info">Processing file<strong> {{mdc.fileName}} </strong></div>
+                        </div>
+                        <umb-load-indicator></umb-load-indicator>
+                    </div>
+                    <div class="umb-panel-group__details-status-actions ng-scope" ng-show="mdc.processed">
+                        <div class="clearfix ng-scope">
+                            <div ng-show="mdc.success" class="alert alert-success"><b>Success - </b>{{mdc.success}}</div>
+                            <div ng-show="mdc.error" class="alert alert-error">
+                                <b>Error processing file {{mdc.fileName}} </b>
+                            </div>
+                            <div class="btn-group">
+                                <input ng-preventdefault ng-click="mdc.back()" class="btn btn-info" value="Back to file upload" style="width: 200px;">
+                            </div>
+                        </div>
+                    </div>
+                </umb-box-content>
+            </umb-box>
+
+            <umb-box class="umb-box">
+                <umb-box-header title="Help Text" description="Ensure you read the below before uploading your CSV file."></umb-box-header>
+                <umb-box-content>
+                    <p>Ensure the csv has a header row.</p>
+                    <p>Three columns > Url, MetaTitle, MetaDescription</p>
+                    <p>All fields are mandatory.</p>
+                    <p>There should not be any empty row or column.</p>
+                    <p>
+                        Url should be full url with trailing slash e.g. https://sitedomain.com/page-name/
+                    </p>
+                    <p><u><a href="/assets/files/Metadata.csv" download="">Sample file can be downloaded here</a></u></p>
+                </umb-box-content>
+            </umb-box>
+
+            <umb-box class="umb-box">
+                <umb-box-header title="Export current Meta data"></umb-box-header>
+                <umb-box-content>
+                    <div ng-hide="exportProcessing">
+                        <div class="btn-group">
+                            <a prevent-default ng-click="mdc.export()" class="btn btn-success">Export meta data</a>
+                        </div>
+                    </div>
+                    <umb-load-indicator ng-if="exportProcessing"></umb-load-indicator>
+                </umb-box-content>
+            </umb-box>
+
+        </umb-editor-container>
+    </umb-editor-view>
+</div>

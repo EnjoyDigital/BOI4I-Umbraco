@@ -38,7 +38,7 @@ namespace BOI.Core.Web.Controllers.Backoffice
         [HttpPost]
         public async Task<HttpResponseMessage> ProcessFile()
         {
-            var response = await fileUploadService.ValidateAndSaveFile(Request?.Form.Files[0], "Solicitor");
+            var response = await fileUploadService.ValidateAndSaveFile(Request?.Form.Files[0], FileUploadService.FileSaveType.Solicitor);
 
             if (response.Errors.NotNullAndAny())
             {

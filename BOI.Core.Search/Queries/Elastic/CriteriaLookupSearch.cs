@@ -28,7 +28,7 @@ namespace BOI.Core.Search.Queries.Elastic
         public bool IsBespoke { get; set; }
     }
 
-    public class CriteriaLookupSearcher
+    public class CriteriaLookupSearcher : ICriteriaLookupSearcher
     {
         private readonly IConfiguration configuration;
 
@@ -54,7 +54,7 @@ namespace BOI.Core.Search.Queries.Elastic
                             .Must(
                                 a =>
                                 {
-                                    switch(criteriaType)
+                                    switch (criteriaType)
                                     {
                                         case FieldConstants.ResidentialProductType:
                                             criteriaField = FieldConstants.ResidentialCriteriaField;

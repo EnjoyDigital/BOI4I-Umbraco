@@ -45,7 +45,7 @@ namespace BOI.Core.Web.Controllers.Hijack
             {
                 ListingUrl = CurrentPage.Url(),
                 Results = results,
-                Paging = new Page<NewsArticleResult>(resultItems: results.QueryResults, totalItems: results.Total, currentPage: model.Page, pagesize: model.Size, activeClass: "-active")
+                Paging = new Page<IPagedResult>(resultItems: results.QueryResults, totalItems: results.Total, currentPage: model.Page, pagesize: model.Size, activeClass: "-active")
             });
         }
     }

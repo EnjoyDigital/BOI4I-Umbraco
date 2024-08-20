@@ -17,10 +17,9 @@
 
   <ItemGroup>
     <Compile Remove="Composers\ProductComposer.cs" />
-    <Compile Remove="Controllers\Backoffice\Api\EdAdminApiController.cs" />
-    <Compile Remove="Controllers\Backoffice\BdmUploadApiController.cs" />
-    <Compile Remove="Controllers\Backoffice\BdmUploadTreeController.cs" />
-    <Compile Remove="Controllers\Backoffice\Trees\EdAdminTreeController.cs" />
+    <Compile Remove="Controllers\Backoffice\Trees\EdAdminTreeController-.cs" />
+    <Compile Remove="Controllers\NonPage\RobotsTxtController.cs" />
+    <Compile Remove="Controllers\NonPage\SitemapXmlController.cs" />
   </ItemGroup>
 
 	<ItemGroup>
@@ -30,6 +29,7 @@
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="33.0.1" />
     <PackageReference Include="DangEasy.Caching.MemoryCache" Version="2.1.0" />
+    <PackageReference Include="FastExcel" Version="3.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
@@ -38,6 +38,8 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
     <PackageReference Include="NEST" Version="7.17.4" />
     <PackageReference Include="Our.Umbraco.Meganav" Version="4.1.0" />
+    <PackageReference Include="Skybrud.Essentials" Version="1.1.57" />
+    <PackageReference Include="Skybrud.Umbraco.Redirects" Version="13.0.4" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="Umbraco.Cms.Core" Version="13.4.1" />
     <PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.4.1" />
@@ -49,10 +51,6 @@
     <ProjectReference Include="..\BOI.Core.Search\BOI.Core.Search.csproj" />
     <ProjectReference Include="..\BOI.Core\BOI.Core.csproj" />
     <ProjectReference Include="..\BOI.Umbraco.Models\BOI.Umbraco.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\Backoffice\Trees\" />
   </ItemGroup>
 
 </Project>

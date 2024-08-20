@@ -48,11 +48,10 @@
                             bdmPod = true;
                             var podAlias = pod.ContentType.Alias.TrimEnd("Action");
                             viewPath = string.Concat(viewPath, "Pods/");
-                           // Html.RenderAction(podAlias, "PodSurface", new { model = pod, heroPod = true });
+                            @await Component.InvokeAsync("PodsView", new { publishedContent = pod, isHeroPod =true})
                             break;
                         default:
                             <partial name="partials/pods/@pod.ContentType.Alias" model="pod" />
-                            //Html.RenderPartial("partials/pods/" + pod.ContentType.Alias, pod);
                             break;
                     }
                 }

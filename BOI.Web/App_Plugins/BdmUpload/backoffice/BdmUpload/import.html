@@ -1,0 +1,103 @@
+﻿<div class="umb-dashboard__content" ng-cloak ng-controller="BdmUploadImportController as ivm">
+    <umb-editor-view>
+        <umb-editor-container>
+            <umb-box>
+                <umb-box-content>
+                    <h3 class="bold ng-scope"> Upload a BDM file (.xlsx, .csv)</h3>
+                    <p>Upload a .xlsx or .csv file with the BDM data.</p>
+                    <p class="bold ng-scope">Please ensure the upload is in the correct format</p>
+                    <div ng-show="ivm.invalidFileFormat" class="alert alert-error property-error" style="display: none;">The uploaded file must be in <b>.xlsx</b> or <b>.csv</b> format.</div>
+                    <div ng-show="ivm.noFile" class="alert alert-error property-error" style="display: none;">A .xlsx or .csv file must be selected.</div>
+                    <div class="umb-panel-group__details-status-actions ng-scope" ng-hide="ivm.processing || ivm.processed">
+                        <div class="input-group">
+                            <label class="input-group-btn">
+                                <span class="btn btn-info" style="margin-bottom: 10px; text-align: center;">
+                                    Select .xlsx or .csv <input type="file" umb-file-upload ngf-multiple="false" class="ng-scope" style="display: none;">
+                                </span>
+                            </label>
+                            <input type="text" id="fileName" class="form-control" readonly style="text-align: center; width: 300px;" value="{{ivm.fileName}}">
+                        </div>
+                        <h3>When declaring column numbers, please ensure hidden columns are taken into account.</h3>
+                        <h4>All columns are expected to have a value. Leaving blank could cause unexpected errors.</h4>
+                        <div class="input-group">
+                            <label class="input-group">FCA Code column</label>
+                            <input type="number" ng-model="ivm.formFields.fCANumber" />
+
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group">Postcode column</label>
+                            <input type="number" ng-model="ivm.formFields.postcode" />
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group">Firstname column</label>
+                            <input type="number" ng-model="ivm.formFields.firstName" />
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group">Lastname column</label>
+                            <input type="number" ng-model="ivm.formFields.lastName" />
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group">Email column</label>
+                            <input type="number" ng-model="ivm.formFields.email" />
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group">Contact column</label>
+                            <input type="number" ng-model="ivm.formFields.contactNumber" />
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group">Bio Column</label>
+                            <input type="number" ng-model="ivm.formFields.bio" />
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group">Job Title</label>
+                            <input type="number" ng-model="ivm.formFields.jobTitle" />
+                        </div>
+                        <div class="input-group">
+                            <label class="input-group">BDM Type</label>
+                            <input type="number" ng-model="ivm.formFields.bDMType" />
+                        </div>
+                        <!--<div class="input-group">
+        <label class="input-group">Require FCA and Postcode match column</label>
+        <input type="number" ng-model="ivm.formFields.requireFCAAndPostcodeMatch" />
+    </div>-->
+                        <input ng-if="ivm.fileName" type="submit" ng-click="ivm.upload()" class="btn btn-success" value="Upload file" style="text-align: center; width: 200px;">
+                    </div>
+                    <div class="umb-panel-group__details-status-actions ng-scope" ng-show="ivm.processing">
+                        <div class="clearfix ng-scope">
+                            <div class="alert alert-info">Processing file<strong> {{ivm.fileName}} </strong></div>
+                        </div>
+                        <umb-load-indicator></umb-load-indicator>
+                    </div>
+                    <div class="umb-panel-group__details-status-actions ng-scope" ng-show="ivm.processed">
+                        <div class="span12 clearfix ng-scope">
+                            <div ng-show="ivm.success" class="alert alert-success"><b>Success - </b>{{ivm.success}}</div>
+                            <div ng-show="ivm.error" class="alert alert-error"><b>Error processing file {{ivm.fileName}} - </b>{{ivm.error}}</div>
+                            <div class="btn-group">
+                                <input ng-preventdefault ng-click="ivm.back()" class="btn btn-info" value="Back to file upload" style="width: 200px;">
+                            </div>
+                        </div>
+                    </div>
+                </umb-box-content>
+            </umb-box>
+            <umb-box>
+                <umb-box-content>
+                    <h3 class="bold ng-scope">Help Text</h3>
+                    <p>Ensure the spread sheet is in the expected format. Example here <a href="/App_Plugins/BdmUpload/backoffice/bdmfinder_sample_file.xlsx"><strong>../bdmfinder sample file.xlsx</strong></a></p>
+                    <p>Ensure there is a value in each column, as empty columns are not picked up by the file processor which ends up with the proceeding column value getting pulled in its place.</p>
+                    <p>The columns do not need to be in any particular order, as the UI above allows the column to be specified that relates to the agent cms property.</p>
+                    <p>It is currently pre-set to the same column order as the sample file referenced above.</p>
+                    <p>All columns are free text bar the following: </p>
+                    <p></p>
+                    <p><strong>Email</strong> is used to identify/link the agents between the csv uppload and the existing agents in the cms.</p>
+                    <p>&nbsp;&nbsp;&nbsp;Agents with a high number of fca codes, that exceed the maximum charater count for a cell, can be split over multiple rows. the email filed will link these up when processing the import.</p>
+                    <p><strong>BDM Type</strong> should only be set with the following values; <strong>BDM, TBMD and IEL</strong>.</p>
+                    <p><strong>IEL</strong> records/agents ,i.e. Hitachi, only need the first name column setting so a. it saves and b. it is identifiable in the cms.</p>
+                    <p>&nbsp;&nbsp;&nbsp;Content for these are set on the BDM finder content page.</p>
+
+
+
+                </umb-box-content>
+            </umb-box>
+        </umb-editor-container>
+    </umb-editor-view>
+</div>  

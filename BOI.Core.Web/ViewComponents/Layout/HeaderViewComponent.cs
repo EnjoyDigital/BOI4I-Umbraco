@@ -7,6 +7,8 @@ using Umbraco.Cms.Web.Common;
 using Umbraco.Extensions;
 using BOI.Core.Web.Models.ViewModels;
 using BOI.Core.Web.Models.ViewModels.Layout;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Routing;
 
 namespace BOI.Core.Web.ViewComponents.Layout
 {
@@ -17,13 +19,16 @@ namespace BOI.Core.Web.ViewComponents.Layout
         private readonly IUmbracoHelperAccessor umbracoHelperAccessor;
         private readonly ICmsService cmsService;
         private readonly ISessionManager sessionManager;
+        private readonly IUrlHelperFactory urlHelperFactory;
 
-        public HeaderViewComponent(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoHelperAccessor umbracoHelperAccessor, ICmsService cmsService, ISessionManager sessionManager)
+        public HeaderViewComponent(IUmbracoContextAccessor umbracoContextAccessor, IUmbracoHelperAccessor umbracoHelperAccessor, 
+            ICmsService cmsService, ISessionManager sessionManager, IUrlHelperFactory urlHelperFactory)
         {
             this.umbracoContextAccessor = umbracoContextAccessor;
             this.umbracoHelperAccessor = umbracoHelperAccessor;
             this.cmsService = cmsService;
             this.sessionManager = sessionManager;
+            this.urlHelperFactory = urlHelperFactory;
         }
 
 
@@ -48,7 +53,8 @@ namespace BOI.Core.Web.ViewComponents.Layout
                 {
                     var viewModel = new BodyViewModel(currentPage);
                     viewModel.SiteRoot = cmsService.GetSiteRoot(currentPage);
-
+                   
+                    viewModel.SearcjAjaxUrl = CustRouePaths.AutoCompleteSearchAjax;
                     return View("Header", viewModel);
                 }
             }

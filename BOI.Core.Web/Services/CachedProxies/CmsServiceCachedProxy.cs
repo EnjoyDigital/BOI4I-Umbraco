@@ -1,7 +1,9 @@
 ﻿using BOI.Umbraco.Models;
 using DangEasy.Caching.MemoryCache;
 using DangEasy.Interfaces.Caching;
+using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
+using static Umbraco.Cms.Core.Constants.Conventions;
 
 namespace BOI.Core.Web.Services.CachedProxies
 {
@@ -38,7 +40,16 @@ namespace BOI.Core.Web.Services.CachedProxies
             return cache.Get(cacheKey, () => cmsService.GetHome(content));
         }
 
-        public DataRepositories GetSiteDataRepositories(int nodeId)
+        public Tuple<IPublishedContent, IDomain> GetNodeAndDomainForUrl(string fullUrlOfNode)
+        {
+            //var siteNode = GetSiteRoot(content);
+            var cacheKey = CacheKey.Build<CmsServiceCachedProxy, Tuple<IPublishedContent, IDomain>>(fullUrlOfNode);
+
+            return cache.Get(cacheKey, () => cmsService.GetNodeAndDomainForUrl(fullUrlOfNode));
+
+
+        }
+            public DataRepositories GetSiteDataRepositories(int nodeId)
         {
             var cacheKey = CacheKey.Build<CmsServiceCachedProxy, DataRepositories>(nodeId.ToString());
 

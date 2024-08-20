@@ -1,0 +1,60 @@
+﻿<div ng-controller="EdAdmin.Controllers.HrefLangController as hlc">
+    <umb-editor-view footer="false">
+        <umb-editor-header name="hlc.name" description="hlc.description" hide-description="false" name-locked="true" description-locked="true" hide-alias="true" hide-icon="true"></umb-editor-header>
+        <umb-editor-container class="form-horizontal">
+            <umb-box>
+                <umb-box-content>
+                    <p>Upload a hreflang <strong>xml sitemap</strong>, this will then update the pages required.</p>
+                    <p>For single entries you can do this manually on the page.</p>
+                    <p class="bold ng-scope">Please ensure the upload is in the correct format - check the help text to ensure you have the correct format</p>
+                    <div ng-show="hlc.invalidFileFormat" class="alert alert-error property-error" style="display: none;">The uploaded file must be in <b>.csv</b> format.</div>
+                    <div ng-show="hlc.noFile" class="alert alert-error property-error" style="display: none;">A .csv file must be selected.</div>
+                    <div class="umb-panel-group__details-status-actions ng-scope" ng-hide="hlc.processing || hlc.processed">
+                        <div class="input-group">
+                            <label class="input-group-btn">
+                                <span class="btn btn-info" style="margin-bottom: 10px; text-align: center;">
+                                    Select .xml <input type="file" accept=".xml" umb-file-upload ngf-multiple="false" class="ng-scope" style="display: none;">
+                                </span>
+                            </label>
+                            <input type="text" id="fileName" class="form-control" readonly style="text-align: center; width: 300px;" value="{{hlc.fileName}}">
+                        </div>
+                        <input ng-if="hlc.fileName" type="submit" ng-click="hlc.upload()" class="btn btn-success" value="Upload file" style="text-align: center; width: 200px;">
+                    </div>
+                    <div class="umb-panel-group__details-status-actions ng-scope" ng-show="hlc.processing">
+                        <div class="clearfix ng-scope">
+                            <div class="alert alert-info">Processing file<strong> {{hlc.fileName}} </strong></div>
+                        </div>
+                        <umb-load-indicator></umb-load-indicator>
+                    </div>
+                    <div class="umb-panel-group__details-status-actions ng-scope" ng-show="hlc.processed">
+                        <div class="clearfix ng-scope">
+                            <div ng-show="hlc.success" class="alert alert-success"><b>Success - </b>{{hlc.success}}</div>
+                            <div ng-show="hlc.error" class="alert alert-error">
+                                <b>Error processing file {{pic.fileName}} </b>
+                                <ul>
+                                    <li ng-repeat="errorMsg in pic.error">{{errorMsg}}</li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <input ng-preventdefault ng-click="hlc.back()" class="btn btn-info" value="Back to file upload" style="width: 200px;">
+                            </div>
+                        </div>
+                    </div>
+                </umb-box-content>
+            </umb-box>
+
+            <umb-box>
+                <umb-box-header title="Help Text" description="Ensure you read the below before uploading your XML file."></umb-box-header>
+                <umb-box-content>
+                    <p>Ensure the Hreflang XML file is valid</p>
+                    <p>
+                        There should not be any empty alternates, otherwise these will not be uploaded
+                    </p>
+                    <p>Url should be full url with trailing slash e.g. https://sitedomain.com/en-gb/page-name/ </p>
+                    <p><u><a href="/assets/files/hreflang.xml" download>Sample file can be downloaded here</a></u></p>
+                </umb-box-content>
+            </umb-box>
+
+        </umb-editor-container>
+    </umb-editor-view>
+</div>
