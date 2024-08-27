@@ -9,7 +9,6 @@
     "~/App_Plugins/EdAdmin/edAdmin.resource.js",
     "~/App_Plugins/EdAdmin/backoffice/EdAdmin/js/hrefLang.controller.js",
     "~/App_Plugins/EdAdmin/backoffice/EdAdmin/js/metaData.controller.js",
-    "~/App_Plugins/EdAdmin/backoffice/EdAdmin/js/memberExport.controller.js",
-    "~/App_Plugins/EdAdmin/backoffice/EdAdmin/js/redirectImport.controller.js"
+    "~/App_Plugins/EdAdmin/backoffice/EdAdmin/js/memberExport.controller.js"
   ]
 }

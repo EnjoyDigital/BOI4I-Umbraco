@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Events;
 using Umbraco.Cms.Core.Services;
@@ -34,8 +32,7 @@ namespace BOI.Core.Web.Controllers.Backoffice.Trees
             {
                 ("Hreflang", "icon-trafic", "hreflang"),
                 ("Meta data", "icon-autofill", "metaData"),
-               // ("Member export", "icon-users", "memberExport"),
-                ("Redirect Import", "icon-reply-arrow", "redirectImport"),
+                ("Member export", "icon-users", "memberExport"),
             }
             .Select((t, i)
                 => CreateTreeNode(i.ToString(), string.Empty, queryStrings, t.Item1, t.Item2, false, MenuRoutePath(t.Item3, queryStrings, i.ToString()))

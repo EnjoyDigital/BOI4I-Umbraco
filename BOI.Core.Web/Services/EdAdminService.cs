@@ -5,12 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
-using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Services;
@@ -21,11 +17,8 @@ using BOI.Umbraco.Models;
 using Skybrud.Umbraco.Redirects.Services;
 using Newtonsoft.Json.Serialization;
 using BOI.Core.Web.Extensions;
-using BOI.Core.Web.Models.ViewModels;
 using BOI.Core.Extensions;
 using BOI.Core.Web.Models.Dtos.EdAdmin;
-using Skybrud.Umbraco.Redirects.Models;
-using Skybrud.Umbraco.Redirects.Models.Options;
 
 
 
@@ -36,9 +29,7 @@ namespace BOI.Core.Web.Services
         byte[] ExportMetaData();
         ImportResponse ImportHrefLang(string path);
         ImportResponse ImportMetaData(string path);
-        ImportResponse ImportRedirects(string path);
-        ExportResponse ExportRedirects();
-       
+        byte[] ExportMembers();
     }
 
     //TODO:HrefLangSettings cms model resolve
@@ -166,98 +157,6 @@ namespace BOI.Core.Web.Services
             return response;
         }
 
-        public ImportResponse ImportRedirects(string filePath)
-        {
-            var response = new ImportResponse();
-
-            var redirectData = GetDataFromCsv<RedirectMap>(filePath, out List<string> errors);
-
-            if (errors.NotNullAndAny())
-            {
-                response.Errors  = string.Join(",   ",errors);
-
-                logger.LogError($"Errors getting data from CSV: {string.Join(", ", errors)}");
-
-                return response;
-            }
-
-            using (var umbracoContext = umbracoContextAccessor.GetRequiredUmbracoContext())
-            {
-                if (umbracoContext != null)
-                {
-                    var redirects =
-                        redirectData
-                            .Select(r =>
-                            {
-                                var destinationUri = new Uri(r.Destination);
-                                var sourceUri = new Uri(r.Source);
-                                var domain = cmsService.GetNodeAndDomainForUrl(r.Destination).Item2;
-                                var route = string.Concat(domain.RootContentId, destinationUri.AbsolutePath);
-
-                                return new
-                                {
-                                    SourceUrl = sourceUri.TrimPathEndSlash().AbsolutePath,
-                                    DestinationNode = umbracoContext.Content.GetByRoute(route)
-                                };
-
-                            }).Where(r => r.DestinationNode != null).ToList();
-
-                    foreach (var redirect in redirects)
-                    {
-                        //Set root node to zero to ensure this is added as 'All sites'
-                        var redirectCheck = redirectsService.GetRedirectByUrl(Guid.Empty, redirect.SourceUrl);
-
-                        if (redirectCheck == null)
-                        {
-                            //redirectsService.DeleteRedirect(redirectCheck);
-
-                            var redirectDestination =
-                                new RedirectDestination()
-                                {
-                                    Id = redirect.DestinationNode.Id,
-                                    Key = redirect.DestinationNode.Key,
-                                    Url = redirect.DestinationNode.Url(),
-                                    Type = RedirectDestinationType.Content
-                                };
-
-                            var createRedirect =
-                                redirectsService.AddRedirect(
-                                    new AddRedirectOptions()
-                                    {
-                                        RootNodeId = 0,
-                                        OriginalUrl = redirect.SourceUrl,
-                                        Destination = redirectDestination,
-                                        Type = RedirectType.Permanent,
-                                        ForwardQueryString = false
-                                    }
-                                );
-                            try
-                            {
-                                redirectsService.SaveRedirect(createRedirect);
-                            }
-                            catch (Exception ex)
-                            {
-                                var errorMessage = $"{ex.Message}: {redirect.SourceUrl}";
-                                errors.Add(errorMessage);
-                                logger.LogError(errorMessage);
-                            }
-                        }
-                        else
-                        {
-                            errors.Add(string.Format("Redirect with source '{0}' already exists, ", redirect.SourceUrl));
-                        }
-
-                    }
-
-                    response.Errors = string.Join(",   ",errors);
-
-                    logger.LogError($"Errors with creating redirects: {string.Join(", ", errors)}");
-                }
-            }
-
-            return response;
-        }
-
         public ImportResponse ImportMetaData(string path)
         {
             string metaTitleAlias = "metaTitle";
@@ -338,45 +237,6 @@ namespace BOI.Core.Web.Services
             return response;
         }
 
-
-        public ExportResponse ExportRedirects()
-        {
-            var response = new ExportResponse();
-
-            if (umbracoHelperAccessor.TryGetUmbracoHelper(out var umbracoHelper) is false)
-            {
-                response.Errors.Add("Error importing redirects");
-                logger.LogError("Umbraco Helper could not be found");
-                return response;
-            }
-
-            var redirectData = new List<RedirectMap>();
-
-            var getRedirects = redirectsService.GetAllRedirects();
-            var host = httpContextAccessor.HttpContext.Request.Host;
-
-            redirectData.AddRange(getRedirects.Select(s => new RedirectMap()
-            {
-                Source = host + s.Url,
-                Destination = host + s.Url
-            }));
-
-            using (var memoryStream = new MemoryStream())
-            {
-                using (var streamWriter = new StreamWriter(memoryStream, Encoding.GetEncoding("iso-8859-1")))
-                {
-                    using (var csv = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
-                    {
-                        csv.WriteRecords(redirectData);
-                    }
-
-                    response.Data = memoryStream.ToArray();
-
-                    return response;
-                }
-            }
-        }
-
         public byte[] ExportMetaData()
         {
             var metaData = new List<PageMetaDataModel>();
@@ -422,7 +282,6 @@ namespace BOI.Core.Web.Services
             }
         }
 
-
         private List<T> GetDataFromCsv<T>(string path, out List<string> errors)
         {
             var errorsBuilder = new List<string>();
@@ -452,6 +311,37 @@ namespace BOI.Core.Web.Services
                 }
 
                 return null;
+            }
+        }
+
+        public byte[] ExportMembers()
+        {
+            var members =
+                memberService.GetMembersByMemberType("member")
+                .Select(member =>
+                    new
+                    {
+                        Username = member.Email,
+                        Email = member.Email,
+                        Name = member.Name,
+                        Roles = memberService.GetAllRoles(member.Username).ToList(),
+                        DateCreated = member.CreateDate
+
+                    }
+                )
+                .ToList();
+
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var streamWriter = new StreamWriter(memoryStream, Encoding.GetEncoding("iso-8859-1")))
+                {
+                    using (var csv = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
+                    {
+                        csv.WriteRecords(members);
+                    }
+
+                    return memoryStream.ToArray();
+                }
             }
         }
 

@@ -77,22 +77,22 @@
             console.log(response);
             var linkElement = document.createElement("a");
             try {
-                //var today = new moment();
-                //var filename = "metadata-" + today.format("d-MMM-YYYY") + ".csv";
-                //var blob = new Blob([response.data], { type: "text/csv" });
-                //var url = window.URL.createObjectURL(blob);
+                var today = new moment();
+                var filename = "metadata-" + today.format("d-MMM-YYYY") + ".csv";
+                var blob = new Blob([response.data], { type: "text/csv" });
+                var url = window.URL.createObjectURL(blob);
 
-                //linkElement.setAttribute("href", url);
-                //linkElement.setAttribute("download", filename);
+                linkElement.setAttribute("href", url);
+                linkElement.setAttribute("download", filename);
 
-                //var clickEvent = new MouseEvent("click", {
-                //    "view": window,
-                //    "bubbles": true,
-                //    "cancelable": false
-                //});
-                //linkElement.dispatchEvent(clickEvent);
-                //mdc.exportProcessing = false;
-                //notificationsService.success("Success", "File should now be downloading");
+                var clickEvent = new MouseEvent("click", {
+                    "view": window,
+                    "bubbles": true,
+                    "cancelable": false
+                });
+                linkElement.dispatchEvent(clickEvent);
+                mdc.exportProcessing = false;
+                notificationsService.success("Success", "File should now be downloading");
             } catch (ex) {
                 exportFailed(ex);
             }

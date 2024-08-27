@@ -63,37 +63,6 @@
                 cache: false,
                 responseType: "arraybuffer"
             });
-        },
-        redirectImport: function (file) {
-            var request = {
-                file: file
-            };
-            return $http({
-                method: "POST",
-                url: "backoffice/EdAdmin/EdAdminApi/ImportRedirects",
-                headers: { "Content-Type": undefined },
-                transformRequest: function (data) {
-                    var formData = new FormData();
-                    formData.append("file", data.file);
-                    return formData;
-                },
-                data: request
-            }).then(function (response) {
-                if (response) {
-                    var fileName = response.data;
-                    return fileName;
-                } else {
-                    return false;
-                }
-            });
-        },
-        exportRedirects: function () {
-            return $http({
-                method: "GET",
-                url: "backoffice/EdAdmin/EdAdminApi/ExportRedirects",
-                cache: false,
-                responseType: "arraybuffer"
-            });
         }
     };
 });

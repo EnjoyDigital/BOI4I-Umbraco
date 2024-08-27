@@ -71,7 +71,7 @@ namespace BOI.Core.Web.Services
             switch (modelType)
             {
                 case FileSaveType.CSV:
-                    if (string.Equals(Path.GetExtension(file.FileName), ".csv", StringComparison.InvariantCultureIgnoreCase))
+                    if (!string.Equals(Path.GetExtension(file.FileName), ".csv", StringComparison.InvariantCultureIgnoreCase))
                         return new SaveResponseDto { Errors = new List<string> { "File must be a valid csv" } };
                     break;
                 case FileSaveType.Product:
