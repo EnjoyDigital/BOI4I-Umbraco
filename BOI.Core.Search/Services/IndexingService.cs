@@ -1,8 +1,6 @@
-﻿using BOI.Core.Constants;
-using BOI.Core.Search.Constants;
+﻿using BOI.Core.Search.Constants;
 using BOI.Core.Search.Models;
 using BOI.Core.Extensions;
-using BOI.Core.Search.Extensions;
 using BOI.Umbraco.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -14,7 +12,6 @@ using Umbraco.Cms.Core.Routing;
 using Umbraco.Extensions;
 using BOI.Core.Search.Queries.SQL;
 using BOI.Core.Search.Models.ElasticSearch;
-using Solicitor = BOI.Core.Search.Models.Solicitor;
 
 namespace BOI.Core.Search.Services
 {
@@ -36,7 +33,6 @@ namespace BOI.Core.Search.Services
     public class IndexingService : IIndexingService
     {
         private readonly ILogger<IndexingService> logger;
-        //private readonly IDatabaseFactory databaseFactory;
         private readonly IPublishedValueFallback publishedValueFallback;
         private readonly IPublishedUrlProvider publishedUrlProvider;
         private readonly IGetAllMediaLogs getAllMediaLogs;
@@ -49,13 +45,12 @@ namespace BOI.Core.Search.Services
         /// </summary>
         /// <param name="logger">An instance of a logger to log progress</param>
         /// <param name="client">A NEST Elasticsearch client</param>
-        public IndexingService(IConfiguration config, IElasticClient client, ILogger<IndexingService> logger, /*IDatabaseFactory databaseFactory,*/
+        public IndexingService(IConfiguration config, IElasticClient client, ILogger<IndexingService> logger,
             IPublishedValueFallback publishedValueFallback, IPublishedUrlProvider publishedUrlProvider, IGetAllMediaLogs getAllMediaLogs)
         {
             this.config = config;
             this.client = client;
             this.logger = logger;
-            //this.databaseFactory = databaseFactory;
             this.publishedValueFallback = publishedValueFallback;
             this.publishedUrlProvider = publishedUrlProvider;
             this.getAllMediaLogs = getAllMediaLogs;

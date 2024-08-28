@@ -3,7 +3,6 @@ using BOI.Core.Extensions;
 using BOI.Core.Search.Constants;
 using BOI.Core.Search.Extensions;
 using BOI.Core.Search.Models;
-using BOI.Umbraco.Models;
 using Microsoft.Extensions.Configuration;
 using Nest;
 using System.ComponentModel.DataAnnotations;
