@@ -1,6 +1,4 @@
-﻿using BOI.Core.Search.Constants;
-
-namespace BOI.Core.Search.Models
+﻿namespace BOI.Core.Search.Models
 {
     public class Page<T>
     {
@@ -19,7 +17,6 @@ namespace BOI.Core.Search.Models
             ItemsPerPage = pagesize;
             Links = Enumerable.Empty<PaginationLink>();
             ActiveClass = activeClass;
-            //GenerateLinks();
         }
 
         public Page(IEnumerable<T> resultItems, long totalItems, string activeClass)
@@ -69,107 +66,6 @@ namespace BOI.Core.Search.Models
         public PaginationLink PrevPageUrl { get; set; }
         public PaginationLink NextPageUrl { get; set; }
         public PaginationLink LastPageUrl { get; set; }
-
-        //public static implicit operator Page<T>(Page<MainSearchResult> v)
-        //{
-        //    return v;
-        //}
-
-        //public void GenerateLinks()
-        //{
-        //    var links = new List<PaginationLink>();
-        //    var wrapper = new HttpRequestWrapper(HttpContext.Current.Request);
-
-        //    FirstPageUrl = new PaginationLink()
-        //    {
-        //        Class = IsFirstPage ? "disabled" : "",
-        //        Href = (CurrentPage > 1) ? wrapper.SetQuerystringKey(BaseQueryAliases.Page, 0, true) : "",
-        //    };
-
-        //    PrevPageUrl = new PaginationLink()
-        //    {
-        //        Class = IsFirstPage ? "disabled" : "",
-        //        Href = (CurrentPage > 1) ? wrapper.SetQuerystringKey(BaseQueryAliases.Page, CurrentPage - 1, true) : "",
-        //    };
-
-        //    if (HasPages)
-        //    {
-        //        if (PageCount > Limit)
-        //        {
-        //            if (CurrentPage >= Limit && CurrentPage < (PageCount - Limit))
-        //            {
-        //                links.Add(new PaginationLink { Page = 1, Href = wrapper.RemoveQuerystringKey(BaseQueryAliases.Page), Text = "1" });
-        //                links.Add(new PaginationLink { Page = 0, Href = string.Empty });
-        //                for (int i = CurrentPage - 1; i < CurrentPage + 2; i++)
-        //                {
-        //                    var activeClass = (CurrentPage == i) ? ActiveClass : "";
-        //                    var pathAndQuery = (i == 1) ? wrapper.RemoveQuerystringKey(BaseQueryAliases.Page) : wrapper.SetQuerystringKey(BaseQueryAliases.Page, i, true);
-        //                    if (i != 1 && i != PageCount)
-        //                    {
-        //                        links.Add(new PaginationLink { Page = i, Href = pathAndQuery, Class = activeClass, Text = i.ToString() });
-        //                    }
-        //                }
-        //                links.Add(new PaginationLink { Page = 0, Href = string.Empty });
-        //                links.Add(new PaginationLink { Page = PageCount, Href = wrapper.SetQuerystringKey(BaseQueryAliases.Page, PageCount, true), Text = PageCount.ToString() });
-        //            }
-        //            else if (CurrentPage < Limit)
-        //            {
-        //                for (int i = 1; i <= Limit; i++)
-        //                {
-        //                    var activeClass = (CurrentPage == i) ? ActiveClass : "";
-        //                    var pathAndQuery = (i == 1) ? wrapper.RemoveQuerystringKey(BaseQueryAliases.Page) : wrapper.SetQuerystringKey(BaseQueryAliases.Page, i, true);
-
-        //                    if (i != PageCount)
-        //                    {
-        //                        links.Add(new PaginationLink { Page = i, Href = pathAndQuery, Class = activeClass, Text = i.ToString() });
-        //                    }
-        //                }
-        //                links.Add(new PaginationLink { Page = 0, Href = string.Empty });
-        //                links.Add(new PaginationLink { Page = PageCount, Href = wrapper.SetQuerystringKey(BaseQueryAliases.Page, PageCount, true), Text = PageCount.ToString() });
-        //            }
-        //            else if (CurrentPage >= (PageCount - Limit))
-        //            {
-        //                links.Add(new PaginationLink { Page = 1, Href = wrapper.RemoveQuerystringKey(BaseQueryAliases.Page), Text = "1" });
-        //                links.Add(new PaginationLink { Page = 0, Href = string.Empty });
-
-        //                for (int i = PageCount - Limit; i <= PageCount; i++)
-        //                {
-        //                    var activeClass = (CurrentPage == i) ? ActiveClass : "";
-        //                    var pathAndQuery = (i == 1) ? wrapper.RemoveQuerystringKey(BaseQueryAliases.Page) : wrapper.SetQuerystringKey(BaseQueryAliases.Page, i, true);
-
-        //                    if (i != 1)
-        //                    {
-        //                        links.Add(new PaginationLink { Page = i, Href = pathAndQuery, Class = activeClass, Text = i.ToString() });
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        else
-        //        {
-        //            for (int i = 1; i <= PageCount; i++)
-        //            {
-        //                var activeClass = (CurrentPage == i) ? ActiveClass : "";
-        //                var pathAndQuery = (i == 1) ? wrapper.RemoveQuerystringKey(BaseQueryAliases.Page) : wrapper.SetQuerystringKey(BaseQueryAliases.Page, i, true);
-
-        //                links.Add(new PaginationLink { Page = i, Href = pathAndQuery, Class = activeClass, Text = i.ToString() });
-        //            }
-        //        }
-        //    }
-
-        //    NextPageUrl = new PaginationLink()
-        //    {
-        //        Class = IsLastPage ? "disabled" : "",
-        //        Href = (CurrentPage < PageCount) ? wrapper.SetQuerystringKey(BaseQueryAliases.Page, CurrentPage + 1, true) : "",
-        //    };
-
-        //    LastPageUrl = new PaginationLink()
-        //    {
-        //        Class = IsLastPage ? "disabled" : "",
-        //        Href = (CurrentPage < PageCount) ? wrapper.SetQuerystringKey(BaseQueryAliases.Page, PageCount, true) : "",
-        //    };
-
-        //    Links = links;
-        //}
     }
     public class PaginationLink
     {

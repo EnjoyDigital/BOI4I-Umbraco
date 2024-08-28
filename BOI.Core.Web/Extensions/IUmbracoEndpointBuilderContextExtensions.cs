@@ -70,7 +70,7 @@ namespace BOI.Core.Web.Extensions
             );
 
             context.EndpointRouteBuilder.MapControllerRoute(
-                CustomRouteNames.AutoCompleteCriteriaLookupAjax,
+                CustomRouteNames.AutoCompleteCriteriaLookupBuyToLetAjax,
                 "/autoCompleteBuyToLetCriteria/",
                 new
                 {

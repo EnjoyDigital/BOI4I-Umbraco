@@ -116,8 +116,10 @@ namespace BOI.Core.Web.Extensions
             builder.Services.AddScoped<ICriteriaLookupSearcher, CriteriaLookupSearcher>();
             
             //left fulled qualified for clarity
-            builder.Services.AddScoped<BOI.Core.Search.Queries.PostcodeLookup.IRequestHandler, PostcodeLookupQuery.RequestHandler>();
+            builder.Services.AddScoped<IRequestHandler, PostcodeLookupQuery.RequestHandler>();
             builder.Services.AddScoped<IFileUploadService, FileUploadService>();
+
+            builder.Services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
             return builder;
         }
 
