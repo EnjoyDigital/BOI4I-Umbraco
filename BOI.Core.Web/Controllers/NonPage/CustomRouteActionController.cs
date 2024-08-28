@@ -123,11 +123,11 @@ namespace BOI.Core.Web.Controllers.NonPage
                 criteriaName = string.Join(" ", criteriaName.Split(' ').Except(wordsToIgnore));
 
             if (productType == FieldConstants.ResidentialProductType)
-                return criteriaLookupSearcher.Execute(new CriteriaLookupSearch() { CriteriaCategory = criteriaCategory, CriteriaName = criteriaName });
+                return criteriaLookupSearcher.ExecuteCriteriaLookup(new CriteriaLookupSearch() { CriteriaCategory = criteriaCategory, CriteriaName = criteriaName }, FieldConstants.ResidentialProductType);
             else if (productType == FieldConstants.BuyToLetProductType)
-                return criteriaLookupSearcher.BuyToLetExecute(new CriteriaLookupSearch() { BuyToLetCriteriaCategory = criteriaCategory, BuyToLetCriteriaName = criteriaName });
+                return criteriaLookupSearcher.ExecuteCriteriaLookup(new CriteriaLookupSearch() { BuyToLetCriteriaCategory = criteriaCategory, BuyToLetCriteriaName = criteriaName }, FieldConstants.BuyToLetProductType);
             else
-                return criteriaLookupSearcher.BespokeExecute(new CriteriaLookupSearch() { BespokeCriteriaCategory = criteriaCategory, BespokeCriteriaName = criteriaName });
+                return criteriaLookupSearcher.ExecuteCriteriaLookup(new CriteriaLookupSearch() { BespokeCriteriaCategory = criteriaCategory, BespokeCriteriaName = criteriaName }, FieldConstants.BespokeProductType);
         }
 
         private CriteriaLookupsResults SearchCriteriaOnly(string criteriaName, string productType, IPublishedContent currentPage)

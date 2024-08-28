@@ -81,9 +81,11 @@ namespace BOI.Core.Web.Controllers.Hijacks
             bespokeCategoryList.Sort((x, y) => string.Compare(x.Text, y.Text));
             bespokeCategoryList = bespokeCategoryList.Prepend(new SelectListItem { Text = "All Categories", Value = "null" }).ToList();
 
-            var results = criteriaLookupSearcher.Execute(model);
-            var buyToLetResults = criteriaLookupSearcher.BuyToLetExecute(model);
-            var bespokeResults = criteriaLookupSearcher.BespokeExecute(model);
+
+
+            var results = criteriaLookupSearcher.ExecuteCriteriaLookup(model, FieldConstants.ResidentialProductType);
+            var buyToLetResults = criteriaLookupSearcher.ExecuteCriteriaLookup(model, FieldConstants.BuyToLetProductType);
+            var bespokeResults = criteriaLookupSearcher.ExecuteCriteriaLookup(model, FieldConstants.BespokeProductType);
 
             return CurrentTemplate(new CriteriaLookupResultsViewModel(CurrentPage,publishedValueFallback)
             {
