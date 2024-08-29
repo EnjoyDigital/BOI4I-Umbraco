@@ -90,17 +90,42 @@ namespace BOI.Core.Search.Queries.Elastic
             return aggDict;
         }
 
-        public QueryContainer BuildQueryContainer(string criteriaName)
+        public QueryContainer BuildQueryContainer(string criteriaName, string productType)
         {
             var query = new QueryContainerDescriptor<WebContent>();
+            QueryContainer queryContainer = null;
+            //TODO: Sort this query out
 
-            var queryContainer =
-                (query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Name).Query(criteriaName).Boost(20))))
+            switch (productType)
+            {
+                case FieldConstants.ResidentialProductType:
+                    queryContainer = (query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Name).Query(criteriaName).Boost(20))))
                  ||
                  query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Content).Query(criteriaName).Operator(Operator.And).Analyzer("ignore_html_tags")))
                  ))
                 &&
-                query.Bool(b => b.Must(m => m.Terms(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Terms("criteria", "criteriaTab"))));
+                query.Bool(b => b.Must(m => m.Terms(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Terms("criteria", "criteriaTab")))) &&
+                query.Bool(b => b.Must(m => m.Term(t => t.Field(tf => tf.ResidentialProduct).Value(true))));
+                    break;
+                case FieldConstants.BuyToLetProductType:
+                    queryContainer = (query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Name).Query(criteriaName).Boost(20))))
+                 ||
+                 query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Content).Query(criteriaName).Operator(Operator.And).Analyzer("ignore_html_tags")))
+                 ))
+                &&
+                query.Bool(b => b.Must(m => m.Terms(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Terms("criteria", "criteriaTab")))) &&
+                query.Bool(b => b.Must(m => m.Term(t => t.Field(tf => tf.BuyToLetProduct).Value(true))));
+                    break;
+                case FieldConstants.BespokeProductType:
+                    queryContainer = (query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Name).Query(criteriaName).Boost(20))))
+                 ||
+                 query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Content).Query(criteriaName).Operator(Operator.And).Analyzer("ignore_html_tags")))
+                 ))
+                &&
+                query.Bool(b => b.Must(m => m.Terms(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Terms("criteria", "criteriaTab")))) &&
+                query.Bool(b => b.Must(m => m.Term(t => t.Field(tf => tf.BespokeProduct).Value(true))));
+                    break;
+            }
 
             return queryContainer;
         }
@@ -136,11 +161,11 @@ namespace BOI.Core.Search.Queries.Elastic
             return criteriaCategoryFilters;
         }
 
-        public CriteriaLookupsResults ExecuteCriteriaLookup(CriteriaLookupSearch model, string criteriaType)
+        public CriteriaLookupsResults ExecuteCriteriaLookup(CriteriaLookupSearch model, string productType)
         {
             string criteriaName = string.Empty, criteriaCategoryFilterName = string.Empty, criteriaCategoryFilter = string.Empty, criteriaCategory = string.Empty;
 
-            switch (criteriaType)
+            switch (productType)
             {
                 case FieldConstants.ResidentialProductType:
                     criteriaName = model.CriteriaName;
@@ -162,13 +187,21 @@ namespace BOI.Core.Search.Queries.Elastic
                     break;
             }
 
+            var esQuery = new SearchDescriptor<WebContent>().Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
+                    .TrackTotalHits()
+                    .Size(10000)
+                    .Query(q => BuildQueryContainer(criteriaName, productType));
+
+            var stream = new System.IO.MemoryStream();
+            esClient.RequestResponseSerializer.Serialize(esQuery, stream);
+            var jsonQuery = System.Text.Encoding.UTF8.GetString(stream.ToArray());
 
             var search = esClient
                 .Search<WebContent>(s => s
                     .Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
                     .TrackTotalHits()
                     .Size(10000)
-                    .Query(q => BuildQueryContainer(criteriaName))
+                    .Query(q => BuildQueryContainer(criteriaName, productType))
                     .Aggregations(agg => BuildAggregationContainer(criteriaCategoryFilterName))
                     .PostFilter(pf => BuildPostFilterContainer(criteriaCategoryFilter, criteriaCategory))
                     .Highlight(x => x.Fields(y => y.Field(f => f.Content).NumberOfFragments(1).Type(HighlighterType.Plain).FragmentSize(10000).PreTags(HightLightPre).PostTags(HightLightPost)))

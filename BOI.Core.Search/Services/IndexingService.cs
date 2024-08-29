@@ -487,11 +487,11 @@ namespace BOI.Core.Search.Services
                 }
             }
 
-            var searchTitle =  content.Value<string>(publishedValueFallback, "searchTitle", fallback: Fallback.ToDefaultValue, defaultValue: content.Name) ;
+            var searchTitle = content.Value<string>(publishedValueFallback, "searchTitle", fallback: Fallback.ToDefaultValue, defaultValue: content.Name);
             var searchDescription = content.Value<string>(publishedValueFallback, "searchDescription", fallback: Fallback.ToDefaultValue, defaultValue: content.Name);
             var searchKeywords = content.Value<string>(publishedValueFallback, "searchKeywords", fallback: Fallback.ToDefaultValue, defaultValue: "");
             var searchImage = (content.Value<IPublishedContent>(publishedValueFallback, "searchImage")?.Url(publishedUrlProvider)) ?? "";
-            var searchExclude =  content.Value<bool>(publishedValueFallback, "excludeFromSearch", fallback: Fallback.ToDefaultValue, defaultValue: true);
+            var searchExclude = content.Value<bool>(publishedValueFallback, "excludeFromSearch", fallback: Fallback.ToDefaultValue, defaultValue: true);
 
             var metaTitle = content.Value<string>(publishedValueFallback, "metaTitle", fallback: Fallback.ToDefaultValue, defaultValue: "");
             var metaDescription = content.HasValue("metaDescription") ? content.Value<IPublishedContent>(publishedValueFallback, "metaDescription")?.Url(publishedUrlProvider) : "";
@@ -508,7 +508,7 @@ namespace BOI.Core.Search.Services
             string criteriaName = "";
             string criteriaCategory = "";
 
-            if (string.Equals(content.ContentType.Alias,Criteria.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(content.ContentType.Alias, Criteria.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
             {
                 if (content.HasValue("criteriaName") && !string.IsNullOrEmpty(content.Value<string>(publishedValueFallback, "criteriaName")))
                 {
@@ -519,7 +519,17 @@ namespace BOI.Core.Search.Services
                     criteriaName = content.Name;
                 }
                 criteriaCategory = content.HasValue("criteriaCategory") ? content.Value<IPublishedContent>(publishedValueFallback, "criteriaCategory")?.Name : "";
-                var criteriaProductType = content.HasValue("criteriaProductType") ? content.Value<IEnumerable<string>>(publishedValueFallback, "criteriaProductType") : Enumerable.Empty<string>();
+            }
+
+            string bodyText = null, criteriaUpdateDate = null, criteriaTabUpdateDate = null;
+
+            if (string.Equals(content.ContentType.Alias, Criteria.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase) || string.Equals(content.ContentType.Alias, "criteriaTab", StringComparison.InvariantCultureIgnoreCase))
+            {
+                bodyText = content.HasValue("bodyText") ? content.Value<string>(publishedValueFallback, "bodyText") : "";
+                criteriaUpdateDate = content.HasValue("criteriaUpdatedDate") ? content.Value<DateTime>(publishedValueFallback, "criteriaUpdatedDate").ToString("yyyy-MM-ddTHH:mm:sszzz") : string.Empty;
+                criteriaTabUpdateDate = content.HasValue("criteriaTabUpdatedDate") ? content.Value<DateTime>(publishedValueFallback, "criteriaTabUpdatedDate").ToString("yyyy-MM-ddTHH:mm:sszzz") : string.Empty;
+
+                var criteriaProductType = content.HasValue("criteriaProductType") ? content.Value<IEnumerable<string>>(publishedValueFallback, "criteriaProductType") : content.Parent.HasValue("criteriaProductType") ? content.Parent.Value<IEnumerable<string>>(publishedValueFallback, "criteriaProductType") : Enumerable.Empty<string>();
                 if (criteriaProductType != null && criteriaProductType.Any())
                 {
                     foreach (var criteriaproductType in criteriaProductType)
@@ -538,19 +548,11 @@ namespace BOI.Core.Search.Services
                             default:
                                 BuyToLetProduct = false;
                                 ResidentialProduct = false;
+                                BespokeProduct = false;
                                 break;
                         }
                     }
                 }
-            }
-
-            string bodyText = null, criteriaUpdateDate = null, criteriaTabUpdateDate = null;
-
-            if (string.Equals(content.ContentType.Alias, Criteria.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase) || string.Equals(content.ContentType.Alias, "criteriaTab", StringComparison.InvariantCultureIgnoreCase))
-            {
-                bodyText = content.HasValue("bodyText") ? content.Value<string>(publishedValueFallback, "bodyText") : "";
-                criteriaUpdateDate = content.HasValue("criteriaUpdatedDate") ? content.Value<DateTime>(publishedValueFallback, "criteriaUpdatedDate").ToString("yyyy-MM-ddTHH:mm:sszzz") : string.Empty;
-                criteriaTabUpdateDate = content.HasValue("criteriaTabUpdatedDate") ? content.Value<DateTime>(publishedValueFallback, "criteriaTabUpdatedDate").ToString("yyyy-MM-ddTHH:mm:sszzz") : string.Empty;
             }
 
             string productType = null, category = null, lTVTitle = null, lTVFilterText = null, term = null, rate = null, description = null, overallCost = null, productFees = null, features = null, earlyRepaymentCharges = null, code = null, productVariant = null, withdrawalDateTime = null, aIPDeadlineDateTime = null, launchDateTime = null;

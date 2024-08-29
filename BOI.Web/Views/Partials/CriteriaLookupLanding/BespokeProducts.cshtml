@@ -2,9 +2,9 @@
 @inject IShortStringHelper shortStringHelper;
 @inherits UmbracoViewPage<CriteriaLookupResultsViewModel>
 
-@if (Model.BespokeResults != null && Model.BespokeResults.QueryResults != null && Model.BespokeResults.QueryResults.Any(x => x.IsBespokeProduct))
+@if (Model.BespokeResults != null && Model.BespokeResults.QueryResults != null)
 {
-    var BespokeProducts = Model.BespokeResults.QueryResults.Where(x => x.IsBespokeProduct).OrderBy(y => y.CriteriaName);
+    var BespokeProducts = Model.BespokeResults.QueryResults.OrderBy(y => y.CriteriaName);
     var GroupedBespokeProducts = BespokeProducts.GroupBy(y => y.CriteriaName[0].ToString().ToUpper());
     var BespokeProductsResultText = BespokeProducts.Count() > 1 ? "results" : "result";
     var charAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();

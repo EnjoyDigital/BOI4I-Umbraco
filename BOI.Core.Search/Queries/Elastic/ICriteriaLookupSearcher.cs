@@ -5,7 +5,7 @@ namespace BOI.Core.Search.Queries.Elastic
 {
     public interface ICriteriaLookupSearcher
     {
-        QueryContainer BuildQueryContainer(string criteriaName);
+        QueryContainer BuildQueryContainer(string criteriaName, string productType);
         IAggregationContainer BuildAggregationContainer(string criteriaFilterName);
         QueryContainer BuildPostFilterContainer(string criteriaCategoryFilter, string criteriaCategory);
         AggregateDictionary CriteriaLookupFormValues(string criteriaType);

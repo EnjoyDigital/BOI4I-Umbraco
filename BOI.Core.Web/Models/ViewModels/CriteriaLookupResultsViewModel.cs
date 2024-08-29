@@ -10,7 +10,9 @@ namespace BOI.Core.Web.Models.ViewModels
         public CriteriaLookupResultsViewModel(IPublishedContent content, IPublishedValueFallback publishedValueFallback) : base(content, publishedValueFallback) { }
 
         public CriteriaLookupsResults Results;
+        
         public CriteriaLookupsResults BuyToLetResults;
+
         public CriteriaLookupsResults BespokeResults;
         public string ListingUrl { get; set; }
         public IEnumerable<SelectListItem> CategoryList { get; set; }
