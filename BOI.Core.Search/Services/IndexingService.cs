@@ -522,7 +522,7 @@ namespace BOI.Core.Search.Services
                 }
                 faqCategory = content.HasValue("fAQCategory") ? content.Value<IPublishedContent>(publishedValueFallback, "fAQCategory")?.Name : content.Parent.HasValue("fAQCategory") ? content.Parent.Value<IPublishedContent>(publishedValueFallback, "fAQCategory")?.Name : string.Empty;
                 faqAnswer = content.HasValue("answer") ? content.Value<string>(publishedValueFallback, "answer") : "";
-                faqKeywords = content.HasValue("faqKeywords") ? content.Value<string>(publishedValueFallback, "faqKeywords") : "";
+                faqKeywords = content.HasValue("keywords") ? content.Value<string>(publishedValueFallback, "keywords") : "";
             }
             #endregion
 

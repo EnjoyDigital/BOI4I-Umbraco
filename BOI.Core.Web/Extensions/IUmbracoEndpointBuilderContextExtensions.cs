@@ -101,6 +101,26 @@ namespace BOI.Core.Web.Extensions
                 }
             );
 
+            context.EndpointRouteBuilder.MapControllerRoute(
+                CustomRouteNames.FAQAjax,
+                "/findFAQ/",
+                new
+                {
+                    controller = "CustomRouteAction",
+                    action = "FindFAQ",
+                }
+            );
+
+            context.EndpointRouteBuilder.MapControllerRoute(
+                CustomRouteNames.AutoCompleteFAQAjax,
+                "/autoCompleteFAQ/",
+                new
+                {
+                    controller = "CustomRouteAction",
+                    action = "AutoCompleteFAQ",
+                }
+            );
+
 
             context.EndpointRouteBuilder.MapControllerRoute(
                 CustomRouteNames.ProductLandingAjax,

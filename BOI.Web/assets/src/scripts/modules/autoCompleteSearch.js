@@ -2,7 +2,6 @@
 
 export default function AutoCompleteCriterea() {
     var selector = '#searchResultForm';
-
     jQuery.fn.extend({
         autocompleteSearch: function (options) {
             var form = $(this).closest('form');

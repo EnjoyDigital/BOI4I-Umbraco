@@ -114,6 +114,7 @@ namespace BOI.Core.Web.Extensions
             builder.Services.AddScoped<IAutocompleteQuery, AutocompleteQuery>();
             builder.Services.AddScoped<IContentImporter, ContentImporter>();
             builder.Services.AddScoped<ICriteriaLookupSearcher, CriteriaLookupSearcher>();
+            builder.Services.AddScoped<IFAQSearcher, FAQSearcher>();
             
             //left fulled qualified for clarity
             builder.Services.AddScoped<IRequestHandler, PostcodeLookupQuery.RequestHandler>();

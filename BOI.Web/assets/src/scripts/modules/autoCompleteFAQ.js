@@ -4,9 +4,9 @@ export default function AutoCompleteSearch() {
     jQuery.fn.extend({
         autocompleteSearch: function (options) {
             var searchInput = $(this);
+
             this.autocomplete({
                 serviceUrl: searchInput.closest('form').data('autocompleteurl'),
-                
                 paramName: "queryString",
                 noCache: true,
                 appendTo: searchInput.closest('.product-filters-input-wrap'),
@@ -16,17 +16,10 @@ export default function AutoCompleteSearch() {
                         type: 'POST',
                         url: searchInput.closest('form').data('ajaxaddurl'),
                         data: {
-                            'criteriaName': suggestion.value, 'pageId': searchInput.closest('form').data('pageid'), 'searchCriteriaOnly': 'true'
+                            'faqQuestion': suggestion.value, 'pageId': searchInput.closest('form').data('pageid'), 'searchFaqOnly': 'true'
                         },
                         success: function (data) {
-
-                            if (searchInput.attr('id') === 'CriteriaName') {
-                                $('#criteriaResult').html(data);
-                            }
-                            else if (searchInput.attr('id') === 'BuyToLetCriteriaName')
-                                $('#buyToLetResult').html(data);
-                            else
-                                $('#bespokeResult').html(data);
+                            $('#faqResult').html(data);
                             searchInput.closest('.tab-content').find('.accordion-heading').first().click();
                         }
                     });
@@ -40,7 +33,7 @@ export default function AutoCompleteSearch() {
         }
     });
 
-    $('#CriteriaName, #BuyToLetCriteriaName, #BespokeCriteriaName').each(function () {
+    $('#FAQName').each(function () {
         $(this).autocompleteSearch();
     });
 }

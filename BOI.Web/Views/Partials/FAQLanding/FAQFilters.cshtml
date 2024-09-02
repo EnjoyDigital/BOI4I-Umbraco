@@ -3,8 +3,6 @@
 <div class="tab-content rich-text" data-tab-title="FAQ Criteria" id="FAQCriteria">
     <form action="" class="product-filters criteria-filters" data-autocompleteurl="@Url.RouteUrl(CustomRouteNames.AutoCompleteFAQAjax, new {controller = "CustomRouteAction", action = "AutoCompleteFAQ"})" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.FAQAjax, new {controller = "CustomRouteAction", action = "FindFAQ"})" data-pageid="@Model.Id">
         <fieldset>
-            <legend class="h3 product-filters__title js-toggle-product-filters">Filter Criteria</legend>
-
             <div class="product-filters-inner js-product-filters">
 
                 <div class="product-filters-input-wrap -select-wrap">
@@ -18,11 +16,11 @@
                 </div>
 
                 <div class="product-filters-input-wrap">
-                    <button class="button" id="FAQSearch" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.FAQAjax, new { controller = "CustomRouteAction", action = "FindFAQ" })" data-pageid="@Model.Id"><span>Search</span></button>
+                    <button class="button" id="FAQSearch" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.FAQAjax, new { controller = "CustomRouteAction", action = "FindFAQ" })" data-pageid="@Model.Id"><span>Search</span></button>
                 </div>
 
                 <div class="product-filters-input-wrap">
-                    <button class="button -blue-outline js-form-clear" id="FAQClear" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.FAQAjax, new { controller = "CustomRouteAction", action = "FindFAQ" })" data-pageid="@Model.Id"><span>Clear</span></button>
+                    <button class="button -blue-outline js-form-clear" id="FAQClear" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.FAQAjax, new { controller = "CustomRouteAction", action = "FindFAQ" })" data-pageid="@Model.Id"><span>Clear</span></button>
                 </div>
 
             </div>
