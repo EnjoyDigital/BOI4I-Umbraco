@@ -1,0 +1,33 @@
+﻿@inherits UmbracoViewPage<CriteriaLookupResultsViewModel>
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="~/Views/Shared/Hero.cshtml" />
+<partial name="~/Views/Shared/Breadcrumb.cshtml" />
+
+
+@if (Model.Content != null)
+{
+    @Html.GetBlockListHtml(Model, "content")
+}
+
+<div id="tabs"></div>
+<section class="criteria-lookup-container">
+    <div class="umb-block-list">
+        <div class="tabbed-content">
+            <partial name="~/Views/Partials/FAQLanding/FAQFilters.cshtml" />
+        </div>
+    </div>
+</section>
+
+@if (Model.Pods != null)
+{
+    <div class="umb-block-list">
+        <partial name="~/Views/Partials/Pods.cshtml" />
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript" src="/assets/dist/js/faqLanding.bundle.js" asp-append-version="true"></script>
+}

@@ -2,72 +2,72 @@
 @inherits UmbracoViewPage<IFAqblock>
 
 @{
-    if( (Model?.FAqs.NullOrEmpty()).GetValueOrDefault())
+    if ((Model?.FAqs.NullOrEmpty()).GetValueOrDefault())
     {
         return;
     }
 
-    
-        <div class="faq-block">
 
-            <h3 class="faq-block__heading">@Model.Title</h3>
+    <div class="faq-block">
 
-            @foreach (var faq in Model.FAqs.OfType<BlockListItem<FAqnestedItem>>())
+        <h3 class="faq-block__heading">@Model.Title</h3>
+
+        @foreach (var faq in Model.FAqs.OfType<BlockListItem<FAqnestedItem>>())
+        {
+            var faqItem = (FAqnestedItem)faq.Content;
+            if (faqItem == null)
             {
-                var faqItem = (FAqnestedItem)faq.Content;
-                if(faqItem == null)
-                {
-                    continue;
-                }
+                continue;
+            }
             <div class="accordion" id="@faqItem.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)">
-                    <button id="Accordion-@faqItem.Question.ToLower().Replace(" ", "-")-heading" class="accordion-heading" aria-controls="Accordion-@faqItem.Question.ToLower().Replace(" ", "-")-content">
-                        @faqItem.Question<i class="toggle"></i>
-                    </button>
+                <button id="Accordion-@faqItem.Question.ToLower().Replace(" ", "-")-heading" class="accordion-heading" aria-controls="Accordion-@faqItem.Question.ToLower().Replace(" ", "-")-content">
+                    @faqItem.Question<i class="toggle"></i>
+                </button>
 
-                    @if (faq.Content.Answer != null && faq.Content.Answer.Any())
-                    {
+                @if (faq.Content.Answer != null && faq.Content.Answer.Any())
+                {
 
-                        <div id="Accordion-@faqItem.Question.ToLower().Replace(" ", "-")-content" class="accordion-content rich-text" aria-labelledby="Accordion-@faqItem.Question.ToLower().Replace(" ", "-")-heading">
-                            @foreach (var faqItemAnswer in faq.Content.Answer)
+                    <div id="Accordion-@faqItem.Question.ToLower().Replace(" ", "-")-content" class="accordion-content rich-text" aria-labelledby="Accordion-@faqItem.Question.ToLower().Replace(" ", "-")-heading">
+                        @foreach (var faqItemAnswer in faq.Content.Answer)
+                        {
+                            switch (faqItemAnswer.Content.ContentType.Alias)
                             {
-                                switch (faqItemAnswer.Content.ContentType.Alias)
-                                {
-                                    case FAqitemWithAnswer.ModelTypeAlias:
-                                        var answer = (FAqitemWithAnswer)faqItemAnswer.Content;
-                                        if(answer == null)
-                                        {
-                                            continue;
-                                        }
+                                case FAqitemWithAnswer.ModelTypeAlias:
+                                    var answer = (FAqitemWithAnswer)faqItemAnswer.Content;
+                                    if (answer == null)
+                                    {
+                                        continue;
+                                    }
 
-                                        @answer.Answer
+                                    @answer.Answer
                                     <partial src="AccordionLink" model="Link to this" />
 
                                     break;
                                 case FAqitemWithQuestion.ModelTypeAlias:
                                     var faqItemWithQuestion = (FAqitemWithQuestion)faqItemAnswer.Content;
-                                    if(faqItemWithQuestion == null)
+                                    if (faqItemWithQuestion == null)
                                     {
                                         continue;
                                     }
                                     <div class="accordion" id="@faqItem.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)_@faqItemWithQuestion.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)">
 
                                         <button id="Accordion-@faqItem.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)_@faqItemWithQuestion.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)-heading" class="accordion-heading" aria-controls="Accordion-@faqItem.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)_@faqItemWithQuestion.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)-content">
-                                                @faqItemWithQuestion.Question
-                                                <i class="toggle"></i>
-                                            </button>
+                                            @faqItemWithQuestion.Question
+                                            <i class="toggle"></i>
+                                        </button>
                                         <div id="Accordion-@faqItem.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)_@faqItemWithQuestion.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)-content" class="accordion-content rich-text" role="region" aria-labelledby="Accordion-@faqItem.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)_@faqItemWithQuestion.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)-heading">
-                                                @faqItemWithQuestion.Answer
+                                            @faqItemWithQuestion.Answer
                                             <partial src="AccordionLink" model="Link to this" />
-                                            </div>
                                         </div>
-                                        break;
-                                }
-
+                                    </div>
+                                    break;
                             }
-                        </div>
-                    }
-                </div>
-            }
-        </div>
-    
+
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
 }

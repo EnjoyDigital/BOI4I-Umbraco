@@ -36,12 +36,18 @@ namespace BOI.Core.Search.Models
         public bool BespokeProduct { get; set; }
         public string BodyText { get; set; }
         public string Content { get; set; }
-        public List<Tags> Tags { get; set; }
         public string CriteriaUpdateDate { get; set; }
         public string CriteriaTabUpdateDate { get; set; }
         public bool Published { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
+
+        //FAQ Fields
+        public string FaqCategory { get; set; }
+        public string FaqQuestion { get; set; }
+        public string FaqAnswer { get; set; }
+        //public FAQNestedItem FAQs { get; set; }
+
 
         //BDM Contact Fields
         public string FCANumber { get; set; }
