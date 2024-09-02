@@ -46,7 +46,7 @@ namespace BOI.Core.Search.Models
         public string FaqCategory { get; set; }
         public string FaqQuestion { get; set; }
         public string FaqAnswer { get; set; }
-        //public FAQNestedItem FAQs { get; set; }
+        public string FaqKeywords { get; set; }
 
 
         //BDM Contact Fields

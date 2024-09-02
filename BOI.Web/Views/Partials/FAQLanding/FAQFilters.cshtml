@@ -1,0 +1,34 @@
+﻿@inherits UmbracoViewPage<FAQResultsViewModel>
+
+<div class="tab-content rich-text" data-tab-title="FAQ Criteria" id="FAQCriteria">
+    <form action="" class="product-filters criteria-filters" data-autocompleteurl="@Url.RouteUrl(CustomRouteNames.AutoCompleteFAQAjax, new {controller = "CustomRouteAction", action = "AutoCompleteFAQ"})" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.FAQAjax, new {controller = "CustomRouteAction", action = "FindFAQ"})" data-pageid="@Model.Id">
+        <fieldset>
+            <legend class="h3 product-filters__title js-toggle-product-filters">Filter Criteria</legend>
+
+            <div class="product-filters-inner js-product-filters">
+
+                <div class="product-filters-input-wrap -select-wrap">
+                    <label for="FAQCategory">@Model.FAqsearchCategoryText</label>
+                    @Html.DropDownListFor(m => Model.FAQCategory, Model.CategoryList, new { id = "FAQCategory" })
+                </div>
+
+                <div class="product-filters-input-wrap -search-term">
+                    <label for="FAQName">@Model.FAqsearchNameText</label>
+                    @Html.TextBoxFor(m => Model.FAQName, new { id = "FAQName", placeholder = "Enter your search" })
+                </div>
+
+                <div class="product-filters-input-wrap">
+                    <button class="button" id="FAQSearch" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.FAQAjax, new { controller = "CustomRouteAction", action = "FindFAQ" })" data-pageid="@Model.Id"><span>Search</span></button>
+                </div>
+
+                <div class="product-filters-input-wrap">
+                    <button class="button -blue-outline js-form-clear" id="FAQClear" data-ajaxurl="@Url.RouteUrl(CustomRouteNames.FAQAjax, new { controller = "CustomRouteAction", action = "FindFAQ" })" data-pageid="@Model.Id"><span>Clear</span></button>
+                </div>
+
+            </div>
+        </fieldset>
+    </form>
+
+    <partial name="~/Views/Partials/FAQLanding/FAQs.cshtml" />
+</div>
+

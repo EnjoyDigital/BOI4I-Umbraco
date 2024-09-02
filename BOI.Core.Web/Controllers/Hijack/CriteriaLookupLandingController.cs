@@ -28,7 +28,7 @@ namespace BOI.Core.Web.Controllers.Hijacks
         private readonly IShortStringHelper shortStringHelper;
 
         public CriteriaLookupLandingController(IConfiguration config, IPublishedValueFallback publishedValueFallback,
-            IElasticClient esClient, ILogger<NewsLandingController> logger, ICompositeViewEngine compositeViewEngine,
+            IElasticClient esClient, ILogger<CriteriaLookupLandingController> logger, ICompositeViewEngine compositeViewEngine,
             IUmbracoContextAccessor umbracoContextAccessor, UmbracoHelper umbracoHelper, IShortStringHelper shortStringHelper) : base(logger, compositeViewEngine, umbracoContextAccessor)
         {
             this.config = config;

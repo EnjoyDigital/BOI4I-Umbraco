@@ -1,0 +1,86 @@
+﻿@using Umbraco.Cms.Core.Strings
+@inject IShortStringHelper shortStringHelper;
+@inherits UmbracoViewPage<FAQResultsViewModel>
+
+@if (Model.Results != null && Model.Results.QueryResults != null)
+{
+    var Faqs = Model.Results.QueryResults.OrderBy(y => y.SortOrder);
+    var GroupedFaqs = Faqs.GroupBy(y => y.FAQQuestion[0].ToString().ToUpper());
+    var FaqsResultText = Faqs.Count() > 1 ? "results" : "result";
+   @*  var charAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
+    var FaqsChars = Faqs.Select(x => x.FAQQuestion[0]); *@
+
+    <div id="bespokeResult">
+
+        <div class="product-table-caption">
+            <span class="h3 product-table-caption__title">@Faqs.Count() @FaqsResultText</span>
+            <a class="print-products js-print-products" href="" title="Click to download criteria PDF">
+                <svg class="[ icon icon-print -blue ]">
+                    <use xlink:href="#sprite-icon-pdf-document-icon"></use>
+                </svg>
+                <span>Download Criteria PDF</span>
+            </a>
+        </div>
+
+@*         <div class="alphabet-list">
+            <ul>
+                @foreach (var alpha in charAlpha)
+                {
+                    <li>
+                        @if (FaqsChars.Contains(alpha))
+                        {
+                            <a href="" data-letter="@alpha">@alpha</a>
+                        }
+                        else
+                        {
+                            @alpha
+                        }
+                    </li>
+                }
+            </ul>
+        </div> *@
+
+        @foreach (var groupedFaq in GroupedFaqs)
+        {
+            <div class="criteria-category" data-letter="@groupedFaq.Key">
+                <h3>@groupedFaq.Key</h3>
+
+                @foreach (var criteria in groupedFaq.OrderBy(y => y.SortOrder))
+                {
+                    <div class="accordion" id="@criteria.NameId">
+                        <div class="accordion-heading">
+                            @criteria.FAQQuestion
+                            <i class="toggle"></i>
+                        </div>
+                        <div class="accordion-content rich-text">
+                            @Html.Raw(criteria.FAQAnswer)
+
+                            @if (criteria.FAQTabs != null && criteria.FAQTabs.Any())
+                            {
+                                foreach (var tab in criteria.FAQTabs)
+                                {
+                                    <div class="accordion" id="@tab.FAQTabQuestion.ToLower().ToCleanString(shortStringHelper, CleanStringType.UrlSegment)">
+                                        <div class="accordion-heading">
+                                            @tab.FAQTabQuestion
+                                            <i class="toggle"></i>
+                                        </div>
+                                        <div class="accordion-content rich-text">
+                                            @Html.Raw(tab.FAQAnswer)
+
+                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>@Model.FAqnoResultFoundText</p>
+}

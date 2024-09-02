@@ -3,6 +3,7 @@ using BOI.Core.Extensions;
 using BOI.Core.Search.Constants;
 using BOI.Core.Search.Extensions;
 using BOI.Core.Search.Models;
+using BOI.Umbraco.Models;
 using Microsoft.Extensions.Configuration;
 using Nest;
 using System.ComponentModel.DataAnnotations;
@@ -187,15 +188,6 @@ namespace BOI.Core.Search.Queries.Elastic
                     break;
             }
 
-            var esQuery = new SearchDescriptor<WebContent>().Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
-                    .TrackTotalHits()
-                    .Size(10000)
-                    .Query(q => BuildQueryContainer(criteriaName, productType));
-
-            var stream = new System.IO.MemoryStream();
-            esClient.RequestResponseSerializer.Serialize(esQuery, stream);
-            var jsonQuery = System.Text.Encoding.UTF8.GetString(stream.ToArray());
-
             var search = esClient
                 .Search<WebContent>(s => s
                     .Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
@@ -237,9 +229,9 @@ namespace BOI.Core.Search.Queries.Elastic
         private List<CriteriaLookupResult> GetCriteriaResutls(ISearchResponse<WebContent> search)
         {
             var parentCriteriaList = new List<CriteriaLookupResult>();
-            if (search.Documents.Any(x => x.NodeTypeAlias.Equals("criteriaTab", StringComparison.InvariantCultureIgnoreCase)))
+            if (search.Documents.Any(x => x.NodeTypeAlias.Equals(CriteriaTab.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase)))
             {
-                var criteriaTabDocs = search.Documents.Where(x => x.NodeTypeAlias.Equals("criteriaTab", StringComparison.InvariantCultureIgnoreCase)).GroupBy(y => y.ParentNodeId);
+                var criteriaTabDocs = search.Documents.Where(x => x.NodeTypeAlias.Equals(CriteriaTab.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase)).GroupBy(y => y.ParentNodeId);
 
                 foreach (var criteriaTabDoc in criteriaTabDocs)
                 {
@@ -273,7 +265,7 @@ namespace BOI.Core.Search.Queries.Elastic
             }
 
             var queryResults = new List<CriteriaLookupResult>();
-            var nonCriteriaTabs = search.Documents.Where(x => !x.NodeTypeAlias.Equals("criteriaTab", StringComparison.InvariantCulture));
+            var nonCriteriaTabs = search.Documents.Where(x => !x.NodeTypeAlias.Equals(CriteriaTab.ModelTypeAlias, StringComparison.InvariantCulture));
             foreach (var nonCriteriaTab in nonCriteriaTabs)
             {
                 var criteriaTabs = search.Documents.Where(x => x.ParentNodeId == nonCriteriaTab.Id).Select(r => new CriteriaTabResult()

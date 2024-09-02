@@ -58,6 +58,30 @@ namespace BOI.Umbraco.Models
 		public virtual global::Umbraco.Cms.Core.Models.Blocks.BlockListModel Content => this.Value<global::Umbraco.Cms.Core.Models.Blocks.BlockListModel>(_publishedValueFallback, "content");
 
 		///<summary>
+		/// FAQ No Result Found Text
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("fAQNoResultFoundText")]
+		public virtual string FAqnoResultFoundText => this.Value<string>(_publishedValueFallback, "fAQNoResultFoundText");
+
+		///<summary>
+		/// FAQ Search Category Text
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("fAQSearchCategoryText")]
+		public virtual string FAqsearchCategoryText => this.Value<string>(_publishedValueFallback, "fAQSearchCategoryText");
+
+		///<summary>
+		/// FAQ Search Name Text
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("fAQSearchNameText")]
+		public virtual string FAqsearchNameText => this.Value<string>(_publishedValueFallback, "fAQSearchNameText");
+
+		///<summary>
 		/// Background Colour: This field will allow you to choose the colour of the background elements, in the hero banner.
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]

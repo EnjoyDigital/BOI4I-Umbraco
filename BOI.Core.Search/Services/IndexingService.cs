@@ -508,8 +508,7 @@ namespace BOI.Core.Search.Services
             var sortOrder = content.SortOrder;
 
             #region FAQ
-            string faqQuestion = string.Empty, faqCategory = string.Empty, faqAnswer = string.Empty;
-            var faqs = new FAQNestedItem();
+            string faqQuestion = string.Empty, faqCategory = string.Empty, faqAnswer = string.Empty, faqKeywords = string.Empty;
 
             if (string.Equals(content.ContentType.Alias, FAQ.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase) || string.Equals(content.ContentType.Alias, FAqtab.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -523,38 +522,7 @@ namespace BOI.Core.Search.Services
                 }
                 faqCategory = content.HasValue("fAQCategory") ? content.Value<IPublishedContent>(publishedValueFallback, "fAQCategory")?.Name : content.Parent.HasValue("fAQCategory") ? content.Parent.Value<IPublishedContent>(publishedValueFallback, "fAQCategory")?.Name : string.Empty;
                 faqAnswer = content.HasValue("answer") ? content.Value<string>(publishedValueFallback, "answer") : "";
-                //var fAQs = content.HasValue("fAQs") ? content.Value<BlockListModel>(publishedValueFallback, "fAQs") : null;
-                //if (fAQs.NotNullAndAny())
-                //{
-                //    foreach (var faq in fAQs)
-                //    {
-                //        var faqNestedItem = faq.Content as FAqnestedItem;
-                //        faqs.Question = faqNestedItem.Question;
-                //        var answerList = new List<FAQItemAnswer>();
-
-                //        foreach (var answer in faqNestedItem.Answer)
-                //        {
-                //            var faqItemAnswer = new FAQItemAnswer();
-                //            var answerContent = answer.Content;
-
-                //            switch (answerContent.ContentType.Alias)
-                //            {
-                //                case FAqitemWithAnswer.ModelTypeAlias:
-                //                    var fAqitemWithAnswer = answerContent as FAqitemWithAnswer;
-                //                    faqItemAnswer.Answer = fAqitemWithAnswer.Answer.ToString();
-                //                    var b = fAqitemWithAnswer.Answer;
-                //                    break;
-                //                case FAqitemWithQuestion.ModelTypeAlias:
-                //                    var fAqitemWithQuestion = answerContent as FAqitemWithQuestion;
-                //                    faqItemAnswer.FAQItemWithQuestion = new FAQItemWithQuestion() { FAQQuestion = fAqitemWithQuestion.Question, FAQAnswer = fAqitemWithQuestion.Answer.ToString() };
-                //                    break;
-                //            }
-                //            answerList.Add(faqItemAnswer);
-                //        }
-                //        faqs.Answer = answerList;
-                //    }
-                //}
-
+                faqKeywords = content.HasValue("faqKeywords") ? content.Value<string>(publishedValueFallback, "faqKeywords") : "";
             }
             #endregion
 
@@ -706,9 +674,9 @@ namespace BOI.Core.Search.Services
                 FaqCategory = faqCategory,
                 FaqQuestion = faqQuestion,
                 FaqAnswer = faqAnswer,
-                //FAQs = faqs,
+                FaqKeywords = faqKeywords,
 
-                Content = !string.IsNullOrWhiteSpace(combinedContent.ToString().Trim()) ? combinedContent.ToString().Trim() : !string.IsNullOrWhiteSpace(bodyText) ? bodyText : null,
+                Content = !string.IsNullOrWhiteSpace(combinedContent.ToString().Trim()) ? combinedContent.ToString().Trim() : !string.IsNullOrWhiteSpace(bodyText) ? bodyText : !string.IsNullOrWhiteSpace(faqAnswer) ? faqAnswer :null,
                 Regions = regionsList,
                 PostCodeOutCodes = postcodeOutcodes,
                 FCANumber = fCANumberList,
