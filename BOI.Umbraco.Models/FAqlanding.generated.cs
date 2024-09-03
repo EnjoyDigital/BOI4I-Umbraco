@@ -82,6 +82,14 @@ namespace BOI.Umbraco.Models
 		public virtual string FAqsearchNameText => this.Value<string>(_publishedValueFallback, "fAQSearchNameText");
 
 		///<summary>
+		/// Words To Ignore
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("wordsToIgnore")]
+		public virtual string WordsToIgnore => this.Value<string>(_publishedValueFallback, "wordsToIgnore");
+
+		///<summary>
 		/// Background Colour: This field will allow you to choose the colour of the background elements, in the hero banner.
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]

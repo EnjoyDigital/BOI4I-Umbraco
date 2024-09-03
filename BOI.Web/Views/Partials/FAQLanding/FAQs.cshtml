@@ -2,14 +2,12 @@
 @inject IShortStringHelper shortStringHelper;
 @inherits UmbracoViewPage<FAQResultsViewModel>
 
-@if (Model.Results != null && Model.Results.QueryResults != null)
+@if (Model.Results != null && Model.Results.QueryResults != null && Model.Results.QueryResults.Count() > 0)
 {
     var Faqs = Model.Results.QueryResults.OrderBy(y => y.SortOrder);
     var GroupedFaqs = Faqs.GroupBy(y => y.FAQQuestion[0].ToString().ToUpper());
     var FaqsResultText = Faqs.Count() > 1 ? "results" : "result";
-   @*  var charAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
-    var FaqsChars = Faqs.Select(x => x.FAQQuestion[0]); *@
-
+    
     <div id="faqResult">
 
         <div class="product-table-caption">
@@ -21,24 +19,6 @@
                 <span>Download Criteria PDF</span>
             </a>
         </div>
-
-@*         <div class="alphabet-list">
-            <ul>
-                @foreach (var alpha in charAlpha)
-                {
-                    <li>
-                        @if (FaqsChars.Contains(alpha))
-                        {
-                            <a href="" data-letter="@alpha">@alpha</a>
-                        }
-                        else
-                        {
-                            @alpha
-                        }
-                    </li>
-                }
-            </ul>
-        </div> *@
 
         @foreach (var groupedFaq in GroupedFaqs)
         {
