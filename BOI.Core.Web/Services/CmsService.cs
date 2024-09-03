@@ -77,7 +77,7 @@ namespace BOI.Core.Web.Services
             using (UmbracoContextReference umbContextRef = umbracoContextFactory.EnsureUmbracoContext())
             {
                 var allDomains = domainService.GetAll(false);
-                string domainName = allDomains.OrderByDescending(x => x.DomainName.Length).FirstOrDefault(d => fullUrlOfNode.Contains(d.DomainName)).DomainName;
+                string domainName = allDomains.OrderByDescending(x => x.DomainName.Length).FirstOrDefault(d => fullUrlOfNode.Contains(d.DomainName))?.DomainName;
                 var domain = allDomains.FirstOrDefault(d => d.DomainName == domainName);
                 if (domain == null)
                 {

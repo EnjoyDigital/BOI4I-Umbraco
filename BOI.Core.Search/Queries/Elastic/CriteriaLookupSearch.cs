@@ -91,51 +91,111 @@ namespace BOI.Core.Search.Queries.Elastic
             return aggDict;
         }
 
-        public QueryContainer BuildQueryContainer(string criteriaName)
+        public QueryContainer BuildQueryContainer(string criteriaName, string productType)
         {
             var query = new QueryContainerDescriptor<WebContent>();
+            QueryContainer queryContainer = null;
+            //TODO: Sort this query out
 
-            var queryContainer =
-                (query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Name).Query(criteriaName).Boost(20))))
+            switch (productType)
+            {
+                case FieldConstants.ResidentialProductType:
+                    queryContainer = (query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Name).Query(criteriaName).Boost(20))))
                  ||
                  query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Content).Query(criteriaName).Operator(Operator.And).Analyzer("ignore_html_tags")))
                  ))
                 &&
-                query.Bool(b => b.Must(m => m.Terms(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Terms("criteria", "criteriaTab"))));
+                query.Bool(b => b.Must(m => m.Terms(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Terms("criteria", "criteriaTab")))) &&
+                query.Bool(b => b.Must(m => m.Term(t => t.Field(tf => tf.ResidentialProduct).Value(true))));
+                    break;
+                case FieldConstants.BuyToLetProductType:
+                    queryContainer = (query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Name).Query(criteriaName).Boost(20))))
+                 ||
+                 query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Content).Query(criteriaName).Operator(Operator.And).Analyzer("ignore_html_tags")))
+                 ))
+                &&
+                query.Bool(b => b.Must(m => m.Terms(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Terms("criteria", "criteriaTab")))) &&
+                query.Bool(b => b.Must(m => m.Term(t => t.Field(tf => tf.BuyToLetProduct).Value(true))));
+                    break;
+                case FieldConstants.BespokeProductType:
+                    queryContainer = (query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Name).Query(criteriaName).Boost(20))))
+                 ||
+                 query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Content).Query(criteriaName).Operator(Operator.And).Analyzer("ignore_html_tags")))
+                 ))
+                &&
+                query.Bool(b => b.Must(m => m.Terms(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Terms("criteria", "criteriaTab")))) &&
+                query.Bool(b => b.Must(m => m.Term(t => t.Field(tf => tf.BespokeProduct).Value(true))));
+                    break;
+            }
 
             return queryContainer;
         }
 
-        public CriteriaLookupsResults Execute(CriteriaLookupSearch model)
+        public IAggregationContainer BuildAggregationContainer(string criteriaFilterName)
         {
+            var query = new AggregationContainerDescriptor<WebContent>();
+
+            var queryContainer =
+                query.Terms(criteriaFilterName, t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Size(1000));
+
+            return queryContainer;
+        }
+
+        public QueryContainer BuildPostFilterContainer(string criteriaCategoryFilter, string criteriaCategory)
+        {
+            var query = new QueryContainerDescriptor<WebContent>();
+
+            QueryContainer criteriaCategoryFilters = null;
+
+            if (!string.IsNullOrEmpty(criteriaCategoryFilter) && criteriaCategoryFilter != "null")
+            {
+                criteriaCategoryFilters &= query.Term(t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Value(criteriaCategoryFilter));
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(criteriaCategory) && criteriaCategory != "null")
+                {
+                    criteriaCategoryFilters &= query.Term(t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Value(criteriaCategory));
+                }
+            }
+
+            return criteriaCategoryFilters;
+        }
+
+        public CriteriaLookupsResults ExecuteCriteriaLookup(CriteriaLookupSearch model, string productType)
+        {
+            string criteriaName = string.Empty, criteriaCategoryFilterName = string.Empty, criteriaCategoryFilter = string.Empty, criteriaCategory = string.Empty;
+
+            switch (productType)
+            {
+                case FieldConstants.ResidentialProductType:
+                    criteriaName = model.CriteriaName;
+                    criteriaCategoryFilterName = "criteriaCategoryFilter";
+                    criteriaCategoryFilter = model.CriteriaCategoryFilter;
+                    criteriaCategory = model.CriteriaCategory;
+                    break;
+                case FieldConstants.BuyToLetProductType:
+                    criteriaName = model.BuyToLetCriteriaName;
+                    criteriaCategoryFilterName = "buyToLetCriteriaCategoryFilter";
+                    criteriaCategoryFilter = model.BuyToLetCriteriaCategoryFilter;
+                    criteriaCategory = model.BuyToLetCriteriaCategory;
+                    break;
+                case FieldConstants.BespokeProductType:
+                    criteriaName = model.BespokeCriteriaName;
+                    criteriaCategoryFilterName = "bespokeCriteriaCategoryFilter";
+                    criteriaCategoryFilter = model.BespokeCriteriaCategoryFilter;
+                    criteriaCategory = model.BespokeCriteriaCategory;
+                    break;
+            }
+
             var search = esClient
                 .Search<WebContent>(s => s
                     .Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
                     .TrackTotalHits()
                     .Size(10000)
-                    .Query(q => BuildQueryContainer(model.CriteriaName))
-                    .Aggregations(agg => agg
-                        .Terms("criteriaCategoryFilter", t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Size(1000))
-                    )
-                    .PostFilter(pf =>
-                    {
-                        QueryContainer criteriaCategoryFilters = null;
-
-                        if (!string.IsNullOrEmpty(model.CriteriaCategoryFilter) && model.CriteriaCategoryFilter != "null")
-                        {
-                            criteriaCategoryFilters &= pf.Term(t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Value(model.CriteriaCategoryFilter));
-                        }
-                        else
-                        {
-                            if (!string.IsNullOrWhiteSpace(model.CriteriaCategory) && model.CriteriaCategory != "null")
-                            {
-                                criteriaCategoryFilters &= pf.Term(t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Value(model.CriteriaCategory));
-                            }
-                        }
-
-                        return criteriaCategoryFilters;
-                    }
-                    )
+                    .Query(q => BuildQueryContainer(criteriaName, productType))
+                    .Aggregations(agg => BuildAggregationContainer(criteriaCategoryFilterName))
+                    .PostFilter(pf => BuildPostFilterContainer(criteriaCategoryFilter, criteriaCategory))
                     .Highlight(x => x.Fields(y => y.Field(f => f.Content).NumberOfFragments(1).Type(HighlighterType.Plain).FragmentSize(10000).PreTags(HightLightPre).PostTags(HightLightPost)))
                     .Sort(so => so.Descending(f => f.SortOrder))
                 )
@@ -146,11 +206,11 @@ namespace BOI.Core.Search.Queries.Elastic
 
             var refinefilters = search.Aggregations;
 
-            var categoryFilters = refinefilters.Terms("criteriaCategoryFilter").Buckets.Where(x => x.Key.HasValue()).Select(c => new RefineFilter
+            var categoryFilters = refinefilters.Terms(criteriaCategoryFilterName).Buckets.Where(x => x.Key.HasValue()).Select(c => new RefineFilter
             {
                 Label = c.Key,
                 Value = c.Key,
-                IsChecked = c.Key == model.CriteriaCategoryFilter ? true : false
+                IsChecked = c.Key == criteriaCategoryFilter ? true : false
             }).ToList();
 
             if (categoryFilters.Count > 0)
@@ -166,134 +226,12 @@ namespace BOI.Core.Search.Queries.Elastic
             return results;
         }
 
-        public CriteriaLookupsResults BuyToLetExecute(CriteriaLookupSearch model)
-        {
-            var search = esClient
-                .Search<WebContent>(s => s
-                    .Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
-                    .TrackTotalHits()
-                    .Size(10000)
-                    .Query(q => BuildQueryContainer(model.BuyToLetCriteriaName))
-                    .Aggregations(agg => agg
-                        .Terms("buyToLetCriteriaCategoryFilter", t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Size(1000))
-                    )
-                    .PostFilter(pf =>
-                    {
-                        QueryContainer criteriaCategoryFilters = null;
-
-                        if (!string.IsNullOrEmpty(model.BuyToLetCriteriaCategoryFilter) && model.BuyToLetCriteriaCategoryFilter != "null")
-                        {
-                            criteriaCategoryFilters &= pf.Term(t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Value(model.BuyToLetCriteriaCategoryFilter));
-                        }
-                        else
-                        {
-                            if (!string.IsNullOrWhiteSpace(model.BuyToLetCriteriaCategory) && model.BuyToLetCriteriaCategory != "null")
-                            {
-                                criteriaCategoryFilters &= pf.Term(t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Value(model.BuyToLetCriteriaCategory));
-                            }
-                        }
-
-                        return criteriaCategoryFilters;
-                    }
-                    )
-                    .Highlight(x => x.Fields(y => y.Field(f => f.Content).NumberOfFragments(1).Type(HighlighterType.Plain).FragmentSize(10000).PreTags(HightLightPre).PostTags(HightLightPost)))
-                    .Sort(so => so.Descending(f => f.SortOrder))
-                )
-                .EnsureSuccess();
-            ParseHighLights(search, "content");
-
-            var queryResults = GetCriteriaResutls(search);
-
-            var refinefilters = search.Aggregations;
-
-            var categoryFilters = refinefilters.Terms("buyToLetCriteriaCategoryFilter").Buckets.Where(x => x.Key.HasValue()).Select(c => new RefineFilter
-            {
-                Label = c.Key,
-                Value = c.Key,
-                IsChecked = c.Key == model.BuyToLetCriteriaCategoryFilter ? true : false
-            }).ToList();
-
-            if (categoryFilters.Count > 0)
-            {
-                categoryFilters.Sort((x, y) => string.Compare(x.Value, y.Value));
-            }
-
-            var results = new CriteriaLookupsResults
-            {
-                QueryResults = queryResults,
-            };
-
-            return results;
-
-        }
-
-        public CriteriaLookupsResults BespokeExecute(CriteriaLookupSearch model)
-        {
-            var search = esClient
-                .Search<WebContent>(s => s
-                    .Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
-                    .TrackTotalHits()
-                    .Size(10000)
-                    .Query(q => BuildQueryContainer(model.BespokeCriteriaName))
-                    .Aggregations(agg => agg
-                        .Terms("bespokeCriteriaCategoryFilter", t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Size(1000))
-                    )
-                    .PostFilter(pf =>
-                    {
-                        QueryContainer criteriaCategoryFilters = null;
-
-                        if (!string.IsNullOrEmpty(model.BespokeCriteriaCategoryFilter) && model.BespokeCriteriaCategoryFilter != "null")
-                        {
-                            criteriaCategoryFilters &= pf.Term(t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Value(model.BespokeCriteriaCategoryFilter));
-                        }
-                        else
-                        {
-                            if (!string.IsNullOrWhiteSpace(model.BespokeCriteriaCategory) && model.BespokeCriteriaCategory != "null")
-                            {
-                                criteriaCategoryFilters &= pf.Term(t => t.Field(f => f.CriteriaCategory.Suffix("keyword")).Value(model.BespokeCriteriaCategory));
-                            }
-                        }
-
-                        return criteriaCategoryFilters;
-                    }
-                    )
-                    .Highlight(x => x.Fields(y => y.Field(f => f.Content).NumberOfFragments(1).Type(HighlighterType.Plain).FragmentSize(10000).PreTags(HightLightPre).PostTags(HightLightPost)))
-                    .Sort(so => so.Descending(f => f.SortOrder))
-                )
-                .EnsureSuccess();
-            ParseHighLights(search, "content");
-
-            var queryResults = GetCriteriaResutls(search);
-
-            var refinefilters = search.Aggregations;
-
-            var categoryFilters = refinefilters.Terms("bespokeCriteriaCategoryFilter").Buckets.Where(x => x.Key.HasValue()).Select(c => new RefineFilter
-            {
-                Label = c.Key,
-                Value = c.Key,
-                IsChecked = c.Key == model.BespokeCriteriaCategoryFilter ? true : false
-            }).ToList();
-
-            if (categoryFilters.Count > 0)
-            {
-                categoryFilters.Sort((x, y) => string.Compare(x.Value, y.Value));
-            }
-
-            var results = new CriteriaLookupsResults
-            {
-                QueryResults = queryResults,
-            };
-
-            return results;
-
-        }
-
         private List<CriteriaLookupResult> GetCriteriaResutls(ISearchResponse<WebContent> search)
         {
             var parentCriteriaList = new List<CriteriaLookupResult>();
-            if (search.Documents.Any(x => x.NodeTypeAlias.Equals("criteriaTab", StringComparison.InvariantCultureIgnoreCase)))
+            if (search.Documents.Any(x => x.NodeTypeAlias.Equals(CriteriaTab.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase)))
             {
-                var criteriaTabDocs = search.Documents.Where(x => x.NodeTypeAlias.Equals("criteriaTab", StringComparison.InvariantCultureIgnoreCase)).GroupBy(y => y.ParentNodeId);
+                var criteriaTabDocs = search.Documents.Where(x => x.NodeTypeAlias.Equals(CriteriaTab.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase)).GroupBy(y => y.ParentNodeId);
 
                 foreach (var criteriaTabDoc in criteriaTabDocs)
                 {
@@ -327,7 +265,7 @@ namespace BOI.Core.Search.Queries.Elastic
             }
 
             var queryResults = new List<CriteriaLookupResult>();
-            var nonCriteriaTabs = search.Documents.Where(x => !x.NodeTypeAlias.Equals("criteriaTab", StringComparison.InvariantCulture));
+            var nonCriteriaTabs = search.Documents.Where(x => !x.NodeTypeAlias.Equals(CriteriaTab.ModelTypeAlias, StringComparison.InvariantCulture));
             foreach (var nonCriteriaTab in nonCriteriaTabs)
             {
                 var criteriaTabs = search.Documents.Where(x => x.ParentNodeId == nonCriteriaTab.Id).Select(r => new CriteriaTabResult()

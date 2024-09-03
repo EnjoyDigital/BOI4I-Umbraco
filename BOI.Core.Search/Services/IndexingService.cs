@@ -1,8 +1,6 @@
-﻿using BOI.Core.Constants;
-using BOI.Core.Search.Constants;
+﻿using BOI.Core.Search.Constants;
 using BOI.Core.Search.Models;
 using BOI.Core.Extensions;
-using BOI.Core.Search.Extensions;
 using BOI.Umbraco.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -14,7 +12,6 @@ using Umbraco.Cms.Core.Routing;
 using Umbraco.Extensions;
 using BOI.Core.Search.Queries.SQL;
 using BOI.Core.Search.Models.ElasticSearch;
-using Solicitor = BOI.Core.Search.Models.Solicitor;
 
 namespace BOI.Core.Search.Services
 {
@@ -36,7 +33,6 @@ namespace BOI.Core.Search.Services
     public class IndexingService : IIndexingService
     {
         private readonly ILogger<IndexingService> logger;
-        //private readonly IDatabaseFactory databaseFactory;
         private readonly IPublishedValueFallback publishedValueFallback;
         private readonly IPublishedUrlProvider publishedUrlProvider;
         private readonly IGetAllMediaLogs getAllMediaLogs;
@@ -49,13 +45,12 @@ namespace BOI.Core.Search.Services
         /// </summary>
         /// <param name="logger">An instance of a logger to log progress</param>
         /// <param name="client">A NEST Elasticsearch client</param>
-        public IndexingService(IConfiguration config, IElasticClient client, ILogger<IndexingService> logger, /*IDatabaseFactory databaseFactory,*/
+        public IndexingService(IConfiguration config, IElasticClient client, ILogger<IndexingService> logger,
             IPublishedValueFallback publishedValueFallback, IPublishedUrlProvider publishedUrlProvider, IGetAllMediaLogs getAllMediaLogs)
         {
             this.config = config;
             this.client = client;
             this.logger = logger;
-            //this.databaseFactory = databaseFactory;
             this.publishedValueFallback = publishedValueFallback;
             this.publishedUrlProvider = publishedUrlProvider;
             this.getAllMediaLogs = getAllMediaLogs;
@@ -156,24 +151,24 @@ namespace BOI.Core.Search.Services
                     .CharFilters(cf => cf
                         .HtmlStrip("ignore_html_tags")
                      )
-                ))
-                .Map<WebContent>(m => m
-                        .AutoMap()
-                        .Properties(ps => ps
-                            .Nested<Tags>(f => f.Name(p => p.Tags))
-                            .Text(f => f
-                                 .Name(p => p.Content)
-                                 .Analyzer("ignore_html_tags")
-                                 .Fields(fi => fi
-                                     .Keyword(kw => kw
-                                         .Name("keyword")
-                                         .IgnoreAbove(256)
-                                     )
-                                 )
-                            )
-                        )
+                )));
+                //.Map<WebContent>(m => m
+                //        .AutoMap()
+                //        .Properties(ps => ps
+                //            .Nested<Tags>(f => f.Name(p => p.Tags))
+                //            .Text(f => f
+                //                 .Name(p => p.Content)
+                //                 .Analyzer("ignore_html_tags")
+                //                 .Fields(fi => fi
+                //                     .Keyword(kw => kw
+                //                         .Name("keyword")
+                //                         .IgnoreAbove(256)
+                //                     )
+                //                 )
+                //            )
+                //        )
 
-                    ));
+                //    ));
 
                 logger.LogInformation(createIndexResponse.IsValid.ToString());
 
@@ -381,6 +376,7 @@ namespace BOI.Core.Search.Services
             //    return null;
             //}
 
+            #region block list
             var combinedContent = new StringBuilder();
             //TODO: extract this to a method or an extension method on something appropriate
             var blockListContent = content.HasValue("content") ? content.Value<BlockListModel>(publishedValueFallback, "content") : null;
@@ -391,12 +387,12 @@ namespace BOI.Core.Search.Services
                     var blockContent = block.Content;
                     switch (block.Content.ContentType.Alias)
                     {
-                        case "richTextBlock":
+                        case RichTextBlock.ModelTypeAlias:
                             combinedContent.AppendLine(block.Content.HasValue("richText") ? block.Content.Value<string>(publishedValueFallback, "richText") : null);
                             break;
-                        case "calculatorBlock":
+                        case CalculatorBlock.ModelTypeAlias:
                             break;
-                        case "childPageBlock":
+                        case ChildPageBlock.ModelTypeAlias:
                             combinedContent.AppendLine(block.Content.HasValue("title") ? block.Content.Value<string>(publishedValueFallback, "title") : null);
                             var childPages = block.Content.HasValue("childPages") ? block.Content.Value<BlockListModel>(publishedValueFallback, "childPages") : null;
                             foreach (var childPage in childPages)
@@ -405,14 +401,14 @@ namespace BOI.Core.Search.Services
                                 combinedContent.AppendLine(childPage.Content.HasValue("childSubText") ? childPage.Content.Value<string>(publishedValueFallback, "childSubText") : null);
                             }
                             break;
-                        case "contactDetailBlock":
+                        case ContactDetailBlock.ModelTypeAlias:
                             var contactDetailList = block.Content.HasValue("contactDetailList") ? block.Content.Value<BlockListModel>(publishedValueFallback, "contactDetailList") : null;
                             foreach (var contactDetailItem in contactDetailList)
                             {
                                 combinedContent.AppendLine(contactDetailItem.Content.HasValue("contactDetailCopy") ? contactDetailItem.Content.Value<string>(publishedValueFallback, "contactDetailCopy") : null);
                             }
                             break;
-                        case "documentDownloadAndCTALinkBlock":
+                        case DocumentDownloadAndCtalinkBlock.ModelTypeAlias:
                             combinedContent.AppendLine(block.Content.HasValue("title") ? block.Content.Value<string>(publishedValueFallback, "title") : null);
                             var documentsLinks = block.Content.HasValue("documentsLinks") ? block.Content.Value<BlockListModel>(publishedValueFallback, "documentsLinks") : null;
                             foreach (var documentsLink in documentsLinks)
@@ -420,7 +416,7 @@ namespace BOI.Core.Search.Services
                                 var documentsLinkblockContent = documentsLink.Content;
                                 switch (documentsLink.Content.ContentType.Alias)
                                 {
-                                    case "documentUploadBlock":
+                                    case DocumentUploadBlock.ModelTypeAlias:
                                         var documentsLinkBlockDocuments = documentsLink.Content.HasValue("documents") ? documentsLink.Content.Value<BlockListModel>(publishedValueFallback, "documents") : null;
                                         foreach (var documentsLinkBlockDocument in documentsLinkBlockDocuments)
                                         {
@@ -432,7 +428,7 @@ namespace BOI.Core.Search.Services
                                 }
                             }
                             break;
-                        case "documentUploadBlock":
+                        case DocumentUploadBlock.ModelTypeAlias:
                             var documents = block.Content.HasValue("documents") ? block.Content.Value<BlockListModel>(publishedValueFallback, "documents") : null;
                             if (documents.NotNullAndAny())
                             {
@@ -442,7 +438,7 @@ namespace BOI.Core.Search.Services
                                 }
                             }
                             break;
-                        case "fAQBlock":
+                        case FAqblock.ModelTypeAlias:
                             combinedContent.AppendLine(block.Content.HasValue("title") ? block.Content.Value<string>(publishedValueFallback, "title") : null);
                             var fAQs = block.Content.HasValue("fAQs") ? block.Content.Value<BlockListModel>(publishedValueFallback, "fAQs") : null;
                             if (fAQs.NotNullAndAny())
@@ -454,9 +450,9 @@ namespace BOI.Core.Search.Services
                                 }
                             }
                             break;
-                        case "gridBlock":
+                        case GridBlock.ModelTypeAlias:
                             break;
-                        case "howItWorksBlock":
+                        case HowItWorksBlock.ModelTypeAlias:
                             combinedContent.AppendLine(block.Content.HasValue("title") ? block.Content.Value<string>(publishedValueFallback, "title") : null);
                             var steps = block.Content.HasValue("steps") ? block.Content.Value<BlockListModel>(publishedValueFallback, "steps") : null;
                             if (steps.NotNullAndAny())
@@ -468,10 +464,10 @@ namespace BOI.Core.Search.Services
                                 }
                             }
                             break;
-                        case "imageBlock":
+                        case ImageBlock.ModelTypeAlias:
                             combinedContent.AppendLine(block.Content.HasValue("caption") ? block.Content.Value<string>(publishedValueFallback, "caption") : null);
                             break;
-                        case "imageGalleryBlock":
+                        case ImageGalleryBlock.ModelTypeAlias:
                             combinedContent.AppendLine(block.Content.HasValue("title") ? block.Content.Value<string>(publishedValueFallback, "title") : null);
                             var gallery = block.Content.HasValue("gallery") ? block.Content.Value<BlockListModel>(publishedValueFallback, "gallery") : null;
                             if (gallery.NotNullAndAny())
@@ -482,7 +478,7 @@ namespace BOI.Core.Search.Services
                                 }
                             }
                             break;
-                        case "videoBlock":
+                        case VideoBlock.ModelTypeAlias:
                             combinedContent.AppendLine(block.Content.HasValue("title") ? block.Content.Value<string>(publishedValueFallback, "title") : null);
                             combinedContent.AppendLine(block.Content.HasValue("caption") ? block.Content.Value<string>(publishedValueFallback, "caption") : null);
                             break;
@@ -492,11 +488,13 @@ namespace BOI.Core.Search.Services
                 }
             }
 
-            var searchTitle =  content.Value<string>(publishedValueFallback, "searchTitle", fallback: Fallback.ToDefaultValue, defaultValue: content.Name) ;
+            #endregion
+
+            var searchTitle = content.Value<string>(publishedValueFallback, "searchTitle", fallback: Fallback.ToDefaultValue, defaultValue: content.Name);
             var searchDescription = content.Value<string>(publishedValueFallback, "searchDescription", fallback: Fallback.ToDefaultValue, defaultValue: content.Name);
             var searchKeywords = content.Value<string>(publishedValueFallback, "searchKeywords", fallback: Fallback.ToDefaultValue, defaultValue: "");
             var searchImage = (content.Value<IPublishedContent>(publishedValueFallback, "searchImage")?.Url(publishedUrlProvider)) ?? "";
-            var searchExclude =  content.Value<bool>(publishedValueFallback, "excludeFromSearch", fallback: Fallback.ToDefaultValue, defaultValue: true);
+            var searchExclude = content.Value<bool>(publishedValueFallback, "excludeFromSearch", fallback: Fallback.ToDefaultValue, defaultValue: true);
 
             var metaTitle = content.Value<string>(publishedValueFallback, "metaTitle", fallback: Fallback.ToDefaultValue, defaultValue: "");
             var metaDescription = content.HasValue("metaDescription") ? content.Value<IPublishedContent>(publishedValueFallback, "metaDescription")?.Url(publishedUrlProvider) : "";
@@ -509,11 +507,31 @@ namespace BOI.Core.Search.Services
             var nodeTypeAlias = content.ContentType.Alias;
             var sortOrder = content.SortOrder;
 
+            #region FAQ
+            string faqQuestion = string.Empty, faqCategory = string.Empty, faqAnswer = string.Empty, faqKeywords = string.Empty;
+
+            if (string.Equals(content.ContentType.Alias, FAQ.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase) || string.Equals(content.ContentType.Alias, FAqtab.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (content.HasValue("question") && !string.IsNullOrEmpty(content.Value<string>(publishedValueFallback, "question")))
+                {
+                    faqQuestion = content.Value<string>(publishedValueFallback, "question");
+                }
+                else
+                {
+                    faqQuestion = content.Name;
+                }
+                faqCategory = content.HasValue("fAQCategory") ? content.Value<IPublishedContent>(publishedValueFallback, "fAQCategory")?.Name : content.Parent.HasValue("fAQCategory") ? content.Parent.Value<IPublishedContent>(publishedValueFallback, "fAQCategory")?.Name : string.Empty;
+                faqAnswer = content.HasValue("answer") ? content.Value<string>(publishedValueFallback, "answer") : "";
+                faqKeywords = content.HasValue("keywords") ? content.Value<string>(publishedValueFallback, "keywords") : "";
+            }
+            #endregion
+
+            #region Criteria Lookup
             bool BuyToLetProduct = false, ResidentialProduct = false, BespokeProduct = false;
             string criteriaName = "";
             string criteriaCategory = "";
 
-            if (string.Equals(content.ContentType.Alias,Criteria.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(content.ContentType.Alias, Criteria.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
             {
                 if (content.HasValue("criteriaName") && !string.IsNullOrEmpty(content.Value<string>(publishedValueFallback, "criteriaName")))
                 {
@@ -524,7 +542,17 @@ namespace BOI.Core.Search.Services
                     criteriaName = content.Name;
                 }
                 criteriaCategory = content.HasValue("criteriaCategory") ? content.Value<IPublishedContent>(publishedValueFallback, "criteriaCategory")?.Name : "";
-                var criteriaProductType = content.HasValue("criteriaProductType") ? content.Value<IEnumerable<string>>(publishedValueFallback, "criteriaProductType") : Enumerable.Empty<string>();
+            }
+
+            string bodyText = null, criteriaUpdateDate = null, criteriaTabUpdateDate = null;
+
+            if (string.Equals(content.ContentType.Alias, Criteria.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase) || string.Equals(content.ContentType.Alias, CriteriaTab.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
+            {
+                bodyText = content.HasValue("bodyText") ? content.Value<string>(publishedValueFallback, "bodyText") : "";
+                criteriaUpdateDate = content.HasValue("criteriaUpdatedDate") ? content.Value<DateTime>(publishedValueFallback, "criteriaUpdatedDate").ToString("yyyy-MM-ddTHH:mm:sszzz") : string.Empty;
+                criteriaTabUpdateDate = content.HasValue("criteriaTabUpdatedDate") ? content.Value<DateTime>(publishedValueFallback, "criteriaTabUpdatedDate").ToString("yyyy-MM-ddTHH:mm:sszzz") : string.Empty;
+
+                var criteriaProductType = content.HasValue("criteriaProductType") ? content.Value<IEnumerable<string>>(publishedValueFallback, "criteriaProductType") : content.Parent.HasValue("criteriaProductType") ? content.Parent.Value<IEnumerable<string>>(publishedValueFallback, "criteriaProductType") : Enumerable.Empty<string>();
                 if (criteriaProductType != null && criteriaProductType.Any())
                 {
                     foreach (var criteriaproductType in criteriaProductType)
@@ -543,20 +571,15 @@ namespace BOI.Core.Search.Services
                             default:
                                 BuyToLetProduct = false;
                                 ResidentialProduct = false;
+                                BespokeProduct = false;
                                 break;
                         }
                     }
                 }
             }
+            #endregion
 
-            string bodyText = null, criteriaUpdateDate = null, criteriaTabUpdateDate = null;
-
-            if (string.Equals(content.ContentType.Alias, Criteria.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase) || string.Equals(content.ContentType.Alias, "criteriaTab", StringComparison.InvariantCultureIgnoreCase))
-            {
-                bodyText = content.HasValue("bodyText") ? content.Value<string>(publishedValueFallback, "bodyText") : "";
-                criteriaUpdateDate = content.HasValue("criteriaUpdatedDate") ? content.Value<DateTime>(publishedValueFallback, "criteriaUpdatedDate").ToString("yyyy-MM-ddTHH:mm:sszzz") : string.Empty;
-                criteriaTabUpdateDate = content.HasValue("criteriaTabUpdatedDate") ? content.Value<DateTime>(publishedValueFallback, "criteriaTabUpdatedDate").ToString("yyyy-MM-ddTHH:mm:sszzz") : string.Empty;
-            }
+            #region Product
 
             string productType = null, category = null, lTVTitle = null, lTVFilterText = null, term = null, rate = null, description = null, overallCost = null, productFees = null, features = null, earlyRepaymentCharges = null, code = null, productVariant = null, withdrawalDateTime = null, aIPDeadlineDateTime = null, launchDateTime = null;
             bool interestOnly = false, isNew = false, isFixedRate = false;
@@ -589,15 +612,9 @@ namespace BOI.Core.Search.Services
                 productVariant = content.HasValue("productVariant") ? content.Value<string>(publishedValueFallback, "productVariant") : "";
             }
 
-            var tags = content.HasProperty("tags") && content.HasValue("tags") ? content.Value<IEnumerable<string>>(publishedValueFallback, "tags") : null;
-            var tagsList = new List<Tags>();
+            #endregion
 
-            if (tags != null)
-            {
-                tagsList.AddRange(tags.Select(tag => new Tags() { Tag = tag }));
-            }
-
-
+            #region BDM
             string regionsList = null, bio = null, bdmId = null, fCANumberList = null, postcodeOutcodes = null, bdmType = null;
             bool active = true, requireFcaAndpc = false;
             if (string.Equals(content.ContentType.Alias, BDmcontact.ModelTypeAlias, StringComparison.InvariantCultureIgnoreCase))
@@ -620,6 +637,7 @@ namespace BOI.Core.Search.Services
                 requireFcaAndpc = content.Value<bool>(publishedValueFallback, BdmContactConstants.RequireFCAAndPostcodeMatch, fallback: Fallback.ToDefaultValue, defaultValue: false);
             }
 
+            #endregion
 
             var doc = new WebContent()
             {
@@ -653,8 +671,12 @@ namespace BOI.Core.Search.Services
                 CriteriaUpdateDate = criteriaUpdateDate,
                 CriteriaTabUpdateDate = criteriaTabUpdateDate,
 
-                Content = !string.IsNullOrWhiteSpace(combinedContent.ToString().Trim()) ? combinedContent.ToString().Trim() : !string.IsNullOrWhiteSpace(bodyText) ? bodyText : null,
-                Tags = tagsList,
+                FaqCategory = faqCategory,
+                FaqQuestion = faqQuestion,
+                FaqAnswer = faqAnswer,
+                FaqKeywords = faqKeywords,
+
+                Content = !string.IsNullOrWhiteSpace(combinedContent.ToString().Trim()) ? combinedContent.ToString().Trim() : !string.IsNullOrWhiteSpace(bodyText) ? bodyText : !string.IsNullOrWhiteSpace(faqAnswer) ? faqAnswer :null,
                 Regions = regionsList,
                 PostCodeOutCodes = postcodeOutcodes,
                 FCANumber = fCANumberList,

@@ -27,8 +27,6 @@ using BOI.Core.Search.Queries.PostcodeLookup;
 using BankOfIreland.Intermediaries.Feature.Search.Queries.Elastic;
 using BOI.Core.Search.Models;
 using BOI.Core.Web.Commands;
-using Microsoft.AspNetCore.Routing;
-using Umbraco.Cms.Core.Services;
 
 
 namespace BOI.Core.Web.Extensions
@@ -105,7 +103,7 @@ namespace BOI.Core.Web.Extensions
         private static IUmbracoBuilder RegisterCustomServices(this IUmbracoBuilder builder)
         {
             //TODO: Add edservices
-            //builder.Services.AddScoped<IEdAdminService, EdAdminService>();
+            builder.Services.AddScoped<IEdAdminService, EdAdminService>();
             builder.Services.AddScoped<IRazorViewRenderService, RazorViewRenderService>();
             builder.Services.AddScoped<ICacheTagHelperService, CacheTagHelperService>();
             builder.Services.AddMemoryCache();
@@ -116,10 +114,13 @@ namespace BOI.Core.Web.Extensions
             builder.Services.AddScoped<IAutocompleteQuery, AutocompleteQuery>();
             builder.Services.AddScoped<IContentImporter, ContentImporter>();
             builder.Services.AddScoped<ICriteriaLookupSearcher, CriteriaLookupSearcher>();
+            builder.Services.AddScoped<IFAQSearcher, FAQSearcher>();
             
             //left fulled qualified for clarity
-            builder.Services.AddScoped<BOI.Core.Search.Queries.PostcodeLookup.IRequestHandler, PostcodeLookupQuery.RequestHandler>();
+            builder.Services.AddScoped<IRequestHandler, PostcodeLookupQuery.RequestHandler>();
             builder.Services.AddScoped<IFileUploadService, FileUploadService>();
+
+            builder.Services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
             return builder;
         }
 

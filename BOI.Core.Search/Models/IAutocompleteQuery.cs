@@ -9,6 +9,8 @@ namespace BOI.Core.Search.Models
 
         IEnumerable<AutocompleteSuggestionSubClass> Execute();
         ISearchResponse<WebContent> SearchCriteria();
+        ISearchResponse<WebContent> SearchFAQ();
         IEnumerable<AutocompleteSuggestionSubClass> SearchCriteriaLookup();
+        IEnumerable<AutocompleteSuggestionSubClass> SearchFAQs();
     }
 }

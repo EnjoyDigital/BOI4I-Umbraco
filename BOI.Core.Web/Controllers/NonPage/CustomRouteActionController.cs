@@ -1,8 +1,6 @@
-﻿using BOI.Core.Web.Services;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
+﻿using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Web.Common.Controllers;
 using BOI.Core.Search.Constants;
 using BOI.Core.Search.Models;
@@ -12,35 +10,30 @@ using Umbraco.Cms.Web.Common;
 using BOI.Core.Search.Queries.Elastic;
 using Umbraco.Cms.Core.Strings;
 using Umbraco.Extensions;
-using Nest;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Umbraco.Cms.Core.Web;
 using BOI.Umbraco.Models;
-using System.Text;
 
 namespace BOI.Core.Web.Controllers.NonPage
 {
     public class CustomRouteActionController : UmbracoPageController, IVirtualPageController
     {
-        private readonly IDomainService domainService;
         private readonly IAutocompleteQuery autocomplete;
         private readonly UmbracoHelper umbracoHelper;
         private readonly ICriteriaLookupSearcher criteriaLookupSearcher;
-        //private readonly IElasticClient esClient;
-        //private readonly IConfiguration config;
+        private readonly IFAQSearcher faqSearcher;
         private readonly IShortStringHelper shortStringHelper;
         private readonly IPublishedValueFallback publishedValueFallback;
         private readonly IUmbracoContextAccessor umbracoContextAccessor;
 
-        public CustomRouteActionController(IDomainService domainService, IAutocompleteQuery autocomplete, UmbracoHelper umbracoHelper, ICriteriaLookupSearcher criteriaLookupSearcher, IShortStringHelper shortStringHelper,
-            ILogger<CustomRouteActionController> logger, ICompositeViewEngine compositeViewEngine, IPublishedValueFallback publishedValueFallback, IUmbracoContextAccessor umbracoContextAccessor)
+        public CustomRouteActionController(IAutocompleteQuery autocomplete, UmbracoHelper umbracoHelper, ICriteriaLookupSearcher criteriaLookupSearcher, IFAQSearcher faqSearcher,
+            IShortStringHelper shortStringHelper, ILogger<CustomRouteActionController> logger, ICompositeViewEngine compositeViewEngine, IPublishedValueFallback publishedValueFallback, IUmbracoContextAccessor umbracoContextAccessor)
             : base(logger, compositeViewEngine)
         {
-            this.domainService = domainService;
             this.autocomplete = autocomplete;
             this.umbracoHelper = umbracoHelper;
             this.criteriaLookupSearcher = criteriaLookupSearcher;
+            this.faqSearcher = faqSearcher;
             this.shortStringHelper = shortStringHelper;
             this.publishedValueFallback = publishedValueFallback;
             this.umbracoContextAccessor = umbracoContextAccessor;
@@ -70,7 +63,6 @@ namespace BOI.Core.Web.Controllers.NonPage
         }
 
         [HttpPost]
-
         public ActionResult FindBuyToLetCriteria(string criteriaName, string criteriaCategory, int pageId, string searchCriteriaOnly)
         {
             var currentPage = umbracoHelper.Content(pageId);
@@ -94,7 +86,6 @@ namespace BOI.Core.Web.Controllers.NonPage
         }
 
         [HttpPost]
-
         public ActionResult FindBespokeCriteria(string criteriaName, string criteriaCategory, int pageId, string searchCriteriaOnly)
         {
             var currentPage = umbracoHelper.Content(pageId);
@@ -116,44 +107,26 @@ namespace BOI.Core.Web.Controllers.NonPage
             });
         }
 
-        [HttpGet]
-        public ActionResult Site(string queryString)
-        {
-            autocomplete.QueryString = queryString;
-
-            var response = autocomplete.Execute();
-            return Json(new AutocompleteSuggestion { suggestions = response });
-        }
-
         private CriteriaLookupsResults SearchCriteriaWithCriteriaTab(string criteriaName, string criteriaCategory, string productType, IPublishedContent currentPage)
         {
             var wordsToIgnore = currentPage.Value<string>("wordsToIgnore")?.Split(' ');
             if (wordsToIgnore != null && criteriaName != null)
                 criteriaName = string.Join(" ", criteriaName.Split(' ').Except(wordsToIgnore));
 
-           // var criteriaLookupSearcher = new CriteriaLookupSearcher(config, esClient, shortStringHelper);
-
             if (productType == FieldConstants.ResidentialProductType)
-                return criteriaLookupSearcher.Execute(new CriteriaLookupSearch() { CriteriaCategory = criteriaCategory, CriteriaName = criteriaName });
+                return criteriaLookupSearcher.ExecuteCriteriaLookup(new CriteriaLookupSearch() { CriteriaCategory = criteriaCategory, CriteriaName = criteriaName }, FieldConstants.ResidentialProductType);
             else if (productType == FieldConstants.BuyToLetProductType)
-                return criteriaLookupSearcher.BuyToLetExecute(new CriteriaLookupSearch() { BuyToLetCriteriaCategory = criteriaCategory, BuyToLetCriteriaName = criteriaName });
+                return criteriaLookupSearcher.ExecuteCriteriaLookup(new CriteriaLookupSearch() { BuyToLetCriteriaCategory = criteriaCategory, BuyToLetCriteriaName = criteriaName }, FieldConstants.BuyToLetProductType);
             else
-                return criteriaLookupSearcher.BespokeExecute(new CriteriaLookupSearch() { BespokeCriteriaCategory = criteriaCategory, BespokeCriteriaName = criteriaName });
+                return criteriaLookupSearcher.ExecuteCriteriaLookup(new CriteriaLookupSearch() { BespokeCriteriaCategory = criteriaCategory, BespokeCriteriaName = criteriaName }, FieldConstants.BespokeProductType);
         }
 
         private CriteriaLookupsResults SearchCriteriaOnly(string criteriaName, string productType, IPublishedContent currentPage)
         {
-            //var query = new AutocompleteQuery(esClient, config)
-            //{
-            //    QueryString = criteriaName,
-            //    CriteriaType = productType
-            //};
             autocomplete.QueryString = criteriaName;
             autocomplete.CriteriaType = productType;
-            //var response = query.SearchCriteria();
-            var response = autocomplete.SearchCriteria();
 
-            // var criteriaLookupSearcher = new CriteriaLookupSearcher(config, esClient, shortStringHelper);
+            var response = autocomplete.SearchCriteria();
             var criteria = response.Documents.FirstOrDefault();
             var result = new CriteriaLookupResult()
             {
@@ -176,6 +149,61 @@ namespace BOI.Core.Web.Controllers.NonPage
             };
         }
 
+        [HttpPost]
+        public ActionResult FindFAQ(string faqQuestion, string faqCategory, int pageId, string searchFaqOnly)
+        {
+            var currentPage = umbracoHelper.Content(pageId);
+
+            FAQResults results = new FAQResults();
+
+            if (searchFaqOnly == null || !bool.Parse(searchFaqOnly))
+            {
+                results = SearchFAQWithFAQTab(faqQuestion, faqCategory, currentPage);
+            }
+            else
+            {
+                results = SearchFAQOnly(faqQuestion, currentPage);
+            }
+
+            return PartialView("~/Views/Partials/FAQLanding/FAQs.cshtml", new FAQResultsViewModel(currentPage, publishedValueFallback)
+            {
+                ListingUrl = currentPage.Url(),
+                Results = results,
+            });
+        }
+
+        private FAQResults SearchFAQWithFAQTab(string faqQuestion, string faqCategory, IPublishedContent currentPage)
+        {
+            var wordsToIgnore = currentPage.Value<string>("wordsToIgnore")?.Split(' ');
+            if (wordsToIgnore != null && faqQuestion != null)
+                faqQuestion = string.Join(" ", faqQuestion.Split(' ').Except(wordsToIgnore));
+
+            return faqSearcher.ExecuteFAQ(new FAQSearch() { FAQCategory = faqCategory, FAQQuestion = faqQuestion });
+        }
+
+        private FAQResults SearchFAQOnly(string faqQuestion, IPublishedContent currentPage)
+        {
+            autocomplete.QueryString = faqQuestion;
+
+            var response = autocomplete.SearchFAQ();
+            var criteria = response.Documents.FirstOrDefault();
+            var result = new FAQResult()
+            {
+                Id = criteria.Id,
+                NameId = criteria.Name.ToCleanString(shortStringHelper, CleanStringType.UrlSegment),
+                FAQQuestion = criteria.FaqQuestion,
+                SortOrder = criteria.SortOrder,
+                FAQCategory = criteria.FaqCategory,
+                FAQAnswer = criteria.FaqAnswer,
+                FAQTabs = faqSearcher.SearchFAQTabs(criteria.Id)
+            };
+
+            return new FAQResults
+            {
+                QueryResults = result.AsEnumerableOfOne().ToList()
+            };
+        }
+
         public IPublishedContent? FindContent(ActionExecutingContext actionExecutingContext)
         {
             if (umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext))
@@ -192,15 +220,27 @@ namespace BOI.Core.Web.Controllers.NonPage
 
         public JsonResult AutoCompleteCriteriaLookup(string queryString, string criteriaType)
         {
-            //var query = new AutocompleteQuery(esClient, config)
-            //{
-            //    QueryString = queryString,
-            //    CriteriaType = criteriaType
-            //};
             autocomplete.QueryString = queryString;
             autocomplete.CriteriaType = criteriaType;
-            //var response = query.SearchCriteria();
+
             var response = autocomplete.SearchCriteriaLookup();
+            return Json(new AutocompleteSuggestion { suggestions = response });
+        }
+
+        public JsonResult AutoCompleteFAQ(string queryString)
+        {
+            autocomplete.QueryString = queryString;
+
+            var response = autocomplete.SearchFAQs();
+            return Json(new AutocompleteSuggestion { suggestions = response });
+        }
+
+        [HttpGet]
+        public ActionResult Site(string queryString)
+        {
+            autocomplete.QueryString = queryString;
+
+            var response = autocomplete.Execute();
             return Json(new AutocompleteSuggestion { suggestions = response });
         }
     }

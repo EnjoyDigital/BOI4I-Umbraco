@@ -28,7 +28,7 @@ namespace BOI.Core.Web.Controllers.Hijacks
         private readonly IShortStringHelper shortStringHelper;
 
         public CriteriaLookupLandingController(IConfiguration config, IPublishedValueFallback publishedValueFallback,
-            IElasticClient esClient, ILogger<NewsLandingController> logger, ICompositeViewEngine compositeViewEngine,
+            IElasticClient esClient, ILogger<CriteriaLookupLandingController> logger, ICompositeViewEngine compositeViewEngine,
             IUmbracoContextAccessor umbracoContextAccessor, UmbracoHelper umbracoHelper, IShortStringHelper shortStringHelper) : base(logger, compositeViewEngine, umbracoContextAccessor)
         {
             this.config = config;
@@ -81,9 +81,11 @@ namespace BOI.Core.Web.Controllers.Hijacks
             bespokeCategoryList.Sort((x, y) => string.Compare(x.Text, y.Text));
             bespokeCategoryList = bespokeCategoryList.Prepend(new SelectListItem { Text = "All Categories", Value = "null" }).ToList();
 
-            var results = criteriaLookupSearcher.Execute(model);
-            var buyToLetResults = criteriaLookupSearcher.BuyToLetExecute(model);
-            var bespokeResults = criteriaLookupSearcher.BespokeExecute(model);
+
+
+            var results = criteriaLookupSearcher.ExecuteCriteriaLookup(model, FieldConstants.ResidentialProductType);
+            var buyToLetResults = criteriaLookupSearcher.ExecuteCriteriaLookup(model, FieldConstants.BuyToLetProductType);
+            var bespokeResults = criteriaLookupSearcher.ExecuteCriteriaLookup(model, FieldConstants.BespokeProductType);
 
             //Hacky fix for validation error state - no marker for required fields so not sure why this is doing what it is doing
             //ModelState.Clear();
@@ -100,131 +102,5 @@ namespace BOI.Core.Web.Controllers.Hijacks
                 isBespoke = model.IsBespoke
             });
         }
-
-        public ActionResult FindResidentialCriteria(string criteriaName, string criteriaCategory, int pageId, string searchCriteriaOnly)
-        {
-            var currentPage = umbracoHelper.Content(pageId);
-
-            CriteriaLookupsResults results = new CriteriaLookupsResults();
-
-            if (searchCriteriaOnly == null || !bool.Parse(searchCriteriaOnly))
-            {
-                results = SearchCriteriaWithCriteriaTab(criteriaName, criteriaCategory, FieldConstants.ResidentialProductType, currentPage);
-            }
-            else
-            {
-                results = SearchCriteriaOnly(criteriaName, FieldConstants.ResidentialProductType, currentPage);
-            }
-
-            return PartialView("~/Views/Partials/CriteriaLookupLanding/ResidentialProducts.cshtml", new CriteriaLookupResultsViewModel(currentPage, publishedValueFallback)
-            {
-                ListingUrl = currentPage.Url(),
-                Results = results,
-            });
-        }
-
-        public ActionResult FindBuyToLetCriteria(string criteriaName, string criteriaCategory, int pageId, string searchCriteriaOnly)
-        {
-            var currentPage = umbracoHelper.Content(pageId);
-
-            CriteriaLookupsResults results = new CriteriaLookupsResults();
-
-            if (searchCriteriaOnly == null || !bool.Parse(searchCriteriaOnly))
-            {
-                results = SearchCriteriaWithCriteriaTab(criteriaName, criteriaCategory, FieldConstants.BuyToLetProductType, currentPage);
-            }
-            else
-            {
-                results = SearchCriteriaOnly(criteriaName, FieldConstants.BuyToLetProductType, currentPage);
-            }
-
-            return PartialView("~/Views/Partials/CriteriaLookupLanding/BuyToLetProducts.cshtml", new CriteriaLookupResultsViewModel(currentPage, publishedValueFallback)
-            {
-                ListingUrl = currentPage.Url(),
-                BuyToLetResults = results
-            });
-        }
-
-        public ActionResult FindBespokeCriteria(string criteriaName, string criteriaCategory, int pageId, string searchCriteriaOnly)
-        {
-            var currentPage = umbracoHelper.Content(pageId);
-            CriteriaLookupsResults results = new CriteriaLookupsResults();
-
-            if (searchCriteriaOnly == null || !bool.Parse(searchCriteriaOnly))
-            {
-                results = SearchCriteriaWithCriteriaTab(criteriaName, criteriaCategory, FieldConstants.BespokeProductType, currentPage);
-            }
-            else
-            {
-                results = SearchCriteriaOnly(criteriaName, FieldConstants.BespokeProductType, currentPage);
-            }
-
-            return PartialView("~/Views/Partials/CriteriaLookupLanding/BespokeProducts.cshtml", new CriteriaLookupResultsViewModel(currentPage, publishedValueFallback)
-            {
-                ListingUrl = currentPage.Url(),
-                BespokeResults = results
-            });
-        }
-
-        private CriteriaLookupsResults SearchCriteriaWithCriteriaTab(string criteriaName, string criteriaCategory, string productType, IPublishedContent currentPage)
-        {
-            var wordsToIgnore = currentPage.Value<string>("wordsToIgnore")?.Split(' ');
-            if (wordsToIgnore != null)
-                criteriaName = string.Join(" ", criteriaName.Split(' ').Except(wordsToIgnore));
-
-            var criteriaLookupSearcher = new CriteriaLookupSearcher(config, esClient,shortStringHelper);
-
-            if (productType == FieldConstants.ResidentialProductType)
-                return criteriaLookupSearcher.Execute(new CriteriaLookupSearch() { CriteriaCategory = criteriaCategory, CriteriaName = criteriaName });
-            else if (productType == FieldConstants.BuyToLetProductType)
-                return criteriaLookupSearcher.BuyToLetExecute(new CriteriaLookupSearch() { BuyToLetCriteriaCategory = criteriaCategory, BuyToLetCriteriaName = criteriaName });
-            else
-                return criteriaLookupSearcher.BespokeExecute(new CriteriaLookupSearch() { BespokeCriteriaCategory = criteriaCategory, BespokeCriteriaName = criteriaName });
-        }
-
-        private CriteriaLookupsResults SearchCriteriaOnly(string criteriaName, string productType, IPublishedContent currentPage)
-        {
-            var query = new AutocompleteQuery(esClient, config)
-            {
-                QueryString = criteriaName,
-                CriteriaType = productType
-            };
-            var response = query.SearchCriteria();
-
-            var criteriaLookupSearcher = new CriteriaLookupSearcher(config, esClient, shortStringHelper);
-            var criteria = response.Documents.FirstOrDefault();
-            var result = new CriteriaLookupResult()
-            {
-                Id = criteria.Id,
-                NameId = criteria.Name.ToCleanString(shortStringHelper, CleanStringType.UrlSegment),
-                CriteriaName = criteria.CriteriaName,
-                SortOrder = criteria.SortOrder,
-                CriteriaCategory = criteria.CriteriaCategory,
-                BodyText = criteria.BodyText,
-                IsBuyToLetProduct = criteria.BuyToLetProduct,
-                IsResidentialProduct = criteria.ResidentialProduct,
-                IsBespokeProduct = criteria.BespokeProduct,
-                CriteriaTabs = criteriaLookupSearcher.SearchCriteriaTabs(criteria.Id),
-                CriteriaUpdatedDate = criteria.CriteriaUpdateDate
-            };
-
-            return new CriteriaLookupsResults
-            {
-                QueryResults = result.AsEnumerableOfOne().ToList()
-            };
-        }
-
-        public JsonResult AutoCompleteCriteriaLookup(string queryString, string criteriaType)
-        {
-            var query = new AutocompleteQuery(esClient, config)
-            {
-                QueryString = queryString,
-                CriteriaType = criteriaType
-            };
-
-            var response = query.SearchCriteriaLookup();
-            return Json(new AutocompleteSuggestion { suggestions = response });
-        }
-
     }
 }

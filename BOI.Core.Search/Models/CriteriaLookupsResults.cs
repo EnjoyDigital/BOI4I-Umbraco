@@ -28,10 +28,4 @@
         public string BodyText { get; set; }
         public string CriteriaTabUpdatedDate { get; set; }
     }
-
-    public class CriteriaLookupRefineFilters
-    {
-        public List<RefineFilter> CategoryList { get; set; }
-        public string CriteriaCategoryName { get; set; }
-    }
 }

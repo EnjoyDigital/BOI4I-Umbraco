@@ -36,7 +36,6 @@
 	  <Content Include="App_Plugins\EdAdmin\backoffice\EdAdmin\hreflang.html" />
 	  <Content Include="App_Plugins\EdAdmin\backoffice\EdAdmin\memberExport.html" />
 	  <Content Include="App_Plugins\EdAdmin\backoffice\EdAdmin\metaData.html" />
-	  <Content Include="App_Plugins\EdAdmin\backoffice\EdAdmin\redirectImport.html" />
 	  <Content Include="App_Plugins\EdAdmin\dashboard.html" />
 	  <Content Include="App_Plugins\EdAdmin\lang\en-GB.xml" />
 	  <Content Include="App_Plugins\EdAdmin\lang\en-US.xml" />
@@ -101,7 +100,6 @@
 	  <None Include="App_Plugins\EdAdmin\backoffice\EdAdmin\js\hrefLang.controller.js" />
 	  <None Include="App_Plugins\EdAdmin\backoffice\EdAdmin\js\memberExport.controller.js" />
 	  <None Include="App_Plugins\EdAdmin\backoffice\EdAdmin\js\metaData.controller.js" />
-	  <None Include="App_Plugins\EdAdmin\backoffice\EdAdmin\js\redirectImport.controller.js" />
 	  <None Include="App_Plugins\EdAdmin\edAdmin.resource.js" />
 	  <None Include="App_Plugins\EdAdmin\package.manifest" />
 	  <None Include="App_Plugins\ElasticSearchPublishContentApp\controller.js" />
@@ -309,6 +307,7 @@
 
 	<ItemGroup>
 	  <Folder Include="App_Data\" />
+	  <Folder Include="wwwroot\assets\files\" />
 	</ItemGroup>
 
 	<!-- Keep this as false if ModelsBuilder mode is InMemoryAuto -->

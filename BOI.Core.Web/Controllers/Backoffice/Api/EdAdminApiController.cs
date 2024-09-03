@@ -4,10 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using Umbraco.Cms.Web.BackOffice.Controllers;
 using Umbraco.Cms.Web.Common.Attributes;
@@ -65,22 +62,24 @@ namespace BOI.Core.Web.Controllers.Backoffice.Api
         }
 
         [HttpGet]
-        public HttpResponseMessage ExportMeta()
+        public IActionResult ExportMeta()
         {
-            var response = new HttpResponseMessage
+            try
             {
-                StatusCode = HttpStatusCode.OK,
-                Content = new ByteArrayContent(_edAdminService.ExportMetaData())
-            };
-            var fileName = string.Format("MetaData-{0:dd-MMM-yy}.csv", DateTime.Now);
-            response.Headers.Add("x-filename", fileName);
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                var stream = new MemoryStream(_edAdminService.ExportMetaData());
+
+                return new FileStreamResult(stream, "text/csv")
+                {
+                    FileDownloadName = $"MetaData-{DateTime.Now:dd-MMM-yy}.csv"
+                };
+            }
+            catch (Exception ex)
             {
-                FileName = fileName
-            };
-            return response;
+                logger.LogError($"Error - Exporting Meta: {ex.Message}");
+                return new StatusCodeResult(500);
+            }
         }
+
 
         [HttpPost]
         public async Task<HttpResponseMessage> ImportMeta()
@@ -110,39 +109,23 @@ namespace BOI.Core.Web.Controllers.Backoffice.Api
             };
         }
 
-        [HttpPost]
-        public async Task<HttpStatusCode> ImportRedirects()
-        {
-            var response = await fileUploadService.ValidateAndSaveFile(Request?.Form.Files[0], FileSaveType.CSV);
-
-            if (response.Errors.NotNullAndAny())
-            {
-                return HttpStatusCode.InternalServerError;
-            }
-
-            var importResults = _edAdminService.ImportRedirects(response.FilePath);
-
-            return !importResults.Errors.NotNullAndAny() ? HttpStatusCode.Accepted : HttpStatusCode.InternalServerError;
-        }
-
         [HttpGet]
-        public IActionResult ExportRedirects()
+        public IActionResult ExportMembers()
         {
             try
             {
-                var stream = new MemoryStream(_edAdminService.ExportRedirects().Data);
+                var stream = new MemoryStream(_edAdminService.ExportMembers());
+
                 return new FileStreamResult(stream, "text/csv")
                 {
-                    FileDownloadName = string.Format("Redirects-{0:dd-MMM-yy}.csv", DateTime.Now)
+                    FileDownloadName = $"MembersExport-{DateTime.Now:dd-MMM-yy}.csv"
                 };
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error exporting Redirects");
-
+                logger.LogError($"Error - Exporting Members: {ex.Message}");
                 return new StatusCodeResult(500);
             }
         }
-
     }
 }

@@ -2,9 +2,9 @@
 @using Umbraco.Cms.Core.Strings
 @inject IShortStringHelper shortStringHelper;
 
-@if (Model.BuyToLetResults != null && Model.BuyToLetResults.QueryResults != null && Model.BuyToLetResults.QueryResults.Any(x => x.IsBuyToLetProduct))
+@if (Model.BuyToLetResults != null && Model.BuyToLetResults.QueryResults != null)
 {
-    var BuyToLetProducts = Model.BuyToLetResults.QueryResults.Where(x => x.IsBuyToLetProduct).OrderBy(y => y.CriteriaName);
+    var BuyToLetProducts = Model.BuyToLetResults.QueryResults.OrderBy(y => y.CriteriaName);
     var GroupedBuyToLetProducts = BuyToLetProducts.GroupBy(y => y.CriteriaName[0].ToString().ToUpper());
     var BuyToLetProductsResultText = BuyToLetProducts.Count() > 1 ? "results" : "result";
     var charAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();

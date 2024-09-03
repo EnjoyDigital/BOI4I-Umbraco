@@ -70,7 +70,7 @@ namespace BOI.Core.Web.Extensions
             );
 
             context.EndpointRouteBuilder.MapControllerRoute(
-                CustomRouteNames.AutoCompleteCriteriaLookupAjax,
+                CustomRouteNames.AutoCompleteCriteriaLookupBuyToLetAjax,
                 "/autoCompleteBuyToLetCriteria/",
                 new
                 {
@@ -98,6 +98,26 @@ namespace BOI.Core.Web.Extensions
                     controller = "CustomRouteAction",
                     action = "AutoCompleteCriteriaLookup",
                     criteriaType = FieldConstants.BespokeProductType
+                }
+            );
+
+            context.EndpointRouteBuilder.MapControllerRoute(
+                CustomRouteNames.FAQAjax,
+                "/findFAQ/",
+                new
+                {
+                    controller = "CustomRouteAction",
+                    action = "FindFAQ",
+                }
+            );
+
+            context.EndpointRouteBuilder.MapControllerRoute(
+                CustomRouteNames.AutoCompleteFAQAjax,
+                "/autoCompleteFAQ/",
+                new
+                {
+                    controller = "CustomRouteAction",
+                    action = "AutoCompleteFAQ",
                 }
             );
 

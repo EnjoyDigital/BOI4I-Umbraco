@@ -4,7 +4,6 @@ export default function AutoCompleteSearch() {
     jQuery.fn.extend({
         autocompleteSearch: function (options) {
             var searchInput = $(this);
-
             this.autocomplete({
                 serviceUrl: searchInput.closest('form').data('autocompleteurl'),
                 

@@ -7,9 +7,11 @@
         public const string CriteriaLookupAjax = "ajax";
         public const string CriteriaLookupAjaxBuyToLet = "ajaxBuyToLet";
         public const string CriteriaLookupAjaxBespoke = "ajaxBespoke";
+        public const string FAQAjax = "ajaxFAQ";
         public const string AutoCompleteCriteriaLookupAjax = "ajaxAutoCompleteCriteriaLookup";
         public const string AutoCompleteCriteriaLookupBuyToLetAjax = "ajaxAutoCompleteCriteriaLookupBuyToLet";
         public const string AutoCompleteCriteriaLookupBespokeAjax = "ajaxAutoCompleteCriteriaLookupBespoke";
+        public const string AutoCompleteFAQAjax = "ajaxAutoCompleteFAQ";
         public const string ProductLandingAjax = "ajaxProductLanding";
         public const string AutoCompleteSearchAjax = "ajaxAutoCompleteSearch";
         public const string Autocomplete = "AutoComplete";
@@ -22,9 +24,11 @@
         public const string CriteriaLookupAjax = "ajax";
         public const string CriteriaLookupAjaxBuyToLet = "ajaxBuyToLet";
         public const string CriteriaLookupAjaxBespoke = "ajaxBespoke";
+        public const string FAQAjax = "ajaxFAQ";
         public const string AutoCompleteCriteriaLookupAjax = "ajaxAutoCompleteCriteriaLookup";
         public const string AutoCompleteCriteriaLookupBuyToLetAjax = "ajaxAutoCompleteCriteriaLookupBuyToLet";
         public const string AutoCompleteCriteriaLookupBespokeAjax = "ajaxAutoCompleteCriteriaLookupBespoke";
+        public const string AutoCompleteFAQAjax = "ajaxAutoCompleteFAQ";
         public const string ProductLandingAjax = "ajaxProductLanding";
         public const string AutoCompleteSearchAjax = "/api/site/";
         public const string Autocomplete = "/api/site/";
