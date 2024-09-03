@@ -85,6 +85,8 @@ namespace BOI.Core.Web.Controllers.Hijacks
             var buyToLetResults = criteriaLookupSearcher.BuyToLetExecute(model);
             var bespokeResults = criteriaLookupSearcher.BespokeExecute(model);
 
+            //Hacky fix for validation error state - no marker for required fields so not sure why this is doing what it is doing
+            //ModelState.Clear();
             return CurrentTemplate(new CriteriaLookupResultsViewModel(CurrentPage,publishedValueFallback)
             {
                 ListingUrl = CurrentPage.Url(),

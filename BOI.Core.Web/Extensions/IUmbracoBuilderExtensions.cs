@@ -98,7 +98,7 @@ namespace BOI.Core.Web.Extensions
                 builder.Services.AddScoped<ICmsService, CmsService>();
                 builder.Services.AddScoped<ISitemapXmlGenerator, SitemapXmlGenerator>();
             }
-
+            builder.Services.AddControllers(    options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
             return builder;
         }
 

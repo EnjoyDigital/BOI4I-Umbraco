@@ -1,5 +1,7 @@
+using AspNetCore.Unobtrusive.Ajax;
 using BOI.Core.Middleware;
 using BOI.Core.Web.Extensions;
+
 
 namespace BOI.Web
 {
@@ -77,6 +79,8 @@ namespace BOI.Web
                 });
 
             app.UseStaticFiles();
+
+            app.UseUnobtrusiveAjax();
         }
     }
 }
