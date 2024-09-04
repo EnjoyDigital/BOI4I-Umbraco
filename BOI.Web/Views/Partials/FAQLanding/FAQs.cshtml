@@ -2,43 +2,23 @@
 @inject IShortStringHelper shortStringHelper;
 @inherits UmbracoViewPage<FAQResultsViewModel>
 
-@if (Model.Results != null && Model.Results.QueryResults != null)
+@if (Model.Results != null && Model.Results.QueryResults != null && Model.Results.QueryResults.Count() > 0)
 {
     var Faqs = Model.Results.QueryResults.OrderBy(y => y.SortOrder);
     var GroupedFaqs = Faqs.GroupBy(y => y.FAQQuestion[0].ToString().ToUpper());
     var FaqsResultText = Faqs.Count() > 1 ? "results" : "result";
-   @*  var charAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray();
-    var FaqsChars = Faqs.Select(x => x.FAQQuestion[0]); *@
-
+    
     <div id="faqResult">
 
         <div class="product-table-caption">
             <span class="h3 product-table-caption__title">@Faqs.Count() @FaqsResultText</span>
-            <a class="print-products js-print-products" href="" title="Click to download criteria PDF">
+            <a class="print-products js-print-products" href="" title="Click to download FAQ PDF">
                 <svg class="[ icon icon-print -blue ]">
                     <use xlink:href="#sprite-icon-pdf-document-icon"></use>
                 </svg>
-                <span>Download Criteria PDF</span>
+                <span>Download FAQ PDF</span>
             </a>
         </div>
-
-@*         <div class="alphabet-list">
-            <ul>
-                @foreach (var alpha in charAlpha)
-                {
-                    <li>
-                        @if (FaqsChars.Contains(alpha))
-                        {
-                            <a href="" data-letter="@alpha">@alpha</a>
-                        }
-                        else
-                        {
-                            @alpha
-                        }
-                    </li>
-                }
-            </ul>
-        </div> *@
 
         @foreach (var groupedFaq in GroupedFaqs)
         {
@@ -67,12 +47,12 @@
                                         <div class="accordion-content rich-text">
                                             @Html.Raw(tab.FAQAnswer)
 
-                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this FAQ"))" />
                                         </div>
                                     </div>
                                 }
                             }
-                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this FAQ"))" />
                         </div>
                     </div>
                 }

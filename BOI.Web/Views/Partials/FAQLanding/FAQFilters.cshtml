@@ -1,6 +1,6 @@
 ﻿@inherits UmbracoViewPage<FAQResultsViewModel>
 
-<div class="tab-content rich-text" data-tab-title="FAQ Criteria" id="FAQCriteria">
+<div class="tab-content rich-text" id="FAQCriteria">
     <form action="" class="product-filters criteria-filters" data-autocompleteurl="@Url.RouteUrl(CustomRouteNames.AutoCompleteFAQAjax, new {controller = "CustomRouteAction", action = "AutoCompleteFAQ"})" data-ajaxaddurl="@Url.RouteUrl(CustomRouteNames.FAQAjax, new {controller = "CustomRouteAction", action = "FindFAQ"})" data-pageid="@Model.Id">
         <fieldset>
             <div class="product-filters-inner js-product-filters">

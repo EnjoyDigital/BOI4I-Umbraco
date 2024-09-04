@@ -20,6 +20,17 @@
                     <p>Intermediary use only</p>
                 </div>
                 <ul class="header-top__content--links">
+                    @if (!Model.SiteRoot.HidePrintPdflink)
+                    {
+                        <li class="not-bold">
+                            <a class="print-products js-print-products" href="" title="Save page as PDF">
+                                <svg class="[ icon icon-print -blue ]">
+                                    <use xlink:href="#sprite-icon-pdf-document-icon"></use>
+                                </svg>
+                                <span>Save page as PDF</span>
+                            </a>
+                        </li>
+                    }
                     @if (Model.SiteRoot.ContactUsLink != null)
                     {
                         <li class="not-bold"><a href="@Model.SiteRoot.ContactUsLink.Url" target="@Model.SiteRoot.ContactUsLink.Target">@Model.SiteRoot.ContactUsLink.Name</a></li>
@@ -71,7 +82,7 @@
                                     {
 
                                         <div class="submenu-listing">
-                                            @if (child.Url==null || child.Url == "#")
+                                            @if (child.Url == null || child.Url == "#")
                                             {
                                                 <span class="submenu-listing__heading">@child.GetTitleOrName()</span>
                                             }
@@ -91,6 +102,17 @@
                         <button aria-label="Open site search" aria-haspopup="true" aria-expanded="false" aria-controls="SiteSearch" class="header-bottom__menu--search">
                             <img src="~/assets/dist/images/icons/sprite-icon-search.svg" alt="" aria-role="presentation">
                         </button>
+                    }
+                    @if (!Model.SiteRoot.HidePrintPdflink)
+                    {
+                        <li class="not-bold">
+                            <a class="print-products js-print-products" href="" title="Save page as PDF">
+                                <svg class="[ icon icon-print -teal ]">
+                                    <use xlink:href="#sprite-icon-pdf-document-icon"></use>
+                                </svg>
+                                <span>Save page as PDF</span>
+                            </a>
+                        </li>
                     }
                 </ul>
 
