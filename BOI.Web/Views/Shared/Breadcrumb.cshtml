@@ -1,6 +1,6 @@
 ﻿@inherits UmbracoViewPage
 @{
-    var BreadCrumb = Model.Ancestors().Where(n => n.TemplateId != 0).OrderBy(a => a.Level);
+    var BreadCrumb = Model.Ancestors().Where(n => n.TemplateId!=null &&  n.TemplateId != 0).OrderBy(a => a.Level);
 }
 
 <div class="breadcrumbs">

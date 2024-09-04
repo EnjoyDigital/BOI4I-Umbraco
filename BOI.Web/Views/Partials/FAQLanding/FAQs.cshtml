@@ -12,11 +12,11 @@
 
         <div class="product-table-caption">
             <span class="h3 product-table-caption__title">@Faqs.Count() @FaqsResultText</span>
-            <a class="print-products js-print-products" href="" title="Click to download criteria PDF">
+            <a class="print-products js-print-products" href="" title="Click to download FAQ PDF">
                 <svg class="[ icon icon-print -blue ]">
                     <use xlink:href="#sprite-icon-pdf-document-icon"></use>
                 </svg>
-                <span>Download Criteria PDF</span>
+                <span>Download FAQ PDF</span>
             </a>
         </div>
 
@@ -47,12 +47,12 @@
                                         <div class="accordion-content rich-text">
                                             @Html.Raw(tab.FAQAnswer)
 
-                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this FAQ"))" />
                                         </div>
                                     </div>
                                 }
                             }
-                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this FAQ"))" />
                         </div>
                     </div>
                 }

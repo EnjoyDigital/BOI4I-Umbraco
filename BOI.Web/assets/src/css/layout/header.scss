@@ -302,6 +302,11 @@
           display: none !important;
         }
 
+         .print-products {
+            display: flex;
+            justify-content: center;
+          }
+
         .header-top__content--text {
           display: none;
         }
@@ -628,6 +633,10 @@
               display: block;
               margin-left: 2px;
             }
+          }
+
+          .print-products {
+            display: none !important;
           }
         }
       }
