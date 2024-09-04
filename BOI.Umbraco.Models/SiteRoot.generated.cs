@@ -113,6 +113,13 @@ namespace BOI.Umbraco.Models
 		public virtual global::Umbraco.Cms.Core.Models.Link GlobalProductCta => this.Value<global::Umbraco.Cms.Core.Models.Link>(_publishedValueFallback, "globalProductCTA");
 
 		///<summary>
+		/// Hide Print PDF Link
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
+		[ImplementPropertyType("hidePrintPDFLink")]
+		public virtual bool HidePrintPdflink => this.Value<bool>(_publishedValueFallback, "hidePrintPDFLink");
+
+		///<summary>
 		/// LinkedIn Link
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]

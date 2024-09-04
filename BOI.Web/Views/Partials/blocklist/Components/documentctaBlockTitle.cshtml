@@ -1,0 +1,5 @@
+﻿@inherits UmbracoViewPage<DocumentctaBlockTitle>
+@if (Model.Title.HasValue())
+{
+    <span class="h4 document-download-cta-block__title">@Model.Title</span>
+}

@@ -17,7 +17,7 @@
                     {
                         continue;
                     }
-                    <partial src="@string.Concat("BlockList/Components/" , data.ContentType.Alias)" model="@block.Content" />
+                    <partial name="@string.Concat("BlockList/Components/" , data.ContentType.Alias)" model="@block.Content" />
                 }
             </div>
         }
@@ -33,7 +33,7 @@
                     {
                         continue;
                     }
-                    <partial src="@string.Concat("BlockList/Components/" , data.ContentType.Alias)" model="@block.Content" />
+                    <partial name="@string.Concat("BlockList/Components/" , data.ContentType.Alias)" model="@block.Content" />
                 }
             </div>
         }
