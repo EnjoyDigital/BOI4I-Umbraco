@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23" height="39" viewBox="0 0 23 39">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g>
+                    <g>
+                        <g>
+                            <g fill-rule="nonzero" transform="translate(-307 -1725) translate(306 1650) translate(0 70) translate(1) translate(.424 5) translate(.576)">
+                                <path fill="#000" d="M2.668 3.597C1.004 5.44-.039 8.121.001 10.644c.085 5.273 2.378 7.269 6.046 14.525 1.32 3.193 2.7 6.572 4.01 12.168.183.826.36 1.593.443 1.659.082.066.26-.703.442-1.528 1.312-5.597 2.69-8.973 4.011-12.166 3.668-7.257 5.961-9.253 6.046-14.525.04-2.523-1.005-5.208-2.67-7.05C16.427 1.624 13.559.067 10.5.002 7.442-.063 4.57 1.494 2.668 3.597z"/>
+                                <ellipse cx="10.5" cy="10.576" fill="#FFF" rx="7.219" ry="7.271"/>
+                            </g>
+                            <text fill="#000" font-family="HelveticaNeue-Medium, Helvetica Neue" font-size="10" font-weight="400" transform="translate(-307 -1725) translate(306 1650) translate(0 70) translate(1) translate(.424 5)">
+                                <tspan x="8.296" y="14">1</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
