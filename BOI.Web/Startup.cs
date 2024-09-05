@@ -1,6 +1,7 @@
 using AspNetCore.Unobtrusive.Ajax;
 using BOI.Core.Middleware;
 using BOI.Core.Web.Extensions;
+using BOI.Core.Web.Middleware;
 
 
 namespace BOI.Web
@@ -77,7 +78,7 @@ namespace BOI.Web
                     u.UseBackOfficeEndpoints();
                     u.UseWebsiteEndpoints();
                 });
-
+            app.UseMiddleware<MediaRequestHandler>();
             app.UseStaticFiles();
 
             app.UseUnobtrusiveAjax();

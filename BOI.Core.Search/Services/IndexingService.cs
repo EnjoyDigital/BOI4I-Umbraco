@@ -12,11 +12,14 @@ using Umbraco.Cms.Core.Routing;
 using Umbraco.Extensions;
 using BOI.Core.Search.Queries.SQL;
 using BOI.Core.Search.Models.ElasticSearch;
+using BOI.Core.Constants;
 
 namespace BOI.Core.Search.Services
 {
     public interface IIndexingService
     {
+
+        string MediaRequestLogIndexAlias { get; }
         void CheckAndCreateIndex(IEnumerable<WebContent> content);
 
         void DeleteItemsFromIndex(params int[] indexItems);
@@ -39,6 +42,9 @@ namespace BOI.Core.Search.Services
         private readonly IConfiguration config;
 
         private readonly IElasticClient client;
+
+        public string MediaRequestLogIndexAlias { get { return config.GetValue<string>(ConfigurationConstants.MediaLogIndexAlias); } }
+
 
         /// <summary>
         /// Creates a new instance of the indexing service
