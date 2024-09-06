@@ -78,7 +78,7 @@ namespace BOI.Web
                     u.UseBackOfficeEndpoints();
                     u.UseWebsiteEndpoints();
                 });
-            app.UseMiddleware<MediaRequestHandler>();
+            //app.UseMiddleware<MediaRequestHandler>();
             app.UseStaticFiles();
 
             app.UseUnobtrusiveAjax();
