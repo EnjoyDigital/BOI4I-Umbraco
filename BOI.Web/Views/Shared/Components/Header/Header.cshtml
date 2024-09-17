@@ -64,7 +64,7 @@
                     {
 
                         <li>
-                            <a href="@item.Url" title="@item.Title" @Html.Raw(item.Url == Model.Content.Url() ? "aria-current=\"page\"" : string.Empty) @Html.Raw(@item.Children.Any() ? "aria-haspopup=\"true\"" : string.Empty) aria-expanded="false">@item.GetTitleOrName()</a>
+                            <a href="@item.Url" target="@item.Target" title="@item.GetTitleOrName()" @Html.Raw(item.Url == Model.Content.Url() ? "aria-current=\"page\"" : string.Empty) @Html.Raw(@item.Children.Any() ? "aria-haspopup=\"true\"" : string.Empty) aria-expanded="false">@item.GetTitleOrName()</a>
 
                             @if (@item.Children.Any())
                             {
