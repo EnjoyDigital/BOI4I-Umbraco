@@ -286,7 +286,7 @@ namespace BOI.Core.Search.Queries.Elastic
         {
             var search = esClient
                 .Search<WebContent>(s => s
-                    .Index(configuration["WebContentEsIndexAlias"])
+                    .Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
                     .TrackTotalHits()
                     .Size(10000)
                     .Query(q => q
@@ -346,7 +346,7 @@ namespace BOI.Core.Search.Queries.Elastic
         {
             var search = esClient
                 .Search<WebContent>(s => s
-                    .Index(configuration["WebContentEsIndexAlias"])
+                    .Index(configuration[ConfigurationConstants.WebcontentIndexAliasKey])
                     .TrackTotalHits()
                     .Size(10000)
                     .Query(q => q
