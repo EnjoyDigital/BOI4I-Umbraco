@@ -40,7 +40,7 @@
                                     }
 
                                     @answer.Answer
-                                    <partial src="AccordionLink" model="Link to this" />
+                                    <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this"))" />
 
                                     break;
                                 case FAqitemWithQuestion.ModelTypeAlias:
@@ -57,7 +57,7 @@
                                         </button>
                                         <div id="Accordion-@faqItem.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)_@faqItemWithQuestion.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)-content" class="accordion-content rich-text" role="region" aria-labelledby="Accordion-@faqItem.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)_@faqItemWithQuestion.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)-heading">
                                             @faqItemWithQuestion.Answer
-                                            <partial src="AccordionLink" model="Link to this" />
+                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this"))" />
                                         </div>
                                     </div>
                                     break;
