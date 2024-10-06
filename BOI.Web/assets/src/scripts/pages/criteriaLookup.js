@@ -36,7 +36,7 @@ $(document).on('click', '#ResidentialClear', function (e) {
     var formUrl = $(this).data('ajaxaddurl');
     var pageId = $(this).data('pageid');
 
-    $('#CriteriaCategory').val('');
+    $("#CriteriaCategory").val($("#CriteriaCategory option:first").val());
     document.getElementById('CriteriaName').value = '';
 
     $.ajax({
@@ -78,7 +78,7 @@ $(document).on('click', '#BuyToLetClear', function (e) {
     var formUrl = $(this).data('ajaxurl');
     var pageId = $(this).data('pageid');
 
-    $('#BuyToLetCriteriaCategory').val('');
+    $("#BuyToLetCriteriaCategory").val($("#BuyToLetCriteriaCategory option:first").val());
     document.getElementById('BuyToLetCriteriaName').value = '';
 
     $.ajax({
@@ -120,7 +120,7 @@ $(document).on('click', '#BespokeClear', function (e) {
     var formUrl = $(this).data('ajaxurl');
     var pageId = $(this).data('pageid');
 
-    $('#BespokeCriteriaCategory').val('');
+    $("#BespokeCriteriaCategory").val($("#BespokeCriteriaCategory option:first").val());
     document.getElementById('BespokeCriteriaName').value = '';
 
     $.ajax({
