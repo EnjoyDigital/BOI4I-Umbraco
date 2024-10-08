@@ -55,7 +55,7 @@ namespace BOI.Umbraco.Models
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("childNavigationItems")]
-		public virtual global::System.Collections.Generic.IEnumerable<global::BOI.Umbraco.Models.MainNavigationItemLevel2> ChildNavigationItems => this.Value<global::System.Collections.Generic.IEnumerable<global::BOI.Umbraco.Models.MainNavigationItemLevel2>>(_publishedValueFallback, "childNavigationItems");
+		public virtual global::Umbraco.Cms.Core.Models.Blocks.BlockListModel ChildNavigationItems => this.Value<global::Umbraco.Cms.Core.Models.Blocks.BlockListModel>(_publishedValueFallback, "childNavigationItems");
 
 		///<summary>
 		/// Navigation Item

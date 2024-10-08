@@ -55,6 +55,6 @@ namespace BOI.Umbraco.Models
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("navigationItem")]
-		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent NavigationItem => this.Value<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(_publishedValueFallback, "navigationItem");
+		public virtual global::Umbraco.Cms.Core.Models.Link NavigationItem => this.Value<global::Umbraco.Cms.Core.Models.Link>(_publishedValueFallback, "navigationItem");
 	}
 }
