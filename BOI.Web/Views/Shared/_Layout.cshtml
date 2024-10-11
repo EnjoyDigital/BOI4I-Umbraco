@@ -14,7 +14,7 @@
     @await Component.InvokeAsync("Header")
     @await Component.InvokeAsync("ScrollBarBlock")
 
-    <div class="print-logo"><img src="~/assets/dist/images/logo-boi.svg" alt="Bank of Ireland" asp-append-version="true"/></div>
+    <div class="print-logo"><img src="~/assets/dist/images/logo-boi.svg" alt="Bank of Ireland" asp-append-version="true" /></div>
 
     <main id="Main" class="main">
         @RenderBody()
@@ -29,6 +29,18 @@
         </svg>
     </a>
 
+    @*  @if (!Model.Parent<SiteRoot>().HidePrintPdflink)
+    { *@
+    <a class="common-print js-print-products" href="" title="Save page as PDF">
+        Save page as PDF
+        <svg class="[ icon ]" aria-hidden="true">
+            <use xlink:href="#sprite-icon-arrow-up"></use>
+        </svg>
+    </a>
+    @*  }  *@
+
+    
+
     @await Component.InvokeAsync("Footer")
 
     <link type="text/css" rel="stylesheet" href="/assets/dist/css/style.css" asp-append-version="true" />
@@ -37,8 +49,8 @@
     @await Component.InvokeAsync("BackgroundCss")
 
     @RenderSection("Scripts", required: false)
-   
-    @await Component.InvokeAsync("BodyScripts",new { upperScripts = false })
+
+    @await Component.InvokeAsync("BodyScripts", new { upperScripts = false })
 
     <script type="text/javascript" src="/App_Plugins/UmbracoForms/Assets/themes/default/umbracoForms.js"></script>
     @Html.RenderUnobtrusiveAjaxScript()

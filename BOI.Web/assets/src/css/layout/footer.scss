@@ -198,12 +198,30 @@
     display:none;
     position: fixed;
     bottom: 10px;
-    right: 10px;
+    right: 100px;
     font-size: 0;
     line-height: 0;
     color: transparent;
     background-color: $teal;
     z-index:3;
+
+    svg {
+        width: 28px;
+        height: 28px;
+        margin: 16px;
+    }
+}
+
+.common-print {
+    display: block;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 0;
+    line-height: 0;
+    color: transparent;
+    background-color: $teal;
+    z-index: 3;
 
     @media (min-width: $min-desktop) {
         right: 15px;
