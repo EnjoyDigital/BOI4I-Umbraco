@@ -1,6 +1,11 @@
+@using System.Linq
+@using Microsoft.Extensions.Options
+@using Umbraco.Forms.Core.Configuration
+
+@inject IOptionsSnapshot<Recaptcha2Settings> Configuration
 @model Umbraco.Forms.Web.Models.FieldViewModel
 @{
-    var siteKey = Umbraco.Forms.Core.Configuration.GetSetting("RecaptchaPublicKey");
+    var siteKey = Configuration.Value.PublicKey;
     var theme = "clean";
     var themeSetting = Model.AdditionalSettings.FirstOrDefault(x => x.Key == "Theme");
     if (themeSetting.Value != "")
