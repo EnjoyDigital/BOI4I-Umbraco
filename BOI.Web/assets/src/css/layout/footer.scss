@@ -194,26 +194,10 @@
     }
 }
 
+
+
 .back-to-top {
-    display:none;
-    position: fixed;
-    bottom: 10px;
-    right: 100px;
-    font-size: 0;
-    line-height: 0;
-    color: transparent;
-    background-color: $teal;
-    z-index:3;
-
-    svg {
-        width: 28px;
-        height: 28px;
-        margin: 16px;
-    }
-}
-
-.common-print {
-    display: block;
+    display: none;
     position: fixed;
     bottom: 10px;
     right: 10px;
@@ -233,3 +217,24 @@
         margin: 16px;
     }
 }
+
+.common-print {
+    display: block;
+    position: fixed;
+    bottom: 10px;
+    right: 80px;
+    font-size: 0;
+    line-height: 0;
+    color: transparent;
+    background-color: $blue;
+    z-index: 3;
+
+  
+
+    svg {
+        width: 28px;
+        height: 28px;
+        margin: 16px;
+    }
+}
+
