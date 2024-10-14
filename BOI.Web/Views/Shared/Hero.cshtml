@@ -1,4 +1,5 @@
-﻿@inherits UmbracoViewPage<IHeroMixin>
+﻿@using BOI.Core.Web.Extensions
+@inherits UmbracoViewPage<IHeroMixin>
 
 @{
     var backgroundColourClass = (Model.BackgroundColour?.Label != "BOI Blue" ? "-bg-teal" : "");
@@ -10,17 +11,11 @@
 }
 
 <section class="hero-area @backgroundColourClass @(Model.BackgroundImage == null ?  "-no-bg-image" : "")">
-    <!--Will need to add some kind of null check for background image depending upon implementation-->
     @if (Model.BackgroundImage != null)
     {
-        <div class="hero-area__bg-image">
-            @Model.BackgroundImage.GetImageHtml("hero-area__bg-image", !string.IsNullOrWhiteSpace(Model.BackgroundImage.Name) ? Model.BackgroundImage.Name : "hero background image", false,
-                     ("HeroAreaMobile", 414),
-                     ("HeroAreaTablet", 980),
-                     ("HeroAreaDesktop", 1200)
-                     )
-        </div>
+        Context.ResponsiveBackground(Model.BackgroundImage, new { desktop = "HeroAreaDesktop", tablet = "HeroAreaTablet", mobile = "HeroAreaMobile" }, ".hero-area__bg-image");
     }
+    <div class="hero-area__bg-image"></div>
 
     <div class="hero-area-inner">
         <div class="hero-area__copy">
