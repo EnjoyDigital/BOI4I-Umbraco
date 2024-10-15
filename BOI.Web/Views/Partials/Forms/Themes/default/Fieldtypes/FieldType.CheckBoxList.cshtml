@@ -3,8 +3,8 @@
 
 @{ var i = 0; }
           
-<span class="checkboxlist" id="@Model.Id" data-umb="@Model.Id">
-@foreach (Umbraco.Forms.Web.Models.PrevalueViewModel pv in Model.PreValues)  
+<span class="checkboxlist checkbox-wrapper inline" id="@Model.Id" data-umb="@Model.Id">
+@foreach (Umbraco.Forms.Web.Models.PrevalueViewModel pv in Model.PreValues)
 {
     <input type="checkbox" 
            class="@Html.GetFormFieldClass(Model.FieldTypeName)" 
