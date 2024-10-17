@@ -10,7 +10,7 @@ export default function AutoCompleteSearch() {
                 paramName: "queryString",
                 noCache: true,
                 appendTo: searchInput.closest('.product-filters-input-wrap'),
-                onSelect: function (suggestion) {
+                onselectionchange: function (suggestion) {
 
                     $.ajax({
                         type: 'POST',
