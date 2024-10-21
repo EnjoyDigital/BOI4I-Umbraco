@@ -194,12 +194,32 @@
     }
 }
 
+.common-print {
+    display: block;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 0;
+    line-height: 0;
+    color: transparent;
+    background-color: $blue;
+    z-index: 3;
 
+    @media (min-width: $min-desktop) {
+        right: 15px;
+    }
+
+    svg {
+        width: 28px;
+        height: 28px;
+        margin: 16px;
+    }
+}
 
 .back-to-top {
     display: none;
     position: fixed;
-    bottom: 10px;
+    bottom: 75px;
     right: 10px;
     font-size: 0;
     line-height: 0;
@@ -218,23 +238,5 @@
     }
 }
 
-.common-print {
-    display: block;
-    position: fixed;
-    bottom: 10px;
-    right: 80px;
-    font-size: 0;
-    line-height: 0;
-    color: transparent;
-    background-color: $blue;
-    z-index: 3;
 
-  
-
-    svg {
-        width: 28px;
-        height: 28px;
-        margin: 16px;
-    }
-}
 
