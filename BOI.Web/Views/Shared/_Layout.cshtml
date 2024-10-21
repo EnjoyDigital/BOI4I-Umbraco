@@ -43,6 +43,9 @@
             <svg class="[ icon icon-clock -white ]" aria-hidden="true">
                 <use xlink:href="#sprite-icon-pdf-document-icon"></use>
             </svg>
+            <span class="common-print-message">
+                Save page as PDF
+            </span>
         </a>
     }
 
@@ -53,8 +56,6 @@
 
     <partial name="BackgroundCss" />
 
-@*     <partial name="SVG_Sprite" />
- *@
     @RenderSection("Scripts", required: false)
 
     @await Component.InvokeAsync("BodyScripts", new { upperScripts = false })
