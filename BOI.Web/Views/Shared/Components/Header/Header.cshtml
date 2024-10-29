@@ -34,7 +34,7 @@
                 </ul>
             </div>
             <div class="header-top__mobile">
-                @if (Model.SiteRoot.Navigation != null && Model.SiteRoot.Navigation.Any() && !Model.HideNavigation)
+                @if (Model.SiteRoot.MainNavigation != null && Model.SiteRoot.MainNavigation.Any() && !Model.HideNavigation)
                 {
                     <button class="header-top__mobile--hamburger" aria-label="Open main menu" aria-haspopup="true" aria-expanded="false" aria-controls="MainMenu">
                         <img src="~/assets/dist/images/icons/icon-hamburger.svg" alt="">

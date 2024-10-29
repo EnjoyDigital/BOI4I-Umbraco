@@ -1,7 +1,6 @@
 using AspNetCore.Unobtrusive.Ajax;
 using BOI.Core.Middleware;
 using BOI.Core.Web.Extensions;
-using BOI.Core.Web.Middleware;
 
 
 namespace BOI.Web
@@ -63,7 +62,7 @@ namespace BOI.Web
             else
             {
 				app.UseExceptionHandler(err => err.UseCustomErrors(env));
-			}
+            }
 
             app.UseUmbraco()
                 .WithMiddleware(u =>
