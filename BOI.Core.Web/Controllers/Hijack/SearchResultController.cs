@@ -19,13 +19,16 @@ namespace BOI.Core.Web.Controllers.Hijack
 
         // private readonly IElasticClient esClient;
         private readonly ISearchResultSearcher searchResultSearcher;
-                private readonly ILogger<SolicitorLandingController> logger;
+        private readonly ILogger<SolicitorLandingController> logger;
+        private readonly IPublishedValueFallback publishedValueFallback;
 
-        public SearchResultController(ISearchResultSearcher searchResultSearcher,  ILogger<SolicitorLandingController> logger, ICompositeViewEngine compositeViewEngine, IUmbracoContextAccessor umbracoContextAccessor) 
+        public SearchResultController(ISearchResultSearcher searchResultSearcher, ILogger<SolicitorLandingController> logger, ICompositeViewEngine compositeViewEngine, IUmbracoContextAccessor umbracoContextAccessor,
+            IPublishedValueFallback publishedValueFallback)
             : base(logger, compositeViewEngine, umbracoContextAccessor)
         {
             this.searchResultSearcher = searchResultSearcher;
             this.logger = logger;
+            this.publishedValueFallback = publishedValueFallback;
         }
 
         [NonAction]
@@ -41,9 +44,11 @@ namespace BOI.Core.Web.Controllers.Hijack
             {
                 var results = searchResultSearcher.Execute(model);
 
-                
 
-                return CurrentTemplate(new SearchResultsViewModel() { Content = CurrentPage as SearchResult ,
+
+                return CurrentTemplate(new SearchResultsViewModel(CurrentPage, publishedValueFallback)
+                {
+                    Content = CurrentPage as SearchResult,
                     Results = results,
                     SearchTerm = model.SearchTerm,
                     Paging = new Page<IPagedResult>(resultItems: results.QueryResults, totalItems: results.Total, currentPage: model.Page, pagesize: model.Size, activeClass: "-active")
@@ -51,7 +56,7 @@ namespace BOI.Core.Web.Controllers.Hijack
             }
             else
             {
-                return CurrentTemplate(new SearchResultsViewModel() { Content = CurrentPage as SearchResult });
+                return CurrentTemplate(new SearchResultsViewModel(CurrentPage, publishedValueFallback) { Content = CurrentPage as SearchResult });
             }
         }
 
