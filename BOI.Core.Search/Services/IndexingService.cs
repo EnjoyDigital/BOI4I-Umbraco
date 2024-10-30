@@ -158,24 +158,23 @@ namespace BOI.Core.Search.Services
                     .CharFilters(cf => cf
                         .HtmlStrip("ignore_html_tags")
                      )
-                )));
-                //.Map<WebContent>(m => m
-                //        .AutoMap()
-                //        .Properties(ps => ps
-                //            .Nested<Tags>(f => f.Name(p => p.Tags))
-                //            .Text(f => f
-                //                 .Name(p => p.Content)
-                //                 .Analyzer("ignore_html_tags")
-                //                 .Fields(fi => fi
-                //                     .Keyword(kw => kw
-                //                         .Name("keyword")
-                //                         .IgnoreAbove(256)
-                //                     )
-                //                 )
-                //            )
-                //        )
+                ))
+                .Map<WebContent>(m => m
+                        .AutoMap()
+                        .Properties(ps => ps
+                            .Text(f => f
+                                 .Name(p => p.Content)
+                                 .Analyzer("ignore_html_tags")
+                                 .Fields(fi => fi
+                                     .Keyword(kw => kw
+                                         .Name("keyword")
+                                         .IgnoreAbove(256)
+                                     )
+                                 )
+                            )
+                        )
 
-                //    ));
+                    ));
 
                 logger.LogInformation(createIndexResponse.IsValid.ToString());
 
@@ -683,7 +682,7 @@ namespace BOI.Core.Search.Services
                 FaqAnswer = faqAnswer,
                 FaqKeywords = faqKeywords,
 
-                Content = !string.IsNullOrWhiteSpace(combinedContent.ToString().Trim()) ? combinedContent.ToString().Trim() : !string.IsNullOrWhiteSpace(bodyText) ? bodyText : !string.IsNullOrWhiteSpace(faqAnswer) ? faqAnswer :null,
+                Content = !string.IsNullOrWhiteSpace(combinedContent.ToString().Trim()) ? combinedContent.ToString().Trim() : !string.IsNullOrWhiteSpace(bodyText) ? bodyText : !string.IsNullOrWhiteSpace(faqAnswer) ? faqAnswer : null,
                 Regions = regionsList,
                 PostCodeOutCodes = postcodeOutcodes,
                 FCANumber = fCANumberList,
