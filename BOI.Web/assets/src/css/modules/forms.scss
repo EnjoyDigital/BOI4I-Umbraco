@@ -321,11 +321,15 @@ input[type=checkbox] {
     flex-wrap: wrap;
     justify-content: space-between;
     .umbraco-forms-field {
-      width: 48%;
-    }
-
-    .multiplechoice, .radiobuttons, .singlechoice, .dataconsent {
       width: 100%;
     }
+
+    .dropdown{
+        width:48%;
+    }
+/*
+    .multiplechoice, .radiobuttons, .singlechoice, .dataconsent {
+      width: 100%;
+    }*/
   }
 }
