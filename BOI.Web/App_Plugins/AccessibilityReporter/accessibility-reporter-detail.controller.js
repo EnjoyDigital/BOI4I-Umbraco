@@ -1,7 +1,17 @@
 angular.module("umbraco")
-    .controller("My.AccessibilityReporterDetail", function ($scope, AccessibilityReporterService) {
+    .controller("My.AccessibilityReporterDetail", function ($scope) {
 
-        $scope.accessibilityReporterService = AccessibilityReporterService;
+        $scope.impactToTag = function(impact) {
+            switch(impact) {
+                case "serious":
+                case "critical":
+                  return "danger";
+                case "moderate":
+                    return "warning";
+                default:
+                  return "default";
+              };
+        };
 
         $scope.addFullStop = function(sentence) {
             return sentence.replace(/([^.])$/, '$1.');
