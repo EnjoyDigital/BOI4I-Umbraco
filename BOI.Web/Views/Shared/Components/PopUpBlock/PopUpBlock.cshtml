@@ -6,7 +6,7 @@
     <div class="popup-block single-popup">
         <div class="popup-block__inner">
             <p class="popup-block__inner--title">@Model.SiteRoot.PopUpTitle</p>
-            <p class="popup-block__inner--text">@Model.SiteRoot.PopUpText</p>
+            <p class="popup-block__inner--text">@Html.Raw(Model.SiteRoot.PopUpText)</p>
             <div class="popup-block__inner--btn button popup-close"><span>Close</span></div>
             <div class="popup-block__inner--close popup-close">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">

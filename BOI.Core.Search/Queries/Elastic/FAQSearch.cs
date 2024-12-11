@@ -63,9 +63,9 @@ namespace BOI.Core.Search.Queries.Elastic
             var query = new QueryContainerDescriptor<WebContent>();
             QueryContainer queryContainer = null;
 
-            queryContainer = (query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Name).Query(faqQuestion).Boost(20))))
-                     || query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.Content).Query(faqQuestion).Operator(Operator.And).Analyzer("ignore_html_tags"))))
-                     || query.Bool(b => b.Must(m => m.Match(t => t.Field(f => f.FaqKeywords).Query(faqQuestion).Operator(Operator.And).Analyzer("ignore_html_tags")))))
+            queryContainer = (query.Bool(b => b.Must(m => m.MatchPhrase(t => t.Field(f => f.Name).Query(faqQuestion).Boost(20))))
+                     || query.Bool(b => b.Must(m => m.MatchPhrase(t => t.Field(f => f.Content).Query(faqQuestion).Analyzer("ignore_html_tags"))))
+                     || query.Bool(b => b.Must(m => m.MatchPhrase(t => t.Field(f => f.FaqKeywords).Query(faqQuestion).Analyzer("ignore_html_tags")))))
                      && query.Bool(b => b.Must(m => m.Terms(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Terms(FAQ.ModelTypeAlias, FAqtab.ModelTypeAlias))));
 
             return queryContainer;

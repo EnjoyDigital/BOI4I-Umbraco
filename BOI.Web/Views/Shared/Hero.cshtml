@@ -1,12 +1,9 @@
-﻿@inherits UmbracoViewPage<IHeroMixin>
+﻿@using BOI.Core.Web.Extensions
+@inherits UmbracoViewPage<IHeroMixin>
 
 @{
-    //Change for classes if preffered
-    // var backgroundColour = Model.BackgroundColour?.Color;
     var backgroundColourClass = (Model.BackgroundColour?.Label != "BOI Blue" ? "-bg-teal" : "");
     var Root = Model.AncestorOrSelf<SiteRoot>();
-   // var pagePods = Model.HeroPodPicker;
-    
     var heroPods = (Model.HeroPodPicker == null ? Root.GlobalHeroPodPicker : Model.HeroPodPicker);
     var bdmCta = (Model.BDmfinderCta != null ? Model.BDmfinderCta : Root.GlobalBdmcta);
     var productCta = (Model.ProductCta != null ? Model.ProductCta : Root.GlobalProductCta);
@@ -14,13 +11,10 @@
 }
 
 <section class="hero-area @backgroundColourClass @(Model.BackgroundImage == null ?  "-no-bg-image" : "")">
-    <!--Will need to add some kind of null check for background image depending upon implementation-->
-
     @if (Model.BackgroundImage != null)
     {
-        @* @Html.ResponsiveBackground(Model.BackgroundImage, new { desktop = "HeroAreaDesktop", tablet = "HeroAreaTablet", mobile = "HeroAreaMobile" }, ".hero-area__bg-image") *@
+        Context.ResponsiveBackground(Model.BackgroundImage, new { desktop = "HeroAreaDesktop", tablet = "HeroAreaTablet", mobile = "HeroAreaMobile" }, ".hero-area__bg-image");
     }
-
     <div class="hero-area__bg-image"></div>
 
     <div class="hero-area-inner">
@@ -48,7 +42,7 @@
                             bdmPod = true;
                             var podAlias = pod.ContentType.Alias.TrimEnd("Action");
                             viewPath = string.Concat(viewPath, "Pods/");
-                            @await Component.InvokeAsync("PodsView", new { publishedContent = pod, isHeroPod =true})
+                            @await Component.InvokeAsync("PodsView", new { publishedContent = pod, isHeroPod = true })
                             break;
                         default:
                             <partial name="partials/pods/@pod.ContentType.Alias" model="pod" />

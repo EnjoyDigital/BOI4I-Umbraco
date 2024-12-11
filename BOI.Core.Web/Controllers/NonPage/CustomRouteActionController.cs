@@ -154,6 +154,10 @@ namespace BOI.Core.Web.Controllers.NonPage
         {
             var currentPage = umbracoHelper.Content(pageId);
 
+            var wordsToIgnore = currentPage.Value<string>("wordsToIgnore")?.Split(' ');
+            if (wordsToIgnore != null && faqQuestion != null)
+                faqQuestion = string.Join(" ", faqQuestion.Split(' ').Except(wordsToIgnore));
+
             FAQResults results = new FAQResults();
 
             if (searchFaqOnly == null || !bool.Parse(searchFaqOnly))

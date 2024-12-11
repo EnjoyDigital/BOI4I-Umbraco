@@ -36,7 +36,7 @@ $(document).on('click', '#FAQClear', function (e) {
     var formUrl = $(this).data('ajaxaddurl');
     var pageId = $(this).data('pageid');
 
-    $('#FAQCategory').val('');
+    $("#FAQCategory").val($("#FAQCategory option:first").val());
     document.getElementById('FAQName').value = '';
 
     $.ajax({

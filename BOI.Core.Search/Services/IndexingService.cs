@@ -146,6 +146,7 @@ namespace BOI.Core.Search.Services
 
                 var createIndexResponse = client.Indices.Create(indexName, c => c
                 .Settings(s => s
+                .Setting("index.mapping.ignore_malformed", true)
                 .Analysis(an => an
                     .Analyzers(n => n
                         .Custom("ignore_html_tags", cn => cn
@@ -157,24 +158,23 @@ namespace BOI.Core.Search.Services
                     .CharFilters(cf => cf
                         .HtmlStrip("ignore_html_tags")
                      )
-                )));
-                //.Map<WebContent>(m => m
-                //        .AutoMap()
-                //        .Properties(ps => ps
-                //            .Nested<Tags>(f => f.Name(p => p.Tags))
-                //            .Text(f => f
-                //                 .Name(p => p.Content)
-                //                 .Analyzer("ignore_html_tags")
-                //                 .Fields(fi => fi
-                //                     .Keyword(kw => kw
-                //                         .Name("keyword")
-                //                         .IgnoreAbove(256)
-                //                     )
-                //                 )
-                //            )
-                //        )
+                ))
+                .Map<WebContent>(m => m
+                        .AutoMap()
+                        .Properties(ps => ps
+                            .Text(f => f
+                                 .Name(p => p.Content)
+                                 .Analyzer("ignore_html_tags")
+                                 .Fields(fi => fi
+                                     .Keyword(kw => kw
+                                         .Name("keyword")
+                                         .IgnoreAbove(256)
+                                     )
+                                 )
+                            )
+                        )
 
-                //    ));
+                    ));
 
                 logger.LogInformation(createIndexResponse.IsValid.ToString());
 
@@ -608,8 +608,8 @@ namespace BOI.Core.Search.Services
                 launchDateTime = content.HasValue("launchDateTime") ? content.Value<DateTime>(publishedValueFallback, "launchDateTime").ToString("yyyy-MM-dd") : string.Empty;
                 isNew = content.HasValue("isNew") ? content.Value<bool>(publishedValueFallback, "isNew") : false;
                 isFixedRate = content.HasValue("isFixedRate") ? content.Value<bool>(publishedValueFallback, "isFixedRate") : false;
-                withdrawalDateTime = content.HasValue("withdrawalProductDateTime") ? content.Value<DateTime>(publishedValueFallback, "withdrawalProductDateTime").ToString("yyyy-MM-ddTHH:mm:sszzz") : "";
-                aIPDeadlineDateTime = content.HasValue("aIPDeadlineDateTime") ? content.Value<DateTime>(publishedValueFallback, "aIPDeadlineDateTime").ToString("yyyy-MM-ddTHH:mm:sszzz") : "";
+                withdrawalDateTime = content.HasValue("withdrawalProductDateTime") ? content.Value<DateTime>(publishedValueFallback, "withdrawalProductDateTime").ToString("yyyy-MM-ddTHH:mm:sszzz") : string.Empty;
+                aIPDeadlineDateTime = content.HasValue("aIPDeadlineDateTime") ? content.Value<DateTime>(publishedValueFallback, "aIPDeadlineDateTime").ToString("yyyy-MM-ddTHH:mm:sszzz") : string.Empty;
                 productVariant = content.HasValue("productVariant") ? content.Value<string>(publishedValueFallback, "productVariant") : "";
             }
 
@@ -682,7 +682,7 @@ namespace BOI.Core.Search.Services
                 FaqAnswer = faqAnswer,
                 FaqKeywords = faqKeywords,
 
-                Content = !string.IsNullOrWhiteSpace(combinedContent.ToString().Trim()) ? combinedContent.ToString().Trim() : !string.IsNullOrWhiteSpace(bodyText) ? bodyText : !string.IsNullOrWhiteSpace(faqAnswer) ? faqAnswer :null,
+                Content = !string.IsNullOrWhiteSpace(combinedContent.ToString().Trim()) ? combinedContent.ToString().Trim() : !string.IsNullOrWhiteSpace(bodyText) ? bodyText : !string.IsNullOrWhiteSpace(faqAnswer) ? faqAnswer : null,
                 Regions = regionsList,
                 PostCodeOutCodes = postcodeOutcodes,
                 FCANumber = fCANumberList,

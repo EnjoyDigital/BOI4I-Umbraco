@@ -4,6 +4,13 @@
     @await Component.InvokeAsync("Head")
 </head>
 <body class="">
+
+    @{
+        var model = Model as IPublishedContent;
+        var siteRoot = model.AncestorOrSelf<SiteRoot>();
+    }
+
+
     @await Component.InvokeAsync("BodyScripts", new { upperScripts = true })
 
     <a class="skip-to-content-link" href="#Main" tabindex="1">
@@ -14,7 +21,7 @@
     @await Component.InvokeAsync("Header")
     @await Component.InvokeAsync("ScrollBarBlock")
 
-    <div class="print-logo"><img src="~/assets/dist/images/logo-boi.svg" alt="Bank of Ireland" asp-append-version="true"/></div>
+    <div class="print-logo"><img src="~/assets/dist/images/logo-boi.svg" alt="Bank of Ireland" asp-append-version="true" /></div>
 
     <main id="Main" class="main">
         @RenderBody()
@@ -29,16 +36,29 @@
         </svg>
     </a>
 
+    @if (!siteRoot.HidePrintPdflink)
+    {
+        <a class="common-print js-print-products" href="" title="Save page as PDF">
+            Save page as PDF
+            <svg class="[ icon icon-clock -white ]" aria-hidden="true">
+                <use xlink:href="#sprite-icon-pdf-document-icon"></use>
+            </svg>
+            <span class="common-print-message">
+                Save page as PDF
+            </span>
+        </a>
+    }
+
     @await Component.InvokeAsync("Footer")
 
     <link type="text/css" rel="stylesheet" href="/assets/dist/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/assets/dist/css/first-paint.css" asp-append-version="true" />
 
-    @* TODO: PB TO CHECK IF THIS WORKS *@
-    @await Component.InvokeAsync("BackgroundCss")
+    <partial name="BackgroundCss" />
 
     @RenderSection("Scripts", required: false)
-   
-    @await Component.InvokeAsync("BodyScripts",new { upperScripts = false })
+
+    @await Component.InvokeAsync("BodyScripts", new { upperScripts = false })
 
     <script type="text/javascript" src="/App_Plugins/UmbracoForms/Assets/themes/default/umbracoForms.js"></script>
     @Html.RenderUnobtrusiveAjaxScript()

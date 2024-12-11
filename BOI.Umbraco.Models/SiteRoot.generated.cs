@@ -136,12 +136,12 @@ namespace BOI.Umbraco.Models
 		public virtual global::Umbraco.Cms.Core.Models.Link LoginLink => this.Value<global::Umbraco.Cms.Core.Models.Link>(_publishedValueFallback, "loginLink");
 
 		///<summary>
-		/// Mega Navigation
+		/// Main Navigation
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("megaNavigation")]
-		public virtual string MegaNavigation => this.Value<string>(_publishedValueFallback, "megaNavigation");
+		[ImplementPropertyType("mainNavigation")]
+		public virtual global::Umbraco.Cms.Core.Models.Blocks.BlockListModel MainNavigation => this.Value<global::Umbraco.Cms.Core.Models.Blocks.BlockListModel>(_publishedValueFallback, "mainNavigation");
 
 		///<summary>
 		/// Navigation

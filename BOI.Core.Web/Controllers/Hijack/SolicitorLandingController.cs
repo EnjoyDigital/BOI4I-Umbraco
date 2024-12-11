@@ -47,7 +47,7 @@ namespace BOI.Core.Web.Controllers.Hijack
             {
                 SolicitorResultsViewModel viewModel = null;
 
-                if (model.Postcode.HasValue() || model.SolicitorName.HasValue())
+                if (model.Postcode.HasValue())
                 {
                     var lookupQuery = new PostcodeLookupQuery.Request();
                     lookupQuery.Postcode = model.Postcode;

@@ -1,20 +1,21 @@
 @using System.Globalization
+@using Microsoft.Extensions.Options
 @using Umbraco.Forms.Core
-@using Umbraco.Forms.Mvc
-@{
-    var datePickerYearRange = Configuration.GetSetting("DatePickerYearRange");
-    if (string.IsNullOrEmpty(datePickerYearRange))
-    {
-        datePickerYearRange = "10";
-    }
+@using Umbraco.Forms.Core.Configuration
+@using Umbraco.Forms.Web
 
-    Html.AddFormThemeCssFile("~/App_Plugins/UmbracoForms/Assets/pikaday/pikaday.min.css");
-    Html.AddFormThemeScriptFile(null, "~/App_Plugins/UmbracoForms/Assets/moment/min/moment-with-locales.min.js");
-    Html.AddFormThemeScriptFile(null, "~/App_Plugins/UmbracoForms/Assets/pikaday/pikaday.min.js");
-    Html.AddFormThemeScriptFile(null, "~/App_Plugins/UmbracoForms/Assets/datepicker.init.min.js");
+@inject IOptionsSnapshot<DatePickerSettings> Configuration
+
+@{
+    int datePickerYearRange = Configuration.Value.DatePickerYearRange;
+
+    Html.AddFormThemeCssFile("~/App_Plugins/UmbracoForms/Assets/pikaday/pikaday.css");
+    Html.AddFormThemeScriptFile("~/App_Plugins/UmbracoForms/Assets/moment/min/moment-with-locales.min.js");
+    Html.AddFormThemeScriptFile("~/App_Plugins/UmbracoForms/Assets/pikaday/pikaday.js");
+    Html.AddFormThemeScriptFile("~/App_Plugins/UmbracoForms/Assets/datepicker.init.js");
 
     //only render the script block below one time per page
-    var alreadyRendered = Context.Items.Contains("__formDatePickerRendered");
+    var alreadyRendered = Context.Items.ContainsKey("__formDatePickerRendered");
     Context.Items["__formDatePickerRendered"] = true;
 }
 

@@ -1,4 +1,5 @@
 ﻿using BOI.Core.Search.Constants;
+using BOI.Core.Search.Models.ElasticSearch;
 using BOI.Umbraco.Models;
 using Microsoft.Extensions.Configuration;
 using Nest;
@@ -9,6 +10,8 @@ namespace BOI.Core.Search.Models
     {
         private readonly IElasticClient esClient;
         private readonly IConfiguration configuration;
+        private ElasticSettings EsIndexes => new(configuration);
+
 
         public AutocompleteQuery(IElasticClient esClient, IConfiguration configuration)
         {
@@ -50,7 +53,7 @@ namespace BOI.Core.Search.Models
             QueryString = QueryString.ToLower();
 
             var searchQuery = new SearchDescriptor<WebContent>()
-                .Index(configuration["WebContentEsIndexAlias"])
+                .Index(EsIndexes.WebContentEsIndexAlias)
                .Query(query =>
                {
                    const int boost = 3;
@@ -92,7 +95,7 @@ namespace BOI.Core.Search.Models
             QueryString = QueryString.ToLower();
 
             var searchQuery = new SearchDescriptor<WebContent>()
-                .Index(configuration["WebContentEsIndexAlias"])
+                .Index(EsIndexes.WebContentEsIndexAlias)
                .Query(query =>
                {
                    const int boost = 3;
@@ -147,7 +150,7 @@ namespace BOI.Core.Search.Models
             QueryString = QueryString.ToLower();
 
             var searchQuery = new SearchDescriptor<WebContent>()
-                .Index(configuration["WebContentEsIndexAlias"])
+                .Index(EsIndexes.WebContentEsIndexAlias)
                .Query(query =>
                {
                    const int boost = 3;

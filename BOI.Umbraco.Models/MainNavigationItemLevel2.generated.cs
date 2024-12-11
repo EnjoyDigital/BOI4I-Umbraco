@@ -50,11 +50,19 @@ namespace BOI.Umbraco.Models
 		// properties
 
 		///<summary>
+		/// Child Navigation Items
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("childNavigationItems")]
+		public virtual global::Umbraco.Cms.Core.Models.Blocks.BlockListModel ChildNavigationItems => this.Value<global::Umbraco.Cms.Core.Models.Blocks.BlockListModel>(_publishedValueFallback, "childNavigationItems");
+
+		///<summary>
 		/// Navigation Item
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.4.1+d72fc5c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("navigationItem")]
-		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent NavigationItem => this.Value<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(_publishedValueFallback, "navigationItem");
+		public virtual global::Umbraco.Cms.Core.Models.Link NavigationItem => this.Value<global::Umbraco.Cms.Core.Models.Link>(_publishedValueFallback, "navigationItem");
 	}
 }

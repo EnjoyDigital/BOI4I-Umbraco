@@ -11,3 +11,11 @@ function scrollToTop() {
         return false;
     });
 }
+
+// help text
+$(document).on('mouseenter', '.common-print', function (e) {
+    $(this).addClass('active');
+});
+$(document).on('mouseleave', '.common-print', function (e) {
+    $(this).removeClass('active');
+});

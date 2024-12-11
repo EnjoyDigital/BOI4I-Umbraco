@@ -1,0 +1,7 @@
+﻿@if (@Context.Items["BackgroundImages"]==null)
+{
+    return;
+}
+@{
+<style>@Context.RenderBackgroundCss("desktop") @@media only screen and (max-width: 1200px){@Context.RenderBackgroundCss("desktop1366")}  @@media only screen and (max-width: 1024px){@Context.RenderBackgroundCss("desktop1024")} @@media only screen and (max-width: 980px){@Context.RenderBackgroundCss("desktop980")} @@media only screen and (max-width: 768px){@Context.RenderBackgroundCss("tablet")} @@media only screen and (max-width: 568px){@Context.RenderBackgroundCss("mobile")}  @@media only screen and (max-width: 420px){@Context.RenderBackgroundCss("mobile420")}</style>
+}
