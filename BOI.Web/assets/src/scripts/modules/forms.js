@@ -2,7 +2,7 @@ import 'parsleyjs'
 
 export default function Forms() {
     formStyling()
-    formSubmission()
+    //formSubmission() //disabling to avoid duplicate submission
     fileUpload()
     // keyValidation() // Disabling for when 2 forms on the page.
 }
@@ -27,9 +27,6 @@ function formSubmission() {
 
     _form.on('submit', function (e) {
         e.preventDefault();
-
-       
-
 
         var _t = '#' + $(this).parent('div').attr('id');
         var _success = '.umbraco-forms-submitmessage';
