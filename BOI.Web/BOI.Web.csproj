@@ -60,6 +60,7 @@
 	  <Content Include="App_Plugins\SolicitorUpload\backoffice\SolicitorUpload\import.html" />
 	  <Content Include="App_Plugins\SolicitorUpload\lang\en-GB.xml" />
 	  <Content Include="App_Plugins\SolicitorUpload\lang\en-US.xml" />
+	  <Content Include="App_Plugins\TwoFactorProviders\twoFactorProviderGoogleAuthenticator.html" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -127,6 +128,8 @@
 	  <None Include="App_Plugins\SolicitorUpload\backoffice\SolicitorUpload\dataViewer.controller.js" />
 	  <None Include="App_Plugins\SolicitorUpload\package.manifest" />
 	  <None Include="App_Plugins\SolicitorUpload\SolicitorUpload.resource.js" />
+	  <None Include="App_Plugins\TwoFactorProviders\package.manifest" />
+	  <None Include="App_Plugins\TwoFactorProviders\twoFactorProviderGoogleAuthenticator.controller.js" />
 	  <None Include="Views\Partials\BdmFinder\BdmListing.cshtml" />
 	  <None Include="Views\Partials\SolicitorLookup\SolicitorLookUpResultList.cshtml" />
 	  <None Include="wwwroot\assets\dist\css\style.css" />
