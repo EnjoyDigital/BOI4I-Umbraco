@@ -30,6 +30,7 @@
     <PackageReference Include="CsvHelper" Version="33.0.1" />
     <PackageReference Include="DangEasy.Caching.MemoryCache" Version="2.1.0" />
     <PackageReference Include="FastExcel" Version="3.0.13" />
+    <PackageReference Include="GoogleAuthenticator" Version="3.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
@@ -41,10 +42,10 @@
     <PackageReference Include="Skybrud.Essentials" Version="1.1.57" />
     <PackageReference Include="Skybrud.Umbraco.Redirects" Version="13.0.4" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="Umbraco.Cms.Core" Version="13.4.1" />
-    <PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.4.1" />
-    <PackageReference Include="Umbraco.Cms.Web.Common" Version="13.4.1" />
-    <PackageReference Include="Umbraco.Forms.Core" Version="13.2.0" />
+    <PackageReference Include="Umbraco.Cms.Core" Version="13.5.2" />
+    <PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.5.2" />
+    <PackageReference Include="Umbraco.Cms.Web.Common" Version="13.5.2" />
+    <PackageReference Include="Umbraco.Forms.Core" Version="13.4.0" />
   </ItemGroup>
 
   <ItemGroup>

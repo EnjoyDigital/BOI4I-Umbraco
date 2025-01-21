@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="Our.Umbraco.Meganav" Version="4.1.0" />
-    <PackageReference Include="Umbraco.Cms.Core" Version="13.4.1" />
-    <PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.4.1" />
+    <PackageReference Include="Umbraco.Cms.Core" Version="13.5.2" />
+    <PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.5.2" />
   </ItemGroup>
 
   <ItemGroup>
