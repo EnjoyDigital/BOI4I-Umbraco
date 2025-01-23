@@ -97,7 +97,10 @@ namespace BOI.Web
                 options.AddIISUrlRewrite(iisUrlRewriteStreamReader);
             }
 
-            app.UseRewriter(options);
+            if (!env.IsDevelopment())
+            {
+                app.UseRewriter(options);
+            }
         }
 
         //return app;
