@@ -30,7 +30,7 @@
     <PackageReference Include="CsvHelper" Version="33.0.1" />
     <PackageReference Include="DangEasy.Caching.MemoryCache" Version="2.1.0" />
     <PackageReference Include="FastExcel" Version="3.0.13" />
-    <PackageReference Include="GoogleAuthenticator" Version="3.2.0" />
+    <PackageReference Include="GoogleAuthenticator" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
