@@ -8,5 +8,11 @@
             public const string PopUpText = "popUpText";
             public const string HideMainNavigation = "hideMainNavigation";
         }
+
+        public class Cors
+        {
+            public static string CorsPolicyName = "CalculatorCorsPloicy";
+
+        }
     }
 }
