@@ -1,10 +1,7 @@
 using AspNetCore.Unobtrusive.Ajax;
 using BOI.Core.Middleware;
 using BOI.Core.Web.Extensions;
-using BOI.Core.Web.Models.Cors;
 using Microsoft.AspNetCore.Rewrite;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
-using static BOI.Core.Web.Constants.SiteAliases;
 
 
 namespace BOI.Web
@@ -38,25 +35,6 @@ namespace BOI.Web
         /// </remarks>
         public void ConfigureServices(IServiceCollection services)
         {
-            var corsConfig = _config.GetSection("CorsConfig").Get<CorsConfig>();
-            if (corsConfig != null)
-            {
-                services = services.AddCors(options =>
-                {
-                    options.AddPolicy(Cors.CorsPolicyName, builder =>
-                    {
-                        foreach (var corsItem in corsConfig.Origins)
-                        {
-                            builder.WithOrigins(corsItem.RequestOrigin);
-                        }
-                    }
-                    );
-
-                }
-
-                );
-
-            }
             services.AddUmbraco(_env, _config)
                 .AddBackOffice()
                 .AddWebsite()
