@@ -58,7 +58,7 @@ namespace BOI.Web
         {
             var logger = app.ApplicationServices.GetRequiredService<ILogger<Startup>>();
 
-            UseCustomRewrites(app, env, _config, logger);
+            //UseCustomRewrites(app, env, _config, logger);
 
             if (env.IsDevelopment())
             {
@@ -88,20 +88,20 @@ namespace BOI.Web
             app.UseUnobtrusiveAjax();
         }
 
-        private void UseCustomRewrites(IApplicationBuilder app, IWebHostEnvironment env, IConfiguration configuration, ILogger<Startup> logger)
-        {
-            var options = new RewriteOptions();
+        //private void UseCustomRewrites(IApplicationBuilder app, IWebHostEnvironment env, IConfiguration configuration, ILogger<Startup> logger)
+        //{
+        //    var options = new RewriteOptions();
 
-            using (var iisUrlRewriteStreamReader = File.OpenText("Config/rewrites.config"))
-            {
-                options.AddIISUrlRewrite(iisUrlRewriteStreamReader);
-            }
+        //    using (var iisUrlRewriteStreamReader = File.OpenText("Config/rewrites.config"))
+        //    {
+        //        options.AddIISUrlRewrite(iisUrlRewriteStreamReader);
+        //    }
 
-            if (!env.IsDevelopment())
-            {
-                app.UseRewriter(options);
-            }
-        }
+        //    if (!env.IsDevelopment())
+        //    {
+        //        app.UseRewriter(options);
+        //    }
+        //}
 
         //return app;
     }
