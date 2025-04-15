@@ -1,6 +1,7 @@
 using AspNetCore.Unobtrusive.Ajax;
 using BOI.Core.Middleware;
 using BOI.Core.Web.Extensions;
+using Microsoft.AspNetCore.Rewrite;
 
 
 namespace BOI.Web
@@ -55,13 +56,17 @@ namespace BOI.Web
         /// <param name="env">The web hosting environment.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var logger = app.ApplicationServices.GetRequiredService<ILogger<Startup>>();
+
+            //UseCustomRewrites(app, env, _config, logger);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
-				app.UseExceptionHandler(err => err.UseCustomErrors(env));
+                app.UseExceptionHandler(err => err.UseCustomErrors(env));
             }
 
             app.UseUmbraco()
@@ -82,5 +87,23 @@ namespace BOI.Web
 
             app.UseUnobtrusiveAjax();
         }
+
+        //private void UseCustomRewrites(IApplicationBuilder app, IWebHostEnvironment env, IConfiguration configuration, ILogger<Startup> logger)
+        //{
+        //    var options = new RewriteOptions();
+
+        //    using (var iisUrlRewriteStreamReader = File.OpenText("Config/rewrites.config"))
+        //    {
+        //        options.AddIISUrlRewrite(iisUrlRewriteStreamReader);
+        //    }
+
+        //    if (!env.IsDevelopment())
+        //    {
+        //        app.UseRewriter(options);
+        //    }
+        //}
+
+        //return app;
     }
+
 }
