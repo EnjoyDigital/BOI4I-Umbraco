@@ -45,7 +45,7 @@
     <PackageReference Include="Umbraco.Cms.Core" Version="13.8.1" />
     <PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.8.1" />
     <PackageReference Include="Umbraco.Cms.Web.Common" Version="13.8.1" />
-    <PackageReference Include="Umbraco.Forms.Core" Version="13.4.0" />
+    <PackageReference Include="Umbraco.Forms.Core" Version="13.4.2" />
   </ItemGroup>
 
   <ItemGroup>
