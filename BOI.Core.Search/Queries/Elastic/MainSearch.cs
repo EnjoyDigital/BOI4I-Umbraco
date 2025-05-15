@@ -3,6 +3,7 @@
 using BOI.Core.Extensions;
 using BOI.Core.Search.Extensions;
 using BOI.Core.Search.Models;
+using BOI.Umbraco.Models;
 using Microsoft.Extensions.Configuration;
 using Nest;
 using Umbraco.Cms.Core.Strings;
@@ -56,6 +57,8 @@ namespace BankOfIreland.Intermediaries.Feature.Search.Queries.Elastic
         private readonly IElasticClient esClient;
         private readonly IShortStringHelper shortStringHelper;
         private IConfigurationRoot configuration1;
+        private WebContent criteriaLandingPage = null;
+        private WebContent fAQLandingPage = null;
 
         public SearchResultSearcher(IConfiguration configuration, IElasticClient esClient, IShortStringHelper shortStringHelper)
         {
@@ -144,11 +147,78 @@ namespace BankOfIreland.Intermediaries.Feature.Search.Queries.Elastic
             {
                 SearchLinkUrl = GetCriteriaLookupLandingPageFromCriteriaTab(Source.ParentNodeId);
             }
+            else if (Source.NodeTypeAlias.Equals("fAQ", StringComparison.InvariantCultureIgnoreCase))
+            {
+                SearchLinkUrl = GetFAQLandingPageFromFAQ(Source);
+            }
+            else if (Source.NodeTypeAlias.Equals("fAQTab", StringComparison.InvariantCultureIgnoreCase))
+            {
+                SearchLinkUrl = GetFAQLandingPageFromFAQTab(Source.ParentNodeId);
+            }
             else
             {
                 SearchLinkUrl = !string.IsNullOrWhiteSpace(Source.Url) ? Source.Url : "";
             }
             return SearchLinkUrl;
+        }
+
+        private string GetFAQLandingPageFromFAQTab(int parentNodeId)
+        {
+            var search = esClient
+                .Search<WebContent>(s => s
+                    .Index(configuration["ElasticSettings:WebContentEsIndexAlias"])
+                    .Query(q => q
+                        .Bool(b => b
+                            .Must(
+                                a =>
+                                {
+                                    return a.Term(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Value(FAQ.ModelTypeAlias));
+                                },
+                                a =>
+                                {
+                                    return a.Term(t => t.Field(tf => tf.Id).Value(parentNodeId));
+                                }
+                            )
+                        )
+                    )
+                )
+            .EnsureSuccess();
+
+            return search.Documents.Any() ? GetFAQLandingPageFromFAQ(search?.Documents?.FirstOrDefault()) : "#";
+        }
+
+        private string GetFAQLandingPageFromFAQ(WebContent source)
+        {
+            if (fAQLandingPage == null)
+            {
+                var search = esClient
+                    .Search<WebContent>(s => s
+                        .Index(configuration["ElasticSettings:WebContentEsIndexAlias"])
+                        .Query(q => q
+                            .Bool(b => b
+                                .Must(
+                                    a =>
+                                    {
+                                        return a.Term(t => t.Field(tf => tf.NodeTypeAlias.Suffix("keyword")).Value(FAqlanding.ModelTypeAlias));
+                                    }
+                                )
+                            )
+                        )
+                    )
+                .EnsureSuccess();
+
+                if (search.Documents.Any())
+                {
+                    fAQLandingPage = search.Documents.FirstOrDefault();
+                }
+            }
+
+            if (fAQLandingPage != null)
+            {
+                return string.Concat(fAQLandingPage.Url, "#", source.Name.ToCleanString(shortStringHelper, CleanStringType.UrlSegment).ToLower().Replace(" ", "-"));
+            }
+            else
+            { return "#"; }
         }
 
         private string GetCriteriaLookupLandingPageFromCriteriaTab(int parentNodeId)
@@ -175,7 +245,7 @@ namespace BankOfIreland.Intermediaries.Feature.Search.Queries.Elastic
 
             return search.Documents.Any() ? GetCriteriaLookupLandingPageFromCriteria(search.Documents.FirstOrDefault(), search.Documents.FirstOrDefault().ResidentialProduct, search.Documents.FirstOrDefault().BespokeProduct) : "#";
         }
-        private WebContent criteriaLandingPage = null;
+
         private string GetCriteriaLookupLandingPageFromCriteria(WebContent source, bool residentialProduct, bool bespokeProduct)
         {
             if (criteriaLandingPage == null)
@@ -242,5 +312,6 @@ namespace BankOfIreland.Intermediaries.Feature.Search.Queries.Elastic
             return search.Documents.Any() ? string.Concat(search.Documents?.FirstOrDefault()?.Url, interestOnly ? "?InterestOnly=true" : "", "#", productCode) : "#";
 
         }
+
     }
 }
