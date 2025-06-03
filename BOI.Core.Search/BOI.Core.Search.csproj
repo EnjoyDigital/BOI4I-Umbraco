@@ -11,8 +11,8 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
 		<PackageReference Include="NEST" Version="7.17.4" />
-		<PackageReference Include="Umbraco.Cms.Core" Version="13.5.3" />
-		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.5.3" />
+		<PackageReference Include="Umbraco.Cms.Core" Version="13.8.1" />
+		<PackageReference Include="Umbraco.Cms.Infrastructure" Version="13.8.1" />
 	</ItemGroup>
 
 	<ItemGroup>
