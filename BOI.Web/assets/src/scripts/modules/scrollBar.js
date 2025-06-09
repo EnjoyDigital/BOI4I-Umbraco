@@ -3,7 +3,7 @@ export default function Scrollbar() {
     $slides = document.querySelectorAll(".scroll-bar__inner"),
     $slideWrapper = $('.scroll-bar');
   var scrollBar = document.querySelector(".scroll-bar");
-  var scollInterval;
+    var scollInterval;
 
   if ($slideWrapper.length > 0) {
     setScollBarHeight()
