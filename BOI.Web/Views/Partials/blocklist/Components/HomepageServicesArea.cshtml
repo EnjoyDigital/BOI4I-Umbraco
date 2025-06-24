@@ -1,0 +1,15 @@
+﻿@inherits UmbracoViewPage<HomepageServicesArea>
+<div>
+@Model?.Title.SurroundWith("<h2>", "</h2>")
+@foreach(var service in Model?.ServiceItems?.Select(x => ( x.Content as ServiceAreaItem) )  )
+{
+    <div class="homepage-service">
+        @if (service.Icon != null)
+        {
+            <img src="@service.Icon.Url()" alt="@service.Icon.GetImageAlternativeText()" class="homepage-service__icon" />
+        }
+        <h3 class="homepage-service__title">@service.Title</h3>
+        @Html.Raw(service.Text)
+    </div>
+}
+</div>
