@@ -71,6 +71,24 @@
   line-height: meta-unit($line-height,rem);
 }
 
+/* Fluid sizes - in pixels */
+@function fluid($min, $max, $minWidth: 420, $maxWidth: 1400) {
+  $minRem: $min / $base-font-size;
+  $maxRem: $max / $base-font-size;
+  $minWidthRem: $minWidth / $base-font-size;
+  $maxWidthRem: $maxWidth / $base-font-size;
+
+  $slope: ($maxRem - $minRem) / ($maxWidthRem - $minWidthRem);
+  $yAxisIntersection: -$minWidthRem * $slope + $minRem;
+
+  $clampMin: $minRem + rem;
+  $clampValOne: $yAxisIntersection + rem;
+  $clampValTwo: ($slope * 100) + vw;
+  $clampMax: $maxRem + rem;
+
+  @return clamp(#{$clampMin}, #{$clampValOne} + #{$clampValTwo}, #{$clampMax});
+}
+
 @mixin vertical-gradient($start,$end) {
   background: $end;
   background: -webkit-linear-gradient($start,$end);

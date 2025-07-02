@@ -106,6 +106,21 @@ exports.default = series(
     ),
 );
 
+exports.devSassOnly = series(
+    parallel(
+        firstPaint,
+        buildSass,
+        buildRteSass,
+        buildSvgSprite
+    ),
+    parallel(
+        watchFirstPaint,
+        watchSass,
+        watchRteSass,
+        watchSvgIcons
+    ),
+);
+
 exports.buildOnly = parallel(
     firstPaint,
     buildSass,

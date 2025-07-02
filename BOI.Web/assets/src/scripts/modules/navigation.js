@@ -8,7 +8,7 @@ export default function Navigation() {
     var $searchButton = document.querySelector('.header-bottom__menu--search');
     var $siteSearch = document.querySelector('.site-search');
     var $searchBox = document.querySelector('.search-bar');
-    var $searchClose = document.querySelector('.search-bar__icons--grey');
+    var $searchClose = document.querySelector('.js-close-site-search');
     var $headerBottom = document.querySelector('.header-bottom__menu');
     var $mobileSubmenu = document.querySelectorAll('.show-submenu');
     var $mobileMenu = document.querySelectorAll('.header-bottom__menu--menu');
@@ -51,7 +51,8 @@ export default function Navigation() {
         });
     }
 
-    $searchClose.addEventListener('click', function () {
+    $searchClose.addEventListener('click', function (e) {
+        e.preventDefault();
         $searchButton.setAttribute('aria-expanded', false);
         $searchBox.classList.remove('search-active');
         $mobileNav.classList.add('bottom-nav-active');

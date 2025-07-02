@@ -15,13 +15,15 @@
         <div class="header-top">
             <div class="header-top__content">
                 <div class="header-top__content--text">
-                    <img src="~/assets/dist/images/icons/icon-alert.svg" alt='Alert Icon'>
+                    <svg class="[ icon icon-alert ]" aria-hidden="true">
+                        <use xlink:href="#sprite-icon-alert"></use>
+                    </svg>
                     <p>Intermediary use only</p>
                 </div>
                 <ul class="header-top__content--links">
                     @if (Model.SiteRoot.ContactUsLink != null)
                     {
-                        <li class="not-bold"><a href="@Model.SiteRoot.ContactUsLink.Url" target="@Model.SiteRoot.ContactUsLink.Target">@Model.SiteRoot.ContactUsLink.Name</a></li>
+                        <li><a href="@Model.SiteRoot.ContactUsLink.Url" target="@Model.SiteRoot.ContactUsLink.Target">@Model.SiteRoot.ContactUsLink.Name</a></li>
                     }
                     @if (Model.SiteRoot.RegisterLink != null)
                     {
@@ -29,7 +31,12 @@
                     }
                     @if (Model.SiteRoot.LoginLink != null)
                     {
-                        <li><a href="@Model.SiteRoot.LoginLink.Url" target="@Model.SiteRoot.LoginLink.Target">@Model.SiteRoot.LoginLink.Name</a></li>
+                        <li>
+                            <a href="@Model.SiteRoot.LoginLink.Url" target="@Model.SiteRoot.LoginLink.Target">@Model.SiteRoot.LoginLink.Name</a>
+                            <svg class="[ icon icon-padlock -blue ]" aria-hidden="true">
+                                <use xlink:href="#sprite-icon-padlock"></use>
+                            </svg>
+                        </li>
                     }
                 </ul>
             </div>
@@ -97,7 +104,10 @@
                     @if (Model.SiteRoot.SearchResultsLink != null)
                     {
                         <button aria-label="Open site search" aria-haspopup="true" aria-expanded="false" aria-controls="SiteSearch" class="header-bottom__menu--search">
-                            <img src="~/assets/dist/images/icons/sprite-icon-search.svg" alt="" aria-role="presentation">
+                            Search
+                            <svg class="[ icon icon-search-alt -blue ]" aria-hidden="true">
+                                <use xlink:href="#sprite-icon-search-alt"></use>
+                            </svg>
                         </button>
                     }
                     
@@ -113,31 +123,20 @@
                 <form id="searchResultForm" action="@Model.SiteRoot.SearchResultsLink.Url" class="search-bar" data-autocompleteurl="@Model.SearcjAjaxUrl">
                     <div class="search-bar__wrap">
                         <div class="search-bar__search">
-                            <svg class="search-bar__search--icon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="#fff">
-                                <title>Search</title>
-                                <g>
-                                    <g>
-                                        <path d="M127.662 523.25c4.094 0 7.412 3.318 7.412 7.412 0 1.867-.69 3.573-1.83 4.876l3.22 3.218c.195.196.195.512 0 .708-.174.173-.443.192-.638.057l-.07-.057-3.218-3.22c-1.303 1.14-3.01 1.83-4.876 1.83-4.094 0-7.412-3.318-7.412-7.412 0-4.094 3.318-7.412 7.412-7.412zm0 1c-3.541 0-6.412 2.87-6.412 6.412 0 3.541 2.87 6.412 6.412 6.412 3.541 0 6.412-2.87 6.412-6.412 0-3.541-2.87-6.412-6.412-6.412z" transform="translate(-120 -523)" />
-                                    </g>
-                                </g>
-                            </svg>
-
                             <div class="search-bar__search--input">
                                 <label id="SiteSearchLabel" for="@MainSearchBindAliases.SearchTerm" class="sr-only">Search</label>
                                 @Html.TextBox(MainSearchBindAliases.SearchTerm, null, new { placeholder = "Type to search", id = @MainSearchBindAliases.SearchTerm })
                             </div>
                         </div>
                         <div class="search-bar__icons">
-                            <button class="search-bar__icons--teal">
-                                <img src="~/assets/dist/images/icons/icon-arrow-crumb.svg" alt='search'>
+                            <button>
+                                <svg class="[ icon icon-search-alt -blue ]" aria-hidden="true">
+                                    <use xlink:href="#sprite-icon-search-alt"></use>
+                                </svg>
                             </button>
-                            <button class="search-bar__icons--grey" aria-label="Close site search" aria-controls="SiteSearch">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-                                    <g fill="none" fill-rule="evenodd">
-                                        <g fill="#353535" fill-rule="nonzero">
-                                            <path d="M230.12 629.12c.174-.173.443-.193.638-.058l.07.058 8.172 8.173 8.173-8.173c.195-.195.512-.195.707 0 .173.174.193.443.058.638l-.058.07-8.173 8.172 8.173 8.173.058.069c.135.195.115.464-.058.638-.174.173-.443.193-.638.058l-.07-.058-8.172-8.173-8.173 8.173c-.195.195-.512.195-.707 0-.173-.174-.193-.443-.058-.638l.058-.07 8.173-8.172-8.173-8.173-.058-.069c-.135-.195-.115-.464.058-.638z" transform="translate(-230 -629)" />
-                                        </g>
-                                    </g>
+                            <button aria-label="Close site search" aria-controls="SiteSearch" class="js-close-site-search">
+                                <svg class="[ icon icon-cross-alt -blue ]" aria-hidden="true">
+                                    <use xlink:href="#sprite-icon-cross-alt"></use>
                                 </svg>
                             </button>
                         </div>
