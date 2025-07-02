@@ -21,7 +21,7 @@ export default function Navigation() {
                 $main.style.position = "static";
                 $button.setAttribute('aria-label', 'Open main menu');
                 $button.setAttribute('aria-expanded', false);
-                $button.innerHTML = '<img src="/assets/dist/images/icons/icon-hamburger.svg">';
+                $button.innerHTML = '<img src="/assets/dist/images/icons/icon-hamburger-dark-blue.svg">';
             } else {
                 $mobileNav.classList.add('nav-active');
                 $mobileTop.classList.add('nav-active');
@@ -29,7 +29,7 @@ export default function Navigation() {
                 $main.style.position = "fixed";
                 $button.setAttribute('aria-label', 'Close main menu');
                 $button.setAttribute('aria-expanded', true);
-                $button.innerHTML = '<img src="/assets/dist/images/icons/icon-mobile-menu-close.svg">';
+                $button.innerHTML = '<svg class="[ icon icon-cross-alt -dark-blue ]" aria-hidden="true"><use xlink:href="#sprite-icon-cross-alt"></use></svg>Close';
                 while ($mobileTop.childNodes.length > 0) { 
                     $headerBottom.appendChild($mobileTop.childNodes[0]);
                 }
@@ -63,9 +63,9 @@ export default function Navigation() {
 
     function mobileSubmenu() {
         for (let i = 0; i < $mobileSubmenu.length; i++) {
-            $mobileSubmenu[i].parentElement.addEventListener('focusout', function (e) {
+            $mobileSubmenu[i].addEventListener('focusout', function (e) {
                 // If focus is still in the parent, do nothing
-                if ($mobileSubmenu[i].parentElement.contains(e.relatedTarget)) return;
+                if ($mobileSubmenu[i].contains(e.relatedTarget)) return;
 
                 // If on mobile do nothing
                 if ($(window).width() < 768) return;
@@ -80,7 +80,7 @@ export default function Navigation() {
                 $topLevelLink.setAttribute('aria-expanded', false)
             });
 
-            $mobileSubmenu[i].parentElement.addEventListener('click', function (e) {
+            $mobileSubmenu[i].addEventListener('click', function (e) {
                 if (e.detail == 1) { //is actually a click event, not a keyboard event in disguise
                     if (typeof (e.target.href) != 'undefined') {
                         if (e.target.href == '' || e.target.href.slice(-1) == '#') {
@@ -97,6 +97,10 @@ export default function Navigation() {
                 var $sibling = $mobileSubmenu[i].nextElementSibling;
                 var $topLevelLink = $mobileSubmenu[i].previousElementSibling;
 
+                if ($parent.classList.contains('submenu-listing__heading')) {
+                    $sibling = $parent.nextElementSibling;
+                }
+
                 if ($parent.classList.contains('submenu-open')) {
                     $sibling.style.display = "";
                     $parent.classList.remove('submenu-open');
@@ -105,7 +109,7 @@ export default function Navigation() {
                 } else {
                     $sibling.style.display = "flex";
                     $parent.classList.add('submenu-open');
-                    $headerBottom.style.height = "calc(100% + 140px)";
+                    $headerBottom.style.height = "calc(100% - 80px)";
                     $topLevelLink.setAttribute('aria-expanded', true)
                 }
             });

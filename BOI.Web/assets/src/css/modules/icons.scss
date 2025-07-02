@@ -6,6 +6,11 @@
     color: $blue;
   }
 
+  &.-dark-blue {
+    fill: $dark-blue;
+    color: $dark-blue;
+  }
+
   &.-text-grey {
     fill: $text;
     color: $text;

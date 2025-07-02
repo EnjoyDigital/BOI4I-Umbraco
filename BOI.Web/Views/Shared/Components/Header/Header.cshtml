@@ -32,10 +32,12 @@
                     @if (Model.SiteRoot.LoginLink != null)
                     {
                         <li>
-                            <a href="@Model.SiteRoot.LoginLink.Url" target="@Model.SiteRoot.LoginLink.Target">@Model.SiteRoot.LoginLink.Name</a>
-                            <svg class="[ icon icon-padlock -blue ]" aria-hidden="true">
-                                <use xlink:href="#sprite-icon-padlock"></use>
-                            </svg>
+                            <a href="@Model.SiteRoot.LoginLink.Url" target="@Model.SiteRoot.LoginLink.Target">
+                                @Model.SiteRoot.LoginLink.Name
+                                <svg class="[ icon icon-padlock -blue ]" aria-hidden="true">
+                                    <use xlink:href="#sprite-icon-padlock"></use>
+                                </svg>
+                            </a>
                         </li>
                     }
                 </ul>
@@ -44,7 +46,7 @@
                 @if (Model.SiteRoot.MainNavigation != null && Model.SiteRoot.MainNavigation.Any() && !Model.HideNavigation)
                 {
                     <button class="header-top__mobile--hamburger" aria-label="Open main menu" aria-haspopup="true" aria-expanded="false" aria-controls="MainMenu">
-                        <img src="~/assets/dist/images/icons/icon-hamburger.svg" alt="">
+                        <img src="~/assets/dist/images/icons/icon-hamburger-dark-blue.svg" alt="">
                     </button>
                 }
             </div>
@@ -59,7 +61,13 @@
                     {
                         var itemContent = item.Content as MainNavigationItem;
                         <li>
-                            <a href="@itemContent?.NavigationItem?.Url" target="@itemContent?.NavigationItem?.Target" title="@itemContent?.NavigationItem?.Name" @Html.Raw(itemContent?.NavigationItem?.Url == Model?.Content?.Url() ? "aria-current=\"page\"" : string.Empty) @Html.Raw(@itemContent.ChildNavigationItems.Any() ? "aria-haspopup=\"true\"" : string.Empty) aria-expanded="false">@itemContent?.NavigationItem?.Name</a>
+                            <a href="@itemContent?.NavigationItem?.Url" target="@itemContent?.NavigationItem?.Target" title="@itemContent?.NavigationItem?.Name" @Html.Raw(itemContent?.NavigationItem?.Url == Model?.Content?.Url() ? "aria-current=\"page\"" : string.Empty) @Html.Raw(@itemContent.ChildNavigationItems.Any() ? "aria-haspopup=\"true\"" : string.Empty) aria-expanded="false">
+                                @* TODO: Add mobile-only icon *@
+                                <div class="menu-item-icon">
+                                    <img src="" alt="" width="20" height="20" />
+                                </div>
+                                @itemContent?.NavigationItem?.Name
+                            </a>
 
                             @if (itemContent.ChildNavigationItems.Any())
                             {
@@ -79,7 +87,11 @@
                                         <div class="submenu-listing">
                                             @if (childContent.NavigationItem.Url == null || childContent.NavigationItem.Url == "#")
                                             {
-                                                <span class="submenu-listing__heading">@childContent.NavigationItem.Name</span>
+                                                <span class="submenu-listing__heading">
+                                                    @childContent.NavigationItem.Name
+
+                                                    <div class="show-submenu"></div>
+                                                </span>
                                             }
 
                                             @if (childContent.ChildNavigationItems.Any())
@@ -134,7 +146,7 @@
                                     <use xlink:href="#sprite-icon-search-alt"></use>
                                 </svg>
                             </button>
-                            <button aria-label="Close site search" aria-controls="SiteSearch" class="js-close-site-search">
+                            <button aria-label="Close site search" aria-controls="SiteSearch" class="js-close-site-search close-site-search">
                                 <svg class="[ icon icon-cross-alt -blue ]" aria-hidden="true">
                                     <use xlink:href="#sprite-icon-cross-alt"></use>
                                 </svg>

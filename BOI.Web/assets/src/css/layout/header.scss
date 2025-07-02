@@ -40,7 +40,11 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: $white;
+    background-color: $grey-11;
+
+    @media (min-width: $min-desktop) {
+      background-color: $white;
+    }
 
     .header-logo {
       position: absolute;
@@ -63,6 +67,21 @@ header {
 
       &__mobile {
         display: flex;
+
+        &--hamburger {
+          display: flex;
+          align-items: center;
+          padding: 0;
+          column-gap: 8px;
+          font-size: 14px;
+          line-height: 20px;
+          color: $dark-blue;
+
+          svg {
+            width: 10px;
+            height: 10px;
+          }
+        }
       }
 
       .nav-active {
@@ -90,37 +109,25 @@ header {
       top: 80px;
       z-index: 2;
       width: 100%;
-      overflow-y: scroll;
+      background-color: $white;
       transition: all 0.3s ease;
-
-      &:before {
-        content: '';
-        position: absolute;
-        background-color: $dark-blue;
-        width: 100%;
-        height: 60vh;
-        top: 0;
-        left: 0;
-      }
-
-      &:after {
-        content: '';
-        position: absolute;
-        background-image: url(/assets/dist/images/icons/chevron-vertical-dark-blue.svg);
-        background-size: cover;
-        width: 100%;
-        top: 59vh;
-        height: 110px;
-        left: 0;
-        background-repeat: no-repeat;
-        z-index: -1;
-      }
 
       &__menu {
         display: flex;
         flex-direction: column;
-        margin-top: 180px;
-        padding: 0 20px;
+        padding: 50px 0 24px;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 50px;
+          width: 100%;
+          background-color: $grey-11;
+        }
 
         li {
           display: flex;
@@ -128,22 +135,15 @@ header {
           justify-content: space-between;
           align-items: center;
 
-          @include media($medium) {
-            display: block;
-          }
-
-          &:before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            border-top: 1px solid rgba($white, 0.3);
-            width: 100%;
-          }
-
           a {
-            color: $white;
+            color: $blue;
             padding: 15px 10px;
+
+            @include media($max-tablet) {
+              padding: 15px 24px;
+              font-size: 14px;
+              line-height: 22px;
+            }
           }
 
           .no-link {
@@ -160,14 +160,11 @@ header {
             position: absolute;
             width: 32px;
             height: 32px;
-            border-radius: 100%;
-            border: 1px solid $white;
             top: 26px;
             right: 17px;
             transform: translateY(-50%);
             background-color: transparent;
             backface-visibility: hidden;
-            transition: border-color 0.3s ease;
 
             @include media($small) {
               right: 15px;
@@ -176,7 +173,7 @@ header {
             &:before,
             &:after {
               content: '';
-              background-color: $white;
+              background-color: $blue;
               position: absolute;
               top: 50%;
               left: 50%;
@@ -185,14 +182,39 @@ header {
             }
 
             &:before {
-              height: 16px;
-              width: 1px;
+              height: 10px;
+              width: 2px;
             }
 
             &:after {
-              width: 16px;
-              height: 1px;
+              width: 10px;
+              height: 2px;
             }
+          }
+        }
+
+        > li {
+          > a {
+            @include media($medium) {
+              display: flex;
+              align-items: center;
+              column-gap: 24px;
+            }
+          }
+        }
+
+        .menu-item-icon {
+          width: 20px;
+          height: 20px;
+          flex-shrink: 0;
+
+          svg {
+            width: 100%;
+            height: 100%;
+          }
+
+          @media (min-width: $min-tablet) {
+            display: none;
           }
         }
 
@@ -206,6 +228,10 @@ header {
             color: $blue;
           }
 
+          > a {
+            box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.14);
+          }
+
           .show-submenu {
             padding: 15px;
             background-color: $white;
@@ -215,7 +241,9 @@ header {
             &:after {
               background-color: $blue;
             }
+          }
 
+          > .show-submenu {
             &:before {
               transform: translate(-50%, -50%) rotate(90deg);
             }
@@ -227,7 +255,9 @@ header {
             flex-wrap: wrap;
 
             @include media($medium) {
-              padding: 30px 13px 10px;
+              padding: 0;
+              border-top: 1px solid $grey-8;
+              border-bottom: 1px solid $grey-8;
             }
 
             li {
@@ -243,11 +273,11 @@ header {
               a {
                 background: transparent;
                 padding: 10px;
-                color: $white;
+                color: $blue;
 
                 @include media($medium) {
-                  font-size: 0.9em;
-                  line-height: 1.3em;
+                  font-size: 14px;
+                  line-height: 22px;
                   padding: 0;
                 }
               }
@@ -277,25 +307,49 @@ header {
 
           @include media($medium) {
             width: 50%;
+            margin-bottom: 0;
           }
 
           @include media($small) {
             width: 100%;
+            padding-right: 0;
           }
 
           &__heading {
+            position: relative;
             display: block;
             font-size: 14px;
             line-height: 20px;
-            margin-bottom: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid $grey-8;
             font-weight: 600;
+            padding: 15px 24px;
+            color: $blue;
 
-            @include media($medium) {
-              color: $white;
-              font-size: 15px;
-              margin-bottom: 10px;
+            @media (min-width: $min-tablet) {
+              margin-bottom: 12px;
+              padding: 0 0 12px;
+              color: $text;
+              border-bottom: 1px solid $grey-8;
+
+              .show-submenu {
+                display: none;
+              }
+            }
+          }
+
+          > ul {
+            @media (max-width: $max-tablet) {
+              display: none;
+              padding: 16px 24px;
+              border-top: 1px solid $grey-8;
+              border-bottom: 1px solid $grey-8;
+              background-color: $grey-11;
+              flex-direction: column;
+
+              > li {
+                &:not(:last-child) {
+                  margin-bottom: 10px;
+                }
+              }
             }
           }
         }
@@ -314,14 +368,12 @@ header {
         }
 
         .header-top__content--links {
-          position: absolute;
-          left: 0;
-          top: 120px;
-          z-index: 4;
           display: flex;
-          width: calc(100% - 40px);
-          margin: 0 20px;
+          width: 100%;
+          padding: 16px;
           justify-content: space-between;
+          background-color: $grey-11;
+          order: -1;
 
           li {
             width: 100%;
@@ -387,13 +439,15 @@ header {
             position: static;
             display: flex;
             width: auto;
+            padding: 0;
             line-height: 14px;
+            background-color: transparent;
+            order: unset;
 
             li {
-              position: relative;
               display: flex;
               align-items: center;
-              column-gap: 4px;
+              position: relative;
               margin-left: 20px;
               color: $blue;
 
@@ -415,6 +469,9 @@ header {
               }
 
               a {
+                display: flex;
+                align-items: center;
+                column-gap: 4px;
                 background-color: transparent;
                 padding: 0;
                 color: inherit;
@@ -441,7 +498,6 @@ header {
         display: none;
         position: static;
         min-height: 0;
-        overflow-y: visible;
 
         &:before {
           content: none;
@@ -460,8 +516,14 @@ header {
           flex-wrap: wrap;
           max-width: $max-desktop;
           margin: auto;
+          padding: 0;
           background-color: $grey-11;
           border-radius: 16px;
+          overflow: visible;
+
+          &::before {
+            content: none;
+          }
 
           .submenu-open {
             a {
@@ -469,6 +531,11 @@ header {
               color: $text;
               background-color: transparent;
             }
+
+            > a {
+              box-shadow: none;
+            }
+
             .header-bottom__menu--submenu li a {
               padding: 0;
               color: $text;
@@ -496,15 +563,15 @@ header {
               }
             }
 
-            &:before {
-              content: none;
-            }
-
             a {
               position: relative;
               color: $blue;
               padding: 0;
               line-height: 22px;
+
+              @include media($max-tablet) {
+                font-size: 14px;
+              }
             }
           }
 
@@ -532,6 +599,7 @@ header {
             min-width: 659px;
             max-width: 659px;
             left: 0;
+            z-index: 1;
 
             &.-align-right {
               left: auto;
@@ -561,8 +629,8 @@ header {
               }
 
               a {
-                font-size: 0.9em;
-                line-height: 1.3em;
+                font-size: 14px;
+                line-height: 20px;
 
                 &:hover {
                   color: $blue;
@@ -635,23 +703,20 @@ header {
 
 .search-bar {
   width: 100%;
-  padding: 104px 0 24px;
-  position: absolute;
   display: flex;
-  margin: 0 20px;
-  left: 0;
-  width: calc(100% - 40px);
+  padding: 0 16px;
+  background-color: $grey-11;
+  order: -2;
 
   @media (min-width: $min-desktop) {
-    padding: 0;
     position: relative;
+    padding: 0;
+    background-color: transparent;
+    order: unset;
   }
 
   &__wrap {
-    position: absolute;
     display: flex;
-    top: 50px;
-    left: 0;
     width: 100%;
   }
 
@@ -672,12 +737,12 @@ header {
 
         border: none;
         background-color: transparent;
-        color: $white;
+        color: $text;
         padding: 8px 0 9px;
 
         &:focus {
           background-color: transparent;
-          color: $white;
+          color: $text;
         }
       }
     }
@@ -699,6 +764,12 @@ header {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    @media (max-width: $min-desktop) {
+      .close-site-search {
+        display: none;
+      }
     }
   }
 
