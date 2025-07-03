@@ -3,18 +3,27 @@
 
   &.-blue {
     fill: $blue;
+    color: $blue;
+  }
+
+  &.-dark-blue {
+    fill: $dark-blue;
+    color: $dark-blue;
   }
 
   &.-text-grey {
     fill: $text;
+    color: $text;
   }
 
   &.-white {
     fill: $white;
+    color: $white;
   }
 
   &.-teal {
     fill: $teal;
+    color: $teal;
   }
 }
 
@@ -78,4 +87,19 @@
 .icon-small-logo-boi {
   width: 56px;
   height: 71px;
+}
+
+.icon-padlock {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-search-alt {
+  width: 18px;
+  height: 18px;
+}
+
+.icon-cross-alt {
+  width: 14px;
+  height: 14px;
 }

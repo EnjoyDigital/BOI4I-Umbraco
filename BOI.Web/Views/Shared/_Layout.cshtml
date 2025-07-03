@@ -63,7 +63,7 @@
     <script type="text/javascript" src="/App_Plugins/UmbracoForms/Assets/themes/default/umbracoForms.js"></script>
     @Html.RenderUnobtrusiveAjaxScript()
     <div class="svg-sprite" style="display: none">
-        <partial name="SVG_Sprite" />
+        @Html.Partial("~/Views/Shared/SvgSprite.cshtml");
     </div>
 
 </body>
