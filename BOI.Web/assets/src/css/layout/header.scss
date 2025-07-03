@@ -306,11 +306,6 @@ header {
           margin-bottom: #{fluid(4, 12)};
 
           @include media($medium) {
-            width: 50%;
-            margin-bottom: 0;
-          }
-
-          @include media($small) {
             width: 100%;
             padding-right: 0;
           }
@@ -324,7 +319,7 @@ header {
             padding: 15px 24px;
             color: $blue;
 
-            @media (min-width: $min-tablet) {
+            @media (min-width: $min-desktop) {
               margin-bottom: 12px;
               padding: 0 0 12px;
               color: $text;
@@ -369,9 +364,10 @@ header {
 
         .header-top__content--links {
           display: flex;
+          justify-content: space-between;
+          gap: 8px;
           width: 100%;
           padding: 16px;
-          justify-content: space-between;
           background-color: $grey-11;
           order: -1;
 
@@ -379,17 +375,33 @@ header {
             width: 100%;
 
             a {
-              color: $white;
-              background-color: $navy-blue;
-              padding: 10px 35px;
-              border-bottom-right-radius: 25px;
-              border-top-left-radius: 25px;
-              width: 95%;
-              text-align: center;
+              width: 100%;
             }
 
             &:before {
               content: none;
+            }
+
+            &.header-top__content--links--contact {
+              @media (max-width: $max-tablet) {
+                display: none;
+              }
+            }
+
+            &.header-top__content--links--register {
+              @media (max-width: $max-tablet) {
+                a {
+                  @include button;
+                }
+              }
+            }
+
+            &.header-top__content--links--login {
+              @media (max-width: $max-tablet) {
+                a {
+                  @include button--secondary; 
+                }
+              }
             }
           }
 
@@ -438,6 +450,7 @@ header {
           &--links {
             position: static;
             display: flex;
+            column-gap: 20px;
             width: auto;
             padding: 0;
             line-height: 14px;
@@ -448,7 +461,6 @@ header {
               display: flex;
               align-items: center;
               position: relative;
-              margin-left: 20px;
               color: $blue;
 
               &:hover {
@@ -471,6 +483,7 @@ header {
               a {
                 display: flex;
                 align-items: center;
+                flex-direction: row-reverse;
                 column-gap: 4px;
                 background-color: transparent;
                 padding: 0;

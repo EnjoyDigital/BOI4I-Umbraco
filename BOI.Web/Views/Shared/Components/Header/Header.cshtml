@@ -23,20 +23,26 @@
                 <ul class="header-top__content--links">
                     @if (Model.SiteRoot.ContactUsLink != null)
                     {
-                        <li><a href="@Model.SiteRoot.ContactUsLink.Url" target="@Model.SiteRoot.ContactUsLink.Target">@Model.SiteRoot.ContactUsLink.Name</a></li>
+                        <li class="header-top__content--links--contact">
+                            <a href="@Model.SiteRoot.ContactUsLink.Url" target="@Model.SiteRoot.ContactUsLink.Target">
+                                <span>@Model.SiteRoot.ContactUsLink.Name</span>
+                            </a>
+                        </li>
                     }
                     @if (Model.SiteRoot.RegisterLink != null)
                     {
-                        <li><a href="@Model.SiteRoot.RegisterLink.Url" target="@Model.SiteRoot.RegisterLink.Target">@Model.SiteRoot.RegisterLink.Name</a></li>
+                        <li class="header-top__content--links--register">
+                            <a href="@Model.SiteRoot.RegisterLink.Url" target="@Model.SiteRoot.RegisterLink.Target"><span>@Model.SiteRoot.RegisterLink.Name</span></a>
+                        </li>
                     }
                     @if (Model.SiteRoot.LoginLink != null)
                     {
-                        <li>
+                        <li class="header-top__content--links--login">
                             <a href="@Model.SiteRoot.LoginLink.Url" target="@Model.SiteRoot.LoginLink.Target">
-                                @Model.SiteRoot.LoginLink.Name
                                 <svg class="[ icon icon-padlock -blue ]" aria-hidden="true">
                                     <use xlink:href="#sprite-icon-padlock"></use>
                                 </svg>
+                                <span>@Model.SiteRoot.LoginLink.Name</span>
                             </a>
                         </li>
                     }

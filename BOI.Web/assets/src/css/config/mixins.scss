@@ -206,3 +206,127 @@
     }
   }
 }
+
+@mixin button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 50px;
+  padding: 0 30px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: $white;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &::before {
+    top: 0;
+    height: 45px;
+    background-color: $blue;
+    border-radius: 8px;
+    z-index: 1;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+  }
+
+  &::after {
+    bottom: 0;
+    height: 10px;
+    background-color: $dark-blue;
+    border-radius: 0 0 8px 8px;
+  }
+
+  > * {
+    position: relative;
+    top: -2px;
+    z-index: 1;
+    transition: transform 0.15s ease;
+  }
+
+  .icon {
+    color: $white;
+    fill: $white;
+    transition: transform 0.15s ease, color 0.15s ease, fill 0.15s ease;
+  }
+
+  &:hover {
+    &:not(.disabled),
+    &:not([disabled]) {
+      color: $grey-11;
+
+      &::before {
+        background-color: $blue-2;
+        transform: translateY(1px);
+      }
+
+      > * {
+        transform: translateY(1px);
+        color: $grey-11;
+      }
+
+      .icon {
+        fill: $grey-11;
+      }
+    }
+  }
+}
+
+@mixin button--secondary {
+  @include button;
+
+  color: $blue;
+
+  &::before {
+    height: 47px;
+    background-color: $white;
+    border: 2px solid $blue;
+    transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  }
+  
+  &::after {
+    background-color: $blue;
+  }
+
+  .icon {
+    color: $blue;
+    fill: $blue;
+  }
+
+  &:hover {
+    &:not(.disabled),
+    &:not([disabled]) {
+      color: $blue-2;
+
+      &::before {
+        background-color: $grey-11;
+        border-color: $blue-2;
+      }
+
+      &::after {
+        background-color: $blue-2;
+      }
+
+      > * {
+        transform: translateY(1px);
+        color: $blue-2;
+      }
+
+      .icon {
+        fill: $blue-2;
+      }
+    }
+  }
+}
