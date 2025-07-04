@@ -263,8 +263,7 @@
   }
 
   &:hover {
-    &:not(.disabled),
-    &:not([disabled]) {
+    &:not(.disabled):not([disabled]) {
       color: $grey-11;
 
       &::before {
@@ -281,6 +280,13 @@
         fill: $grey-11;
       }
     }
+  }
+
+  &.disabled,
+  &[disabled],
+  &[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 
@@ -306,8 +312,7 @@
   }
 
   &:hover {
-    &:not(.disabled),
-    &:not([disabled]) {
+    &:not(.disabled):not([disabled]) {
       color: $blue-2;
 
       &::before {

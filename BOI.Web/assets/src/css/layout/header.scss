@@ -900,27 +900,14 @@ header {
       }
     }
 
-    .header-top {
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
-    }
-
     .header-bottom {
       padding: 25px 0 0;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
       transition: all 0.3s ease;
 
       &__menu {
-        li {
-          padding-bottom: 15px;
-
-          &:after {
-            bottom: 9px;
-          }
-
-          .submenu-item {
-            padding-bottom: 0;
-          }
-        }
+        margin-top: 14px;
+        margin-bottom: 16px;
       }
 
       &__menu--submenu {
@@ -936,18 +923,9 @@ header {
     }
   }
 
-  .search-bar {
-    padding: 10px 0 10px;
+  .site-search {
+    padding-top: 38px;
+    padding-bottom: 17px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
-    transition: all 0.3s ease;
-    background-color: $grey;
-    position: absolute;
-    width: 100%;
-    top: 0;
-    margin: 0;
-  }
-
-  .autocomplete-suggestions {
-    top: 55px;
   }
 }

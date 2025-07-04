@@ -105,39 +105,39 @@
             {
                 if (!Model.IsFirstPage)
                 {
-                    <input class="button"
+                    <button class="button"
                            type="submit"
                            value="@Model.PreviousCaption"
                            name="__prev"
                            formnovalidate
-                           data-umb="prev-forms-form" />
+                           data-umb="prev-forms-form"><span>@Model.PreviousCaption</span></button>
                 }
 
                 if (!Model.IsLastPage)
                 {
-                    <input type="submit"
+                    <button type="submit"
                            class="button"
                            value="@Model.NextCaption"
                            name="__next"
-                           data-umb="next-forms-form" />
+                           data-umb="next-forms-form"><span>@Model.NextCaption</span></button>
                 }
 
                 if (Model.IsLastPage)
                 {
-                    <input type="submit"
+                    <button type="submit"
                            class="button"
                            value="@Model.SubmitCaption"
                            name="__next"
-                           data-umb="submit-forms-form" />
+                           data-umb="submit-forms-form"><span>@Model.SubmitCaption</span></button>
                 }
             }
             else
             {
-                <input type="submit"
+                <button type="submit"
                        class="button"
                        value="@Model.SubmitCaption"
                        name="__next"
-                       data-umb="submit-forms-form" />
+                       data-umb="submit-forms-form"><span>@Model.SubmitCaption</span></button>
             }
         </div>
     </div>
