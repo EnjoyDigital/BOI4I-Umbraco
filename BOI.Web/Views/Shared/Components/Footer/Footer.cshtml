@@ -7,17 +7,15 @@
 
 <footer>
     <div class="footer-container">
+        <a href='/' class='footer-logo-link'>
+            <img src="~/assets/dist/images/main-logo-boi-footer.svg" alt="Bank of Ireland for Intermediaries">
+        </a>
         <div class="footer-top">
-            <div class="footer-top__col">
-                <a href='/' class='footer-logo-link'>
-                    <img src="~/assets/dist/images/main-logo-boi-footer.svg" alt="Bank of Ireland for Intermediaries">
-                </a>
-            </div>
             @if (Model.SiteRoot.Column1HeadingLink != null)
             {
                 <div class="footer-top__col">
                     <ul>
-                        <li class="blue-subheader">
+                        <li class="subheader">
                             <h2>
                                 @if (string.Equals(Model.SiteRoot.Column1HeadingLink.Url, "#", StringComparison.InvariantCultureIgnoreCase))
                                 {
@@ -31,6 +29,7 @@
                                         @(Model.SiteRoot.Column1HeadingLink != null ? Model.SiteRoot.Column1HeadingLink.Name : "")
                                     </a>
                                 }
+                                <div class="show-submenu"></div>
                             </h2>
                         </li>
                         @foreach (var footerItem in Model.SiteRoot.Column1Links)
@@ -44,7 +43,7 @@
             {
                 <div class="footer-top__col">
                     <ul>
-                        <li class="blue-subheader">
+                        <li class="subheader">
                             <h2>
                                 @if (string.Equals(Model.SiteRoot.Column2HeadingLink.Url, "#", StringComparison.InvariantCultureIgnoreCase))
                                 {
@@ -58,6 +57,7 @@
                                         @(Model.SiteRoot.Column2HeadingLink != null ? Model.SiteRoot.Column2HeadingLink.Name : "")
                                     </a>
                                 }
+                                <div class="show-submenu"></div>
                             </h2>
                         </li>
                         @foreach (var footerItem in Model.SiteRoot.Column2Links)
@@ -71,7 +71,7 @@
             {
                 <div class="footer-top__col">
                     <ul>
-                        <li class="blue-subheader">
+                        <li class="subheader">
                             <h2>
                                 @if (string.Equals(Model.SiteRoot.Column3HeadingLink.Url, "#", StringComparison.InvariantCultureIgnoreCase))
                                 {
@@ -85,6 +85,7 @@
                                         @(Model.SiteRoot.Column3HeadingLink != null ? Model.SiteRoot.Column3HeadingLink.Name : "")
                                     </a>
                                 }
+                                <div class="show-submenu"></div>
                             </h2>
                         </li>
                         @foreach (var footerItem in Model.SiteRoot.Column3Links)
@@ -98,7 +99,7 @@
             {
                 <div class="footer-top__col">
                     <ul>
-                        <li class="blue-subheader">
+                        <li class="subheader">
                             <h2>
                                 @if (string.Equals(Model.SiteRoot.Column4HeadingLink.Url, "#", StringComparison.InvariantCultureIgnoreCase))
                                 {
@@ -112,6 +113,7 @@
                                         @(Model.SiteRoot.Column4HeadingLink != null ? Model.SiteRoot.Column4HeadingLink.Name : "")
                                     </a>
                                 }
+                                <div class="show-submenu"></div>
                             </h2>
                         </li>
                         @foreach (var footerItem in Model.SiteRoot.Column4Links)
@@ -121,37 +123,52 @@
                     </ul>
                 </div>
             }
+
+            @if (Model.SiteRoot.LinkedInLink != null)
+            {
+                <div class="footer-top__col">
+                    <ul>
+                        <li class="subheader">
+                            <h2>
+                                @* TODO: Possibly allow this to be CMS managed? *@
+                                <span>Connect</span>
+                            </h2>
+                        </li>
+                    </ul>
+                    <a href="@Model.SiteRoot.LinkedInLink.Url" target="@Model.SiteRoot.LinkedInLink.Target" title="LinkedIn" class="social">
+                        <svg class="[ icon icon-linkedin ]" aria-hidden="true">
+                            <use xlink:href="#sprite-linkedin-icon"></use>
+                        </svg>
+                        LinkedIn
+                    </a>
+                </div>
+            }
         </div>
 
         <div class="footer-bottom">
             <div class="footer-bottom__text">
-                <div class="flex-container">
-                    <div class="left-content">
-                        <p class="blue-subheader"><img alt='Alert Icon' src="~/assets/dist/images/icons/icon-alert.svg">Intermediary use only</p>
-                    </div>
-                    <div class="right-content">
+                <p class="use-only">
+                    <svg class="[ icon icon-alert-adaptable ]" aria-hidden="true">
+                        <use xlink:href="#sprite-icon-alert-adaptable"></use>
+                    </svg>
+                    Intermediary use only
+                </p>
+            </div>
 
-                        @if (Model.SiteRoot.LinkedInLink != null)
-                        {
-                            <a href="@Model.SiteRoot.LinkedInLink.Url" target="@Model.SiteRoot.LinkedInLink.Target" title="LinkedIn">
-                                <svg class="[ icon linkedin ]" aria-hidden="true">
-                                    <use xlink:href="#sprite-linkedin"></use>
-                                </svg>
-                            </a>
-                        }
-                    </div>
-                </div>
-
+            <div class="footer-bottom__text">
                 @Html.Raw(Model.SiteRoot.FooterText)
             </div>
 
             <ul class="footer-bottom__links">
-                <li class="footer-bottom__links--bold">&copy; <a href="@(Model.SiteRoot.CopyrightLink != null ? Model.SiteRoot.CopyrightLink.Url : "")">@currentYear Bank of Ireland</a></li>
                 @foreach (var link in Model.SiteRoot.BottomLinks)
                 {
                     <li><a href="@link.Url">@link.Name</a></li>
                 }
             </ul>
+
+            <div class="footer-copyright">
+                <p>&copy; <a href="@(Model.SiteRoot.CopyrightLink != null ? Model.SiteRoot.CopyrightLink.Url : "")">@currentYear Bank of Ireland</a></p>
+            </div>
         </div>
     </div>
 </footer>
