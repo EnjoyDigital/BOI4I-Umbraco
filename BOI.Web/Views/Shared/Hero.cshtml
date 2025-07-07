@@ -2,7 +2,6 @@
 @inherits UmbracoViewPage<IHeroMixin>
 
 @{
-    var backgroundColourClass = (Model.BackgroundColour?.Label != "BOI Blue" ? "-bg-teal" : "");
     var Root = Model.AncestorOrSelf<SiteRoot>();
     var heroPods = (Model.HeroPodPicker == null ? Root.GlobalHeroPodPicker : Model.HeroPodPicker);
     var bdmCta = (Model.BDmfinderCta != null ? Model.BDmfinderCta : Root.GlobalBdmcta);
@@ -10,63 +9,62 @@
     var bdmPod = false;
 }
 
-<section class="hero-area @backgroundColourClass @(Model.BackgroundImage == null ?  "-no-bg-image" : "")">
-    @if (Model.BackgroundImage != null)
-    {
-        Context.ResponsiveBackground(Model.BackgroundImage, new { desktop = "HeroAreaDesktop", tablet = "HeroAreaTablet", mobile = "HeroAreaMobile" }, ".hero-area__bg-image");
-    }
-    <div class="hero-area__bg-image"></div>
+<section class="hero-area">
+    <div class="hero-area__copy">
+        <h1>@(Model.Title.IsNullOrWhiteSpace() ? "" : Model.Title)</h1>
+        <p>@Model.SupportingText</p>
 
-    <div class="hero-area-inner">
-        <div class="hero-area__copy">
-            <h1>@(Model.Title.IsNullOrWhiteSpace() ? "" : Model.Title)</h1>
-            <p class="h5">@Model.SupportingText</p>
-            @if (Model.CTA != null)
+        @* July 2025: No CTA in new designs *@
+        @*
+        @if (Model.CTA != null)
+        {
+            <a href="@Model.CTA.Url" class="button @(backgroundColourClass != "-bg-teal" ? "-white-outline" : "")" target="@Model.CTA.Target">
+                <span>@Model.CTA.Name</span>
+            </a>
+        }
+        *@
+    </div>
+
+    <div class="hero-area__additional">
+
+        @if (heroPods != null)
+        {
+            string viewPath = "~/Views/Partials/";
+            foreach (var pod in heroPods)
             {
-                <a href="@Model.CTA.Url" class="button @(backgroundColourClass != "-bg-teal" ? "-white-outline" : "")" target="@Model.CTA.Target">
-                    <span>@Model.CTA.Name</span>
-                </a>
-            }
-        </div>
-
-        <div class="hero-area__additional">
-
-            @if (heroPods != null)
-            {
-                string viewPath = "~/Views/Partials/";
-                foreach (var pod in heroPods)
+                switch (pod.ContentType.Alias)
                 {
-                    switch (pod.ContentType.Alias)
-                    {
-                        case BDmpodAction.ModelTypeAlias:
-                            bdmPod = true;
-                            var podAlias = pod.ContentType.Alias.TrimEnd("Action");
-                            viewPath = string.Concat(viewPath, "Pods/");
-                            @await Component.InvokeAsync("PodsView", new { publishedContent = pod, isHeroPod = true })
-                            break;
-                        default:
-                            <partial name="partials/pods/@pod.ContentType.Alias" model="pod" />
-                            break;
-                    }
+                    case BDmpodAction.ModelTypeAlias:
+                        bdmPod = true;
+                        var podAlias = pod.ContentType.Alias.TrimEnd("Action");
+                        viewPath = string.Concat(viewPath, "Pods/");
+                        @await Component.InvokeAsync("PodsView", new { publishedContent = pod, isHeroPod = true })
+                        break;
+                    default:
+                        <partial name="partials/pods/@pod.ContentType.Alias" model="pod" />
+                        break;
                 }
             }
+        }
 
-            @if (!Model.HideBdmfinder && !bdmPod)
-            {
-                <a href="@bdmCta.Url" class="button -block -no-radius -teal">
-                    <svg class="[ icon icon-search -black ]" aria-hidden="true">
-                        <use xlink:href="#sprite-icon-search"></use>
-                    </svg>
-                    <span>@bdmCta.Name</span>
-                </a>
-            }
+        @* July 2025: No BdmFinder or Product CTAs in new designs *@
+        @*
+        @if (!Model.HideBdmfinder && !bdmPod)
+        {
+            <a href="@bdmCta.Url" class="button -block -no-radius -teal">
+                <svg class="[ icon icon-search -black ]" aria-hidden="true">
+                    <use xlink:href="#sprite-icon-search"></use>
+                </svg>
+                <span>@bdmCta.Name</span>
+            </a>
+        }
 
-            @if (!Model.HideProductCta)
-            {
-                <a href="@productCta.Url" class="button -block -no-radius">
-                    <span>@productCta.Name</span>
-                </a>
-            }
-        </div>
+        @if (!Model.HideProductCta)
+        {
+            <a href="@productCta.Url" class="button -block -no-radius">
+                <span>@productCta.Name</span>
+            </a>
+        }
+        *@
     </div>
 </section>
