@@ -3,12 +3,12 @@
 @model BOI.Core.Search.Models.Page<IPagedResult>
 <div class="pagination">
     <ul>
-        @if (!Model.IsFirstPage)
-        {
-            <li><a href="@Html.SetQueryString(ViewContext.HttpContext,BaseQueryAliases.Page, 1)" class="pagination-button pagination-button--start">Go to first page</a></li>
-            <li><a href="@Html.SetQueryString(ViewContext.HttpContext,BaseQueryAliases.Page, Model.CurrentPage - 1)" class="pagination-button pagination-button--prev">Go to previous page</a></li>
-        }
+        @* July 2025: New designs have removed "go to first page". Previous always present but disabled when on first page *@
+        @*
+        <li><a href="@Html.SetQueryString(ViewContext.HttpContext,BaseQueryAliases.Page, 1)" class="pagination-button pagination-button--start">Go to first page</a></li>
+        *@
 
+        <li><a href="@Html.SetQueryString(ViewContext.HttpContext,BaseQueryAliases.Page, Model.CurrentPage - 1)" class="pagination-button pagination-button--prev @(Model.IsFirstPage ? "disabled" : "")" disabled="@(Model.IsFirstPage ? "disabled" : null)">Go to previous page</a></li>
 
         @{
             if (Model.HasPages)
@@ -95,10 +95,11 @@
             }
         } *@
 
-        @if (!Model.IsLastPage)
-        {
-            <li><a href="@Html.SetQueryString(ViewContext.HttpContext,BaseQueryAliases.Page, Model.CurrentPage + 1)" class="pagination-button pagination-button--next">Go to next page</a></li>
-            <li><a href="@Html.SetQueryString(ViewContext.HttpContext,BaseQueryAliases.Page, Model.PageCount)"  class="pagination-button pagination-button--end">Go to last page</a></li>
-        }
+        @* July 2025: New designs have removed "go to last page". Previous always present but disabled when on last page *@
+        @*
+        <li><a href="@Html.SetQueryString(ViewContext.HttpContext,BaseQueryAliases.Page, Model.PageCount)"  class="pagination-button pagination-button--end">Go to last page</a></li>
+        *@
+        
+        <li><a href="@Html.SetQueryString(ViewContext.HttpContext,BaseQueryAliases.Page, Model.CurrentPage + 1)" class="pagination-button pagination-button--next @(Model.IsLastPage ? "disabled" : "")" disabled="@(Model.IsLastPage ? "disabled" : null)">Go to next page</a></li>
     </ul>
 </div>

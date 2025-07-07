@@ -78,7 +78,8 @@ h2, h3, h4, h5, h6,
 }
 
 h1, .h1 {
-  @include font-size(32);
+  font-size: #{fluid(40, 56)};
+  line-height: #{fluid(52, 68)};
   margin-bottom: 1.5rem;
 
   &:not(.sans) {
@@ -86,7 +87,8 @@ h1, .h1 {
   }
 
   &.sans {
-    @include font-size(26);
+    font-size: #{fluid(26, 34)};
+    line-height: #{fluid(38, 46)};
     font-weight: 600;
   }
 }
@@ -118,14 +120,6 @@ h5, .h5 {
 }
 
 @media(min-width: $max-tablet) {
-  h1, .h1 {
-    @include font-size(40);
-
-    &.sans {
-      @include font-size(34);
-    }
-  }
-
   h2, .h2 {
     @include font-size(30);
   }

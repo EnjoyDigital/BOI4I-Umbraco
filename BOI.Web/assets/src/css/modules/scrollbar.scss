@@ -1,4 +1,6 @@
 .scroll-bar {
+    position: relative;
+    z-index: 1;
     background-color: $dark-blue;
     padding: 10px 20px;
     height: 185px;

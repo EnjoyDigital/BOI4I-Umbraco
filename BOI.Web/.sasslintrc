@@ -31,3 +31,5 @@ rules:
         - row-gap
         - column-gap
         - aspect-ratio
+        - text-underline-offset
+        - text-decoration-thickness
