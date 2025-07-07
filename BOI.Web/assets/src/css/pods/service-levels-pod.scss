@@ -1,54 +1,27 @@
 .service-levels-pod {
-  background-color: $blue;
-  padding: 40px 30px 30px;
-  color: $white;
-  text-align: center;
-
-  @include media($medium) {
-    padding: 30px 20px 24px;
-  }
+  background-color: $white;
+  padding: #{fluid(24, 40)} #{fluid(24, 32)};
 
   h2 {
-      color: $white;
+    color: $text-dark;
+    margin-bottom: 8px;
   }
 
-  p {
-    @include font-size(13);
-    margin-top: 10px;
-    margin-bottom: 1.5rem;
+  .rich-text .child-page-block-item__inner-list,
+  .child-page-block-item__inner-list {
+    column-gap: 16px;
+    margin-bottom: 32px;
   }
 
-  .hero-area-quick-links__list {
-    li {
-      padding: 15px 8px;
-      text-align: left;
-      font-weight: 700;
-      border-bottom: 1px solid rgba($white,0.3);
-
-      &:first-child {
-        border-top: 1px solid rgba($white,0.3);
-      }
-    }
-  }
-
-  .hero-area-quick-links__list-icon-wrap {
-    width: 50px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    margin-right: 20px;
-
-    img {
-      max-height: 42px;
-    }
+  .child-page-block-item__inner-list-icon {
+    width: 48px;
+    height: 48px;
   }
 
   > a {
-    @include link-style-fill-bar();
-    display: inline-block;
-    margin-top: 24px;
+    @include simple-link-style();
+    color: $blue;
     font-weight: 600;
-    color: $white;
   }
 }
 
@@ -63,9 +36,8 @@
   display: flex;
   align-items: center;
   margin-top: 5px;
-  font-weight: bold;
-  color: $white;
-  opacity: 0.75;
+  color: $text;
+  font-weight: normal;
 
   .icon {
     margin-right: 5px;

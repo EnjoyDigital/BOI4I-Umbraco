@@ -6,7 +6,7 @@
     width: 100%;
     flex-shrink: 0;
 
-    @include media-min($small-medium) {
+    @include media-min($max-tablet) {
         flex: 1;
         width: 60%;
     }
@@ -23,7 +23,7 @@
         .bdm-finder-form-inner {
             flex-direction: column;
 
-            @include media-min($small-medium) {
+            @include media-min($max-tablet) {
                 align-items: baseline;
             }
 
@@ -37,7 +37,7 @@
                 align-items: baseline;
                 flex-direction: column;
 
-                @include media-min($small-medium) {
+                @include media-min($max-tablet) {
                     margin-bottom: 16px;
                     width: 100%;
                 }
@@ -59,7 +59,7 @@
                 }
 
                 .-search-term {
-                    @include media-min($small-medium) {
+                    @include media-min($max-tablet) {
                         width: 100%;
                     }
                 }
@@ -80,7 +80,7 @@
 .bdm-finder-icon-wrap {
     display: none;
 
-    @include media-min($small-medium) {
+    @include media-min($max-tablet) {
         flex: 1;
         width: 40%;
         display: block;

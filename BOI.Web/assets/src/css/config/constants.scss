@@ -10,8 +10,8 @@ $max-width: (1170 + $margin * 2);
 
 $tiny: 420px;
 $small: 568px;
+$small-med: 640px;
 $medium: 768px;
-$small-medium: 767px;
 $med-large: 860px;
 $large: 980px;
 $large-huge: 1023px;
@@ -34,7 +34,8 @@ $max-mobile-nav: 768px; // you can use this if your mobile nav will look complet
 $white: #fff;
 $black: #000;
 
-$text: #353535;
+$text: #666666;
+$text-dark: #333333;
 
 $blue: #0000ff;
 $blue-2: #0000C2;
@@ -74,6 +75,7 @@ $silver: #c0c0c0;
 //
 $BankofIreland-Regular: 'BankofIrelandSerif-Regular', serif;
 $BankofIreland-Bold: 'BankofIrelandSerif-Bold', serif;
+$OpenSans: 'Open Sans', sans-serif; 
 
 :root {
   --sectionPaddingX: 16px;

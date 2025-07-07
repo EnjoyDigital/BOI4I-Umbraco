@@ -39,6 +39,7 @@
   gap: #{fluid(16, 32)};
   list-style: none;
   margin-top: 32px;
+  margin-bottom: 0;
   padding-bottom: 80px;
 
   @media (min-width: $min-tablet) {
@@ -86,6 +87,7 @@
     flex-shrink: 0;
     width: 80px;
     height: 80px;
+    margin: 0;
   }
 
   img {
