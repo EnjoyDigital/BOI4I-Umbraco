@@ -45,11 +45,11 @@
     .footer-top {
         display: grid;
         grid-template-columns: auto;
-        gap: #{fluid(16, 32)};
         margin-top: 32px;
 
         @media (min-width: $min-tablet) {
             grid-template-columns: repeat(9, 1fr);
+            gap: #{fluid(16, 32)};
         }
 
         @media (min-width: #{$small-desktop + 1px}) {
@@ -65,8 +65,18 @@
                 grid-column: span 2;
             }
 
-            ul {
+            @media (max-width: $max-mobile) {
+                padding-top: 10px;
+                padding-bottom: 4px;
+                border-top: 1px solid $grey-8;
 
+                &:last-child {
+                    padding-bottom: 10px;
+                    border-bottom: 1px solid $grey-8;
+                }
+            }
+
+            ul {
                 li {
                     font-weight: 600;
 
@@ -79,9 +89,19 @@
                         color: $blue;
                     }
 
+                    @media (min-width: $min-tablet) {
+                        &:not(.subheader) {
+                            display: block !important; // override inline js
+                        }
+                    }
+
                     @media (max-width: $max-mobile) {
                         &:not(.subheader) {
                             display: none;
+                        }
+
+                        &:last-child {
+                            margin-bottom: 10px;
                         }
                     }
                 }
@@ -116,6 +136,10 @@
                         background-color: transparent;
                         backface-visibility: hidden;
 
+                        @media (min-width: $min-tablet) {
+                            display: none;
+                        }
+
                         &:before,
                         &:after {
                             content: '';
@@ -135,6 +159,14 @@
                         &:after {
                             width: 10px;
                             height: 2px;
+                        }
+                    }
+
+                    &.active {
+                        .show-submenu {
+                            &:before {
+                                transform: translate(-50%, -50%) rotate(90deg);
+                            }
                         }
                     }
                 }

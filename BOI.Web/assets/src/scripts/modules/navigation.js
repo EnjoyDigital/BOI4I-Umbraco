@@ -10,7 +10,7 @@ export default function Navigation() {
     var $searchBox = document.querySelector('.search-bar');
     var $searchClose = document.querySelector('.js-close-site-search');
     var $headerBottom = document.querySelector('.header-bottom__menu');
-    var $mobileSubmenu = document.querySelectorAll('.show-submenu');
+    var $mobileSubmenu = document.querySelectorAll('header .show-submenu');
     var $mobileMenu = document.querySelectorAll('.header-bottom__menu--menu');
     if ($button) {
         $button.addEventListener('click', function() {
