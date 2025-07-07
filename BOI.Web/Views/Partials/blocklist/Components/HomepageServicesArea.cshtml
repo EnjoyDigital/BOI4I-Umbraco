@@ -1,15 +1,31 @@
 ﻿@inherits UmbracoViewPage<HomepageServicesArea>
-<div>
-@Model?.Title.SurroundWith("<h2>", "</h2>")
-@foreach(var service in Model?.ServiceItems?.Select(x => ( x.Content as ServiceAreaItem) )  )
-{
-    <div class="homepage-service">
-        @if (service.Icon != null)
-        {
-            <img src="@service.Icon.Url()" alt="@service.Icon.GetImageAlternativeText()" class="homepage-service__icon" />
-        }
-        <h3 class="homepage-service__title">@service.Title</h3>
-        @Html.Raw(service.Text)
+
+<section class="homepage-service">
+    <div class="homepage-service-inner">
+        @Model?.Title.SurroundWith("<h2 class=\"homepage-service-title\">", "</h2>")
+
+        @* TODO: Add in missing summary field. *@
+        <div class="homepage-service-summary">
+            <p>We offer great service and have the right people, products and 
+            systems to support you.</p>
+        </div>
+
+        <div class="homepage-service-grid">
+            @foreach(var service in Model?.ServiceItems?.Select(x => ( x.Content as ServiceAreaItem) )  )
+            {
+                <div class="homepage-service-item">
+                    @if (service.Icon != null)
+                    {
+                        <div class="homepage-service-item__icon">
+                            <img src="@service.Icon.Url()" alt="@service.Icon.GetImageAlternativeText()" class="homepage-service__icon" />
+                        </div>
+                    }
+                    <div class="homepage-service-item__content">
+                        <h3 class="homepage-service-item__content-title">@service.Title</h3>
+                        @Html.Raw(service.Text)
+                    </div>
+                </div>
+            }
+        </div>
     </div>
-}
-</div>
+</section>
