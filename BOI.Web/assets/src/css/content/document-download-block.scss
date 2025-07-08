@@ -113,8 +113,6 @@
 .pod-group {
   .document-download-block {
     display: block;
-    padding: 40px 30px 0;
-    background-color: $white;
 
     + .document-download-block {
       margin-top: 0;
@@ -130,20 +128,19 @@
     width: 100%;
     display: flex;
     align-items: center;
+    column-gap: 4px;
     text-align: left;
-    padding: 13px 15px;
+    padding: 8px 0;
     margin: 0;
+    background-color: transparent;
     border: none;
-    border-top: 1px solid $teal;
-    border-bottom: 1px solid $teal;
-    margin-bottom: -1px;
+    color: $blue;
 
     &:first-child {
       margin-top: 0;
     }
 
     .icon {
-      margin-right: 20px;
       flex-shrink: 0;
     }
 
@@ -153,17 +150,12 @@
     }
 
     .icon-pdf-document-icon {
-      fill: $text;
-      width: 22px;
-      height: 29px;
+      width: 24px;
+      height: 24px;
     }
 
     > span {
-      @include link-style();
-
-      &:after {
-        background-color: $blue;
-      }
+      @include simple-link-style();
     }
 
     p {
@@ -171,28 +163,22 @@
     }
 
     &:hover {
-      background-color: $white;
-      border-color: $teal;
-
-      .document-download-block-item__title {
-        color: inherit;
-      }
-
-      .icon {
-        fill: inherit;
-      }
+      background-color: transparent;
+      color: $blue;
 
       > span {
-        &:after {
-          transform: scaleX(1);
-        }
+        text-decoration-color: transparent;
+      }
+
+      .document-download-block-item__title {
+        color: $blue;
       }
     }
   }
 
   .document-download-block-item__title {
     margin: 0;
-    font-weight: 400;
+    font-weight: 600;
   }
 
   .document-download-cta-block__title {

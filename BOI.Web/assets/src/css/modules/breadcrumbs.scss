@@ -1,9 +1,14 @@
 .breadcrumbs {
+  background-color: $white;
+}
+
+.breadcrumbs-inner {
   position: relative;
   width: 100%;
   max-width: $mega;
   margin: 0 auto;
   padding: 16px 10px;
+  background-color: $white;
 
   @include media($max-desktop) {
     padding: 10px 20px 0;
