@@ -81,7 +81,7 @@
     @include media($small) {
       display: block;
       width: 100%;
-      padding: 15px 15px 15px calc(37% + 15px);
+      padding: 8px 16px 8px calc(37% + 16px);
       text-align: left;
 
       &:before {
@@ -90,9 +90,8 @@
         left: 0;
         top: 0;
         max-width: 37%;
-        padding: 15px;
+        padding: 8px 16px;
         font-weight: 600;
-        color: $white;
         z-index: 1;
       }
 
@@ -106,7 +105,7 @@
     }
 
     @include media($tiny) {
-      padding: 15px 15px 15px 155px;
+      padding: 8px 16px 8px 156px;
 
       &:before,
       &:after {
@@ -128,15 +127,28 @@
         display: block;
 
         &:not(:last-child) {
-          margin-bottom: 20px;
+          padding-bottom: 32px;
         }
-      }
 
-      @include media($small) {
-        &:first-child {
-          td {
-            &:first-child {
-              border-top: 1px solid $grey;
+        td {
+          &:nth-child(odd) {
+            background-color: $white;
+          }
+
+          &:nth-child(even) {
+            background-color: $grey-11;
+          }
+
+          &:first-child,
+          &:last-child {
+            border-bottom: 2px solid $grey-8;
+          }
+
+          &:first-child {
+            padding-top: 16px;
+
+            &::before {
+              padding-top: 16px;
             }
           }
         }
@@ -196,7 +208,6 @@
   @include media($small) {
     flex-direction: column-reverse;
     text-align: left;
-    margin-bottom: 16px;
   }
 }
 
@@ -215,7 +226,7 @@
   text-decoration: none;
 
   @include media($small) {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 
   > span {

@@ -170,9 +170,11 @@ table {
         }
       }
 
-      &:last-child {
-        td {
-          border-bottom: 2px solid $grey-8;
+      @include media-min($max-mobile) {
+        &:last-child {
+          td {
+            border-bottom: 2px solid $grey-8;
+          }
         }
       }
     }
