@@ -42,7 +42,8 @@ h5 {
 
 p,li {
   a {
-    @include link-style-fill-bar(rgba($blue,0.3), $blue);
+    // @include link-style-fill-bar(rgba($blue,0.3), $blue);
+    @include simple-link-style();
     color: $blue;
   }
 }

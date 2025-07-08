@@ -28,6 +28,12 @@
     max-width: 672px;
     margin: 0 auto;
     color: $grey-12;
+
+    a {
+      @include simple-link-style();
+      color: $blue;
+      font-weight: 600;
+    }
   }
 }
 
