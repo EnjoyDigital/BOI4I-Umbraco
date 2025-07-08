@@ -12,8 +12,8 @@
                     <caption class="product-table-caption">
                         <h3 class="product-table-caption__title">@groupedByLTVResult.Key</h3>
                         <a class="print-products js-print-products" href="" title="Click to print products">
-                            <svg class="[ icon icon-print -blue ]" aria-hidden="true">
-                                <use xlink:href="#sprite-icon-print"></use>
+                            <svg class="[ icon icon-print-alt -blue ]" aria-hidden="true">
+                                <use xlink:href="#sprite-icon-print-alt"></use>
                             </svg>
                             <span>Print products</span>
                         </a>
@@ -74,5 +74,106 @@ else
 {
     <div class="rich-text">
         <span class="h2 -blue-text">@Model.NoResultFoundMessage</span>
+
+        @* STATIC DEBUG ONLY *@
+        <table class="product-table">
+                    <caption class="product-table-caption">
+                        <h3 class="product-table-caption__title">60% LTV | Bespoke Fixed Rates</h3>
+                        <a class="print-products js-print-products" href="" title="Click to print products">
+                            <svg class="[ icon icon-print-alt -blue ]" aria-hidden="true">
+                                <use xlink:href="#sprite-icon-print-alt"></use>
+                            </svg>
+                            <span>Print products</span>
+                        </a>
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th class="term">Term</th>
+                            <th class="rate">Rate</th>
+                            <th class="description">Description</th>
+                            <th class="overall-cost">Overall cost of comparison</th>
+                            <th class="product-fee">Product Fee</th>
+                            <th class="features">Features</th>
+                            <th class="early-repayment-charge">Early Repayment Charges (% of the sum repaid)</th>
+                            <th class="code">Code</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                            <tr id="AHQN">
+                                <td data-name="Term">
+                                    2 years
+                                </td>
+                                <td data-name="Rate">4.42% Fixed</td>
+                                <td data-name="Description"> until 30/09/2027 followed by our Standard Variable Rate for the rest of the mortgage term. This is currently 7.44% variable</td>
+                                <td class="overall-cost" data-name="Overall cost of comparison">7.1% APRC</td>
+                                <td data-name="Product Fee">£1995</td>
+                                <td data-name="Features" class="features-text"><ul><li><span class="list-bullets">Standard Valuation Fee Paid by Lender</span></li><li><span class="list-bullets">Minimum Loan £150,000</span></li><li><span class="list-bullets">Maximum Loan £2,500,000</span></li><li><span class="list-bullets">Repayment Methods: Interest Only, Part &amp; Part, Capital Repayment</span></li></ul></td>
+                                <td class="early-repayment-charge" data-name="Early Repayment Charges (% of the sum repaid)">3% until 30/09/2026, then 2% until 30/09/2027</td>
+                                <td data-name="Code">AHQN</td>
+                            </tr>
+                            <tr id="AHQP">
+                                <td data-name="Term">
+                                    2 years
+                                </td>
+                                <td data-name="Rate">4.52% Fixed</td>
+                                <td data-name="Description"> until 30/09/2027 followed by our Standard Variable Rate for the rest of the mortgage term. This is currently 7.44% variable</td>
+                                <td class="overall-cost" data-name="Overall cost of comparison">7.0% APRC</td>
+                                <td data-name="Product Fee">£995</td>
+                                <td data-name="Features" class="features-text"><ul><li><span class="list-bullets">Standard Valuation Fee Paid by Lender</span></li><li><span class="list-bullets">Standard legal fees paid by Lender (for remortgages only)</span></li><li><span class="list-bullets">Minimum Loan £150,000</span></li><li><span class="list-bullets">Maximum Loan £2,500,000</span></li><li><span class="list-bullets">Repayment Methods: Interest Only, Part &amp; Part, Capital Repayment</span></li></ul></td>
+                                <td class="early-repayment-charge" data-name="Early Repayment Charges (% of the sum repaid)">3% until 30/09/2026, then 2% until 30/09/2027</td>
+                                <td data-name="Code">AHQP</td>
+                            </tr>
+                            <tr id="AHQQ">
+                                <td data-name="Term">
+                                    2 years
+                                </td>
+                                <td data-name="Rate">4.52% Fixed</td>
+                                <td data-name="Description"> until 30/09/2027 followed by our Standard Variable Rate for the rest of the mortgage term. This is currently 7.44% variable</td>
+                                <td class="overall-cost" data-name="Overall cost of comparison">7.1% APRC</td>
+                                <td data-name="Product Fee">£995</td>
+                                <td data-name="Features" class="features-text"><ul><li><span class="list-bullets">£300 Cashback paid to solicitor with advance</span></li><li><span class="list-bullets">Standard Valuation Fee Paid by Lender</span></li><li><span class="list-bullets">Minimum Loan £150,000</span></li><li><span class="list-bullets">Maximum Loan £2,500,000</span></li><li><span class="list-bullets">Repayment Methods: Interest Only, Part &amp; Part, Capital Repayment</span></li></ul></td>
+                                <td class="early-repayment-charge" data-name="Early Repayment Charges (% of the sum repaid)">3% until 30/09/2026, then 2% until 30/09/2027</td>
+                                <td data-name="Code">AHQQ</td>
+                            </tr>
+                            <tr id="AHQR">
+                                <td data-name="Term">
+                                    3 years
+                                </td>
+                                <td data-name="Rate">4.51% Fixed</td>
+                                <td data-name="Description"> until 30/09/2028 followed by our Standard Variable Rate for the rest of the mortgage term. This is currently 7.44% variable</td>
+                                <td class="overall-cost" data-name="Overall cost of comparison">6.8% APRC</td>
+                                <td data-name="Product Fee">£1495</td>
+                                <td data-name="Features" class="features-text"><ul><li><span class="list-bullets">£500 Cashback paid to solicitor with advance</span></li><li><span class="list-bullets">Standard Valuation Fee Paid by Lender</span></li><li><span class="list-bullets">Minimum Loan £150,000</span></li><li><span class="list-bullets">Maximum Loan £2,500,000</span></li><li><span class="list-bullets">Repayment Methods: Interest Only, Part &amp; Part, Capital Repayment</span></li></ul></td>
+                                <td class="early-repayment-charge" data-name="Early Repayment Charges (% of the sum repaid)">3% until 30/09/2027, then 2% until 30/09/2028</td>
+                                <td data-name="Code">AHQR</td>
+                            </tr>
+                            <tr id="AHQS">
+                                <td data-name="Term">
+                                    5 years
+                                </td>
+                                <td data-name="Rate">4.53% Fixed</td>
+                                <td data-name="Description"> until 30/09/2030 followed by our Standard Variable Rate for the rest of the mortgage term. This is currently 7.44% variable</td>
+                                <td class="overall-cost" data-name="Overall cost of comparison">6.5% APRC</td>
+                                <td data-name="Product Fee">£1995</td>
+                                <td data-name="Features" class="features-text"><ul><li><span class="list-bullets">Standard Valuation Fee Paid by Lender</span></li><li><span class="list-bullets">Minimum Loan £150,000</span></li><li><span class="list-bullets">Maximum Loan £2,500,000</span></li><li><span class="list-bullets">Repayment Methods: Interest Only, Part &amp; Part, Capital Repayment</span></li></ul></td>
+                                <td class="early-repayment-charge" data-name="Early Repayment Charges (% of the sum repaid)">4% until 30/09/2027, then 3% until 30/09/2029, then 2% until 30/09/2030</td>
+                                <td data-name="Code">AHQS</td>
+                            </tr>
+                            <tr id="AHQT">
+                                <td data-name="Term">
+                                    5 years
+                                </td>
+                                <td data-name="Rate">4.60% Fixed</td>
+                                <td data-name="Description"> until 30/09/2030 followed by our Standard Variable Rate for the rest of the mortgage term. This is currently 7.44% variable</td>
+                                <td class="overall-cost" data-name="Overall cost of comparison">6.5% APRC</td>
+                                <td data-name="Product Fee">£995</td>
+                                <td data-name="Features" class="features-text"><ul><li><span class="list-bullets">£500 Cashback paid to solicitor with advance</span></li><li><span class="list-bullets">Standard Valuation Fee Paid by Lender</span></li><li><span class="list-bullets">Minimum Loan £150,000</span></li><li><span class="list-bullets">Maximum Loan £2,500,000</span></li><li><span class="list-bullets">Repayment Methods: Interest Only, Part &amp; Part, Capital Repayment</span></li></ul></td>
+                                <td class="early-repayment-charge" data-name="Early Repayment Charges (% of the sum repaid)">4% until 30/09/2027, then 3% until 30/09/2029, then 2% until 30/09/2030</td>
+                                <td data-name="Code">AHQT</td>
+                            </tr>
+
+                    </tbody>
+                </table>
     </div>
 }

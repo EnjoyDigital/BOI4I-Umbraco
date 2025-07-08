@@ -39,22 +39,15 @@
 
   th,td {
     min-width: 0;
-    padding-left: 16px;
-    padding-right: 16px;
   }
 
   th {
-    font-size: 13px;
-    line-height: 17px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-
     &.term {
-      min-width: 75px;
+      min-width: 85px;
     }
 
     &.rate {
-      min-width: 105px;
+      min-width: 115px;
     }
 
     &.overall-cost {
@@ -62,7 +55,7 @@
     }
 
     &.description {
-      min-width: 200px;
+      min-width: 150px;
     }
 
     &.product-fee {
@@ -84,28 +77,12 @@
 
   td {
     position: relative;
-    font-size: 12px;
-    line-height: 16px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-
-    &:first-child {
-      border-left: 1px solid $grey;
-    }
-
-    &:last-child {
-      border-right: 1px solid $grey;
-    }
 
     @include media($small) {
       display: block;
       width: 100%;
       padding: 15px 15px 15px calc(37% + 15px);
-      font-size: 13px;
-      line-height: 20px;
       text-align: left;
-      border-left: 1px solid $grey;
-      border-right: 1px solid $grey;
 
       &:before {
         content: attr(data-name);
@@ -117,17 +94,6 @@
         font-weight: 600;
         color: $white;
         z-index: 1;
-      }
-
-      &:after {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 37%;
-        height: 100%;
-        background-color: $dark-blue;
-        border-bottom: 1px solid rgba($white,0.4);
       }
 
       &.overall-cost {
@@ -163,24 +129,6 @@
 
         &:not(:last-child) {
           margin-bottom: 20px;
-        }
-      }
-
-      &:last-child {
-        td {
-          border-bottom: 1px solid $grey;
-
-          // @include media($small) {
-          //   &:not(:last-child) {
-          //     border-bottom: none;
-          //   }
-          // }
-        }
-      }
-
-      &:nth-child(even) {
-        td {
-          background-color: $grey-9;
         }
       }
 
@@ -236,7 +184,7 @@
 
 .product-table-caption {
   display: flex;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 
   @include media-min($small) {
     align-items: flex-end;
@@ -256,11 +204,9 @@
 .product-table-caption__title h3 {
   margin-top: 0;
   margin-bottom: 0;
-
-  @include media($small) {
-    font-size: 20px;
-    line-height: 26px;
-  }
+  font-size: 2rem;
+  line-height: 1;
+  color: $text-dark;
 }
 
 .print-products {
@@ -273,7 +219,9 @@
   }
 
   > span {
-    @include link-style();
+    @include simple-link-style();
+    color: $blue;
+    font-weight: 600;
 
     &:after {
       background-color: $blue;
