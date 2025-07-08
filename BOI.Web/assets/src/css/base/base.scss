@@ -106,6 +106,14 @@ a, button {
   @include media($small) {
     margin-bottom: 20px;
   }
+
+  .umb-block-list {
+    padding: 0;
+
+    @include media($max-desktop) {
+      padding: 0;
+    }
+  }
 }
 
 .overlay-link {

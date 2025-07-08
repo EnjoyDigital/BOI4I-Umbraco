@@ -43,6 +43,7 @@ h5 {
 p,li {
   a {
     @include link-style-fill-bar(rgba($blue,0.3), $blue);
+    color: $blue;
   }
 }
 

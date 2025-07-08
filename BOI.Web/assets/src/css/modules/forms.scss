@@ -105,112 +105,114 @@ select {
 }
 
 select {
-    appearance: none;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 22px;
-    padding: 12px 50px 12px 17px;
-    background-color: $light-grey;
-    border: 1px solid transparent;
-    margin: 0;
-    outline: none;
-    transition: border-color 0.25s ease, background-color 0.25s ease;
+  appearance: none;
+  margin: 0;
+  padding: 12px 50px 12px 17px;
+  background-color: $white;
+  border: 1px solid $text;
+  border-radius: 8px;
+  outline: none;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: $text-dark;
 
-    &::-ms-expand {
-        display: none;
-    }
+  &::-ms-expand {
+    display: none;
+  }
 
-    &:hover {
-        border-color: $grey-2;
-    }
+  &:hover {
+    border-color: $blue;
+  }
+
+  &:focus-within {
+    border-color: $dark-blue;
+    border-width: 2px;
+    padding: 11px 49px 11px 16px;
+  }
+
+  &:disabled {
+    border-color: $grey-8;
+    cursor: not-allowed;
+  }
+  
+  &:not([multiple]) {
+    background-image: linear-gradient(
+      45deg,
+      transparent 27%,
+      $blue 27%,
+      $blue 34%,
+      transparent 34%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 27%,
+      $blue 27%,
+      $blue 34%,
+      transparent 34%
+    );
+    background-size: 18px 12px;
+    background-position: right 22px center, right 22px center;
+    background-repeat: no-repeat;
 
     &:focus-within {
-        color: white;
-        background-color: blue;
+      background-image: linear-gradient(
+        45deg,
+        transparent 66%,
+        $blue 66%,
+        $blue 73%,
+        transparent 73%
+      ),
+      linear-gradient(
+        -45deg,
+        transparent 66%,
+        $blue 66%,
+        $blue 73%,
+        transparent 73%
+      );          
     }
 
     &:disabled {
-      cursor: not-allowed;
+      background-image: linear-gradient(
+        45deg,
+        transparent 66%,
+        $grey-8 66%,
+        $grey-8 73%,
+        transparent 73%
+      ),
+      linear-gradient(
+        -45deg,
+        transparent 66%,
+        $grey-8 66%,
+        $grey-8 73%,
+        transparent 73%
+      );
     }
+  }
 
-    &:not([multiple]) {
-        background-image: linear-gradient(
-            45deg,
-            transparent 27%,
-            $blue 27%,
-            $blue 34%,
-            transparent 34%
-          ),
-          linear-gradient(
-            -45deg,
-            transparent 27%,
-            $blue 27%,
-            $blue 34%,
-            transparent 34%
-          );
-        background-size: 18px 12px;
-        background-position: right 22px center, right 22px center;
-        background-repeat: no-repeat;
-
-        &:focus-within {
-          background-color: blue;
-          background-image: linear-gradient(
-              45deg,
-              transparent 66%,
-              $white 66%,
-              $white 73%,
-              transparent 73%
-            ),
-            linear-gradient(
-              -45deg,
-              transparent 66%,
-              $white 66%,
-              $white 73%,
-              transparent 73%
-            );          
-        }
-
-        &:disabled {
-          background-image: linear-gradient(
-              45deg,
-              transparent 66%,
-              $grey-5 66%,
-              $grey-5 73%,
-              transparent 73%
-            ),
-            linear-gradient(
-              -45deg,
-              transparent 66%,
-              $grey-5 66%,
-              $grey-5 73%,
-              transparent 73%
-            );
-        }
-    }
-
-    select[multiple] {
-        padding-right: 17px;
-
-        option {
-            white-space: normal;
-        }
-    }
+  select[multiple] {
+    padding-right: 17px;
 
     option {
-      font-size: 16px;
-      line-height: 20px;
-      background-color: $light-grey;
-      color: $black;
-
-      &:hover {
-        background-color: $grey;
-        box-shadow: 0 0 10px 100px $black inset;
-      }
-
-      &:checked {
-        background-color: $grey-2;
-      }
+      white-space: normal;
     }
+  }
+
+  option {
+    font-size: 16px;
+    line-height: 20px;
+    background-color: $light-grey;
+    color: $black;
+
+    &:hover {
+      background-color: $grey;
+      box-shadow: 0 0 10px 100px $black inset;
+    }
+
+    &:checked {
+      background-color: $grey-2;
+    }
+  }
 }
 
 input[type=radio],
@@ -222,7 +224,6 @@ input[type=checkbox] {
 .radio-wrapper,
 .checkbox-wrapper {
   label {
-    @include font-size(13);
     position: relative;
     padding-left: 32px;
     margin-bottom: 15px;
@@ -273,20 +274,23 @@ input[type=checkbox] {
 
 .checkbox-wrapper {
     label {
-        &:before {
-            content: '';
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            top: -2px;
-            left: 0;
-            background-color: $white;
-            border: 1px solid $grey-8;
-            box-sizing: border-box;
-            background-size: 13px auto;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+      color: $text-dark;
+
+      &:before {
+        content: '';
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        top: 0;
+        left: 0;
+        background-color: $white;
+        border: 1px solid $grey-12;
+        border-radius: 4px;
+        box-sizing: border-box;
+        background-size: 16px auto;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
     }
 
     input[type=checkbox]:focus-visible + label,
