@@ -5,25 +5,28 @@
     {
         return;
     }
-    <div class="promotional-pod @(Model.Image != null ? "-has-image" : "")">
-        <div class="promotional-pod-inner">
+    <div class="promotional-pod @(Model.Image != null ? "" : "-no-image")">
+        <div class="promotional-pod__inner">
+            @if (Model.Image != null)
+            {
+                <div class="promotional-pod__image">
+                    <img src="@Model.Image.Url()" alt="@Model.Image.GetImageAlternativeText()" />
+                </div>
+            }
+
             <div class="promotional-pod__content">
                 <h2 class="promotional-pod__title">@Model.Title</h2>
-                @Model.SubText
+                <div class="promotional-pod__subtext">
+                    @Model.SubText
+                </div>
 
                 @if ((Model.CTalink?.Url.HasValue()).GetValueOrDefault())
                 {
-                    <a href="@Model.CTalink.Url" class="button -white-outline" target="@Model.CTalink.Target">
+                    <a href="@Model.CTalink.Url" class="button button--secondary" target="@Model.CTalink.Target">
                         <span>@Model.CTalink.Name</span>
                     </a>
                 }
             </div>
-
-            @if (Model.Image != null)
-            {
-                Context.ResponsiveBackground(Model.Image, new { desktop = "PromoPodDesktop", mobile = "PromoPodMobile" }, ".promotional-pod__image");
-            }
-            <div class="promotional-pod__image"></div>
         </div>
     </div>
 }
