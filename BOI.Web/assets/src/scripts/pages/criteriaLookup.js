@@ -6,7 +6,7 @@ import AutoCompleteCriterea from '../modules/autoCompleteCriterea'
 Globals()
 
 // Individually required scripts
-TabbedContent()
+TabbedContent(true) // set true so that we use Tabs only.
 ProductFilters()
 AutoCompleteCriterea()
 

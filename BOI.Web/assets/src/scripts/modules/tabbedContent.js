@@ -1,8 +1,8 @@
-export default function Pagination() {
-    init()
+export default function TabbedContent(tabsOnly) {
+    init(tabsOnly)
 }
 
-function init() {
+function init(tabsOnly) {
     var mobileNavBreakpoint = 767;
 
    
@@ -214,27 +214,36 @@ function init() {
     }
 
     function initializeTabsOrAccordion() {
-        if ($(window).width() > mobileNavBreakpoint) {
+        if (tabsOnly) {
             $('.tabbed-content').each(function () {
                 if ($(this).find('.tab-list').length == 0) {
                     ClearAccordionMarkup();
                     GenerateTabs();
                 }
             });
-        }
-        else {
-            $('.tabbed-content').each(function () {
-                if ($(this).find('.tab-accordion').length == 0) {
-                    ClearTabMarkup();
-                    GenerateAccordions();
-                }
-            });
+        } else {
+            if ($(window).width() > mobileNavBreakpoint) {
+                $('.tabbed-content').each(function () {
+                    if ($(this).find('.tab-list').length == 0) {
+                        ClearAccordionMarkup();
+                        GenerateTabs();
+                    }
+                });
+            }
+            else {
+                $('.tabbed-content').each(function () {
+                    if ($(this).find('.tab-accordion').length == 0) {
+                        ClearTabMarkup();
+                        GenerateAccordions();
+                    }
+                });
+            }
         }
     }
 
-    initializeTabsOrAccordion();
+    initializeTabsOrAccordion(tabsOnly);
 
     $(window).on('resize', function () {
-        initializeTabsOrAccordion();
+        initializeTabsOrAccordion(tabsOnly);
     });
 }

@@ -1,21 +1,5 @@
 .criteria-lookup-container {
-  background-color: $white;
   overflow: hidden;
-
-  .tab-list {
-    position: relative;
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: -1px;
-      left: 50%;
-      width: 100vw;
-      height: calc(100% + 1px);
-      transform: translateX(-50%);
-      background-color: $grey;
-    }
-  }
 }
 
 .criteria-filters {
