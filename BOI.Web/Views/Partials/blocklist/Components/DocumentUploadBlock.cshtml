@@ -5,12 +5,10 @@
         return;
     }
 
-   
-        if (!Model.SubText.ToString().IsNullOrWhiteSpace())
+    <div class="document-download-block-wrapper">
+        @if (!Model.SubText.ToString().IsNullOrWhiteSpace())
         {
-            <div class="rich-text">
-                @Model.SubText
-            </div>
+            @Model.SubText
         }
 
         <div class="document-download-block">
@@ -38,5 +36,5 @@
                 </div>
             }
         </div>
-    
+    </div>
 }

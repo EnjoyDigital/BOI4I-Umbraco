@@ -114,6 +114,10 @@ h5, .h5 {
   @include font-size(16);
 }
 
+p,li {
+  color: $text;
+}
+
 .pod-title {
   @include font-size(24);
 }
@@ -147,6 +151,10 @@ h5, .h5 {
 
 .-grey-text {
   color: $text;
+}
+
+.-dark-grey-text {
+  color: $text-dark;
 }
 
 .-white-text {
