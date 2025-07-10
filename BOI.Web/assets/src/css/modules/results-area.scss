@@ -1,20 +1,8 @@
 .results-area {
   width: 100%;
   max-width: $max-desktop;
-  padding: 40px 9%;
-  background-color: $white;
-
-  @include media($large) {
-    padding: 40px;
-  }
-
-  @include media($medium) {
-    padding: 30px;
-  }
-
-  @include media($small) {
-    padding: 24px;
-  }
+  padding: 0;
+  margin-top: #{fluid(32, 56)};
 
   address {
     display: inline-block;
