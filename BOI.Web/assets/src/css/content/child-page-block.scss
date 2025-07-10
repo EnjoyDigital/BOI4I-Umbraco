@@ -5,7 +5,7 @@
 }
 
 .child-page-block__title {
-  margin-bottom: 0;
+  margin-bottom: #{fluid(24, 32)};
 }
 
 .child-page-block-listing {
@@ -13,7 +13,7 @@
   grid-template-columns: auto;
   gap: #{fluid(24, 32)};
   height: 100%;
-  padding-bottom: 20px;
+  padding-bottom: #{fluid(40, 56)};
 
   @include media-min($max-mobile) {
     grid-template-columns: repeat(2, 1fr);
