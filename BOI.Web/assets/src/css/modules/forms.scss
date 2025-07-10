@@ -50,25 +50,32 @@ input {
 
 input[type=text],
 textarea {
-  border: 1px solid transparent;
-  background-color: $light-grey;
+  border: 1px solid $text;
+  border-radius: 8px;
+  background-color: $white;
   font-size: 16px;
   line-height: 22px;
-  padding: 12px 40px 12px 17px;
+  padding: 12px 50px 12px 17px;
   transition: border-color 0.25s ease, border-width 0.25s ease background-color 0.25s ease;
+  color: $text-dark;
 
   &:hover:not(:focus):not(.input-validation-error) {
-    border-color: $grey-2;
+    border-color: $text;
   }
 
-  &:focus {
+  &:hover {
     border-color: $blue;
-    color: $blue;
+  }
 
-    @include placeholder-styles() {
-      color: $blue;
-      opacity: 0.5;
-    }
+  &:focus-within {
+    border-color: $dark-blue;
+    border-width: 2px;
+    padding: 11px 49px 11px 16px;
+  }
+
+  &:disabled {
+    border-color: $grey-8;
+    cursor: not-allowed;
   }
 
   &.input-validation-error,
@@ -82,6 +89,7 @@ textarea {
     border-color: $red;
     background-image: url(/assets/dist/images/icons/sprite-icon-cross-red.svg);
     background-size: 12px;
+    padding: 11px 49px 11px 16px;
   }
 
   &.valid {

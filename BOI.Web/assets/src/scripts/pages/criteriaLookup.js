@@ -177,7 +177,7 @@ $('body').on('click', '.alphabet-list a', function (e) {
     history.replaceState(null, null, url);
 
     $('html,body').animate({
-        scrollTop: $criteriaCategory.offset().top - 120
+        scrollTop: $criteriaCategory.offset().top - $('header').outerHeight(),
     }, 500, function () {
         //after animation set the focus
         var $categoryHeading = $criteriaCategory.find('h3');

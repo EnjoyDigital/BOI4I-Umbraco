@@ -177,24 +177,36 @@
     padding-left: 32px;
     padding-right: 32px;
   }
+
+  &.-margin-right-0 {
+    margin-right: 0;
+  }
 }
 
 .product-filters-popular-searches {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: #{fluid(16, 24)};
+  row-gap: 8px;
+  width: 100%;
+  margin-top: 24px;
+
+  @include media($small) {
+    padding-bottom: 20px;
+  }
+
+  label {
     width: 100%;
-    margin-top: 35px;
+    margin-bottom: 0;
+    color: $text-dark;
+    font-weight: 600;
+  }
 
-    @include media($small) {
-        padding-bottom: 20px;
-    }
-
-    label {
-        width: 100%;
-    }
-
-    .button {
-        min-width: 0;
-    }
+  button {
+    @include simple-link-style();
+    min-width: 0;
+    padding: 0;
+    color: $blue;
+    font-weight: 600;
+  }
 }

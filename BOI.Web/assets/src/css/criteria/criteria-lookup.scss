@@ -12,6 +12,10 @@
   .product-filters-input-wrap {
     flex-grow: 0;
 
+    &.-flex-grow-1 {
+      flex-grow: 1;
+    }
+
     &.-search-term {
       width: 40%;
 
@@ -24,8 +28,11 @@
 
 .alphabet-list {
   display: block;
+  margin-bottom: 20px;
   padding: 16px 18px 12px;
-  background-color: $blue;
+  background-color: $white;
+  border: 1px solid $text;
+  border-radius: 8px;
 
   ul {
     list-style: none;
@@ -37,21 +44,18 @@
       display: inline-block;
       padding: 0 12px;
       margin: 0;
-      color: rgba($white,0.75);
-      font-size: 15px;
-      line-height: 22px;
+      color: $grey-8;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 600;
 
       &:last-child {
         margin-right: 0;
       }
 
       > a {
-        @include link-style-fill-bar();
-        color: inherit;
-
-        &:hover {
-          color: $white;
-        }
+        @include simple-link-style();
+        color: $blue;
       }
     }
   }

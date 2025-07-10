@@ -4,6 +4,7 @@
   border: 1px solid $grey-8;
   border-radius: 8px;
   background-color: $white;
+  overflow: hidden;
 
   /* for rich-text spacing purposes */
   +*:not(.accordion) {
@@ -89,7 +90,7 @@
     position: absolute;
     top: 0;
     left: 50%;
-    width: calc(100% - 32px);
+    width: 100%;
     height: 1px;
     background-color: $grey-8;
     transform: translateX(-50%);
@@ -154,6 +155,10 @@
   }
 }
 
+.accordion + .accordion-copylink {
+  margin-top: 16px;
+}
+
 /* Accordions within accordions */
 
 // .accordion-content > .accordion {
@@ -175,32 +180,30 @@
 
 /* Background-color variant */
 .results-area,
-.criteria-category,
-.accordion-content {
-    .accordion:not(.active) {
-        .accordion-heading:not(:hover):not(:focus-visible) {
-            background-color: $light-grey;
-        }
-    }
-
-    .accordion-content {
-        background-color: $light-grey;
-    }
-}
-
-.results-area,
 .criteria-category {
-  .accordion-content > {
-    .accordion:not(.active) {
-      .accordion-heading:not(:hover):not(:focus-visible){
-        background-color: $white;
-      }
-    }
-
-    .accordion {
+  .accordion-content {
+    > .accordion {
+      .accordion-heading,
       .accordion-content {
-        background-color: $white;
+        background-color: $grey-11;
       }
     }
   }
 }
+
+// .results-area,
+// .criteria-category {
+//   .accordion-content > {
+//     .accordion:not(.active) {
+//       .accordion-heading:not(:hover):not(:focus-visible){
+//         background-color: $white;
+//       }
+//     }
+
+//     .accordion {
+//       .accordion-content {
+//         background-color: $white;
+//       }
+//     }
+//   }
+// }
