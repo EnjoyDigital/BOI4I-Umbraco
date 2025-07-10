@@ -9,12 +9,25 @@
 }
 
 .child-page-block-listing {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto;
+  gap: #{fluid(24, 32)};
   height: 100%;
+  padding-bottom: 20px;
+
+  @include media-min($max-mobile) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include media-min($large) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .child-page-block-item {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
   background-color: $white;
 
   .campaign-landing & {
@@ -29,27 +42,10 @@
 }
 
 .child-page-block-item__icon-wrapper {
-  padding: #{fluid(24, 40)} #{fluid(24, 40)} 16px;
+  padding-bottom: 16px;
 
   img {
-    display: block;
-    width: 100%;
-    max-width: 280px;
-    height: auto;
-    margin: 0 auto;
-  }
-
-  @include media($max-mobile) {
-    img {
-      max-width: 120px;
-      margin: 0;
-    }
-  }
-
-  @include media($tiny) {
-    img {
-      max-width: none;
-    }
+    max-width: 48px;
   }
 }
 
@@ -57,6 +53,8 @@
   display: block;
   margin-bottom: 0;
   color: $text-dark;
+  font-size: 24px;
+  line-height: 36px;
   font-weight: 600;
   font-family: $OpenSans;
 
@@ -67,7 +65,10 @@
 
 .child-page-block-item__content {
   position: relative;
-  padding: 0 #{fluid(24, 32)} #{fluid(24, 56)};
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 0;
   z-index: 1;
 
   .campaign-landing & {
@@ -75,6 +76,15 @@
       padding: 40px;
     }
   }
+
+  .rich-text {
+    padding: 8px 0 24px;
+  }
+}
+
+.child-page-block-item__cta {
+  @include button--secondary;
+  margin-top: auto;
 }
 
 .child-page-block-item__inner-list-icon {
@@ -103,5 +113,63 @@
     &:not(:last-child) {
       padding-bottom: 16px;
     }
+  }
+}
+
+/* Pod Group (homepage / service block) */
+.pod-group {
+  .child-page-block-listing {
+    display: block;
+    padding-bottom: 0;
+  }
+
+  .child-page-block-item {
+    padding: 0;
+  }
+
+  .child-page-block-item__icon-wrapper {
+    padding: #{fluid(24, 40)} #{fluid(24, 40)} 16px;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    @include media($max-mobile) {
+      img {
+        max-width: 120px;
+        margin: 0;
+      }
+    }
+
+    @include media($tiny) {
+      img {
+        max-width: none;
+      }
+    }
+  }
+
+  .child-page-block-item__content {
+    padding: 0 #{fluid(24, 32)} #{fluid(24, 56)};
+
+    .rich-text {
+      padding: 32px 0;
+    }
+
+    .button {
+      margin-top: 0;
+    }
+  }
+
+  .child-page-block-item__title {
+    font-size: 32px;
+    line-height: 44px;
+  }
+
+  .child-page-block-item__cta {
+    @include button;
   }
 }
