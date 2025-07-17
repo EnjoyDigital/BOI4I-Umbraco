@@ -60,13 +60,20 @@ namespace BOI.Web
 
             //UseCustomRewrites(app, env, _config, logger);
 
-            if (env.IsDevelopment())
+            if (env.IsProduction())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler(err => err.UseCustomErrors(env));
+
             }
             else
             {
-                app.UseExceptionHandler(err => err.UseCustomErrors(env));
+                app.UseDeveloperExceptionPage();
+                app.Use(async (context, next) =>
+                {
+                    context.Response.Headers.Append("X-Robots-Tag", "noindex, nofollow");
+                    await next();
+                });
+
             }
 
             app.UseUmbraco()
