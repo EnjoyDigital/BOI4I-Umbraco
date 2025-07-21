@@ -312,7 +312,6 @@
 
 	<ItemGroup>
 	  <Folder Include="App_Data\" />
-	  <Folder Include="Config\" />
 	  <Folder Include="wwwroot\assets\files\" />
 	</ItemGroup>
 

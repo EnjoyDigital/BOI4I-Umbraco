@@ -90,8 +90,12 @@
                                     @foreach (var child in itemContent.ChildNavigationItems)
                                     {
                                         var childContent = child.Content as MainNavigationItemLevel2;
+                                        if (childContent == null)
+                                        {
+                                            continue;
+                                        }
                                         <div class="submenu-listing">
-                                            @if (childContent.NavigationItem.Url == null || childContent.NavigationItem.Url == "#")
+                                            @if (childContent?.NavigationItem?.Url == null || childContent.NavigationItem.Url == "#")
                                             {
                                                 <span class="submenu-listing__heading">
                                                     @childContent.NavigationItem.Name
@@ -106,6 +110,10 @@
                                                     @foreach (var nextLevelChild in childContent.ChildNavigationItems)
                                                     {
                                                         var nextLevelChildContent = nextLevelChild.Content as MainNavigationItemLevel3;
+                                                        if (nextLevelChildContent?.NavigationItem == null)
+                                                        {
+                                                            continue;
+                                                        }
                                                         <li class="submenu-item">
                                                             <a href="@nextLevelChildContent.NavigationItem.Url" title="@nextLevelChildContent.NavigationItem.Url" @Html.Raw(nextLevelChildContent.NavigationItem.Url == Model.Content?.Url() ? "aria-current=\"page\"" : string.Empty)>@nextLevelChildContent.NavigationItem.Name</a>
                                                         </li>
@@ -128,7 +136,7 @@
                             </svg>
                         </button>
                     }
-                    
+
                 </ul>
 
             }

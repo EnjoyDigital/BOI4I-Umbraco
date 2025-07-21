@@ -68,6 +68,11 @@ namespace BOI.Web
             else
             {
                 app.UseDeveloperExceptionPage();
+             
+
+            }
+            if (!env.IsEnvironment("Release"))
+            {
                 app.Use(async (context, next) =>
                 {
                     context.Response.Headers.Append("X-Robots-Tag", "noindex, nofollow");
