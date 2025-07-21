@@ -118,7 +118,7 @@ namespace BOI.Core.Web.Extensions
             
             //left fulled qualified for clarity
             builder.Services.AddScoped<IRequestHandler, PostcodeLookupQuery.RequestHandler>();
-            builder.Services.AddScoped<IFileUploadService, FileUploadService>();
+            builder.Services.AddScoped<IFileUploadService, FileUploadService>()
 
             builder.Services.AddControllers(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
             return builder;
