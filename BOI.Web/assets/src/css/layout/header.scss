@@ -229,7 +229,7 @@ header {
           }
 
           > a {
-            box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.14);
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.14);
           }
 
           .show-submenu {
@@ -399,7 +399,7 @@ header {
             &.header-top__content--links--login {
               @media (max-width: $max-tablet) {
                 a {
-                  @include button--secondary; 
+                  @include button--secondary;
                 }
               }
             }
@@ -607,7 +607,8 @@ header {
             transform: translateY(100%);
             background-color: $white;
             padding: 24px #{fluid(4, 12)} 12px;
-            box-shadow: 0 20px 15px 0 rgba(0, 0, 0, 0.2);
+            border-bottom: 2px solid $grey-8;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.08);
             width: auto;
             min-width: 659px;
             max-width: 659px;
@@ -648,7 +649,7 @@ header {
                 &:hover {
                   color: $blue;
                 }
-                
+
                 &:after {
                   content: '';
                   position: absolute;
