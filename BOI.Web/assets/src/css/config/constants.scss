@@ -38,13 +38,13 @@ $text: #666666;
 $text-dark: #333333;
 
 $blue: #0000ff;
-$blue-2: #0000C2;
+$blue-2: #0000c2;
 $teal: #00ffc5;
 
 $dark-blue: #00067b;
 $navy-blue: #333795;
 $pale-blue: #b4b5ed;
-$sky-blue: #B2DBFF;
+$sky-blue: #b2dbff;
 
 $red: #ff0000;
 $dark-red: #cb0000;
@@ -76,8 +76,13 @@ $silver: #c0c0c0;
 //
 $BankofIreland-Regular: 'BankofIrelandSerif-Regular', serif;
 $BankofIreland-Bold: 'BankofIrelandSerif-Bold', serif;
-$OpenSans: 'Open Sans', sans-serif; 
+$OpenSans: 'Open Sans', sans-serif;
 
 :root {
   --sectionPaddingX: 16px;
 }
+
+//
+// Padding
+//
+$standard-section-padding: #{fluid(24, 40)} 0 #{fluid(40, 56)};

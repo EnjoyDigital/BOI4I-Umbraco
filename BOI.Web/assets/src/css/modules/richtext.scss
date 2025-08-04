@@ -1,5 +1,5 @@
 .rich-text {
-  padding: #{fluid(24, 40)} 0 #{fluid(40, 56)};
+  padding: $standard-section-padding;
 
   > * {
     &:last-child:not(img) {
@@ -13,5 +13,5 @@
     as the CMS, the code here will only be used by the site, not the cms. So code
     being used by the CMS text editor should NOT be put here
   */
-  @import 'richtext-rte';		
+  @import 'richtext-rte';
 }

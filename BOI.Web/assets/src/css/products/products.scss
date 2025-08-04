@@ -29,15 +29,12 @@
   border: none;
   display: block;
 
-  &:first-child {
-    margin-top: 10px;
-  }
-
   @include media($small) {
     margin-bottom: 25px;
   }
 
-  th,td {
+  th,
+  td {
     min-width: 0;
   }
 
@@ -161,7 +158,7 @@
       position: absolute;
       top: 37%;
       left: 50%;
-      transform: translate(-50%,-50%) translateY(-100%) translateY(-5px);
+      transform: translate(-50%, -50%) translateY(-100%) translateY(-5px);
     }
 
     @include media($small) {
@@ -222,7 +219,7 @@
 
 .print-products {
   display: flex;
-  align-items: center; 
+  align-items: center;
   text-decoration: none;
 
   @include media($small) {
@@ -249,7 +246,7 @@
   }
 }
 
-.no-products-section{
+.no-products-section {
   width: 100%;
   max-width: $max-desktop;
   margin: 0 auto;

@@ -8,7 +8,7 @@
   position: relative;
   width: 100%;
   max-width: $max-desktop;
-  padding: #{fluid(24, 40)} 0 #{fluid(40, 56)};
+  padding: $standard-section-padding;
 }
 
 .homepage-service-title {

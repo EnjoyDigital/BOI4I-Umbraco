@@ -1,7 +1,7 @@
 .promotional-pod {
   @include section-background($sky-blue);
   position: relative;
-  padding: #{fluid(24, 40)} 0 #{fluid(40, 56)};
+  padding: $standard-section-padding;
   background-color: $sky-blue;
 }
 
