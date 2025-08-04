@@ -67,7 +67,7 @@
 
 .criteria-highlight {
     position: relative;
-    background-color: $teal;
+    background-color: $light-teal;
     z-index: 1;
 
     &::after {
@@ -83,6 +83,6 @@
 
     &::selection {
         color: $text;
-        background-color: $teal;
+        background-color: $light-teal;
     }
 }

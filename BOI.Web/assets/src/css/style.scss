@@ -11,6 +11,11 @@
 @import "config/utilities"; // Re-usable utility classes
 
 //
+// Padding
+//
+$standard-section-padding: #{fluid(24, 40)} 0 #{fluid(40, 56)};
+
+//
 // Vendor
 //
 @import 'vendor/pikaday';

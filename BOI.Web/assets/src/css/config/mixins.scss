@@ -11,26 +11,24 @@
 
 /* unit conversion used by font size */
 @function meta-unit($number, $unit) {
-
-  @if $unit == "px" {
-    @return $number+px;
+  @if $unit == 'px' {
+    @return $number + px;
   }
-  @if $unit == "%" {
-    @return $number+"%";
+  @if $unit == '%' {
+    @return $number + '%';
   }
-  @if $unit == "em" {
-    @return em($number)+px;
+  @if $unit == 'em' {
+    @return em($number) + px;
   }
-  @if $unit == "rem" {
+  @if $unit == 'rem' {
     @return calculateRem($number);
   }
 }
 
 /* media query mixins that use breakpoints set in constants.scss */
-@mixin media($max, $min: "") {
-
-  @if ( $min == "" ) {
-    @media screen and (max-width: #{$max} ){
+@mixin media($max, $min: '') {
+  @if ($min == '') {
+    @media screen and (max-width: #{$max} ) {
       @content;
     }
   } @else {
@@ -41,7 +39,7 @@
 }
 
 @mixin media-min($min) {
-  @media screen and (min-width: #{$min + 1} ){
+  @media screen and (min-width: #{$min + 1} ) {
     @content;
   }
 }
@@ -51,11 +49,13 @@
     @content;
   }
 
-  &:-moz-placeholder { /* Firefox 18- */
+  &:-moz-placeholder {
+    /* Firefox 18- */
     @content;
   }
 
-  &::-moz-placeholder {  /* Firefox 19+ */
+  &::-moz-placeholder {
+    /* Firefox 19+ */
     @content;
   }
 
@@ -66,9 +66,9 @@
 
 @mixin font-size($size, $line-height: ($size + 8)) {
   font-size: $size + px;
-  font-size: meta-unit($size,rem);
-  line-height: meta-unit($line-height,px);
-  line-height: meta-unit($line-height,rem);
+  font-size: meta-unit($size, rem);
+  line-height: meta-unit($line-height, px);
+  line-height: meta-unit($line-height, rem);
 }
 
 /* Fluid sizes - in pixels */
@@ -89,10 +89,10 @@
   @return clamp(#{$clampMin}, #{$clampValOne} + #{$clampValTwo}, #{$clampMax});
 }
 
-@mixin vertical-gradient($start,$end) {
+@mixin vertical-gradient($start, $end) {
   background: $end;
-  background: -webkit-linear-gradient($start,$end);
-  background: linear-gradient($start,$end);
+  background: -webkit-linear-gradient($start, $end);
+  background: linear-gradient($start, $end);
 }
 
 @mixin hide-text() {
@@ -105,7 +105,7 @@
   visibility: hidden;
   display: block;
   font-size: 0;
-  content: " ";
+  content: ' ';
   clear: both;
   height: 0;
 }
@@ -122,10 +122,10 @@
 // Cancel Transitions
 @mixin cancel-transitions() {
   -webkit-transition: none !important;
-  -moz-transition:    none !important;
-  -ms-transition:     none !important;
-  -o-transition:      none !important;
-  transition:     none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
 }
 
 /* Slightly lighten a color
@@ -182,11 +182,12 @@
   }
 }
 
-@mixin link-style-fill-bar($colour: rgba($white,0.5), $hover-color: $white) {
+@mixin link-style-fill-bar($colour: rgba($white, 0.5), $hover-color: $white) {
   position: relative; // in case this isn't already applied to the element
   text-decoration: none;
   padding-bottom: 2px;
-  background-image: linear-gradient(90deg, $hover-color, $hover-color), linear-gradient(90deg, $colour, $colour);
+  background-image: linear-gradient(90deg, $hover-color, $hover-color),
+    linear-gradient(90deg, $colour, $colour);
   background-position: 0% 100%;
   background-repeat: no-repeat;
   background-size: 0% 1px, 100% 1px;
@@ -310,9 +311,10 @@
     height: 47px;
     background-color: $white;
     border: 2px solid $blue;
-    transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+    transition: transform 0.15s ease, background-color 0.15s ease,
+      border-color 0.15s ease;
   }
-  
+
   &::after {
     background-color: $blue;
   }

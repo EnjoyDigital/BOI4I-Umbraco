@@ -4,9 +4,12 @@
   as the CMS, richtext.scss will only be used by the site, not the cms
 */
 
-h2, .h2,
-h3, .h3,
-h4, .h4,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
 h5 {
   margin-top: 1rem;
 
@@ -19,10 +22,13 @@ h5 {
   }
 }
 
-@media(min-width: $max-tablet) {
-  h2, .h2,
-  h3, .h3,
-  h4, .h4,
+@media (min-width: $max-tablet) {
+  h2,
+  .h2,
+  h3,
+  .h3,
+  h4,
+  .h4,
   h5 {
     margin-top: 2rem;
 
@@ -40,7 +46,8 @@ h5 {
   margin: 0 0 10px 10px;
 }
 
-p,li {
+p,
+li {
   a {
     // @include link-style-fill-bar(rgba($blue,0.3), $blue);
     @include simple-link-style();
@@ -56,18 +63,15 @@ img {
   margin: 2rem 20px 2rem 0;
 }
 
-ul,ol {
+ul,
+ol {
   margin-bottom: 2rem;
 }
 
 ul {
   list-style: none;
-  padding-left: 30px;
+  padding-left: 10px;
 
-  @include media($small) {
-    padding-left: 20px;
-  }
-  
   li {
     position: relative;
     display: block;
@@ -77,21 +81,19 @@ ul {
     span.list-ticks {
       position: relative;
       display: block;
-      padding-left: 20px;
+      padding-left: 16px;
     }
 
     span.list-bullets {
       &:before {
         content: '';
         position: absolute;
-        top: 7px;
+        top: 10px;
         left: 0;
-        width: 7px;
-        height: 8px;
-        background-image: url(/assets/dist/images/icons/sprite-icon-bullet-blue.svg);
-        background-size: 7px 8px;
-        background-repeat: no-repeat;
-        background-position: center;
+        width: 4px;
+        height: 4px;
+        background-color: $text;
+        border-radius: 100%;
       }
     }
 
@@ -101,12 +103,12 @@ ul {
       &:before {
         content: '';
         position: absolute;
-        top: 4px;
+        top: 6px;
         left: 0;
-        width: 18px;
-        height: 15px;
-        background-image: url(/assets/dist/images/icons/sprite-icon-tick-blue.svg);
-        background-size: 18px 15px;
+        width: 15px;
+        height: 11px;
+        background-image: url(/assets/dist/images/icons/sprite-icon-checkbox-tick.svg);
+        background-size: 15px 11px;
         background-repeat: no-repeat;
         background-position: center;
       }
@@ -134,7 +136,8 @@ table {
     display: block;
   }
 
-  th, td {
+  th,
+  td {
     min-width: 200px;
     padding: 16px 16px 10px;
     text-align: left;

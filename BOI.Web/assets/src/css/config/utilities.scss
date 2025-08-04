@@ -52,3 +52,22 @@
     column-gap: 8px;
   }
 }
+
+// Background Colours
+.u-bg {
+  &--light-teal {
+    background-color: $light-teal;
+  }
+
+  &--light-blue {
+    background-color: $light-blue;
+  }
+
+  &--light-lime {
+    background-color: $light-lime;
+  }
+
+  &--light-honey {
+    background-color: $light-honey;
+  }
+}

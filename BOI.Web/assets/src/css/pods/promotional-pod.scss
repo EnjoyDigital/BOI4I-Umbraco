@@ -3,20 +3,40 @@
   position: relative;
   padding: $standard-section-padding;
   background-color: $sky-blue;
+  
+  &.u-bg--light-teal {
+    background-color: $light-teal;
+    @include section-background($light-teal);
+  }
+
+  &.u-bg--light-blue {
+    background-color: $light-blue;
+    @include section-background($light-blue);
+  }
+
+  &.u-bg--light-lime {
+    background-color: $light-lime;
+    @include section-background($light-lime);
+  }
+
+  &.u-bg--light-honey {
+    background-color: $light-honey;
+    @include section-background($light-honey);
+  }
 }
 
 .promotional-pod__inner {
   position: relative;
   width: 100%;
   max-width: $max-desktop;
-  display: grid;
-  grid-template-columns: auto;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 32px;
   margin: 0 auto;
 
   @include media-min($max-tablet) {
-    grid-template-columns: repeat(2, 1fr);
+    flex-direction: row;
   }
 
   .promotional-pod.-no-image & {
@@ -26,8 +46,18 @@
   }
 }
 
+.promotional-pod__image {
+  @include media-min($max-tablet) {
+    max-width: 50%;
+  }
+}
+
 .promotional-pod__content {
   color: $text-dark;
+
+  @include media-min($max-tablet) {
+    max-width: 50%;
+  }
 
   .button {
     margin-top: 32px;
@@ -36,6 +66,29 @@
 
 .promotional-pod__subtext {
   @include last-child-no-bottom();
+
+  ul {
+    list-style: none;
+    padding-left: 10px; 
+
+    li {
+      position: relative;
+      display: block;
+      margin: 15px 0;
+      padding-left: 16px;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 0;
+        width: 4px;
+        height: 4px;
+        background-color: $text;
+        border-radius: 100%;
+      }
+    }
+  }
 }
 
 .promotional-pod__title {

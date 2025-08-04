@@ -5,6 +5,16 @@
     {
         return;
     }
+    
+    @* TODO: T185692. Need to add background-colour options:
+    - Light Teal: u-bg--light-teal
+    - Light Blue: u-bg--light-blue
+    - Light Lime: u-bg--light-lime
+    - Light Honey: u-bg--light-honey
+
+    Classes to be applied to the "promotional-pod" element.
+    *@
+
     <div class="promotional-pod @(Model.Image != null ? "" : "-no-image")">
         <div class="promotional-pod__inner">
             @if (Model.Image != null)

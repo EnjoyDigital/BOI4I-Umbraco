@@ -201,12 +201,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  background-color: rgba($teal,0.8);
+  background-color: rgba($light-teal,0.8);
   transition: background-color 0.25s ease;
   cursor: pointer;
 
   &:hover {
-    background-color: $teal;
+    background-color: $light-teal;
   }
 
   &:before {
