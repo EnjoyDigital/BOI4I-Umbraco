@@ -9,7 +9,7 @@
     var bdmPod = false;
 }
 
-<section class="hero-area">
+<section class="hero-area @(heroPods == null ? "no-additional" : "")">
     <div class="hero-area__copy">
         <h1>@(Model.Title.IsNullOrWhiteSpace() ? "" : Model.Title)</h1>
         <p>@Model.SupportingText</p>

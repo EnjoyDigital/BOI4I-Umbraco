@@ -7,6 +7,10 @@
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: center bottom -1px;
+
+  &.no-additional {
+    padding-bottom: #{fluid(100, 175)};
+  }
 }
 
 .hero-area__copy,
