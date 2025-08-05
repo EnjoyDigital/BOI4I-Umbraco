@@ -16,6 +16,11 @@
   @include media($max-desktop) {
     padding: 0 20px;
   }
+
+  > .rich-text {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .rich-text.products-intro {
@@ -155,23 +160,17 @@
 
   .icon-new {
     @include media-min($small) {
-      position: absolute;
-      top: 37%;
-      left: 50%;
-      transform: translate(-50%, -50%) translateY(-100%) translateY(-5px);
+      margin-top: 6px;
     }
 
     @include media($small) {
       vertical-align: middle;
-      margin-top: -3px;
-      margin-right: 5px;
+      margin-left: 4px;
     }
   }
 
   .icon-closing {
-    @include media-min($small) {
-      top: 41%;
-    }
+    width: 37px;
   }
 
   &.-withdrawn {

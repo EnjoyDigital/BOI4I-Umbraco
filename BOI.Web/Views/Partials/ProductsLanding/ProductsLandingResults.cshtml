@@ -37,6 +37,7 @@
                             if (resultItem.WithdrawalDateTime.HasValue() && DateTime.Compare(DateTime.Parse(resultItem.WithdrawalDateTime), DateTime.Now) < 0) { continue; }
                             <tr id="@resultItem.Code">
                                 <td data-name="Term">
+                                    @Html.Raw(resultItem.Term)
                                     @if (resultItem.IsNew && !string.IsNullOrWhiteSpace(resultItem.LaunchDateTime))
                                     {
                                         if (DateTime.Now <= Convert.ToDateTime(resultItem.LaunchDateTime).AddDays(7))
@@ -52,7 +53,6 @@
                                             <use xlink:href="#sprite-icon-closing-soon"></use>
                                         </svg>
                                     }
-                                    @Html.Raw(resultItem.Term)
                                 </td>
                                 <td data-name="Rate">@resultItem.FormattedRate% @resultItem.Category</td>
                                 <td data-name="Description">@Html.Raw(resultItem.Description)</td>
