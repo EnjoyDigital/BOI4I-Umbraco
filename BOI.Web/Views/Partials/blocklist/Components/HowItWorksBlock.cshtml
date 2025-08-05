@@ -19,8 +19,11 @@
 
                 <div class="how-it-works-item rich-text">
                     <div class="how-it-works-item__step-number">@i</div>
-                    <span class="h5 how-it-works-item__title">@howItWorksItem.StepTitle</span>
-                    @howItWorksItem.SubSteps
+
+                    <div class="how-it-works-item__content">
+                        <span class="how-it-works-item__title">@howItWorksItem.StepTitle</span>
+                        @howItWorksItem.SubSteps
+                    </div>
                 </div>
             }
         </div>
