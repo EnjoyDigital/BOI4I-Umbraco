@@ -58,8 +58,10 @@
 
   li {
     position: relative;
-    max-width: 203px;
+    width: min-content;
     text-align: center;
+    max-width: 203px;
+    min-width: 188px;
 
     @media (max-width: $max-mobile) {
       display: flex;
