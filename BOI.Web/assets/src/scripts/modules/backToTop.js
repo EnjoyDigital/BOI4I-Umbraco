@@ -38,8 +38,8 @@ function scrollfunction() {
     var scrollTop = document.getElementById("backToTop");
 
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        scrollTop.style.display = "block";
+        scrollTop.classList.add('active');
     } else {
-        scrollTop.style.display = "none";
+        scrollTop.classList.remove('active');
     }
 }
