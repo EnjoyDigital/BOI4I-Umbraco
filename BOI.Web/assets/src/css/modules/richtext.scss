@@ -1,5 +1,6 @@
 .rich-text {
-  padding: var(--sectionPaddingTop) var(--sectionPaddingX) var(--sectionPaddingBottom);
+  // padding: var(--sectionPaddingTop) var(--sectionPaddingX) var(--sectionPaddingBottom);
+  padding: var(--sectionPaddingTop) 0 var(--sectionPaddingBottom);
 
   > * {
     &:last-child:not(img) {

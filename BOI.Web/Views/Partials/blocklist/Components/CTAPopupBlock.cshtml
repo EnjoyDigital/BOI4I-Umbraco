@@ -22,15 +22,19 @@
                 }
                 var uniqueId = @Guid.NewGuid();
 
-                    <a class="button popup-open" href="#" data-popupid="@uniqueId">@popupBlockItem.PopupName</a>
+                    <a class="button popup-open" href="#" data-popupid="@uniqueId">
+                        <span>@popupBlockItem.PopupName</span>
+                    </a>
 
                     <div class="cta-popup" id="@uniqueId">
                         <div class="cta-popup__inner">
                             <div class="cta-popup__header">
                                 <p class="">@popupBlockItem.Title</p>
-                                <button class="button -blue-outline transparent popup-close">Close</button>
+                                <button class="button -blue-outline transparent popup-close">
+                                    <span>Close</span>
+                                </button>
                             </div>
-                            <div class="cta-popup__text">
+                            <div class="cta-popup__text rich-text">
                                 @Html.Raw(popupBlockItem.Description)
                             </div>
                             <div class="cta-popup__footer">
@@ -46,7 +50,9 @@
                                 }
                                 @if (popupBlockItem.CTalink != null)
                                 {
-                                    <a href="@popupBlockItem.CTalink.Url" class="button continue" @(!string.IsNullOrWhiteSpace(popupBlockItem.CTalink.Target) ? "target=" + popupBlockItem.CTalink.Target + "" : string.Empty)>Continue</a>
+                                    <a href="@popupBlockItem.CTalink.Url" class="button continue" @(!string.IsNullOrWhiteSpace(popupBlockItem.CTalink.Target) ? "target=" + popupBlockItem.CTalink.Target + "" : string.Empty)>
+                                        <span>Continue</span>
+                                    </a>
                                 }
                             </div>
                         </div>
@@ -58,7 +64,9 @@
                 {
                     continue;
                 }
-                    <a class="button" href="@popupLinkItem.CTapopupLink.Url" @(!string.IsNullOrWhiteSpace(popupLinkItem.CTapopupLink.Target) ? "target=" + popupLinkItem.CTapopupLink.Target + "" : string.Empty)>@popupLinkItem.CTapopupLink.Name</a>
+                    <a class="button" href="@popupLinkItem.CTapopupLink.Url" @(!string.IsNullOrWhiteSpace(popupLinkItem.CTapopupLink.Target) ? "target=" + popupLinkItem.CTapopupLink.Target + "" : string.Empty)>
+                        <span>@popupLinkItem.CTapopupLink.Name</span>
+                    </a>
                     break;
             }
         }
