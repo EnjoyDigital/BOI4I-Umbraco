@@ -144,11 +144,28 @@ table {
     font-size: 14px;
     line-height: 20px;
     color: $text-dark;
+
+    p {
+      color: inherit;
+    }
+  }
+
+  th {
+    p {
+      margin-bottom: 0;
+    }
   }
 
   td {
     padding: 8px 16px;
     vertical-align: top;
+
+    a,
+    p a,
+    li a {
+      @include simple-link-style();
+      color: $blue;
+    }
   }
 
   thead th,
