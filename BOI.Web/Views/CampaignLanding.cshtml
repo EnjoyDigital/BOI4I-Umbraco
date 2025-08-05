@@ -14,7 +14,7 @@
 	@if (Model.SidebarResources != null)
 	{
 		<div class="campaign-landing__sidebar">
-			@Model.SidebarTitle.SurroundWith(@"<h2 class=""h3 campaign-landing__sidebar-title"">","</h2>")
+			@Model.SidebarTitle.SurroundWith(@"<h2 class=""h2 campaign-landing__sidebar-title"">","</h2>")
 			@await Html.GetBlockListHtmlAsync(Model, "sidebarResources")
 		</div>
 	}

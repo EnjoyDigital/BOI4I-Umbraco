@@ -107,10 +107,10 @@
 
 .document-download-cta-block__title {
   display: block;
-  margin: 24px auto 0;
-  padding: 30px 10px 25px;
-  background-color: $white;
-  text-align: center;
+  margin: 0;
+  padding: 0;
+  color: $text-dark;
+  font-weight: 600;
 
   + .document-download-block {
     margin-top: 0;
@@ -127,7 +127,7 @@
     padding-bottom: 24px;
 
     + .document-download-block-wrapper {
-      margin-top: 0;
+      margin-top: -12px;
     }
 
     .document-download-block {
@@ -152,5 +152,15 @@
 .campaign-landing__sidebar {
   .document-download-block {
     margin: 24px 0 0;
+  }
+
+  .document-download-block-wrapper {
+    &:first-of-type {
+      .document-download-block-item {
+        &:first-child {
+          padding-top: 0;
+        }
+      }
+    }
   }
 }

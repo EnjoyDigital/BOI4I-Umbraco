@@ -27,6 +27,7 @@
 
 .campaign-landing__sidebar {
   width: 100%;
+  padding-top: var(--sectionPaddingTop);
   padding-bottom: 40px;
 
   @include media-min($medium) {
@@ -35,11 +36,5 @@
 
   @include media($small) {
     padding-bottom: 20px;
-  }
-}
-
-.campaign-landing__sidebar-title {
-  @include media-min($medium) {
-    margin-top: 2rem;
   }
 }
