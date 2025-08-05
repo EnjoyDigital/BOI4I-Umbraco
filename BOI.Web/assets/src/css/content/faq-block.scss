@@ -1,12 +1,8 @@
 .faq-block {
   width: 100%;
   max-width: $max-desktop;
-  margin: 40px auto;
-  padding: 0 10px;
-
-  @include media($max-desktop) {
-    padding: 0 20px;
-  }
+  margin: 0 auto;
+  padding: var(--sectionPaddingTop) var(--sectionPaddingX) var(--sectionPaddingTop);
 
   @include media($small) {
     margin: 20px auto;
@@ -19,6 +15,11 @@
 
 .umb-block-list {
   .faq-block {
-    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .rich-text + .faq-block {
+    padding-top: 0;
   }
 }

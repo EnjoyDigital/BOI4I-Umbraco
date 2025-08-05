@@ -10,7 +10,7 @@
 
     <div class="faq-block">
 
-        <h3 class="faq-block__heading">@Model.Title</h3>
+        <h2 class="faq-block__heading">@Model.Title</h2>
 
         @foreach (var faq in Model.FAqs.OfType<BlockListItem<FAqnestedItem>>())
         {
