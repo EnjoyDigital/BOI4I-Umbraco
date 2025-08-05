@@ -40,7 +40,6 @@
   line-height: 28px;
   font-weight: 600;
   text-align: left;
-  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
 
@@ -103,6 +102,13 @@
 
     &:last-child {
       margin-bottom: 0;
+    }
+  }
+
+  > .accordion {
+    .accordion-heading,
+    .accordion-content {
+      background-color: $grey-11;
     }
   }
 }
