@@ -26,6 +26,10 @@
   @include media-min($large) {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .child-page-block-item {
+    border-radius: 8px;
+  }
 }
 
 .child-page-block-item {
@@ -50,6 +54,8 @@
 
   img {
     max-width: 48px;
+    min-width: 38px;
+    height: auto;
   }
 }
 
