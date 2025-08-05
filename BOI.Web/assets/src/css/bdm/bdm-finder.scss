@@ -1,5 +1,32 @@
-.bdm-finder {
-  
+.bdm-finder-wrapper {
+    padding: var(--sectionPaddingTop) var(--sectionPaddingX) var(--sectionPaddingBottom);
+
+    &.u-bg--light-teal {
+        background-color: $light-teal;
+    }
+
+    &.u-bg--light-blue {
+        background-color: $light-blue;
+    }
+
+    &.u-bg--light-lime {
+        background-color: $light-lime;
+    }
+
+    &.u-bg--light-honey {
+        background-color: $light-honey;
+    }
+
+    .bdm-finder {
+        max-width: $max-desktop;
+        margin: 0 auto;
+
+        &.lookup-form-block {
+            @include media($max-tablet) {
+                flex-direction: column;
+            }
+        }
+    }
 }
 
 .bdm-finder-content {
@@ -24,26 +51,30 @@
             flex-direction: column;
 
             @include media-min($max-tablet) {
-                align-items: baseline;
+                align-items: flex-end;
             }
 
             @include media-min($large) {
                 flex-direction: row;
-                align-items: center;
+            }
+
+            .product-filters-input-wrap {
+                margin-top: 0;
+                margin-bottom: 0;
             }
 
             .bdm-finder-inputs {
                 display: flex;
-                align-items: baseline;
+                align-items: flex-start;
                 flex-direction: column;
+                width: 100%;
 
                 @include media-min($max-tablet) {
-                    margin-bottom: 16px;
-                    width: 100%;
+                    flex-direction: row;
                 }
 
                 @include media-min($large) {
-                    flex-direction: row;
+                    align-items: flex-end;
                 }
 
                 #fca-message, #postcode-message {
@@ -52,25 +83,55 @@
 
                 .field-validation-error {
                     color: $dark-red;
+
+                    @include media-min($large) {
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        transform: translateY(100%) translateY(8px);
+                    }
                 }
 
-                .product-filters-input-wrap {
+                &.product-filters-input-wrap {
                     margin-top: 0;
+                    margin-bottom: 0;
+
+                    @include media($large) {
+                        margin-right: 0;
+                    }
+                    
+                    @include media($max-tablet) {
+                        width: 100%;
+
+                        &:not(:last-child) {
+                            margin-right: 0;
+                        }
+                    }
                 }
 
-                .-search-term {
-                    @include media-min($max-tablet) {
+                > .product-filters-input-wrap {
+                    @include media($max-tablet) {
                         width: 100%;
+                        margin-right: 0;
+                        margin-bottom: 16px;
                     }
                 }
             }
 
-            .-button-wrap {
+            .product-filters-input-wrap.-button-wrap {
                 max-width: 235px;
 
                 @include media-min($large-huge) {
                     margin: auto;
                     margin-top: 36px;
+                }
+
+                @include media($large) {
+                    margin: 16px auto 0 0;
+                }
+
+                @include media($max-mobile) {
+                    max-width: none;
                 }
             }
         }
@@ -78,11 +139,9 @@
 }
 
 .bdm-finder-icon-wrap {
-    display: none;
+    margin-right: auto;
 
     @include media-min($max-tablet) {
-        flex: 1;
-        width: 40%;
         display: block;
         margin: 0 auto;
 
@@ -90,10 +149,8 @@
             display: block;
             width: 125px;
             height: auto;
-            margin: auto;
 
             @include media-min($large-huge) {
-                margin: auto 0 auto auto;
                 width: 90px;
             }
 
@@ -101,5 +158,15 @@
                 width: 125px;
             }
         }
+    }
+}
+
+.bdm-finder__listing {
+    max-width: $max-desktop;
+    margin: 0 auto;
+    padding: var(--sectionPaddingTop) 0 var(--sectionPaddingBottom);
+
+    .results-area {
+        margin-top: 0;
     }
 }

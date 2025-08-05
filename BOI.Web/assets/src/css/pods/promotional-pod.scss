@@ -1,7 +1,7 @@
 .promotional-pod {
   @include section-background($sky-blue);
   position: relative;
-  padding: $standard-section-padding;
+  padding: var(--sectionPaddingTop) var(--sectionPaddingX) var(--sectionPaddingBottom);
   background-color: $sky-blue;
   
   &.u-bg--light-teal {

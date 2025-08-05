@@ -6,9 +6,10 @@
 
 .bdm-item {
   width: 100%;
-  background-color: $grey-3;
+  background-color: $white;
   padding: 24px 24px 40px;
   margin-bottom: 24px;
+  border-radius: 12px;
 
   &.no-results {
       width: calc(100%);

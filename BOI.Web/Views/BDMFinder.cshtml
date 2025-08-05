@@ -10,63 +10,72 @@
     @await Html.GetBlockListHtmlAsync(Model, "content")
 }
 
+<section class="bdm-finder-lookup-section">
+    @* TODO: T185694. Need to add background-colour options:
+      - Light Teal: u-bg--light-teal
+      - Light Blue: u-bg--light-blue
+      - Light Lime: u-bg--light-lime
+      - Light Honey: u-bg--light-honey
 
-<div class="umb-block-list">
-    <div class="lookup-form-block bdm-finder">
-        <div class="lookup-form-block-content bdm-finder-content">
-            <h2 class="lookup-form-block__title">Find your dedicated contact</h2>
-
-            <form id="bdm-finder" action="@Model.Url()" class="lookup-form bdm-finder-form">
-                <fieldset>
-                    <div class="lookup-form-inner bdm-finder-form-inner">
-                        <div class="product-filters-input-wrap bdm-finder-inputs">
-                            <div class="product-filters-input-wrap -search-term">
-                                <label for="fcaNumber">FCA Number</label>
-                                <input type="text" name="fcaNumber" id="fcaNumber" placeholder="Eg. 123456" value="@Model.FcaNumber" />
-                                <span id="fca-message" class="field-validation-error ">@Model.FCacodeValidationMessage@*Please enter FCA Number*@</span>
-                            </div>
-                            <div class="product-filters-input-wrap -search-term">
-                                <label for="postcode">Your Postcode</label>
-                                <input type="text" name="postcode" id="postcode" placeholder="Eg. LS2 7EH" value="@Model.Postcode" />
-                                <span id="postcode-message" class="field-validation-error ">@Model.PostcodeValidationMessage@*Please enter a valid postcode*@</span>
-                            </div>
-                        </div>
-                        <div class="product-filters-input-wrap -button-wrap">
-                            <button class="button">
-                                <svg class="[ icon icon-search -white ]" aria-hidden="true">
-                                    <use xlink:href="#sprite-icon-search"></use>
-                                </svg>
-                                <span>Find your contact</span>
-                            </button>
-                        </div>
-                    </div>
-                </fieldset>
-            </form>
-            @if (Model.ContactUsLink != null)
+      Classes to be applied to the "bdm-finder-wrapper" element.
+      Default class: "u-bg--light-teal".
+    *@
+    <div class="bdm-finder-wrapper u-bg--light-teal">
+        <div class="lookup-form-block bdm-finder">
+            @if (Model.LookupIcon != null)
             {
-                <p>
-                    <svg class="[ icon icon-phone -black ]" aria-hidden="true">
-                        <use xlink:href="#sprite-icon-phone"></use>
-                    </svg>
-                    <strong>Any questions?</strong> <a href='@Model.ContactUsLink.Url'>@Model.ContactUsLink.Name</a>
-                </p>
+                <div class="bdm-finder-icon-wrap">
+                    <img src="@Model.LookupIcon.GetCropUrl()" class="icon-bdm-finder" alt="@Model.LookupIcon.GetImageAlternativeText()" />
+                </div>
             }
 
-        </div>
+            <div class="lookup-form-block-content bdm-finder-content">
+                <h2 class="lookup-form-block__title">Find your dedicated contact</h2>
 
-        @if (Model.LookupIcon != null)
-        {
-            <div class="bdm-finder-icon-wrap">
-                <img src="@Model.LookupIcon.GetCropUrl()" class="icon-bdm-finder" alt="@Model.LookupIcon.GetImageAlternativeText()" />
+                <form id="bdm-finder" action="@Model.Url()" class="lookup-form bdm-finder-form">
+                    <fieldset>
+                        <div class="lookup-form-inner bdm-finder-form-inner">
+                            <div class="product-filters-input-wrap bdm-finder-inputs">
+                                <div class="product-filters-input-wrap -search-term">
+                                    <label for="fcaNumber">FCA Number</label>
+                                    <input type="text" name="fcaNumber" id="fcaNumber" placeholder="Eg. 123456" value="@Model.FcaNumber" />
+                                    <span id="fca-message" class="field-validation-error ">@Model.FCacodeValidationMessage@*Please enter FCA Number*@</span>
+                                </div>
+                                <div class="product-filters-input-wrap -search-term">
+                                    <label for="postcode">Your Postcode</label>
+                                    <input type="text" name="postcode" id="postcode" placeholder="Eg. LS2 7EH" value="@Model.Postcode" />
+                                    <span id="postcode-message" class="field-validation-error ">@Model.PostcodeValidationMessage@*Please enter a valid postcode*@</span>
+                                </div>
+                            </div>
+                            <div class="product-filters-input-wrap -button-wrap">
+                                <button class="button">
+                                    <svg class="[ icon icon-search -white ]" aria-hidden="true">
+                                        <use xlink:href="#sprite-icon-search"></use>
+                                    </svg>
+                                    <span>Find your contact</span>
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                @if (Model.ContactUsLink != null)
+                {
+                    <p>
+                        <svg class="[ icon icon-phone -black ]" aria-hidden="true">
+                            <use xlink:href="#sprite-icon-phone"></use>
+                        </svg>
+                        <strong>Any questions?</strong> <a href='@Model.ContactUsLink.Url'>@Model.ContactUsLink.Name</a>
+                    </p>
+                }
+
             </div>
-        }
+        </div>
     </div>
 
-    <div id="bdm-listing">
+    <div id="bdm-listing" class="bdm-finder__listing">
         <partial name="/Views/Partials/BdmFinder/BdmListing.cshtml" />        
     </div>
-
-</div>
+</section>
 
 @if (Model.Pods != null)
 {
