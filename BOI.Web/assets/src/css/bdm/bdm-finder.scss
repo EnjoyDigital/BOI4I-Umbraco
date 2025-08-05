@@ -148,7 +148,7 @@
         .icon-bdm-finder {
             display: block;
             width: 125px;
-            height: auto;
+            height: aut;
 
             @include media-min($large-huge) {
                 width: 90px;
@@ -164,7 +164,7 @@
 .bdm-finder__listing {
     max-width: $max-desktop;
     margin: 0 auto;
-    padding: var(--sectionPaddingTop) 0 var(--sectionPaddingBottom);
+    padding: var(--sectionPaddingTop) var(--sectionPaddingX) var(--sectionPaddingBottom);
 
     .results-area {
         margin-top: 0;
