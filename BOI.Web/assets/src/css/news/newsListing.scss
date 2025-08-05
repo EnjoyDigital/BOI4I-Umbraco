@@ -1,22 +1,18 @@
 .news-article-block {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto;
+  gap: #{fluid(24, 32)};
   width: 100%;
   max-width: $max-desktop;
-  margin: 20px auto;
-  padding: 0 10px;
-  flex-wrap: wrap;
+  margin: 0 auto;
+  padding: var(--sectionPaddingTop) var(--sectionPaddingX) var(--sectionPaddingBottom);
 
-  @include media($max-desktop) {
-    margin: 20px auto;
-    padding: 0 20px;
+  @include media-min($max-mobile) {
+    grid-template-columns: repeat(2, 1fr);
   }
-
-  @include media($large) {
-    flex-wrap: wrap;
-  }
-
-  .campaign-landing & {
-    flex-wrap: wrap;
+  
+  @include media-min($max-tablet) {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -33,80 +29,27 @@
 
 .news-article-block-item {
   position: relative;
-  margin: 24px 24px 0 0;
-  padding: 20px 20px 25px;
-  width: calc(25% - 24px);
-  background-color: $white;
-  border: 1px solid $light-teal;
-  transition: background-color 0.25s ease, border-color 0.25s ease;
+  display: block;
+}
 
-  &:last-child {
-    margin-right: 0;
-  }
+.news-article-block-item__image {
+  border-radius: 8px;
+  margin-bottom: 8px;
+  overflow: hidden;
 
-  @include media($large) {
-    width: calc(50% - 12px);
-
-    &:nth-child(2n) {
-      margin-right: 0;
-    }
-  }
-
-  @include media($small) {
+  img {
     width: 100%;
-    margin-right: 0;
-  }
-
-  .icon-pdf-document-icon {
-    width: 32px;
-    height: 42px;
-    transition: fill 0.25s ease;
-  }
-
-  p {
-    display: inline-block;
-    padding-bottom: 2px;
-    transition: color 0.25s ease, border-color 0.25s ease;
-
-    &.news-article-block-item__cta{
-      border-bottom: 2px solid rgba($blue,0.3);
-    }
-  }
-
-  &:not(.-no-hover):hover {
-    background-color: $blue;
-    border-color: $blue;
-
-    p,
-    .news-article-block-item__title {
-      color: $white;
-    }
-
-    p {
-      border-color: $white;
-    }
-
-    .icon-pdf-document-icon {
-      fill: $white;
-    }
-  }
-
-  .campaign-landing & {
-    @include media-min($small) {
-      width: calc(50% - 12px);
-
-      &:nth-child(2n) {
-        margin-right: 0;
-      }
-    }
+    max-width: none;
+    height: auto;
   }
 }
 
 .news-article-block-item__title {
-  display: block;
-  margin: 15px 0;
-  font-weight: 700;
-  transition: color 0.25s ease;
-  line-height: 24.51px;
-  font-size: 18px;
+  font-weight: 600;
+  color: $blue;
+
+  a {
+    @include simple-link-style();
+    color: inherit;
+  }
 }
