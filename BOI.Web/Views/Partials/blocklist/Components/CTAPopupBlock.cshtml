@@ -28,14 +28,18 @@
 
                     <div class="cta-popup" id="@uniqueId">
                         <div class="cta-popup__inner">
-                            <div class="cta-popup__header">
-                                <p class="">@popupBlockItem.Title</p>
-                                <button class="button -blue-outline transparent popup-close">
-                                    <span>Close</span>
-                                </button>
-                            </div>
-                            <div class="cta-popup__text rich-text">
-                                @Html.Raw(popupBlockItem.Description)
+                            <div class="cta-popup__text">
+                                <div class="cta-popup__header">
+                                    <h2 class="cta-popup__header-title">@popupBlockItem.Title</h2>
+                                    <button class="transparent popup-close" title="Close">
+                                        <svg class="[ icon icon-close -blue ]" aria-hidden="true">
+                                            <use xlink:href="#sprite-icon-close"></use>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="rich-text">
+                                    @Html.Raw(popupBlockItem.Description)
+                                </div>
                             </div>
                             <div class="cta-popup__footer">
                                 @if (popupBlockItem.ConfirmationText.HasValue())
@@ -50,7 +54,7 @@
                                 }
                                 @if (popupBlockItem.CTalink != null)
                                 {
-                                    <a href="@popupBlockItem.CTalink.Url" class="button continue" @(!string.IsNullOrWhiteSpace(popupBlockItem.CTalink.Target) ? "target=" + popupBlockItem.CTalink.Target + "" : string.Empty)>
+                                    <a href="@popupBlockItem.CTalink.Url" class="button continue" @(!string.IsNullOrWhiteSpace(popupBlockItem.CTalink.Target) ? "target=" + popupBlockItem.CTalink.Target + "" : string.Empty) disabled="disabled">
                                         <span>Continue</span>
                                     </a>
                                 }

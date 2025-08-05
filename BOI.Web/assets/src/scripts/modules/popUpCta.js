@@ -55,10 +55,39 @@ function init() {
                             checkbox.removeAttribute('aria-describedby');
                         }
                     });
+
+                    popup.querySelector('input[type=checkbox]').addEventListener('change', function(e) {
+                        var checkId = popupId + "-check";
+                        var checkbox = document.getElementById(checkId);
+
+                        if (checkbox.checked == false) {
+                            popup.querySelector(".continue").setAttribute('disabled', 'disabled');
+                        } else {
+                            popup.querySelector(".continue").removeAttribute('disabled');
+                        }
+                    })
                 }
             });
         }
     }
+
+    var $ctaPopupText = document.querySelectorAll('.cta-popup__text');
+
+    $ctaPopupText.forEach((element) => {
+        element.addEventListener('scroll', () => {            
+            var $header = element.querySelector('.cta-popup__header');
+            var $parent = element.parentElement;
+            var $footer = $parent.querySelector('.cta-popup__footer');
+
+            if (element.scrollTop > 10) {
+                $header.classList.add('reduce');
+                $footer.classList.add('shadow');
+            } else {
+                $header.classList.remove('reduce');
+                $footer.classList.remove('shadow');
+            }
+        })
+    })
 }
 
 // function showPopup() {

@@ -310,7 +310,9 @@ input[type=checkbox] {
     input[type=checkbox]:checked + label,
     input[type=checkbox]:checked + input + label {
         &:before {
-            background-image: url(/assets/dist/images/icons/sprite-icon-checkbox-tick-blue.svg);
+          background-color: $blue;
+          border-color: $blue;
+          background-image: url(/assets/dist/images/icons/sprite-icon-checkbox-tick-white.svg);
         }
     }
 }
