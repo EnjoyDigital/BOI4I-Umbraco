@@ -15,21 +15,23 @@ export default function Navigation() {
     if ($button) {
         $button.addEventListener('click', function() {
             if ($mobileNav.classList.contains('nav-active')) {
+                $nav.classList.remove('nav-active');
                 $mobileNav.classList.remove('nav-active');
                 $mobileTop.classList.remove('nav-active');
                 $searchBox.classList.remove('search-active');
                 $main.style.position = "static";
                 $button.setAttribute('aria-label', 'Open main menu');
                 $button.setAttribute('aria-expanded', false);
-                $button.innerHTML = '<img src="/assets/dist/images/icons/icon-hamburger-dark-blue.svg">';
+                $button.innerHTML = '<svg class="[ icon icon-burger-menu -blue ]" aria-hidden="true"><use xlink:href="#sprite-icon-burger-menu"></use></svg>Menu';
             } else {
+                $nav.classList.add('nav-active');
                 $mobileNav.classList.add('nav-active');
                 $mobileTop.classList.add('nav-active');
                 $searchBox.classList.add('search-active');
                 $main.style.position = "fixed";
                 $button.setAttribute('aria-label', 'Close main menu');
                 $button.setAttribute('aria-expanded', true);
-                $button.innerHTML = '<svg class="[ icon icon-cross-alt -dark-blue ]" aria-hidden="true"><use xlink:href="#sprite-icon-cross-alt"></use></svg>Close';
+                $button.innerHTML = '<svg class="[ icon icon-cross-alt -blue ]" aria-hidden="true"><use xlink:href="#sprite-icon-cross-alt"></use></svg>Close';
                 while ($mobileTop.childNodes.length > 0) { 
                     $headerBottom.appendChild($mobileTop.childNodes[0]);
                 }
@@ -109,7 +111,7 @@ export default function Navigation() {
                 } else {
                     $sibling.style.display = "flex";
                     $parent.classList.add('submenu-open');
-                    $headerBottom.style.height = "calc(100% - 80px)";
+                    // $headerBottom.style.height = "calc(100% - 120px)";
                     $topLevelLink.setAttribute('aria-expanded', true)
                 }
             });

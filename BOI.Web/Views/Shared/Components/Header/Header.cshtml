@@ -52,7 +52,10 @@
                 @if (Model.SiteRoot.MainNavigation != null && Model.SiteRoot.MainNavigation.Any() && !Model.HideNavigation)
                 {
                     <button class="header-top__mobile--hamburger" aria-label="Open main menu" aria-haspopup="true" aria-expanded="false" aria-controls="MainMenu">
-                        <img src="~/assets/dist/images/icons/icon-hamburger-dark-blue.svg" alt="">
+                        <svg class="[ icon icon-burger-menu -blue ]" aria-hidden="true">
+                            <use xlink:href="#sprite-icon-burger-menu"></use>
+                        </svg>
+                        Menu
                     </button>
                 }
             </div>

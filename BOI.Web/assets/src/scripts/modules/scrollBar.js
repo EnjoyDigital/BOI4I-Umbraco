@@ -7,6 +7,7 @@ export default function Scrollbar() {
 
   if ($slideWrapper.length > 0) {
     setScollBarHeight()
+    $('html').addClass('scroll-bar-element-visible');
   }
 
   window.onresize = function () {
