@@ -12,17 +12,26 @@
                     @foreach (var result in Model.Results.QueryResults)
                     {
                         <div class="news-article-block-item">
-                            @* TODO: T185736. Add new image field *@
-                            <div class="news-article-block-item__image">
-                                <img src="https://picsum.photos/320/180" alt="" loading="lazy" width="320" height="180" />
-                            </div>
 
                             @if (!string.IsNullOrEmpty(result.ArticleUrl))
                             {
+                                @* TODO: T185736. Add new image field 
+                                   Image crop dimensions: 320 x 180
+                                *@
+                                <div class="news-article-block-item__image">
+                                    <a href="@result.ArticleUrl"><img src="/assets/dist/images/static-only/bdm-finder-hero.jpg" alt="" loading="lazy" width="320" height="180" /></a>
+                                </div>
+
                                 <h3 class="news-article-block-item__title"><a href="@result.ArticleUrl">@result.ArticleName</a></h3>
                             } else 
                             {
-                                <p class="news-article-block-item__title">@result.ArticleName</p>
+                                @* TODO: T185736. Add new image field 
+                                   Image crop dimensions: 320 x 180
+                                *@
+                                <div class="news-article-block-item__image">
+                                    <img src="/assets/dist/images/static-only/bdm-finder-hero.jpg" alt="" loading="lazy" width="320" height="180" />
+                                </div>
+                                <h3 class="news-article-block-item__title">@result.ArticleName</h3>
                             }
 
                             @*<p class="title -blue-text">@result.ArticleName</p>*@

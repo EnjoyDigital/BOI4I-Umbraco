@@ -41,6 +41,15 @@
     width: 100%;
     max-width: none;
     height: auto;
+    transition: transform 0.25s ease;
+  }
+
+  a {
+    &:hover {
+      img {
+        transform: scale(1.1);
+      }
+    }
   }
 }
 
