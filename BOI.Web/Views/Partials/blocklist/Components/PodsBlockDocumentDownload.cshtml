@@ -1,0 +1,11 @@
+﻿@inherits UmbracoViewPage<PodsBlockDocumentDownload>
+@if(Model.Pods.NullOrEmpty())
+{
+    return;
+}
+<div class="document-download-block-wrapper">
+@foreach(var pod in Model.Pods)
+{
+        <partial name="/views/partials/blocklist/components/DocumentUploadBlockBody.cshtml" model="pod" />
+}
+</div>

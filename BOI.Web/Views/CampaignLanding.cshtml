@@ -19,6 +19,11 @@
 		</div>
 	}
 </section>
+@if (Model.HasValue("contentBlockFullWidth"))
+{
+	@await Html.GetBlockListHtmlAsync(Model, "contentBlockFullWidth")
+}
+
 
 @if (Model.Pods != null)
 {
