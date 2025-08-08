@@ -55,10 +55,6 @@
 .promotional-pod__content {
   color: $text-dark;
 
-  @include media-min($max-tablet) {
-    max-width: 50%;
-  }
-
   .button {
     margin-top: 32px;
   }
