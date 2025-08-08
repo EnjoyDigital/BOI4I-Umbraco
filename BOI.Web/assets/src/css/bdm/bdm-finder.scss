@@ -144,19 +144,15 @@
     @include media-min($max-tablet) {
         display: block;
         margin: 0 auto;
+    }
 
-        .icon-bdm-finder {
-            display: block;
-            width: 125px;
-            height: aut;
+    .icon-bdm-finder {
+        display: block;
+        width: 120px;
+        height: auto;
 
-            @include media-min($large-huge) {
-                width: 90px;
-            }
-
-            @include media-min($large-huge) {
-                width: 125px;
-            }
+        @include media-min($large-huge) {
+            width: 160px;
         }
     }
 }
