@@ -136,9 +136,16 @@ table {
     display: block;
   }
 
+  tr {
+    width: auto !important; // override inline styles
+    height: auto !important; // override inline styles
+  }
+
   th,
   td {
     min-width: 200px;
+    width: auto !important; // override inline styles
+    height: auto !important; // override inline styles
     padding: 16px 16px 10px;
     text-align: left;
     font-size: 14px;
