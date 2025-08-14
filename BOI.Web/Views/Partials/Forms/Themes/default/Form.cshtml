@@ -60,10 +60,11 @@
                                 @if (!f.HideLabel)
                                 {
                                                     <label for="@f.Id" class="umbraco-forms-label">
-                                        @f.Caption @if (f.ShowIndicator)
+                                                    @if (f.ShowIndicator)
                                         {
                                                                 <span class="umbraco-forms-indicator">@Model.Indicator</span>
                                         }
+                                        @f.Caption 
                                                     </label>
                                 }
 

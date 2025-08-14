@@ -3,6 +3,12 @@
   padding-bottom: var(--sectionPaddingBottom);
 }
 
+.rich-text {
+  + .form.pod {
+    padding-top: 0;
+  }
+}
+
 .umbraco-forms-form {
   padding: 0;
 
@@ -50,11 +56,7 @@
   color: $text-dark;
   font-size: 18px;
   line-height: 28px;
-  font-weight: 600;
-}
-
-.umbraco-forms-indicator {
-  color: $blue;
+  font-weight: 600 !important; // override inline styles
 }
 
 .umbraco-forms-tooltip.help-block {
