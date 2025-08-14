@@ -22,21 +22,6 @@ namespace BOI.Umbraco.Models
 	/// <summary>Hero Mixin</summary>
 	public partial interface IHeroMixin : IPublishedContent
 	{
-		/// <summary>Background Colour</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		global::Umbraco.Cms.Core.PropertyEditors.ValueConverters.ColorPickerValueConverter.PickedColor BackgroundColour { get; }
-
-		/// <summary>Background Image</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent BackgroundImage { get; }
-
-		/// <summary>BDM Finder CTA</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		global::Umbraco.Cms.Core.Models.Link BDmfinderCta { get; }
-
 		/// <summary>CTA</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -46,19 +31,6 @@ namespace BOI.Umbraco.Models
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent> HeroPodPicker { get; }
-
-		/// <summary>Hide BDM Finder CTA</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		bool HideBdmfinder { get; }
-
-		/// <summary>Hide Product CTA</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		bool HideProductCta { get; }
-
-		/// <summary>Product CTA</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		global::Umbraco.Cms.Core.Models.Link ProductCta { get; }
 
 		/// <summary>Supporting Text</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
@@ -103,45 +75,6 @@ namespace BOI.Umbraco.Models
 		// properties
 
 		///<summary>
-		/// Background Colour: This field will allow you to choose the colour of the background elements, in the hero banner.
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("backgroundColour")]
-		public virtual global::Umbraco.Cms.Core.PropertyEditors.ValueConverters.ColorPickerValueConverter.PickedColor BackgroundColour => GetBackgroundColour(this, _publishedValueFallback);
-
-		/// <summary>Static getter for Background Colour</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		public static global::Umbraco.Cms.Core.PropertyEditors.ValueConverters.ColorPickerValueConverter.PickedColor GetBackgroundColour(IHeroMixin that, IPublishedValueFallback publishedValueFallback) => that.Value<global::Umbraco.Cms.Core.PropertyEditors.ValueConverters.ColorPickerValueConverter.PickedColor>(publishedValueFallback, "backgroundColour");
-
-		///<summary>
-		/// Background Image: This is the image that will appear on the background of the hero area.
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("backgroundImage")]
-		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent BackgroundImage => GetBackgroundImage(this, _publishedValueFallback);
-
-		/// <summary>Static getter for Background Image</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		public static global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent GetBackgroundImage(IHeroMixin that, IPublishedValueFallback publishedValueFallback) => that.Value<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(publishedValueFallback, "backgroundImage");
-
-		///<summary>
-		/// BDM Finder CTA: A page specific BDM Finder link can be chosen here. If nothing is selected this will fall back to the global setting.
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("bDMFinderCta")]
-		public virtual global::Umbraco.Cms.Core.Models.Link BDmfinderCta => GetBDmfinderCta(this, _publishedValueFallback);
-
-		/// <summary>Static getter for BDM Finder CTA</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		public static global::Umbraco.Cms.Core.Models.Link GetBDmfinderCta(IHeroMixin that, IPublishedValueFallback publishedValueFallback) => that.Value<global::Umbraco.Cms.Core.Models.Link>(publishedValueFallback, "bDMFinderCta");
-
-		///<summary>
 		/// CTA: The CTA (Call To Action) should be used to direct the user to a specific page.
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
@@ -166,41 +99,6 @@ namespace BOI.Umbraco.Models
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
 		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		public static global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent> GetHeroPodPicker(IHeroMixin that, IPublishedValueFallback publishedValueFallback) => that.Value<global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>>(publishedValueFallback, "heroPodPicker");
-
-		///<summary>
-		/// Hide BDM Finder CTA: Tick this checkbox to hide the BDM Finder CTA
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[ImplementPropertyType("hideBDMFinder")]
-		public virtual bool HideBdmfinder => GetHideBdmfinder(this, _publishedValueFallback);
-
-		/// <summary>Static getter for Hide BDM Finder CTA</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		public static bool GetHideBdmfinder(IHeroMixin that, IPublishedValueFallback publishedValueFallback) => that.Value<bool>(publishedValueFallback, "hideBDMFinder");
-
-		///<summary>
-		/// Hide Product CTA: Tick this checkbox to hide the Product CTA
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[ImplementPropertyType("hideProductCTA")]
-		public virtual bool HideProductCta => GetHideProductCta(this, _publishedValueFallback);
-
-		/// <summary>Static getter for Hide Product CTA</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		public static bool GetHideProductCta(IHeroMixin that, IPublishedValueFallback publishedValueFallback) => that.Value<bool>(publishedValueFallback, "hideProductCTA");
-
-		///<summary>
-		/// Product CTA: A page specific Product CTA can be chosen here. If nothing is selected this will fall back to the global setting.
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("productCTA")]
-		public virtual global::Umbraco.Cms.Core.Models.Link ProductCta => GetProductCta(this, _publishedValueFallback);
-
-		/// <summary>Static getter for Product CTA</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		public static global::Umbraco.Cms.Core.Models.Link GetProductCta(IHeroMixin that, IPublishedValueFallback publishedValueFallback) => that.Value<global::Umbraco.Cms.Core.Models.Link>(publishedValueFallback, "productCTA");
 
 		///<summary>
 		/// Supporting Text: The supporting text that will appear underneath the title in the hero. If left blank this will not show on the hero area
