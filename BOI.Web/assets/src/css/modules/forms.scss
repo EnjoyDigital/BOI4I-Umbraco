@@ -49,6 +49,7 @@ input {
 }
 
 input[type=text],
+input[type=number],
 textarea {
   border: 1px solid $text;
   border-radius: 8px;
@@ -59,11 +60,11 @@ textarea {
   transition: border-color 0.25s ease, border-width 0.25s ease background-color 0.25s ease;
   color: $text-dark;
 
-  &:hover:not(:focus):not(.input-validation-error) {
+  &:hover:not(:focus):not(.input-validation-error):not(:disabled):not([disabled="true"]) {
     border-color: $text;
   }
 
-  &:hover {
+  &:hover:not(:disabled):not([disabled="true"]) {
     border-color: $blue;
   }
 
@@ -73,7 +74,8 @@ textarea {
     padding: 11px 49px 11px 16px;
   }
 
-  &:disabled {
+  &:disabled,
+  &[disabled="true"] {
     border-color: $grey-8;
     cursor: not-allowed;
   }
@@ -373,5 +375,67 @@ input[type=checkbox] {
     .multiplechoice, .radiobuttons, .singlechoice, .dataconsent {
       width: 100%;
     }*/
+  }
+}
+
+/* Calculators */
+.calculator-form {
+  display: grid;
+  grid-template-columns: auto;
+  row-gap: 24px;
+
+  @include media-min($small) {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 20%;
+    row-gap: 32px;
+  }
+
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .field {
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
+
+    + h4 {
+      margin-top: 24px;
+
+      @include media-min($small) {
+        margin-top: 56px;
+      }
+    }
+
+    &.button-wrapper {
+      margin-top: auto;
+    }
+  }
+
+  .calculation-wrapper {
+    grid-column: span 2;
+  }
+
+  .calculation,
+  .calculation .text-right {
+    display: grid;
+    grid-template-columns: auto;
+    row-gap: 24px;
+
+    @include media-min($small) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .calculation {
+    @include media-min($small) {
+      column-gap: 20%;
+    }
+
+    .text-right {
+      column-gap: 8px;
+    }
   }
 }

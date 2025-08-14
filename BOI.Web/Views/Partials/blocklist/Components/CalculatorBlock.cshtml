@@ -6,6 +6,7 @@
     }
 
 }
+@*
     <div class="calculator-frame">
         <div id="calculator-container">@Html.Raw(Model.CalculatorEmbed)</div>
         <div class="rich-text">
@@ -15,3 +16,220 @@
     <div class="rich-text">
         @Model.DisclaimerText
     </div>
+    *@
+
+    @* DEBUG: TO BE REMOVED *@
+    @* NOTES: 
+       - add "button-wrapper" class to the .field that contains the button
+       - add inner span tag to all buttons.
+       - add "button--secondary" to "print results" button.
+       - add icons to "save results" and "print results".
+       - Move the "field error message" block to below the result
+    *@
+    <div class="calculator-frame">
+        <div id="calculator-container">
+            <section id="boi-calculator" class="bank-of-ireland" data-gtm-vis-recent-on-screen36935117_59="879" data-gtm-vis-first-on-screen36935117_59="879" data-gtm-vis-total-visible-time36935117_59="100" data-gtm-vis-has-fired36935117_59="1">
+            <p class="required-text">
+                <span class="red">*</span>
+                <strong>Required</strong>
+            </p>
+            <div class="calculator-form" data-pdfurl="https://calculator.bankofirelanduk.com/api/getpdf/GenerateAffordabilityCalculatorPDF" data-apiurl="https://calculator.bankofirelanduk.com/api/calculate" data-typeid="1cfa7353-6474-41f0-91d8-cd224ab090c7 " data-versionid="f667c3f6-c8fe-4b54-bbd1-8c9ead119a91">
+                <fieldset>
+                    <h4>Applicant information</h4>
+                    <div class="field">
+                        <label for="number-of-adults"> Number of adults <span class="help-toggle">?</span>
+                        <span id="number-of-adults-tooltip" class="help-tooltip" role="tooltip">Enter the number of applications and other adults who are financially dependent upon the applicants. <i class="close-tooltip"></i>
+                        </span>
+                        </label>
+                        <div class="select-wrapper">
+                        <select name="number-of-adults" id="number-of-adults" aria-describedby="number-of-adults-tooltip" data-maxval="4" data-minval="1" data-fielderror="number of adults">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                        <div class="select-arrow"></div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="number-of-children"> Number of children <span class="help-toggle">?</span>
+                        <span id="number-of-children-tooltip" class="help-tooltip" role="tooltip">Enter the number of children under the age of 18. Exclude any children who do not live with the applicants. <i class="close-tooltip"></i>
+                        </span>
+                        </label>
+                        <div class="select-wrapper">
+                        <select name="number-of-children" id="number-of-children" aria-describedby="number-of-children-tooltip" data-maxval="6" data-fielderror="number of children" data-minval="0">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                        <div class="select-arrow"></div>
+                        </div>
+                    </div>
+                    <h4>Mortgage terms</h4>
+                    <div class="field">
+                        <label for="mortgage-term-years">Years</label>
+                        <div class="select-wrapper">
+                        <select name="mortgage-term-years" id="mortgage-term-years" data-minval="5" data-fielderror="mortgage terms" data-maxval="35">
+                            <option value="35">35</option>
+                            <option value="34">34</option>
+                            <option value="33">33</option>
+                            <option value="32">32</option>
+                            <option value="31">31</option>
+                            <option value="30">30</option>
+                            <option value="29">29</option>
+                            <option value="28">28</option>
+                            <option value="27">27</option>
+                            <option value="26">26</option>
+                            <option value="25">25</option>
+                            <option value="24">24</option>
+                            <option value="23">23</option>
+                            <option value="22">22</option>
+                            <option value="21">21</option>
+                            <option value="20">20</option>
+                            <option value="19">19</option>
+                            <option value="18">18</option>
+                            <option value="17">17</option>
+                            <option value="16">16</option>
+                            <option value="15">15</option>
+                            <option value="14">14</option>
+                            <option value="13">13</option>
+                            <option value="12">12</option>
+                            <option value="11">11</option>
+                            <option value="10">10</option>
+                            <option value="9">9</option>
+                            <option value="8">8</option>
+                            <option value="7">7</option>
+                            <option value="6">6</option>
+                            <option value="5">5</option>
+                        </select>
+                        <div class="select-arrow"></div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="mortgage-term-months">Months</label>
+                        <div class="select-wrapper">
+                        <select name="mortgage-term-months" id="mortgage-term-months" disabled="">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                        </select>
+                        <div class="select-arrow"></div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="five-year-fixed-rate"> Rate type </label>
+                        <div class="select-wrapper">
+                        <select name="five-year-fixed-rate" id="five-year-fixed-rate" aria-describedby="five-year-fixed-rate-tooltip">
+                            <option value="0">Variable rate or 1 – 4 year fixed rate</option>
+                            <option value="1">5 years or more fixed rate</option>
+                        </select>
+                        <div class="select-arrow"></div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="five-year-fixed-rate-percent">
+                        <span class="red" style="display:none">*</span> Interest rate (%) </label>
+                        <input type="number" disabled="true" id="five-year-fixed-rate-percent" name="five-year-fixed-rate-percent" aria-describedby="interest-rate-tooltip" data-max="20" data-name="Pay Rate" placeholder="">
+                    </div>
+                </fieldset>
+                <fieldset class="wide">
+                    <h4>Applicant finances</h4>
+                    <div class="field align-bottom">
+                        <label for="applicant-1-income">
+                        <span class="red">*</span>Applicant 1 annual income (£) <span class="help-toggle">?</span>
+                        <span id="applicant-1-income-tooltip" class="help-tooltip" role="tooltip">Enter the annual income for applicant 1. Read our help page if you're not sure what to include in this amount. <i class="close-tooltip"></i>
+                        </span>
+                        </label>
+                        <input type="text" id="applicant-1-income" name="" aria-describedby="applicant-1-income-tooltip" data-required="true" data-name="Applicant 1 annual income" placeholder="Applicant 1 annual income (£)">
+                    </div>
+                    <div class="field align-bottom">
+                        <label for="applicant-2-income"> Applicant 2 annual income (£) </label>
+                        <input type="text" id="applicant-2-income" name="applicant-2-income" aria-describedby="applicant-2-income-tooltip" disabled="true">
+                    </div>
+                    <div class="field align-bottom">
+                        <label for="outgoings"> Monthly outgoings (£) <span class="help-toggle">?</span>
+                        <span id="outgoings-tooltip" class="help-tooltip" role="tooltip">Read our affordability calculator help page if you're not sure what to include in this amount. <i class="close-tooltip"></i>
+                        </span>
+                        </label>
+                        <input type="text" id="outgoings" name="outgoings" placeholder="Monthly outgoings" aria-describedby="outgoings-tooltip">
+                    </div>
+                    <div class="field align-bottom">
+                        <label for="ltv">LTV</label>
+                        <div class="select-wrapper">
+                        <select name="ltv" id="ltv">
+                            <option value="1">Less than or equal to 90%</option>
+                            <option value="0">More than 90%</option>
+                        </select>
+                        <div class="select-arrow"></div>
+                        </div>
+                    </div>
+                    <h4>Reference number</h4>
+                    <div class="field">
+                        <label for="reference">Your reference</label>
+                        <input type="text" id="reference" name="reference" placeholder="Reference number">
+                    </div>
+                    <div class="field button-wrapper">
+                        <button class="button calculate">Calculate</button>
+                    </div>
+                </fieldset>
+                <div class="calculation-wrapper error" style="display:none;">
+                <div class="calculation">
+                    <fieldset>
+                    <h4>Your client's affordability is below the minimum loan of </h4>
+                    <span id="min-loan">£</span>
+                    </fieldset>
+                </div>
+                </div>
+                <div class="calculation-wrapper result" style="display: block; height: 173px;" data-gtm-vis-recent-on-screen36935117_64="30021" data-gtm-vis-first-on-screen36935117_64="30021" data-gtm-vis-total-visible-time36935117_64="100" data-gtm-vis-has-fired36935117_64="1">
+                    <div class="calculation">
+                        <fieldset>
+                            <h4>Your client could borrow up to:</h4>
+                            <span id="final-amount">£234,591.00</span>
+                            <p class="fee-info">This amount includes the product fees if you plan to add them to the loan.</p>
+                        </fieldset>
+                        <fieldset class="text-right">
+                            <a href="https://calculator.bankofirelanduk.com/api/getpdf/GenerateAffordabilityCalculatorPDF?Adults=2&amp;Children=2&amp;MortgageYears=32&amp;MortgageMonths=11&amp;HTB=0&amp;App1Income=40000&amp;App2Income=50000&amp;FiveYearFixedRate=1&amp;FiveYearFixedPercentage=2&amp;Outgoings=3000&amp;LTVBelow90=true&amp;Ref=12345&amp;FinalAmount=234591&amp;typeid=1cfa7353-6474-41f0-91d8-cd224ab090c7 &amp;versionid=f667c3f6-c8fe-4b54-bbd1-8c9ead119a91" class="button white save"><span>Save results</span></a>
+                            <a href="javascript:window.print();" class="button button--secondary print"><span>Print results</span></a>
+                        </fieldset>
+                    </div>
+
+
+                </div>
+                <div class="field error message"></div>
+
+                <div class="modal">
+                <div class="income-error">
+                    <div class="message-wrapper">
+                    <div class="message"></div>
+                    <!--<a class="button close">Close</a>-->
+                    </div>
+                </div>
+                </div>
+            </div>
+            </section>
+            <script type="text/javascript" src="/common/scripts/pages/affordabilityCalculator.js?v=_dtYT2dHDQUHyvRxH3pG6qHzJ8jzArsOIu2zTSBfd-Q"></script>
+            <script type="text/javascript" src="/common/scripts/tooltip.js?v=9dAf0VDJ_yP5UkomtwhjXnhlrk2VZtL7PqYYxT4Bv2E"></script>
+        </div>
+        <div class="rich-text">
+            <p>The minimum household income for a residential mortgage is £20,000. Please refer to loan size and LTV limits.</p>
+            <p>
+            <strong>When assessing applications, we consider the level of debts the customer(s) is committed to relative to their income, how much they've paid off and the credit they have left available. We'll exclude student debt from our assessment.</strong>
+            </p>
+            <p>This calculator provides an indication only. It’s not a legally binding mortgage Offer and places Bank of Ireland UK at no obligation to provide your client with a mortgage. All applications must meet our <strong>
+                <a href="/lending-criteria/" title="Lending criteria">lending criteria</a>
+            </strong>and are subject to assessment. The amount your customer could borrow may be less once this assessment has been made. </p>
+        </div>
+</div>
