@@ -191,14 +191,6 @@ namespace BOI.Umbraco.Models
 		public virtual bool HideMainNavigation => global::BOI.Umbraco.Models.NavigationMixin.GetHideMainNavigation(this, _publishedValueFallback);
 
 		///<summary>
-		/// Mobile nav icon
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("mobileNavIcon")]
-		public virtual global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent> MobileNavIcon => global::BOI.Umbraco.Models.NavigationMixin.GetMobileNavIcon(this, _publishedValueFallback);
-
-		///<summary>
 		/// Internal redirect: Will load the selected page’s content transparently without performing any URL redirection. This essentially performs a rewrite. Use with caution
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
