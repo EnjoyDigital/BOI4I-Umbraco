@@ -114,30 +114,6 @@ namespace BOI.Umbraco.Models
 		public virtual string PostcodeValidationMessage => this.Value<string>(_publishedValueFallback, "postcodeValidationMessage");
 
 		///<summary>
-		/// Background Colour: This field will allow you to choose the colour of the background elements, in the hero banner.
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("backgroundColour")]
-		public virtual global::Umbraco.Cms.Core.PropertyEditors.ValueConverters.ColorPickerValueConverter.PickedColor BackgroundColour => global::BOI.Umbraco.Models.HeroMixin.GetBackgroundColour(this, _publishedValueFallback);
-
-		///<summary>
-		/// Background Image: This is the image that will appear on the background of the hero area.
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("backgroundImage")]
-		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent BackgroundImage => global::BOI.Umbraco.Models.HeroMixin.GetBackgroundImage(this, _publishedValueFallback);
-
-		///<summary>
-		/// BDM Finder CTA: A page specific BDM Finder link can be chosen here. If nothing is selected this will fall back to the global setting.
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("bDMFinderCta")]
-		public virtual global::Umbraco.Cms.Core.Models.Link BDmfinderCta => global::BOI.Umbraco.Models.HeroMixin.GetBDmfinderCta(this, _publishedValueFallback);
-
-		///<summary>
 		/// CTA: The CTA (Call To Action) should be used to direct the user to a specific page.
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
@@ -152,28 +128,6 @@ namespace BOI.Umbraco.Models
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("heroPodPicker")]
 		public virtual global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent> HeroPodPicker => global::BOI.Umbraco.Models.HeroMixin.GetHeroPodPicker(this, _publishedValueFallback);
-
-		///<summary>
-		/// Hide BDM Finder CTA: Tick this checkbox to hide the BDM Finder CTA
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[ImplementPropertyType("hideBDMFinder")]
-		public virtual bool HideBdmfinder => global::BOI.Umbraco.Models.HeroMixin.GetHideBdmfinder(this, _publishedValueFallback);
-
-		///<summary>
-		/// Hide Product CTA: Tick this checkbox to hide the Product CTA
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[ImplementPropertyType("hideProductCTA")]
-		public virtual bool HideProductCta => global::BOI.Umbraco.Models.HeroMixin.GetHideProductCta(this, _publishedValueFallback);
-
-		///<summary>
-		/// Product CTA: A page specific Product CTA can be chosen here. If nothing is selected this will fall back to the global setting.
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
-		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("productCTA")]
-		public virtual global::Umbraco.Cms.Core.Models.Link ProductCta => global::BOI.Umbraco.Models.HeroMixin.GetProductCta(this, _publishedValueFallback);
 
 		///<summary>
 		/// Supporting Text: The supporting text that will appear underneath the title in the hero. If left blank this will not show on the hero area
