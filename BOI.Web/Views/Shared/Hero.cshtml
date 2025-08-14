@@ -4,25 +4,12 @@
 @{
     var Root = Model.AncestorOrSelf<SiteRoot>();
     var heroPods = (Model.HeroPodPicker == null ? Root.GlobalHeroPodPicker : Model.HeroPodPicker);
-    var bdmCta = (Model.BDmfinderCta != null ? Model.BDmfinderCta : Root.GlobalBdmcta);
-    var productCta = (Model.ProductCta != null ? Model.ProductCta : Root.GlobalProductCta);
-    var bdmPod = false;
 }
 
 <section class="hero-area @(heroPods == null ? "no-additional" : "")">
     <div class="hero-area__copy">
         <h1>@(Model.Title.IsNullOrWhiteSpace() ? "" : Model.Title)</h1>
         <p>@Model.SupportingText</p>
-
-        @* July 2025: No CTA in new designs *@
-        @*
-        @if (Model.CTA != null)
-        {
-            <a href="@Model.CTA.Url" class="button @(backgroundColourClass != "-bg-teal" ? "-white-outline" : "")" target="@Model.CTA.Target">
-                <span>@Model.CTA.Name</span>
-            </a>
-        }
-        *@
     </div>
 
     <div class="hero-area__additional">
@@ -35,7 +22,6 @@
                 switch (pod.ContentType.Alias)
                 {
                     case BDmpodAction.ModelTypeAlias:
-                        bdmPod = true;
                         var podAlias = pod.ContentType.Alias.TrimEnd("Action");
                         viewPath = string.Concat(viewPath, "Pods/");
                         @await Component.InvokeAsync("PodsView", new { publishedContent = pod, isHeroPod = true })
@@ -46,25 +32,5 @@
                 }
             }
         }
-
-        @* July 2025: No BdmFinder or Product CTAs in new designs *@
-        @*
-        @if (!Model.HideBdmfinder && !bdmPod)
-        {
-            <a href="@bdmCta.Url" class="button -block -no-radius -teal">
-                <svg class="[ icon icon-search -black ]" aria-hidden="true">
-                    <use xlink:href="#sprite-icon-search"></use>
-                </svg>
-                <span>@bdmCta.Name</span>
-            </a>
-        }
-
-        @if (!Model.HideProductCta)
-        {
-            <a href="@productCta.Url" class="button -block -no-radius">
-                <span>@productCta.Name</span>
-            </a>
-        }
-        *@
     </div>
 </section>

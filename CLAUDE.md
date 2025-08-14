@@ -10,12 +10,22 @@ npm install                  # Install dependencies
 gulp default                # Build everything and watch for changes (primary development command)
 gulp buildOnly              # Build once without watching  
 gulp devSassOnly            # Build and watch CSS/Sass only
+gulp help                   # Show available gulp commands
+```
+
+### Code Quality & Linting
+```bash
+# Frontend linting (from BOI.Web directory)
+gulp                        # Runs Sass linting automatically during build
+                           # Sass linting config in .sasslintrc
+                           # ESLint configured in gulpfile.js (currently commented out)
 ```
 
 ### .NET Development
 ```bash
-dotnet build                # Build solution
+dotnet build                # Build solution (from root or BOI.Web directory)
 dotnet run                  # Run in development mode (from BOI.Web directory)
+dotnet ef                   # Entity Framework CLI (installed as local tool)
 ```
 
 ## Project Architecture
@@ -87,9 +97,10 @@ Specialized content types for financial services:
 - **Block List/Block Grid** content editing system
 - **Responsive Images** with crop configurations
 - **Component-based** Razor views with ViewComponents
-- **Vue.js components** for interactive features 
-- **SVG sprite** system for icons (generated via Gulp)
-- **Critical CSS** inlined via FirstPaint.cshtml
+- **Vue.js 2.6 components** for interactive features (Vue files in assets/src/vue/)
+- **SVG sprite** system for icons (generated via Gulp, outputs SvgSprite.cshtml)
+- **Critical CSS** inlined via FirstPaint.cshtml (auto-generated from first-paint.scss)
+- **Webpack 4.x** bundles JavaScript with Babel transpilation and source maps
 
 ## Configuration Management
 
@@ -101,15 +112,29 @@ Specialized content types for financial services:
 
 ## Development Environment
 
-- **PowerShell script** (iis-builder.ps1) configures IIS automatically
-- **Local domains**: boi-net.core.local, boi-net.core.dev.local
+- **PowerShell script** (iis-builder.ps1) configures IIS automatically with admin privileges
+- **Local domains**: boi-net.core.local, boi-net.core.dev.local (configured via hosts file)
 - **HTTPS certificates** auto-generated for development
-- **File permissions** configured for Umbraco temp folders
+- **File permissions** configured for Umbraco temp folders (IUSR, IIS_IUSRS)
+- **Entity Framework Tools** installed locally (.config/dotnet-tools.json)
+
+## Build Output & Structure
+
+### Frontend Assets
+- **CSS Output**: `BOI.Web/wwwroot/assets/dist/css/` (minified, autoprefixed)
+- **JavaScript Output**: `BOI.Web/wwwroot/assets/dist/js/` (webpack bundles with source maps)
+- **Generated Views**: `FirstPaint.cshtml` and `SvgSprite.cshtml` in `Views/Shared/`
+- **Source Maps**: Generated for both CSS and JavaScript in production mode
+
+### Solution Structure
+- **Solution File**: `BOI .net core.sln` (note the space in filename)
+- **5 Projects**: BOI.Web → BOI.Core.Web → BOI.Core.Search → BOI.Core ← BOI.Umbraco.Models
+- **Dependency Flow**: Web projects reference Core projects; Models referenced by Search/Web
 
 ## Important Notes
 
 - **No testing framework** currently implemented
-- **Git workflow** uses feature branches (currently on feature/brand-guidelines-update)
+- **Git workflow** uses feature branches (currently on feature/brand-guidelines-update)  
 - **Media tracking** implemented for PDF/document downloads
 - **Two-factor authentication** support with Google Authenticator
 - **Accessibility reporting** integration available
