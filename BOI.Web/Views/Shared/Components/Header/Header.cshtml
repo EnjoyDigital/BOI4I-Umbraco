@@ -71,9 +71,8 @@
                         var itemContent = item.Content as MainNavigationItem;
                         <li>
                             <a href="@itemContent?.NavigationItem?.Url" target="@itemContent?.NavigationItem?.Target" title="@itemContent?.NavigationItem?.Name" @Html.Raw(itemContent?.NavigationItem?.Url == Model?.Content?.Url() ? "aria-current=\"page\"" : string.Empty) @Html.Raw(@itemContent.ChildNavigationItems.Any() ? "aria-haspopup=\"true\"" : string.Empty) aria-expanded="false">
-                                @* TODO: Add mobile-only icon *@
                                 <div class="menu-item-icon">
-                                    <img src="" alt="" width="20" height="20" />
+                                    <img src="@itemContent?.MobileIcon?.Url()" alt="@itemContent?.NavigationItem?.Name" width="20" height="20" />
                                 </div>
                                 @itemContent?.NavigationItem?.Name
                             </a>

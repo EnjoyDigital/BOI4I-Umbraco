@@ -26,6 +26,11 @@ namespace BOI.Umbraco.Models
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
 		bool HideMainNavigation { get; }
 
+		/// <summary>Mobile nav icon</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent> MobileNavIcon { get; }
+
 		/// <summary>Internal redirect</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
@@ -78,6 +83,19 @@ namespace BOI.Umbraco.Models
 		/// <summary>Static getter for Hide main navigation</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
 		public static bool GetHideMainNavigation(INavigationMixin that, IPublishedValueFallback publishedValueFallback) => that.Value<bool>(publishedValueFallback, "hideMainNavigation");
+
+		///<summary>
+		/// Mobile nav icon
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("mobileNavIcon")]
+		public virtual global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent> MobileNavIcon => GetMobileNavIcon(this, _publishedValueFallback);
+
+		/// <summary>Static getter for Mobile nav icon</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
+		[return: global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		public static global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent> GetMobileNavIcon(INavigationMixin that, IPublishedValueFallback publishedValueFallback) => that.Value<global::System.Collections.Generic.IEnumerable<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>>(publishedValueFallback, "mobileNavIcon");
 
 		///<summary>
 		/// Internal redirect: Will load the selected page’s content transparently without performing any URL redirection. This essentially performs a rewrite. Use with caution
