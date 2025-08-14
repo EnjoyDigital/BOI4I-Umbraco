@@ -4,6 +4,7 @@
 
 header {
   position: relative;
+  background-color: $white;
 
   @include media($max-mobile-nav) {
     padding-bottom: 60px;
