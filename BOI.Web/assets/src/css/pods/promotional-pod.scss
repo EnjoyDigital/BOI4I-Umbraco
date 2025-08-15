@@ -1,3 +1,13 @@
+.umb-block-list {
+  + .promotional-pod {
+    margin-top: -40px;
+
+    @include media($small) {
+      margin-top: -20px;
+    }
+  }
+}
+
 .promotional-pod {
   @include section-background($sky-blue);
   position: relative;

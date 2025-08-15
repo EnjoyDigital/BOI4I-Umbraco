@@ -11,7 +11,7 @@
             @Model.SubText
         }
 
-        <div class="document-download-block">
+        <div class="document-download-block @(Model.SubText != null ? "document-download-block--has-subtext" : null)">
 
             @foreach (var childPage in Model.Documents.OfType<BlockListItem<DocumentUploadItem>>())
             {

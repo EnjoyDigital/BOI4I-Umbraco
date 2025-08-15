@@ -1,19 +1,27 @@
-.document-download-block-wrapper {
-  padding: 40px 0;
+.rich-text {
+  + .document-download-root {
+    padding-top: 0;
+  }
+}
+
+.document-download-root {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 32px;
+  padding: var(--sectionPaddingTop) 0 var(--sectionPaddingBottom);
 
   @include media-min($small-med) {
-    width: 50%;
-    float: left;
+    grid-template-columns: repeat(2, 1fr);
 
-    &:nth-child(odd) {
-      padding-right: 16px;
-    }
-
-    &:nth-child(even) {
-      padding-left: 16px;
+    .document-download-block-wrapper {
+      &:first-child:last-child {
+        grid-column: span 2;
+      }
     }
   }
+}
 
+.document-download-block-wrapper {
   @include media($small-med) {
     + .document-download-block-wrapper {
       padding-top: 0;
