@@ -3,9 +3,42 @@
     if (Model?.Any() != true) { return; }
 }
 <div class="umb-block-list">
-    @foreach (var block in Model)
-    {
-        if (block?.ContentUdi == null) { continue; }
-        @await Html.PartialAsync("blockList/Components/" + block.Content.ContentType.Alias, block.Content)
+    @{
+        var blocks = Model.ToList();
+        var i = 0;
+        while (i < blocks.Count)
+        {
+            var block = blocks[i];
+            if (block?.ContentUdi == null) 
+            { 
+                i++;
+                continue; 
+            }
+
+            // Check if this is a DocumentUploadBlock
+            if (block.Content.ContentType.Alias == "documentUploadBlock")
+            {
+                // Start document download root wrapper
+                <div class="document-download-root">
+                    @{
+                        // Process consecutive DocumentUploadBlocks
+                        while (i < blocks.Count && blocks[i]?.Content?.ContentType.Alias == "documentUploadBlock")
+                        {
+                            if (blocks[i]?.ContentUdi != null)
+                            {
+                                @await Html.PartialAsync("blockList/Components/" + blocks[i].Content.ContentType.Alias, blocks[i].Content)
+                            }
+                            i++;
+                        }
+                    }
+                </div>
+            }
+            else
+            {
+                // Render non-DocumentUploadBlock normally
+                @await Html.PartialAsync("blockList/Components/" + block.Content.ContentType.Alias, block.Content)
+                i++;
+            }
+        }
     }
 </div>
