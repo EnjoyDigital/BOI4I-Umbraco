@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="rich-text">
-        @Model.DisclaimerText
+    @Model.DisclaimerText
     </div>
     *@
 
@@ -23,7 +23,8 @@
        - add "button-wrapper" class to the .field that contains the button
        - add inner span tag to all buttons.
        - add "button--secondary" to "print results" button.
-       - add icons to "save results" and "print results".
+       - add icons to "save results" and "print results". Will need to add these as the svg code itself.
+       - Calculation Results: code changes and additions.
        - Move the "field error message" block to below the result
     *@
     <div class="calculator-frame">
@@ -185,30 +186,49 @@
                         <button class="button calculate">Calculate</button>
                     </div>
                 </fieldset>
-                <div class="calculation-wrapper error" style="display:none;">
-                <div class="calculation">
-                    <fieldset>
-                    <h4>Your client's affordability is below the minimum loan of </h4>
-                    <span id="min-loan">£</span>
-                    </fieldset>
+                <div class="calculation-wrapper error" style="display: block;">
+                    <div class="calculation">
+                        <fieldset>
+                            <h4>Your client's affordability is below the minimum loan of </h4>
+                            <span id="min-loan">£25,001.00</span>
+                        </fieldset>
+                    </div>
                 </div>
-                </div>
-                <div class="calculation-wrapper result" style="display: block; height: 173px;" data-gtm-vis-recent-on-screen36935117_64="30021" data-gtm-vis-first-on-screen36935117_64="30021" data-gtm-vis-total-visible-time36935117_64="100" data-gtm-vis-has-fired36935117_64="1">
+                <div class="calculation-wrapper result" style="display: block;" data-gtm-vis-recent-on-screen36935117_64="30021" data-gtm-vis-first-on-screen36935117_64="30021" data-gtm-vis-total-visible-time36935117_64="100" data-gtm-vis-has-fired36935117_64="1">
                     <div class="calculation">
                         <fieldset>
                             <h4>Your client could borrow up to:</h4>
-                            <span id="final-amount">£234,591.00</span>
-                            <p class="fee-info">This amount includes the product fees if you plan to add them to the loan.</p>
+                            <p>Amount<br />
+                            <span id="final-amount">£234,591.00</span></p>
+                            <div class="fee-info">
+                                <div class="fee-info__icon">
+                                    <svg class="[ icon icon-info-filled ]" aria-hidden="true">
+                                        <use xlink:href="#sprite-icon-info-filled"></use>
+                                    </svg>
+                                </div>
+                                <div class="fee-info__content">
+                                    <span>Please note</span>
+                                    <p>This amount includes the product fees if you plan to add them to the loan.</p>
+                                </div>
+                            </div>
                         </fieldset>
                         <fieldset class="text-right">
-                            <a href="https://calculator.bankofirelanduk.com/api/getpdf/GenerateAffordabilityCalculatorPDF?Adults=2&amp;Children=2&amp;MortgageYears=32&amp;MortgageMonths=11&amp;HTB=0&amp;App1Income=40000&amp;App2Income=50000&amp;FiveYearFixedRate=1&amp;FiveYearFixedPercentage=2&amp;Outgoings=3000&amp;LTVBelow90=true&amp;Ref=12345&amp;FinalAmount=234591&amp;typeid=1cfa7353-6474-41f0-91d8-cd224ab090c7 &amp;versionid=f667c3f6-c8fe-4b54-bbd1-8c9ead119a91" class="button white save"><span>Save results</span></a>
-                            <a href="javascript:window.print();" class="button button--secondary print"><span>Print results</span></a>
+                            <a href="https://calculator.bankofirelanduk.com/api/getpdf/GenerateAffordabilityCalculatorPDF?Adults=2&amp;Children=2&amp;MortgageYears=32&amp;MortgageMonths=11&amp;HTB=0&amp;App1Income=40000&amp;App2Income=50000&amp;FiveYearFixedRate=1&amp;FiveYearFixedPercentage=2&amp;Outgoings=3000&amp;LTVBelow90=true&amp;Ref=12345&amp;FinalAmount=234591&amp;typeid=1cfa7353-6474-41f0-91d8-cd224ab090c7 &amp;versionid=f667c3f6-c8fe-4b54-bbd1-8c9ead119a91" class="button white save">
+                                 <svg class="[ icon icon-pdf-document -blue ]" aria-hidden="true">
+                                    <use xlink:href="#sprite-icon-pdf-document"></use>
+                                </svg>
+                                <span>Save results</span>
+                            </a>
+                            <a href="javascript:window.print();" class="button button--secondary print">
+                                <svg class="[ icon icon-print-alt -blue ]" aria-hidden="true">
+                                    <use xlink:href="#sprite-icon-print-alt"></use>
+                                </svg>
+                                <span>Print results</span>
+                            </a>
                         </fieldset>
                     </div>
-
-
                 </div>
-                <div class="field error message"></div>
+                <div class="field error message" role="alert" style="display: block;">Combined income must be greater than £20,000<br></div>
 
                 <div class="modal">
                 <div class="income-error">
