@@ -13,9 +13,11 @@
     - Light Honey: u-bg--light-honey
 
     Classes to be applied to the "promotional-pod" element.
+
+    TODO: If image is illustration, add class of "-is-illustration" to "promotional-pod" element
     *@
 
-    <div class="promotional-pod @(Model.Image != null ? "" : "-no-image")">
+    <div class="promotional-pod @(Model.Image != null ? "-has-image" : "-no-image")">
         <div class="promotional-pod__inner">
             @if (Model.Image != null)
             {
