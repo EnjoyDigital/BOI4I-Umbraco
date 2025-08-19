@@ -2,7 +2,8 @@
   width: 100%;
   max-width: $max-desktop;
   margin: 0 auto;
-  padding: var(--sectionPaddingTop) var(--sectionPaddingX) var(--sectionPaddingTop);
+  padding: var(--sectionPaddingTop) var(--sectionPaddingX)
+    var(--sectionPaddingTop);
 
   @include media($small) {
     margin: 20px auto;
@@ -18,12 +19,8 @@
     padding-left: 0;
     padding-right: 0;
 
-    &:first-child:not(:last-child) {
-      padding-bottom: 0;
-    }
-
-    + .faq-block:not(:last-child) {
-      padding-bottom: 0;
+    + .promotional-pod {
+      margin-top: var(--sectionPaddingTop);
     }
   }
 
