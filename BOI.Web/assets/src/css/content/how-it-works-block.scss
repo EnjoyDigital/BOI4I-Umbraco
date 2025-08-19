@@ -26,19 +26,24 @@
 
   ul {
     li {
-      margin: 17px 0;
+      position: relative;
+      display: block;
+      margin: 15px 0;
 
       span.list-ticks {
-        padding-left: 32px;
+        padding-left: 25px;
 
         &:before {
-          width: 24px;
-          height: 24px;
-          top: 0;
-          border-radius: 6px 0 6px 0;
-          background-color: $light-teal;
-          background-image: url(/assets/dist/images/icons/sprite-icon-tick-black.svg);
-          background-size: 15px 12px;
+          content: '';
+          position: absolute;
+          top: 6px;
+          left: 0;
+          width: 15px;
+          height: 11px;
+          background-image: url(/assets/dist/images/icons/sprite-icon-checkbox-tick.svg);
+          background-size: 15px 11px;
+          background-repeat: no-repeat;
+          background-position: center;
         }
       }
     }
