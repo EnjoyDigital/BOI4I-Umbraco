@@ -23,7 +23,8 @@
                     <div class="child-page-block-item">
                         @if (childPageItem.ChildIcon != null)
                         {
-                            <div class="child-page-block-item__icon-wrapper">
+                            @* TODO: Add "-is-illustration" class modifier if supplied image is an illustration *@
+                            <div class="child-page-block-item__icon-wrapper -is-illustration">
                                  <img data-object-fit="cover"
                                     src="@childPageItem.ChildIcon.Url()"
                                     alt="@childPageItem.ChildIcon.GetImageAlternativeText()" />

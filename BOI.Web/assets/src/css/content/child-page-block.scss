@@ -55,7 +55,14 @@
   img {
     max-width: 48px;
     min-width: 38px;
-    height: auto;
+    height: auto; 
+  }
+
+  &.-is-illustration {
+    img {
+      max-width: 80px;
+      min-width: 60px;
+    }
   }
 }
 

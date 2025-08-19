@@ -11,7 +11,7 @@
 .promotional-pod {
   @include section-background($sky-blue);
   position: relative;
-  padding: var(--sectionPaddingTop) var(--sectionPaddingX) var(--sectionPaddingBottom);
+  padding: var(--sectionPaddingTop) 0 var(--sectionPaddingBottom);
   background-color: $sky-blue;
   
   &.u-bg--light-teal {
@@ -41,12 +41,12 @@
   max-width: $max-desktop;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 32px;
   margin: 0 auto;
 
   @include media-min($max-tablet) {
     flex-direction: row;
+    align-items: center;
   }
 
   .promotional-pod.-no-image & {
@@ -57,8 +57,24 @@
 }
 
 .promotional-pod__image {
-  @include media-min($max-tablet) {
-    max-width: 50%;
+  @include media($max-tablet) {
+    width: 100%;
+  }
+
+  .promotional-pod.-has-image & {
+    @include media-min($max-tablet) {
+      width: 50%;
+      flex-shrink: 0;
+    }
+
+    img {
+      max-width: none;
+      width: 100%;
+    }
+  }
+
+  .promotional-pod.-is-illustration & {
+    max-width: 160px;
   }
 }
 
