@@ -5,7 +5,7 @@ body {
 }
 
 body {
-  transition: left .3s ease;
+  transition: left 0.3s ease;
   position: relative;
   width: 100%;
   left: 0;
@@ -27,30 +27,30 @@ body {
 }
 
 .sr-only {
-    border: 0 !important;
-    clip: rect(1px, 1px, 1px, 1px) !important;
-    -webkit-clip-path: inset(50%) !important;
-    clip-path: inset(50%) !important;
-    height: 1px !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    position: absolute !important;
-    width: 1px !important;
-    white-space: nowrap !important;
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
 }
 
 .sr-only-focusable:focus,
 .sr-only-focusable:active {
-    clip: auto !important;
-    -webkit-clip-path: none !important;
-    clip-path: none !important;
-    position: static !important;
-    height: auto !important;
-    margin: auto !important;
-    overflow: visible !important;
-    width: 100% !important;
-    white-space: normal !important;
+  clip: auto !important;
+  -webkit-clip-path: none !important;
+  clip-path: none !important;
+  position: static !important;
+  height: auto !important;
+  margin: auto !important;
+  overflow: visible !important;
+  width: 100% !important;
+  white-space: normal !important;
 }
 
 main {
@@ -68,30 +68,29 @@ img {
 }
 
 .InfinityNumber {
-
   a {
     color: inherit;
     text-decoration: none;
     cursor: text;
   }
-
 }
 
-a, button {
+a,
+button {
   color: $text;
   background-color: transparent;
 }
 
 .external-link {
-    display: inline-flex;
-    align-items: center;
+  display: inline-flex;
+  align-items: center;
 
-    svg {
-        fill: currentColor;
-        width: .8em;
-        height: .8em;
-        margin-left: .4em;
-    }
+  svg {
+    fill: currentColor;
+    width: 0.8em;
+    height: 0.8em;
+    margin-left: 0.4em;
+  }
 }
 
 .umb-block-list {
@@ -117,7 +116,7 @@ a, button {
 }
 
 .overlay-link {
-  position: absolute; 
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -136,19 +135,20 @@ a, button {
 }
 
 .skip-to-content-link {
-    background: $light-teal;
-    color: $text;
-    left: 0;
-    padding: 13px 24px;
-    position: absolute;
-    transform: translateX(-100%);
-    transition: transform .3s;
-    z-index: 19;
-    font-weight: 700;
+  background: $blue;
+  color: $white;
+  left: 0;
+  padding: 13px 24px;
+  border-radius: 0 0 8px 0;
+  position: absolute;
+  transform: translateX(-100%);
+  transition: transform 0.3s;
+  z-index: 19;
+  font-weight: 700;
 }
 
 .skip-to-content-link:focus {
-    transform: translateX(0);
+  transform: translateX(0);
 }
 
 // Hide SVG Sprite
