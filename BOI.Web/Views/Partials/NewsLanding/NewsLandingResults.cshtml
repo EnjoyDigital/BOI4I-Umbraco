@@ -15,26 +15,19 @@
 
                             @if (!string.IsNullOrEmpty(result.ArticleUrl))
                             {
-                                @* TODO: T185736. Add new image field 
-                                   Image crop dimensions: 320 x 180
-                                *@
                                 <div class="news-article-block-item__image">
-                                    <a href="@result.ArticleUrl"><img src="/assets/dist/images/static-only/bdm-finder-hero.jpg" alt="" loading="lazy" width="320" height="180" /></a>
+                                    <a href="@result.ArticleUrl"><img src="@result.ArticleImage.GetCropUrl(width:320, height:180)" alt="" loading="lazy" width="320" height="180" /></a>
                                 </div>
 
                                 <h3 class="news-article-block-item__title"><a href="@result.ArticleUrl">@result.ArticleName</a></h3>
-                            } else 
+                            } 
+                            else 
                             {
-                                @* TODO: T185736. Add new image field 
-                                   Image crop dimensions: 320 x 180
-                                *@
                                 <div class="news-article-block-item__image">
-                                    <img src="/assets/dist/images/static-only/bdm-finder-hero.jpg" alt="" loading="lazy" width="320" height="180" />
+                                    <img src="@result.ArticleImage.GetCropUrl(width:320, height:180)" alt="" loading="lazy" width="320" height="180" />
                                 </div>
                                 <h3 class="news-article-block-item__title">@result.ArticleName</h3>
                             }
-
-                            @*<p class="title -blue-text">@result.ArticleName</p>*@
                             <p>@result.ArticleListingSummary</p>
                         </div>
                     }
