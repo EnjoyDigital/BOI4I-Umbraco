@@ -27,9 +27,9 @@ function handlers() {
                 scrollTop: 0
             });
 
-            // document.querySelector(':is(button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])):not(.skip-to-content-link)').focus({
-            //     preventScroll: true,
-            // });
+            document.querySelector(':is(button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])):not(.skip-to-content-link)').focus({
+                preventScroll: true,
+            });
         }
     });
 }

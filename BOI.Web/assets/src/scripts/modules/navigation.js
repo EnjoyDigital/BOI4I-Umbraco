@@ -119,7 +119,7 @@ export default function Navigation() {
     }
 
     function stickyNavigation() { 
-        if (window.scrollY > 200) {
+        if (window.scrollY > 0) {
             $nav.classList.add('nav-scroll');
         } else {
             $nav.classList.remove('nav-scroll');
