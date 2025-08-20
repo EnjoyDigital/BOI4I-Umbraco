@@ -80,5 +80,12 @@ namespace BOI.Umbraco.Models
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("cTALink")]
 		public virtual global::Umbraco.Cms.Core.Models.Link CTalink => this.Value<global::Umbraco.Cms.Core.Models.Link>(_publishedValueFallback, "cTALink");
+
+		///<summary>
+		/// Use Illustration (80px): Check this box if you want the image to display as an illustration (80px max width) instead of an icon (48px max width). Use this for brand guideline illustrations.
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
+		[ImplementPropertyType("useIllustration")]
+		public virtual bool UseIllustration => this.Value<bool>(_publishedValueFallback, "useIllustration");
 	}
 }
