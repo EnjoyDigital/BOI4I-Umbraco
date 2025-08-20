@@ -208,14 +208,32 @@
   }
 }
 
-@mixin simple-link-style() {
-  text-decoration: underline;
+@mixin simple-link-style($underline: underline) {
+  text-decoration: $underline;
   text-underline-position: under;
   text-underline-offset: 1px;
-  transition: text-decoration-color 0.25s ease;
+  transition: color 0.25s ease;
+  color: $blue;
 
   &:hover {
-    text-decoration-color: transparent;
+    color: $blue-2;
+    text-decoration: underline;
+  }
+
+  &:active,
+  &:visited {
+    color: $dark-blue;
+    text-decoration: underline;
+  }
+
+  &:active {
+    background-color: $grey-8;
+    text-decoration: underline;
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline-color: $blue;
   }
 }
 

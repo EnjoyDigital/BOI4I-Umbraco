@@ -96,14 +96,14 @@
 
   &:hover {
     background-color: transparent;
-    color: $blue;
-
-    > span {
-      text-decoration-color: transparent;
-    }
+    color: $blue-2;
 
     .document-download-block-item__title {
-      color: $blue;
+      color: $blue-2;
+    }
+
+    > span {
+      color: $blue-2;
     }
   }
 }

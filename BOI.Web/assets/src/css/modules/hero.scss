@@ -125,10 +125,10 @@
   text-underline-position: under;
   text-underline-offset: 1px;
   text-decoration-thickness: 1px;
-  transition: text-decoration-color 0.25s ease;
+  transition: color 0.25s ease;
   
   .hero-area-quick-links__list li:has(a):hover & {
-    text-decoration-color: transparent;
+    color: $blue-2;
   }
 }
 

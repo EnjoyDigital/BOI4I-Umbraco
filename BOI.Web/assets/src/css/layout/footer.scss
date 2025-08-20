@@ -3,13 +3,7 @@
     padding: 40px 20px;
 
     a {
-        text-decoration: none;
-        color: $text;
-        @include link-style();
-
-        &:after {
-            background-color: $blue;
-        }
+        @include simple-link-style(none);
     }
 
     a.social {
@@ -86,7 +80,6 @@
 
                     a {
                         font-size: 14px;
-                        color: $blue;
                     }
 
                     @media (min-width: $min-tablet) {
@@ -235,6 +228,10 @@
         margin-top: 10px;
         padding-top: 12px;
         border-top: 1px solid $grey-8;
+
+        p {
+            font-weight: 600;
+        }
     }
 
     @media(min-width:$min-desktop) {
