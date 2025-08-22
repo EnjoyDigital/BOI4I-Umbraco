@@ -23,11 +23,12 @@
                     <div class="child-page-block-item">
                         @if (childPageItem.ChildIcon != null)
                         {
-                            
-                            var useIllustration = childPageItem.Value<bool>("useIllustration");
+
+                        var useIllustration = childPageItem.Value<bool>("useIllustration");
                             var iconWrapperClass = useIllustration ? "child-page-block-item__icon-wrapper -is-illustration" : "child-page-block-item__icon-wrapper";
                             
                             <div class="@iconWrapperClass">
+                            <p>Test @(childPageItem.Value<bool>("useIllustration"))</p>
                                  <img data-object-fit="cover"
                                     src="@childPageItem.ChildIcon.Url()"
                                     alt="@childPageItem.ChildIcon.GetImageAlternativeText()" />

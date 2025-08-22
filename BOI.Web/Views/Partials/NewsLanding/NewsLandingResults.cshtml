@@ -16,7 +16,7 @@
                             @if (!string.IsNullOrEmpty(result.ArticleUrl))
                             {
                                 <div class="news-article-block-item__image">
-                                    <a href="@result.ArticleUrl"><img src="@result.ArticleImage.GetCropUrl(width:320, height:180)" alt="" loading="lazy" width="320" height="180" /></a>
+                                    <a href="@result.ArticleUrl"><img src="@(result.ArticleImage.GetCropUrl(width:320, height:180))" alt="" loading="lazy" width="320" height="180" /></a>
                                 </div>
 
                                 <h3 class="news-article-block-item__title"><a href="@result.ArticleUrl">@result.ArticleName</a></h3>
@@ -24,7 +24,7 @@
                             else 
                             {
                                 <div class="news-article-block-item__image">
-                                    <img src="@result.ArticleImage.GetCropUrl(width:320, height:180)" alt="" loading="lazy" width="320" height="180" />
+                                    <img src="@(result.ArticleImage.GetCropUrl(width:320, height:180))" alt="" loading="lazy" width="320" height="180" />
                                 </div>
                                 <h3 class="news-article-block-item__title">@result.ArticleName</h3>
                             }
