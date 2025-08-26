@@ -57,6 +57,11 @@ header {
       display: flex;
       z-index: 10;
       top: 0;
+      
+      img {
+        height: 130px;
+        transition: height 0.25s ease;
+      }
 
       @include media($max-mobile-nav) {
         position: relative;
@@ -67,14 +72,10 @@ header {
           display: block;
           margin: 0 auto;
         }
-      }
 
-      img.small {
-        display: none;
-      }
-
-      img.large {
-        display: block;
+        img {
+          height: 115px;
+        }
       }
     }
 
@@ -922,12 +923,8 @@ header {
 
   .header-container {
     .header-logo {
-      img.small {
-        display: block;
-      }
-
-      img.large {
-        display: none;
+      img {
+        height: 80px;
       }
     }
 
