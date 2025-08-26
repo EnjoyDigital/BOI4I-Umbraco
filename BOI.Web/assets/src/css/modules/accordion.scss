@@ -4,7 +4,6 @@
   border: 1px solid $grey-8;
   border-radius: 8px;
   background-color: $white;
-  overflow: hidden;
 
   /* for rich-text spacing purposes */
   +*:not(.accordion) {
@@ -21,12 +20,6 @@
       }
     }
   }
-
-  &:focus-visible {
-    outline: 2px solid black;
-    outline-offset: 4px;
-  }
-
 }
 
 .accordion-heading {
@@ -35,13 +28,31 @@
   width: 100%;
   position: relative;
   padding: 16px 60px 16px 16px;
+  border-radius: 8px;
   color: $blue;
   font-size: 18px;
   line-height: 28px;
   font-weight: 600;
   text-align: left;
   cursor: pointer;
+  isolation: isolate;
   transition: background-color 0.3s ease, color 0.3s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    transform: translate(-50%,-50%);
+    background-color: $grey-11;
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
 
   .notice {
     font-size: 0.8em;
@@ -74,6 +85,34 @@
       border-bottom: 2px solid $blue;
       border-right: 2px solid $blue;
       transform: rotate(45deg);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $blue;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  &:hover,
+  &:active {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 1px;
+    text-underline-position: under;
+  }
+
+  &:active {
+    color: $dark-blue;
+
+    &::before {
+      opacity: 1;
+    }
+
+    .toggle {
+      &::before {
+        border-color: $dark-blue;
+      }
     }
   }
 }
