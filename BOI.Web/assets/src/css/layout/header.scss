@@ -781,6 +781,13 @@ header {
           background-color: transparent;
           color: $text;
         }
+
+        @include media($max-mobile-nav) {
+          &:focus-within {
+            padding: 8px 4px 9px;
+            outline: 2px solid $blue;
+          }
+        }
       }
     }
 
