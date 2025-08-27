@@ -34,6 +34,22 @@
     </section>
 }
 
+@if (podcasts.NotNullAndAny())
+{
+    <section class="container media-group">
+        <div class="media-description">
+            <h3 class="-blue-text">Podcasts</h3>
+            <p>@podcastCount Podcasts</p>
+        </div>
+        <div class="group-container podcast-container">
+            <partial name="~/Views/Partials/MediaLibrary/Podcasts.cshtml" Model=@podcasts />
+        </div>
+        <div class="load-more">
+            <button class="button @(podcastCount <= 3 ? "hidden" : string.Empty)" id="more-podcasts" data-listing="1" data-count="@podcastCount" data-container=".podcast-container"><span>View more podcasts</span></button>
+        </div>
+    </section>
+}
+
 @if (articles.NotNullAndAny())
 {
     <section class="container media-group">
@@ -62,22 +78,6 @@
         </div>
         <div class="load-more">
             <button class="button @(Model.Documents.Count() <= 3 ? "hidden" : string.Empty)" id="more-documents" data-listing="1" data-count="@Model.Documents.Count()" data-container=".documents-container"><span>View more PDF Documents</span></button>
-        </div>
-    </section>
-}
-
-@if (podcasts.NotNullAndAny())
-{
-    <section class="container media-group">
-        <div class="media-description">
-            <h3 class="-blue-text">Podcasts</h3>
-            <p>@podcastCount Podcasts</p>
-        </div>
-        <div class="group-container podcast-container">
-            <partial name="~/Views/Partials/MediaLibrary/Podcasts.cshtml" Model=@podcasts />
-        </div>
-        <div class="load-more">
-            <button class="button @(podcastCount <= 3 ? "hidden" : string.Empty)" id="more-podcasts" data-listing="1" data-count="@podcastCount" data-container=".podcast-container"><span>View more podcasts</span></button>
         </div>
     </section>
 }
