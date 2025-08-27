@@ -212,7 +212,6 @@
   text-decoration: $underline;
   text-underline-position: under;
   text-underline-offset: 1px;
-  transition: color 0.25s ease;
   color: $blue;
 
   &:hover {
@@ -292,23 +291,36 @@
     transition: transform 0.15s ease, color 0.15s ease, fill 0.15s ease;
   }
 
-  &:hover {
-    &:not(.disabled):not([disabled]) {
-      color: $grey-11;
-
+  &:not(.disabled):not([disabled]) {
+    &:hover {
       &::before {
         background-color: $blue-2;
-        transform: translateY(1px);
       }
 
       > * {
-        transform: translateY(1px);
         color: $grey-11;
       }
 
       .icon {
         fill: $grey-11;
       }
+    }
+
+    &:active {
+      &::before {
+        background-color: $dark-blue;
+        transform: translateY(1px);
+      }
+
+      > * {
+        transform: translateY(1px);
+        color: $grey-8;
+      }
+    }
+
+    &:not(:active):focus {
+      outline: 2px solid $blue;
+      outline-offset: 2px;
     }
   }
 

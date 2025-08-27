@@ -100,7 +100,7 @@
 }
 
 .child-page-block-item__cta {
-  @include button--secondary;
+  @include button;
   margin-top: auto;
 }
 
