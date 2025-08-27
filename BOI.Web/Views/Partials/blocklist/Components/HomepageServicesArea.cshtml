@@ -4,11 +4,12 @@
     <div class="homepage-service-inner">
         @Model?.Title.SurroundWith("<h2 class=\"homepage-service-title\">", "</h2>")
 
-        @* TODO: Add in missing summary field. *@
-        <div class="homepage-service-summary">
-            <p>We offer great service and have the right people, products and 
-            systems to support you.</p>
-        </div>
+        @if (!string.IsNullOrWhiteSpace(Model?.Summary))
+        {
+            <div class="homepage-service-summary">
+                <p>@Model.Summary</p>
+            </div>
+        }
 
         <div class="homepage-service-grid">
             @foreach(var service in Model?.ServiceItems?.Select(x => ( x.Content as ServiceAreaItem) )  )

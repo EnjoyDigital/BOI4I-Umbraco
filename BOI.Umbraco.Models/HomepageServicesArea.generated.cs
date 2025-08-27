@@ -18,7 +18,7 @@ using Umbraco.Extensions;
 
 namespace BOI.Umbraco.Models
 {
-	/// <summary>Homepage service area</summary>
+	/// <summary>Feature Block</summary>
 	[PublishedModel("homepageServicesArea")]
 	public partial class HomepageServicesArea : PublishedElementModel
 	{
@@ -56,6 +56,14 @@ namespace BOI.Umbraco.Models
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("serviceItems")]
 		public virtual global::Umbraco.Cms.Core.Models.Blocks.BlockListModel ServiceItems => this.Value<global::Umbraco.Cms.Core.Models.Blocks.BlockListModel>(_publishedValueFallback, "serviceItems");
+
+		///<summary>
+		/// Summary: Supporting text for the feature block
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("summary")]
+		public virtual string Summary => this.Value<string>(_publishedValueFallback, "summary");
 
 		///<summary>
 		/// Title
