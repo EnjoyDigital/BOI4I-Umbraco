@@ -354,8 +354,8 @@
     fill: $blue;
   }
 
-  &:hover {
-    &:not(.disabled):not([disabled]) {
+  &:not(.disabled):not([disabled]) {
+    &:hover {
       color: $blue-2;
 
       &::before {
@@ -368,7 +368,6 @@
       }
 
       > * {
-        transform: translateY(1px);
         color: $blue-2;
       }
 
@@ -376,6 +375,26 @@
         fill: $blue-2;
       }
     }
+
+    &:active {
+      &::before {
+        background-color: $grey-8;
+        border-color: $dark-blue;
+        transform: translateY(2px);
+      }
+
+      > * {
+        transform: translateY(2px);
+        color: $dark-blue;
+      }
+    }
+  }
+
+  &.disabled,
+  &[disabled],
+  &[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 
