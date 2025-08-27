@@ -299,6 +299,7 @@
     background-color: $blue;
     border-radius: 8px;
     z-index: 3;
+    transition: opacity 0.25s ease, background-color 0.25s ease, color 0.25s ease;
 
     @media (min-width: $min-desktop) {
         right: 15px;
@@ -308,7 +309,6 @@
         width: 32px;
         height: 32px;
     }
-
 
     &-message {
         @include font-size(12);
@@ -341,10 +341,29 @@
         }
     }
 
-    &.active .common-print-message {
-        opacity: 1;
-        visibility: visible;
-        transition: all 0.4s;
+    &:not(:active):focus,
+    &:not(:active):focus-visible,
+    &.active {
+        .common-print-message {
+            opacity: 1;
+            visibility: visible;
+            transition: all 0.4s;
+        }
+    }
+
+    &:hover {
+        background-color: $blue-2;
+    }    
+
+    &:active {
+        background-color: $dark-blue;
+        color: $grey-8;
+    }
+
+    &:not(:active):focus,
+    &:not(:active):focus-visible {
+      outline: 2px solid $blue;
+      outline-offset: 2px;
     }
 }
 
@@ -384,7 +403,18 @@
     }
 
     &:hover {
-        background-color: $blue;
-        color: $white;
+        background-color: $grey-11;
+    }
+
+    &:active {
+        background-color: $grey-8;
+        border-color: $dark-blue;
+        color: $dark-blue;
+    }
+
+    &:not(:active):focus,
+    &:not(:active):focus-visible {
+      outline: 2px solid $blue;
+      outline-offset: 2px;
     }
 }
