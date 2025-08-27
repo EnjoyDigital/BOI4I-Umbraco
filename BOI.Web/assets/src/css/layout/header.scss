@@ -507,16 +507,6 @@ header {
                 }
               }
 
-              &:after {
-                content: '';
-                position: absolute;
-                width: 0%;
-                height: 1px;
-                bottom: -3px;
-                left: 0;
-                background-color: $blue;
-                transition: all 0.2s ease;
-              }
 
               a {
                 display: flex;
@@ -527,6 +517,11 @@ header {
                 padding: 0;
                 color: inherit;
                 font-size: 0.95em;
+                line-height: 21px;
+
+                @include media-min($max-mobile-nav) {
+                  @include simple-link-style(none);
+                }
               }
             }
 

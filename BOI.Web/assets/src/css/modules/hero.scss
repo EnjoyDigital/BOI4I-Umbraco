@@ -117,18 +117,25 @@
 }
 
 .hero-area-quick-links__list-title {
+  @include simple-link-style();
   font-size: 20px;
   line-height: 30px;
   font-weight: 600;
   color: $blue;
-  text-decoration: underline;
-  text-underline-position: under;
-  text-underline-offset: 1px;
-  text-decoration-thickness: 1px;
-  transition: color 0.25s ease;
   
   .hero-area-quick-links__list li:has(a):hover & {
     color: $blue-2;
+  }
+
+  .hero-area-quick-links__list li:has(a):active &,
+  .hero-area-quick-links__list li:has(a):visited & {
+    color: $dark-blue;
+    text-decoration: underline;
+  }
+
+  .hero-area-quick-links__list li:has(a):active & {
+    background-color: $grey-8;
+    text-decoration: underline;
   }
 }
 
