@@ -28,19 +28,17 @@
       color: $blue;
       font-weight: 600;
 
-      &:not(:last-child) {
-        &:after {
-          content: '/';
-          position: absolute;
-          top: 50%;
-          right: -12px;
-          transform: translate(50%,-50%);
-          color: $grey-12;
-        }
+      &:after {
+        content: '/';
+        position: absolute;
+        top: 50%;
+        right: -12px;
+        transform: translate(50%,-50%);
+        color: $grey-12;
       }
 
       > a {
-        @include link-style();
+        @include simple-link-style(none);
         color: $blue;
 
         &:after {

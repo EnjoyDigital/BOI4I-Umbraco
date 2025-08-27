@@ -2,7 +2,7 @@
     background-color: $white;
     padding: 40px 20px;
 
-    a {
+    a:not(.footer-logo-link) {
         @include simple-link-style(none);
     }
 

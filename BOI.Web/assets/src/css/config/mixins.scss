@@ -318,7 +318,8 @@
       }
     }
 
-    &:not(:active):focus {
+    &:not(:active):focus,
+    &:not(:active):focus-visible {
       outline: 2px solid $blue;
       outline-offset: 2px;
     }
