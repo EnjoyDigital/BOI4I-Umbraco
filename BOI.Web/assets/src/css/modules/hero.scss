@@ -31,7 +31,7 @@
   p {
     max-width: 672px;
     margin: 0 auto;
-    color: $grey-12;
+    color: $text;
 
     a {
       @include simple-link-style();
@@ -141,5 +141,5 @@
 
 .hero-area-quick-links__list-text {
   margin-top: 8px;
-  color: $grey-12;
+  color: $text;
 }
