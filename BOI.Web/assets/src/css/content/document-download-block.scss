@@ -98,12 +98,37 @@
     background-color: transparent;
     color: $blue-2;
 
-    .document-download-block-item__title {
-      color: $blue-2;
-    }
-
+    .document-download-block-item__title,
     > span {
       color: $blue-2;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  &:active,
+  &:visited {
+    .document-download-block-item__title,
+    > span {
+      color: $dark-blue;
+      text-decoration: underline;
+    }
+  }
+
+  &:active {
+    .document-download-block-item__title,
+    > span {
+      background-color: $grey-8;
+      text-decoration: underline;
+      text-decoration-thickness: 3px;
+    }
+  }
+
+  &:focus,
+  &:focus-visible {
+    .document-download-block-item__title,
+    > span {
+      outline-color: $blue;
     }
   }
 }

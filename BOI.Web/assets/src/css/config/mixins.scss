@@ -217,6 +217,7 @@
   &:hover {
     color: $blue-2;
     text-decoration: underline;
+    text-decoration-thickness: 2px;
   }
 
   &:active,
@@ -228,6 +229,7 @@
   &:active {
     background-color: $grey-8;
     text-decoration: underline;
+    text-decoration-thickness: 3px;
   }
 
   &:focus,
