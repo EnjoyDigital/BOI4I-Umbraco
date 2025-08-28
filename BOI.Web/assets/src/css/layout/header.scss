@@ -713,6 +713,16 @@ header {
             color: $blue;
             font-weight: 600;
             cursor: pointer;
+
+            > span {
+              @include simple-link-style(none);
+            }
+
+            @include media-min($max-mobile-nav) {
+              &:focus-visible {
+                outline-color: $blue;
+              }
+            }
           }
 
           .print-products {
@@ -778,6 +788,10 @@ header {
           color: $text;
         }
 
+        &:focus-within {
+          padding: 8px 0 9px;
+        }
+
         @include media($max-mobile-nav) {
           &:focus-within {
             padding: 8px 4px 9px;
@@ -798,6 +812,10 @@ header {
     display: flex;
     align-items: center;
     color: $blue;
+
+    button {
+      @include icon-button-states();
+    }
 
     button,
     span {

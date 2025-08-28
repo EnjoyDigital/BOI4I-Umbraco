@@ -411,3 +411,22 @@
     background-color: $colour;
   }
 }
+
+@mixin icon-button-states() {
+  &:hover {
+    background-color: $grey-11;
+  }
+
+  &:active {
+    background-color: $grey-8;
+    border-color: $dark-blue;
+    color: $dark-blue;
+  }
+
+  &:not(:active):focus,
+  &:not(:active):focus-visible {
+    outline: 2px solid $blue;
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+}

@@ -368,6 +368,7 @@
 }
 
 .back-to-top {
+    @include icon-button-states();
     display: flex;
     align-items: center;
     justify-content: center;
@@ -402,19 +403,19 @@
         pointer-events: auto;
     }
 
-    &:hover {
-        background-color: $grey-11;
-    }
+    // &:hover {
+    //     background-color: $grey-11;
+    // }
 
-    &:active {
-        background-color: $grey-8;
-        border-color: $dark-blue;
-        color: $dark-blue;
-    }
+    // &:active {
+    //     background-color: $grey-8;
+    //     border-color: $dark-blue;
+    //     color: $dark-blue;
+    // }
 
-    &:not(:active):focus,
-    &:not(:active):focus-visible {
-      outline: 2px solid $blue;
-      outline-offset: 2px;
-    }
+    // &:not(:active):focus,
+    // &:not(:active):focus-visible {
+    //   outline: 2px solid $blue;
+    //   outline-offset: 2px;
+    // }
 }
