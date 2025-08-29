@@ -1,9 +1,28 @@
-﻿@model string
+﻿@model object
+@{
+    string buttonText;
+    string ariaLabel;
+    
+    if (Model is string stringModel)
+    {
+        buttonText = stringModel;
+        ariaLabel = stringModel;
+    }
+    else
+    {
+        var modelType = Model.GetType();
+        var textProp = modelType.GetProperty("Text");
+        var ariaLabelProp = modelType.GetProperty("AriaLabel");
+        
+        buttonText = textProp?.GetValue(Model)?.ToString() ?? "Link";
+        ariaLabel = ariaLabelProp?.GetValue(Model)?.ToString() ?? buttonText;
+    }
+}
 <div class="accordion-copylink">
-        <button>
-            <svg class="[ icon icon-link -blue ]">
-                <use xlink:href="#sprite-icon-link"></use>
-            </svg>
-            <span>@Model</span>
-        </button>
-    </div>
+    <button aria-label="@ariaLabel">
+        <svg class="[ icon icon-link -blue ]" aria-hidden="true">
+            <use xlink:href="#sprite-icon-link"></use>
+        </svg>
+        <span>@buttonText</span>
+    </button>
+</div>

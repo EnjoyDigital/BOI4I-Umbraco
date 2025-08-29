@@ -53,12 +53,12 @@
                                         <div class="accordion-content rich-text" id="@tabContentId" aria-labelledby="@tabHeadingId">
                                             @Html.Raw(tab.FAQAnswer)
 
-                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this FAQ"))" />
+                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new { Text = "Link to this FAQ", AriaLabel = $"Copy link to FAQ: {tab.FAQTabQuestion} to clipboard" })" />
                                         </div>
                                     </div>
                                 }
                             }
-                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this FAQ"))" />
+                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new { Text = "Link to this FAQ", AriaLabel = $"Copy link to FAQ group: {criteria.FAQQuestion} to clipboard" })" />
                         </div>
                     </div>
                 }
