@@ -6734,7 +6734,7 @@ section.overdraft-calculator .results-wrapper span {
 
 @media screen and (max-width: 568px) {
     .rich-text .product-table thead {
-        display: none
+        @extend .sr-only;
     }
 }
 

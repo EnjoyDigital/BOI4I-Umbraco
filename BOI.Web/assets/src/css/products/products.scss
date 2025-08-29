@@ -119,7 +119,7 @@
 
   thead {
     @include media($small) {
-      display: none;
+      @include sr-only;
     }
   }
 
