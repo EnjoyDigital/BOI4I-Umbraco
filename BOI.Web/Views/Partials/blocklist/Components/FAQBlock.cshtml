@@ -40,7 +40,7 @@
                                     }
 
                                     @answer.Answer
-                                    <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new {Text ="Link to this" AriaLabel = "Copy link to this section to clipboard"})" />
+                                    <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new {Text ="Link to this", AriaLabel = "Copy link to this section to clipboard"})" />
 
                                     break;
                                 case FAqitemWithQuestion.ModelTypeAlias:
@@ -57,7 +57,7 @@
                                         </button>
                                         <div id="Accordion-@faqItem.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)_@faqItemWithQuestion.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)-content" class="accordion-content rich-text" role="region" aria-labelledby="Accordion-@faqItem.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)_@faqItemWithQuestion.Question.ToCleanString(shortStringHelper,CleanStringType.UrlSegment)-heading">
                                             @faqItemWithQuestion.Answer
-                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new {Text ="Link to this" AriaLabel = "Copy link to this section to clipboard"})" />
+                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new {Text ="Link to this", AriaLabel = "Copy link to this section to clipboard"})" />
                                         </div>
                                     </div>
                                     break;
