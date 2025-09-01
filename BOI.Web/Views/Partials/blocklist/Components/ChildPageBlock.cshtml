@@ -19,6 +19,7 @@
                     var childPageItem = (ChildPageItem)childPage?.Content;
                     if(childPageItem == null)
                     { continue; }
+                    var title = childPageItem.ChildTitle.ToString().StripHTMLPTags();
 
                     <div class="child-page-block-item">
                         @if (childPageItem.ChildIcon != null)
@@ -35,10 +36,7 @@
                         }
 
                         <div class="child-page-block-item__content">
-                            <h2 class="child-page-block-item__title">
-                                @{
-                                    var title = childPageItem.ChildTitle.ToString().StripHTMLPTags();
-                                }
+                            <h2 class="child-page-block-item__title">                               
                                 @Html.Raw(title)
                             </h2>
                             <div class="rich-text">
@@ -77,7 +75,7 @@
 
                             @if ((childPageItem.CTalink?.Url.HasValue()).GetValueOrDefault())
                             {
-                                <a href="@childPageItem.CTalink.Url" target="@childPageItem.CTalink.Target" class="child-page-block-item__cta">
+                                <a href="@childPageItem.CTalink.Url" target="@childPageItem.CTalink.Target" class="child-page-block-item__cta" aria-label="@title - @childPageItem.CTalink.Name">
                                     <span>@childPageItem.CTalink.Name</span>
                                 </a>
                             }

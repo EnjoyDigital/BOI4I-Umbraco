@@ -86,7 +86,7 @@ namespace BOI.Core.Extensions
         public static string StripHTMLPTags(this string input)
         {
             input = Regex.Replace(input, "^\\s*<p([^>]*)>", string.Empty);
-            return input.Replace( "<\\/p>\\s*$", string.Empty);
+            return Regex.Replace(input, @"</p>\s*$", string.Empty);
         }
 
         public static string ReplaceAllButFirst(this string originalStr, string search, string replace)
