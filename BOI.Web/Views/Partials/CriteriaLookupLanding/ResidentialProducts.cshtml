@@ -86,13 +86,13 @@
                                         </button>
                                         <div id="Accordion-@criteria.NameId-content" class="accordion-content rich-text" role="region" aria-labelledby="Accordion-@tab.CriteriaTabName.ToLower().Replace(" ", "-")-heading">
                                             @Html.Raw(tab.BodyText)
-                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new {Text ="Link to this criteria", AriaLabel = $"Copy link to {criteria.CriteriaName} - {tab.CriteriaTabName} to clipboard"})" />
                                         </div>
                                     </div>
                                 }
                             }
 
-                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new {Text ="Link to this criteria", AriaLabel = $"Copy link to {criteria.CriteriaName} to clipboard"})" />
 
                         </div>
                     </div>
