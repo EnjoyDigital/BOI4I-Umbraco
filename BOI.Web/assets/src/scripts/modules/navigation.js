@@ -34,11 +34,11 @@ export default function Navigation() {
                 $button.setAttribute('aria-label', 'Close main menu');
                 $button.setAttribute('aria-expanded', true);
                 $button.innerHTML = '<svg class="[ icon icon-cross-alt -blue ]" aria-hidden="true"><use xlink:href="#sprite-icon-cross-alt"></use></svg>Close';
-                while ($mobileTop.childNodes.length > 0) { 
-                    $headerBottom.appendChild($mobileTop.childNodes[0]);
+                while ($mobileTop.childNodes.length > 0) {
+                    $headerBottom.insertBefore($mobileTop.childNodes[0], $headerBottom.firstChild);
                 }
-                while ($searchBox.childNodes.length > 0) {
-                    $headerBottom.appendChild($siteSearch.childNodes[0]);
+                while ($siteSearch.childNodes.length > 0) {
+                    $headerBottom.insertBefore($siteSearch.childNodes[0], $headerBottom.firstChild); // Fixed variable     
                 }
             }
         });
