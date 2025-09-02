@@ -1,21 +1,13 @@
 ﻿@model object
 @{
-    string buttonText;
-    string ariaLabel;
-    
-    if (Model is string stringModel)
+    string buttonText = "Link to this";
+    string ariaLabel = buttonText;
+
+    if (Model != null)
     {
-        buttonText = stringModel;
-        ariaLabel = stringModel;
-    }
-    else
-    {
-        var modelType = Model.GetType();
-        var textProp = modelType.GetProperty("Text");
-        var ariaLabelProp = modelType.GetProperty("AriaLabel");
-        
-        buttonText = textProp?.GetValue(Model)?.ToString() ?? "Link";
-        ariaLabel = ariaLabelProp?.GetValue(Model)?.ToString() ?? buttonText;
+        var type = Model.GetType();
+        buttonText = type.GetProperty("Text")?.GetValue(Model)?.ToString() ?? "Link to this";
+        ariaLabel = type.GetProperty("AriaLabel")?.GetValue(Model)?.ToString() ?? buttonText;
     }
 }
 <div class="accordion-copylink">
