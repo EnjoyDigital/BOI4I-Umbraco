@@ -30,7 +30,7 @@ input {
   padding: 8px;
 
   @include placeholder-styles() {
-    color: rgba(0,0,0,0.5);
+    color: $text-placeholder;
   }
 
   &:focus {
