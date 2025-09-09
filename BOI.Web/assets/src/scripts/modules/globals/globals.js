@@ -19,6 +19,7 @@ import AutoCompleteSearch from '../autoCompleteSearch'
 import MegaNav from '../megaNav'
 import SetScroll from '../setScroll'
 import BackToTop from '../backToTop'
+import RichTextTables from '../richtext-tables'
 
 import externalLinks from '../externalLinks'
 
@@ -41,4 +42,5 @@ export default function Globals() {
     SetScroll()
     externalLinks();
     BackToTop();
+    RichTextTables();
 }
