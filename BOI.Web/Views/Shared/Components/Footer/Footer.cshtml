@@ -167,7 +167,16 @@
             </ul>
 
             <div class="footer-copyright">
-                <p>&copy; <a href="@(Model.SiteRoot.CopyrightLink != null ? Model.SiteRoot.CopyrightLink.Url : "")">@currentYear Bank of Ireland</a></p>
+                <p>&copy; 
+                    @if (Model.SiteRoot.CopyrightLink != null)
+                    {
+                        <a href="@Model.SiteRoot.CopyrightLink.Url">@currentYear Bank of Ireland</a>
+                    }
+                    else
+                    {
+                        <span>@currentYear Bank of Ireland</span>
+                    }
+                </p>
             </div>
         </div>
     </div>
