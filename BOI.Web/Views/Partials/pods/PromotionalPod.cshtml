@@ -26,25 +26,17 @@
                     @Model.SubText
                 </div>
 
-                @* @if ((Model.CTalink?.Url.HasValue()).GetValueOrDefault())
-                {
-                    <a href="@Model.CTalink.Url" class="button button--secondary" target="@Model.CTalink.Target">
-                        <span>@Model.CTalink.Name</span>
-                    </a>
-                }*@
-
-
-                @if (Model.PopupName.HasValue())
+                @if(Model.ShowAsPopUp)
                 {
                     <a class="button popup-open" href="#" data-popupid="@uniqueId">
-                        <span>@Model.PopupName</span>
+                        <span>@Model.PopupTitle</span>
                     </a>
 
                     <div class="cta-popup" id="@uniqueId">
                         <div class="cta-popup__inner">
                             <div class="cta-popup__text">
                                 <div class="cta-popup__header">
-                                    <h2 class="cta-popup__header-title">@Model.Title</h2>
+                                    <h2 class="cta-popup__header-title">@Model.PopupName</h2>
                                     <button class="transparent popup-close" title="Close">
                                         <svg class="[ icon icon-close -blue ]" aria-hidden="true">
                                             <use xlink:href="#sprite-icon-close"></use>
@@ -69,12 +61,21 @@
                                 @if (Model.CTalink != null)
                                 {
                                     <a href="@Model.CTalink.Url" class="button continue" @(!string.IsNullOrWhiteSpace(Model.CTalink.Target) ? "target=" + Model.CTalink.Target + "" : string.Empty) disabled="disabled">
-                                        <span>Continue</span>
+                                        <span>@Model.CTalink.Name</span>
                                     </a>
                                 }
                             </div>
                         </div>
                     </div>
+                }
+                else
+                {
+                    if ((Model.CTalink?.Url.HasValue()).GetValueOrDefault())
+                    {
+                        <a href="@Model.CTalink.Url" class="button button--secondary" target="@Model.CTalink.Target">
+                            <span>@Model.CTalink.Name</span>
+                        </a>
+                    }
                 }
             </div>
         </div>

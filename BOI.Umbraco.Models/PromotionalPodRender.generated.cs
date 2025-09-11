@@ -106,6 +106,13 @@ namespace BOI.Umbraco.Models
 		public virtual string PopupTitle => this.Value<string>(_publishedValueFallback, "popupTitle");
 
 		///<summary>
+		/// Show As PopUp: When checked, CTA will open a pop up. Otherwise will redirect to the link
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
+		[ImplementPropertyType("showAsPopUp")]
+		public virtual bool ShowAsPopUp => this.Value<bool>(_publishedValueFallback, "showAsPopUp");
+
+		///<summary>
 		/// Sub Text
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
