@@ -50,6 +50,22 @@ namespace BOI.Umbraco.Models
 		// properties
 
 		///<summary>
+		/// Confirmation Error Message
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("confirmationErrorMessage")]
+		public virtual string ConfirmationErrorMessage => this.Value<string>(_publishedValueFallback, "confirmationErrorMessage");
+
+		///<summary>
+		/// Confirmation Text
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("confirmationText")]
+		public virtual string ConfirmationText => this.Value<string>(_publishedValueFallback, "confirmationText");
+
+		///<summary>
 		/// CTA Link
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
@@ -58,12 +74,36 @@ namespace BOI.Umbraco.Models
 		public virtual global::Umbraco.Cms.Core.Models.Link CTalink => this.Value<global::Umbraco.Cms.Core.Models.Link>(_publishedValueFallback, "cTALink");
 
 		///<summary>
+		/// Description
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("description")]
+		public virtual global::Umbraco.Cms.Core.Strings.IHtmlEncodedString Description => this.Value<global::Umbraco.Cms.Core.Strings.IHtmlEncodedString>(_publishedValueFallback, "description");
+
+		///<summary>
 		/// Image
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
 		[ImplementPropertyType("image")]
 		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent Image => this.Value<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(_publishedValueFallback, "image");
+
+		///<summary>
+		/// Popup Name
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("popupName")]
+		public virtual string PopupName => this.Value<string>(_publishedValueFallback, "popupName");
+
+		///<summary>
+		/// Popup Title
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("popupTitle")]
+		public virtual string PopupTitle => this.Value<string>(_publishedValueFallback, "popupTitle");
 
 		///<summary>
 		/// Sub Text

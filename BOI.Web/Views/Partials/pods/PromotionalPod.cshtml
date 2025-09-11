@@ -5,17 +5,11 @@
     {
         return;
     }
-    
-    @* TODO: T185692. Need to add background-colour options:
-    - Light Teal: u-bg--light-teal
-    - Light Blue: u-bg--light-blue
-    - Light Lime: u-bg--light-lime
-    - Light Honey: u-bg--light-honey
 
-    Classes to be applied to the "promotional-pod" element.
+    var uniqueId = @Guid.NewGuid();
 
-    TODO: If image is illustration, add class of "-is-illustration" to "promotional-pod" element
-    *@
+
+
 
     <div class="promotional-pod @(Model.Image != null ? "-has-image" : "-no-image")">
         <div class="promotional-pod__inner">
@@ -32,11 +26,55 @@
                     @Model.SubText
                 </div>
 
-                @if ((Model.CTalink?.Url.HasValue()).GetValueOrDefault())
+                @* @if ((Model.CTalink?.Url.HasValue()).GetValueOrDefault())
                 {
                     <a href="@Model.CTalink.Url" class="button button--secondary" target="@Model.CTalink.Target">
                         <span>@Model.CTalink.Name</span>
                     </a>
+                }*@
+
+
+                @if (Model.PopupName.HasValue())
+                {
+                    <a class="button popup-open" href="#" data-popupid="@uniqueId">
+                        <span>@Model.PopupName</span>
+                    </a>
+
+                    <div class="cta-popup" id="@uniqueId">
+                        <div class="cta-popup__inner">
+                            <div class="cta-popup__text">
+                                <div class="cta-popup__header">
+                                    <h2 class="cta-popup__header-title">@Model.Title</h2>
+                                    <button class="transparent popup-close" title="Close">
+                                        <svg class="[ icon icon-close -blue ]" aria-hidden="true">
+                                            <use xlink:href="#sprite-icon-close"></use>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="rich-text">
+                                    @Html.Raw(Model.Description)
+                                </div>
+                            </div>
+                            <div class="cta-popup__footer">
+                                @if (Model.ConfirmationText.HasValue())
+                                {
+                                    <div class="checkbox-wrapper">
+                                        <input id="@uniqueId-check" type="checkbox" />
+                                        <label for="@uniqueId-check">@Model.ConfirmationText</label>
+                                        <div id="@uniqueId-error" class="field-validation-error">
+                                            @Model.ConfirmationErrorMessage
+                                        </div>
+                                    </div>
+                                }
+                                @if (Model.CTalink != null)
+                                {
+                                    <a href="@Model.CTalink.Url" class="button continue" @(!string.IsNullOrWhiteSpace(Model.CTalink.Target) ? "target=" + Model.CTalink.Target + "" : string.Empty) disabled="disabled">
+                                        <span>Continue</span>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
                 }
             </div>
         </div>
