@@ -90,20 +90,20 @@ namespace BOI.Umbraco.Models
 		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent Image => this.Value<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(_publishedValueFallback, "image");
 
 		///<summary>
-		/// Popup Name
+		/// Popup CTA Link Title
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("popupName")]
-		public virtual string PopupName => this.Value<string>(_publishedValueFallback, "popupName");
+		[ImplementPropertyType("popupCTALinkTitle")]
+		public virtual string PopupCtalinkTitle => this.Value<string>(_publishedValueFallback, "popupCTALinkTitle");
 
 		///<summary>
-		/// Popup Title
+		/// Popup Heading
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("popupTitle")]
-		public virtual string PopupTitle => this.Value<string>(_publishedValueFallback, "popupTitle");
+		[ImplementPropertyType("popupHeading")]
+		public virtual string PopupHeading => this.Value<string>(_publishedValueFallback, "popupHeading");
 
 		///<summary>
 		/// Show As PopUp: When checked, CTA will open a pop up. Otherwise will redirect to the link
