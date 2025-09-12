@@ -73,6 +73,14 @@ namespace BOI.Umbraco.Models
 		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent ServiceIcon => this.Value<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(_publishedValueFallback, "serviceIcon");
 
 		///<summary>
+		/// Service Illustration
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("serviceIllustration")]
+		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent ServiceIllustration => this.Value<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(_publishedValueFallback, "serviceIllustration");
+
+		///<summary>
 		/// Service Subtitle: Please enter a subtitle for the service. In case of null Service Date, this would be used
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
