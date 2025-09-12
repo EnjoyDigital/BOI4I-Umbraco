@@ -29,14 +29,14 @@
                 @if(Model.ShowAsPopUp)
                 {
                     <a class="button popup-open" href="#" data-popupid="@uniqueId">
-                        <span>@Model.PopupTitle</span>
+                        <span>@Model.PopupCtalinkTitle</span>
                     </a>
 
                     <div class="cta-popup" id="@uniqueId">
                         <div class="cta-popup__inner">
                             <div class="cta-popup__text">
                                 <div class="cta-popup__header">
-                                    <h2 class="cta-popup__header-title">@Model.PopupName</h2>
+                                    <h2 class="cta-popup__header-title">@Model.PopupHeading</h2>
                                     <button class="transparent popup-close" title="Close">
                                         <svg class="[ icon icon-close -blue ]" aria-hidden="true">
                                             <use xlink:href="#sprite-icon-close"></use>
