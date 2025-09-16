@@ -38,7 +38,7 @@ export default function Navigation() {
                     $headerBottom.insertBefore($mobileTop.childNodes[0], $headerBottom.firstChild);
                 }
                 while ($siteSearch.childNodes.length > 0) {
-                    $headerBottom.insertBefore($siteSearch.childNodes[0], $headerBottom.firstChild); // Fixed variable     
+                    $headerBottom.insertBefore($siteSearch.childNodes[0], $headerBottom.firstChild);
                 }
             }
         });
@@ -92,6 +92,7 @@ export default function Navigation() {
                 // If on mobile do nothing
                 if ($(window).width() < 768) return;
 
+                var $button = e.target;
                 var $parent = $mobileSubmenu[i].parentElement;
                 var $sibling = $mobileSubmenu[i].nextElementSibling;
                 var $topLevelLink = $mobileSubmenu[i].previousElementSibling;
@@ -99,7 +100,8 @@ export default function Navigation() {
                 $sibling.style.display = "";
                 $parent.classList.remove('submenu-open');
                 $headerBottom.style.height = "auto";
-                $topLevelLink.setAttribute('aria-expanded', false)
+                $button.setAttribute('aria-expanded', false);
+                $topLevelLink.setAttribute('aria-expanded', false);
             });
 
             $mobileSubmenu[i].addEventListener('click', function (e) {
@@ -115,6 +117,7 @@ export default function Navigation() {
                         e.preventDefault();
                     }
                 }
+                var $button = e.target;
                 var $parent = $mobileSubmenu[i].parentElement;
                 var $sibling = $mobileSubmenu[i].nextElementSibling;
                 var $topLevelLink = $mobileSubmenu[i].previousElementSibling;
@@ -127,12 +130,15 @@ export default function Navigation() {
                     $sibling.style.display = "";
                     $parent.classList.remove('submenu-open');
                     $headerBottom.style.height = "auto";
-                    $topLevelLink.setAttribute('aria-expanded', false)
+                    $button.setAttribute('aria-expanded', false);
+                    $topLevelLink.setAttribute('aria-expanded', false);                    
                 } else {
                     $sibling.style.display = "flex";
                     $parent.classList.add('submenu-open');
                     // $headerBottom.style.height = "calc(100% - 120px)";
-                    $topLevelLink.setAttribute('aria-expanded', true)
+                    console.log({$button})
+                    $button.setAttribute('aria-expanded', true);
+                    $topLevelLink.setAttribute('aria-expanded', true);                    
                 }
             });
         }
