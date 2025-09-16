@@ -57,13 +57,14 @@ namespace BOI.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var logger = app.ApplicationServices.GetRequiredService<ILogger<Startup>>();
+            var options = new RewriteOptions();
 
             //UseCustomRewrites(app, env, _config, logger);
 
             if (env.IsProduction())
             {
                 app.UseExceptionHandler(err => err.UseCustomErrors(env));
-
+                options.AddRedirectToWwwPermanent();
             }
             else
             {
