@@ -20,6 +20,7 @@
                     if(childPageItem == null)
                     { continue; }
                     var title = childPageItem.ChildTitle.ToString().StripHTMLPTags();
+                    var cleanTitle = title.StripHTML();
 
                     <div class="child-page-block-item">
                         @if (childPageItem.ChildIcon != null)
@@ -75,7 +76,7 @@
 
                             @if ((childPageItem.CTalink?.Url.HasValue()).GetValueOrDefault())
                             {
-                                <a href="@childPageItem.CTalink.Url" target="@childPageItem.CTalink.Target" class="child-page-block-item__cta" aria-label="@title - @childPageItem.CTalink.Name">
+                                <a href="@childPageItem.CTalink.Url" target="@childPageItem.CTalink.Target" class="child-page-block-item__cta" aria-label="@cleanTitle - @childPageItem.CTalink.Name">
                                     <span>@childPageItem.CTalink.Name</span>
                                 </a>
                             }
