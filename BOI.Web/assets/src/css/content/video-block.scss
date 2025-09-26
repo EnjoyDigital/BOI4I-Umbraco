@@ -170,7 +170,8 @@
   position: relative;
   padding-top: 56.25%;
 
-  video {
+  video,
+  .plyr {
     position: absolute;
     top: 0;
     left: 0;

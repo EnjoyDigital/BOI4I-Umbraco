@@ -68,6 +68,7 @@
                     @foreach (var item in Model.SiteRoot.MainNavigation)
                     {
                         var itemContent = item.Content as MainNavigationItem;
+                        var itemId = itemContent.NavigationItem?.Name.ToLower().Replace(" ", "-");
                         <li>
                             <a href="@itemContent?.NavigationItem?.Url" target="@itemContent?.NavigationItem?.Target" title="@itemContent?.NavigationItem?.Name" @Html.Raw(itemContent?.NavigationItem?.Url == Model?.Content?.Url() ? "aria-current=\"page\"" : string.Empty) @Html.Raw(@itemContent.ChildNavigationItems.Any() ? "aria-haspopup=\"true\"" : string.Empty) aria-expanded="false">
                                 <div class="menu-item-icon">
@@ -78,8 +79,8 @@
 
                             @if (itemContent.ChildNavigationItems.Any())
                             {
-                                <div class="show-submenu"></div>
-                                <div class="header-bottom__menu--submenu listing-count-@itemContent.ChildNavigationItems.Count()">
+                                <button class="show-submenu" aria-label="Open/close @itemContent?.NavigationItem?.Name menu"  id="menu-@itemId-trigger" aria-controls="menu-@itemId-content" aria-expanded="false"></button>
+                                <div class="header-bottom__menu--submenu listing-count-@itemContent.ChildNavigationItems.Count()" id="menu-@itemId-content" aria-labelledby="menu-@itemId-trigger">
 
 
 
@@ -94,20 +95,21 @@
                                         if (childContent == null)
                                         {
                                             continue;
-                                        }
+                                        }                                        
+                                        var childId = childContent.NavigationItem?.Name.ToLower().Replace(" ", "-");
                                         <div class="submenu-listing">
                                             @if (childContent?.NavigationItem?.Url == null || childContent.NavigationItem.Url == "#")
                                             {
                                                 <span class="submenu-listing__heading">
                                                     @childContent.NavigationItem.Name
 
-                                                    <div class="show-submenu"></div>
+                                                    <button class="show-submenu" aria-label="Open/close @childContent?.NavigationItem?.Name menu" aria-label="Open/close @itemContent?.NavigationItem?.Name menu"  id="submenu-@childId-trigger" aria-controls="submenu-@childId-content" aria-expanded="false"></button>
                                                 </span>
                                             }
 
                                             @if (childContent.ChildNavigationItems.Any())
                                             {
-                                                <ul>
+                                                <ul id="submenu-@childId-content" aria-labelledby="submenu-@childId-trigger">
                                                     @foreach (var nextLevelChild in childContent.ChildNavigationItems)
                                                     {
                                                         var nextLevelChildContent = nextLevelChild.Content as MainNavigationItemLevel3;

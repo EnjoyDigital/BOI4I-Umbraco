@@ -82,7 +82,7 @@
                 }
 
                 .field-validation-error {
-                    color: $dark-red;
+                    color: $xdark-red;
 
                     @include media-min($large) {
                         position: absolute;

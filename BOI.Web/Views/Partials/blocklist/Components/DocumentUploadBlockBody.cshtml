@@ -30,7 +30,7 @@
                     @if (documentDownloadItem.Document != null)
                     {
                         <a href="@documentDownloadItem.Document.Url()" class="overlay-link" target="_blank" download="@documentDownloadItem.Title">Download<span class="sr-only"> @documentDownloadItem.Title</span></a>
-                        <p><strong>Download</strong></p>
+                        <p aria-hidden="true"><strong>Download</strong></p>
                     }
 
                 </div>

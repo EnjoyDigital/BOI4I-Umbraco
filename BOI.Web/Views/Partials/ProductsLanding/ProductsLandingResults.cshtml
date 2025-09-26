@@ -1,4 +1,5 @@
 ﻿@using System.Text.RegularExpressions
+@using Umbraco.Cms.Core.Strings
 @inherits UmbracoViewPage<ProductsLandingResultsViewModel>
 
 @if (Model.Results != null && Model.Results.QueryResults.Any())
@@ -8,16 +9,16 @@
             var groupedByLTVResults = Model.Results.QueryResults.OfType<BOI.Core.Search.Models.ProductResult>().OrderBy(x => x.LTVSortOrder).GroupBy(x => x.LTVTitle);
             foreach (var groupedByLTVResult in groupedByLTVResults)
             {
-                <table class="product-table">
-                    <caption class="product-table-caption">
-                        <h3 class="product-table-caption__title">@groupedByLTVResult.Key</h3>
-                        <a class="print-products js-print-products" href="" title="Click to print products">
-                            <svg class="[ icon icon-print-alt -blue ]" aria-hidden="true">
-                                <use xlink:href="#sprite-icon-print-alt"></use>
-                            </svg>
-                            <span>Print products</span>
-                        </a>
-                    </caption>
+                <div class="product-table-caption">
+                    <h3 class="product-table-caption__title" id="table-caption-@groupedByLTVResult.Key.ToCleanString(shortStringHelper, CleanStringType.UrlSegment)">@groupedByLTVResult.Key</h3>
+                    <a class="print-products js-print-products" href="" title="Click to print products">
+                        <svg class="[ icon icon-print-alt -blue ]" aria-hidden="true">
+                            <use xlink:href="#sprite-icon-print-alt"></use>
+                        </svg>
+                        <span>Print products</span>
+                    </a>
+                </div>
+                <table class="product-table" aria-labelledby="table-caption-table-caption-@groupedByLTVResult.Key.ToCleanString(shortStringHelper, CleanStringType.UrlSegment)">
                     <thead>
                         <tr>
                             <th class="term">Term</th>

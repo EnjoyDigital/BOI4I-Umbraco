@@ -1,4 +1,4 @@
-name: Build and Deploy Bank of Ireland Calculators
+name: Build and Deploy BOI4I
 
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: bank-calculators-app-${{ github.ref_name == 'release/test' && 'release-test' || github.ref_name == 'release/staging' && 'release-staging' || github.ref_name }}
+        name: boi4i-app-${{ github.ref_name == 'release/test' && 'release-test' || github.ref_name == 'release/staging' && 'release-staging' || github.ref_name }}
         path: ./publish/
 
   deploy:
@@ -42,13 +42,13 @@ jobs:
     runs-on: [self-hosted, windows]
     environment: ${{ github.ref_name }}
     env:
-      ENV_SUFFIX: ${{ github.ref_name == 'release/test' && 'TEST' || github.ref_name == 'release/staging' && 'STAGING' || 'PROD' }}
+      ENV_SUFFIX: ${{ github.ref_name == 'release/test' && 'BOI4I_TEST' || github.ref_name == 'release/staging' && 'BOI4I_STAGING' || 'BOI4I_PROD' }}
     
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
-        name: bank-calculators-app-${{ github.ref_name == 'release/test' && 'release-test' || github.ref_name == 'release/staging' && 'release-staging' || github.ref_name }}
+        name: boi4i-app-${{ github.ref_name == 'release/test' && 'release-test' || github.ref_name == 'release/staging' && 'release-staging' || github.ref_name }}
         path: ./publish/
 
     - name: Debug environment
@@ -81,6 +81,19 @@ jobs:
             # Import required modules
             Import-Module WebAdministration
             
+            # Enable long path support for this PowerShell session
+            try {
+              $registryPath = "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem"
+              $longPathEnabled = Get-ItemProperty -Path $registryPath -Name "LongPathsEnabled" -ErrorAction SilentlyContinue
+              if ($longPathEnabled -and $longPathEnabled.LongPathsEnabled -eq 1) {
+                Write-Host "Long path support is already enabled"
+              } else {
+                Write-Host "Long path support is not enabled - this may cause issues with very long filenames"
+              }
+            } catch {
+              Write-Host "Could not check long path support status: $($_.Exception.Message)"
+            }
+            
             # Stop the application pool
             Write-Host "Stopping application pool: $AppPool"
             try {
@@ -94,6 +107,24 @@ jobs:
               }
             }
             
+            # Stop the website
+            Write-Host "Stopping website..."
+            try {
+              $siteName = (Get-WebAppPoolState -Name $AppPool).ApplicationPool
+              $sites = Get-Website | Where-Object { $_.ApplicationPool -eq $AppPool }
+              foreach ($site in $sites) {
+                Write-Host "Stopping website: $($site.Name)"
+                Stop-Website -Name $site.Name -ErrorAction Stop
+                Write-Host "Website '$($site.Name)' stopped successfully"
+              }
+            } catch {
+              Write-Host "Warning: Could not stop website: $($_.Exception.Message)"
+            }
+            
+            # Wait for application to fully stop
+            Write-Host "Waiting 5 seconds for application to fully stop..."
+            Start-Sleep -Seconds 5
+            
             # Create backup only for staging environment
             if (Test-Path $DeployPath) {
               if ($RefName -like "*staging*") {
@@ -104,7 +135,26 @@ jobs:
               } else {
                 Write-Host "Skipping backup for test environment"
               }
-              Get-ChildItem -Path $DeployPath -Recurse | Remove-Item -Force -Recurse
+              
+              # Remove existing files with error handling for long paths
+              Write-Host "Removing existing files from deployment path..."
+              try {
+                Get-ChildItem -Path $DeployPath -Recurse | Remove-Item -Force -Recurse
+                Write-Host "Successfully removed existing files"
+              } catch {
+                Write-Host "Standard removal failed, trying robocopy method for long paths..."
+                try {
+                  # Use robocopy to handle long paths - create empty dir and mirror it to target
+                  $emptyDir = "C:\Temp\empty_$(Get-Random)"
+                  New-Item -ItemType Directory -Path $emptyDir -Force | Out-Null
+                  robocopy $emptyDir $DeployPath /MIR /NFL /NDL /NJH /NJS /NC /NS /NP
+                  Remove-Item $emptyDir -Force -Recurse
+                  Write-Host "Successfully removed files using robocopy"
+                } catch {
+                  Write-Host "Warning: Could not remove all files: $($_.Exception.Message)"
+                  Write-Host "Continuing with deployment..."
+                }
+              }
             } else {
               Write-Host "Creating deployment directory: $DeployPath"
               New-Item -ItemType Directory -Path $DeployPath -Force | Out-Null
@@ -177,6 +227,19 @@ jobs:
             } catch {
               Write-Host "Error starting application pool: $($_.Exception.Message)"
               throw
+            }
+            
+            # Start the website
+            Write-Host "Starting website..."
+            try {
+              $sites = Get-Website | Where-Object { $_.ApplicationPool -eq $AppPool }
+              foreach ($site in $sites) {
+                Write-Host "Starting website: $($site.Name)"
+                Start-Website -Name $site.Name -ErrorAction Stop
+                Write-Host "Website '$($site.Name)' started successfully"
+              }
+            } catch {
+              Write-Host "Warning: Could not start website: $($_.Exception.Message)"
             }
             
             # Wait for application to start

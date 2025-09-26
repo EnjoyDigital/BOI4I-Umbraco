@@ -42,7 +42,7 @@
 
         @if( (Model.CTalink?.Url.HasValue()).GetValueOrDefault())
         {
-            <a href="@Model.CTalink.Url" target="@Model.CTalink.Target">@Model.CTalink.Name</a>
+            <a href="@Model.CTalink.Url" target="@Model.CTalink.Target" aria-label="@Model.Title - @Model.CTalink.Name">@Model.CTalink.Name</a>
         }
     </div>
 }

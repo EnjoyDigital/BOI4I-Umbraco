@@ -30,7 +30,7 @@ input {
   padding: 8px;
 
   @include placeholder-styles() {
-    color: rgba(0,0,0,0.5);
+    color: $text-placeholder;
   }
 
   &:focus {
@@ -353,7 +353,7 @@ input[type=checkbox] {
   margin-top: 10px;
   padding-left: 18px;
   color: $red;
-  background-image: url(/assets/dist/images/icons/sprite-icon-alert-red.svg);
+  background-image: url(/assets/dist/images/icons/sprite-icon-alert-xdark-red.svg);
   background-repeat: no-repeat;
   background-position: left top 4px;
   background-size: 12px;
@@ -411,6 +411,33 @@ input[type=checkbox] {
 
     &.button-wrapper {
       margin-top: auto;
+    }
+    
+    &.error {
+      input {
+        border: 2px solid $xdark-red;
+      }
+
+      select {
+        border: 2px solid $xdark-red;
+    
+        &:not([multiple]) {
+          background-image: linear-gradient(
+            45deg,
+            transparent 27%,
+            $xdark-red 27%,
+            $xdark-red 34%,
+            transparent 34%
+          ),
+          linear-gradient(
+            -45deg,
+            transparent 27%,
+            $xdark-red 27%,
+            $xdark-red 34%,
+            transparent 34%
+          );
+        }
+      }
     }
   }
 

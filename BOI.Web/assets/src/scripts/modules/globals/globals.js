@@ -19,6 +19,8 @@ import AutoCompleteSearch from '../autoCompleteSearch'
 import MegaNav from '../megaNav'
 import SetScroll from '../setScroll'
 import BackToTop from '../backToTop'
+import RichTextTables from '../richtextTables'
+import CookieBannerFocus from '../cookieBannerFocus'
 
 import externalLinks from '../externalLinks'
 
@@ -41,4 +43,6 @@ export default function Globals() {
     SetScroll()
     externalLinks();
     BackToTop();
+    RichTextTables();
+    CookieBannerFocus();
 }

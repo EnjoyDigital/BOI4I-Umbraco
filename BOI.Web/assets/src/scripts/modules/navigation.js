@@ -16,6 +16,7 @@ export default function Navigation() {
         $button.addEventListener('click', function() {
             if ($mobileNav.classList.contains('nav-active')) {
                 $nav.classList.remove('nav-active');
+                toggleLockedFocus(false);
                 $mobileNav.classList.remove('nav-active');
                 $mobileTop.classList.remove('nav-active');
                 $searchBox.classList.remove('search-active');
@@ -25,6 +26,7 @@ export default function Navigation() {
                 $button.innerHTML = '<svg class="[ icon icon-burger-menu -blue ]" aria-hidden="true"><use xlink:href="#sprite-icon-burger-menu"></use></svg>Menu';
             } else {
                 $nav.classList.add('nav-active');
+                toggleLockedFocus(true);
                 $mobileNav.classList.add('nav-active');
                 $mobileTop.classList.add('nav-active');
                 $searchBox.classList.add('search-active');
@@ -32,12 +34,30 @@ export default function Navigation() {
                 $button.setAttribute('aria-label', 'Close main menu');
                 $button.setAttribute('aria-expanded', true);
                 $button.innerHTML = '<svg class="[ icon icon-cross-alt -blue ]" aria-hidden="true"><use xlink:href="#sprite-icon-cross-alt"></use></svg>Close';
-                while ($mobileTop.childNodes.length > 0) { 
-                    $headerBottom.appendChild($mobileTop.childNodes[0]);
+                while ($mobileTop.childNodes.length > 0) {
+                    $headerBottom.insertBefore($mobileTop.childNodes[0], $headerBottom.firstChild);
                 }
-                while ($searchBox.childNodes.length > 0) {
-                    $headerBottom.appendChild($siteSearch.childNodes[0]);
+                while ($siteSearch.childNodes.length > 0) {
+                    $headerBottom.insertBefore($siteSearch.childNodes[0], $headerBottom.firstChild);
                 }
+            }
+        });
+    }
+
+    // Lock focus on mobile nav to prevent tabbing to other elements- achieved via the inert property
+    function toggleLockedFocus(isLocked) {
+        const excludedTags = ['SCRIPT', 'STYLE', 'META', 'LINK', 'TITLE', 'NOSCRIPT', 'HEAD', 'BASE', 'TEMPLATE', 'SLOT'];
+
+        // Get all sibling elements- assumes <header> is a direct child of <body>
+        const siblings = Array.from($nav.parentNode.children).filter(el => el !== $nav);
+
+        siblings.forEach(function(sibling) {
+            if (excludedTags.indexOf(sibling.tagName) === -1) {
+                if (isLocked) {
+                  sibling.setAttribute('inert', '');
+              } else {
+                  sibling.removeAttribute('inert');
+              }
             }
         });
     }
@@ -72,6 +92,7 @@ export default function Navigation() {
                 // If on mobile do nothing
                 if ($(window).width() < 768) return;
 
+                var $button = e.target;
                 var $parent = $mobileSubmenu[i].parentElement;
                 var $sibling = $mobileSubmenu[i].nextElementSibling;
                 var $topLevelLink = $mobileSubmenu[i].previousElementSibling;
@@ -79,7 +100,8 @@ export default function Navigation() {
                 $sibling.style.display = "";
                 $parent.classList.remove('submenu-open');
                 $headerBottom.style.height = "auto";
-                $topLevelLink.setAttribute('aria-expanded', false)
+                $button.setAttribute('aria-expanded', false);
+                $topLevelLink.setAttribute('aria-expanded', false);
             });
 
             $mobileSubmenu[i].addEventListener('click', function (e) {
@@ -95,6 +117,7 @@ export default function Navigation() {
                         e.preventDefault();
                     }
                 }
+                var $button = e.target;
                 var $parent = $mobileSubmenu[i].parentElement;
                 var $sibling = $mobileSubmenu[i].nextElementSibling;
                 var $topLevelLink = $mobileSubmenu[i].previousElementSibling;
@@ -107,12 +130,15 @@ export default function Navigation() {
                     $sibling.style.display = "";
                     $parent.classList.remove('submenu-open');
                     $headerBottom.style.height = "auto";
-                    $topLevelLink.setAttribute('aria-expanded', false)
+                    $button.setAttribute('aria-expanded', false);
+                    $topLevelLink.setAttribute('aria-expanded', false);                    
                 } else {
                     $sibling.style.display = "flex";
                     $parent.classList.add('submenu-open');
                     // $headerBottom.style.height = "calc(100% - 120px)";
-                    $topLevelLink.setAttribute('aria-expanded', true)
+                    console.log({$button})
+                    $button.setAttribute('aria-expanded', true);
+                    $topLevelLink.setAttribute('aria-expanded', true);                    
                 }
             });
         }
