@@ -96,8 +96,49 @@ jobs:
           Invoke-Command -ScriptBlock {
             param($DeployPath, $AppPool, $RefName)
             
-            # Import required modules
-            Import-Module WebAdministration
+            # Import required modules with error handling
+            Write-Host "Importing WebAdministration module..."
+            try {
+              Import-Module WebAdministration -ErrorAction Stop
+              Write-Host "WebAdministration module imported successfully"
+            } catch {
+              Write-Host "Error importing WebAdministration module: $($_.Exception.Message)"
+              Write-Host "Checking if IIS Management Tools are installed..."
+              
+              # Check if IIS Management Console is available
+              $iisModulePath = "${env:ProgramFiles}\IIS\PowerShell\Snapin\Microsoft.IIS.PowerShell.Provider.dll"
+              if (Test-Path $iisModulePath) {
+                Write-Host "Found IIS PowerShell provider at: $iisModulePath"
+                try {
+                  Import-Module $iisModulePath -ErrorAction Stop
+                  Write-Host "IIS PowerShell provider imported successfully"
+                } catch {
+                  Write-Host "Failed to import IIS PowerShell provider: $($_.Exception.Message)"
+                  throw "IIS Management Tools are not properly installed or configured"
+                }
+              } else {
+                Write-Host "IIS Management Tools not found. Checking alternative paths..."
+                
+                # Try alternative import methods
+                try {
+                  Add-PSSnapin WebAdministration -ErrorAction Stop
+                  Write-Host "WebAdministration snapin added successfully"
+                } catch {
+                  Write-Host "Failed to add WebAdministration snapin: $($_.Exception.Message)"
+                  throw "IIS Management Tools are not installed. Please install IIS Management Console."
+                }
+              }
+            }
+            
+            # Verify WebAdministration commands are available
+            Write-Host "Verifying WebAdministration commands are available..."
+            try {
+              $testCommand = Get-Command Get-WebAppPool -ErrorAction Stop
+              Write-Host "WebAdministration commands verified successfully"
+            } catch {
+              Write-Host "Error: WebAdministration commands are not available: $($_.Exception.Message)"
+              throw "WebAdministration module is not properly loaded. Cannot proceed with IIS operations."
+            }
             
             # Enable long path support for this PowerShell session
             try {
