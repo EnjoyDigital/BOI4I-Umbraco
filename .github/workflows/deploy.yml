@@ -61,6 +61,24 @@ jobs:
         echo "  DEPLOY_PASSWORD_${{ env.ENV_SUFFIX }}"
         echo "  DEPLOY_PATH_${{ env.ENV_SUFFIX }}"
         echo "  APP_POOL_${{ env.ENV_SUFFIX }}"
+        
+        # Validate required secrets are set
+        $deployPath = "${{ secrets[format('DEPLOY_PATH_{0}', env.ENV_SUFFIX)] }}"
+        $appPool = "${{ secrets[format('APP_POOL_{0}', env.ENV_SUFFIX)] }}"
+        
+        echo "Actual values:"
+        echo "  Deploy Path: '$deployPath'"
+        echo "  App Pool: '$appPool'"
+        
+        if ([string]::IsNullOrWhiteSpace($deployPath)) {
+          Write-Error "DEPLOY_PATH_${{ env.ENV_SUFFIX }} secret is not set or is empty"
+          exit 1
+        }
+        
+        if ([string]::IsNullOrWhiteSpace($appPool)) {
+          Write-Error "APP_POOL_${{ env.ENV_SUFFIX }} secret is not set or is empty"
+          exit 1
+        }
 
     - name: Create deployment package
       run: |
@@ -94,16 +112,23 @@ jobs:
               Write-Host "Could not check long path support status: $($_.Exception.Message)"
             }
             
-            # Stop the application pool
-            Write-Host "Stopping application pool: $AppPool"
-            try {
-              Stop-WebAppPool -Name $AppPool -ErrorAction Stop
-              Write-Host "Application pool stopped successfully"
-            } catch {
-              if ($_.Exception.Message -like "*already stopped*") {
-                Write-Host "Application pool is already stopped"
-              } else {
-                Write-Host "Warning: Could not stop application pool: $($_.Exception.Message)"
+            # Validate application pool exists before trying to stop it
+            Write-Host "Checking if application pool exists: $AppPool"
+            $appPoolExists = Get-WebAppPool -Name $AppPool -ErrorAction SilentlyContinue
+            if (-not $appPoolExists) {
+              Write-Host "Warning: Application pool '$AppPool' does not exist. Skipping application pool operations."
+            } else {
+              # Stop the application pool
+              Write-Host "Stopping application pool: $AppPool"
+              try {
+                Stop-WebAppPool -Name $AppPool -ErrorAction Stop
+                Write-Host "Application pool stopped successfully"
+              } catch {
+                if ($_.Exception.Message -like "*already stopped*") {
+                  Write-Host "Application pool is already stopped"
+                } else {
+                  Write-Host "Warning: Could not stop application pool: $($_.Exception.Message)"
+                }
               }
             }
             
