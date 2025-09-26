@@ -15,10 +15,6 @@ jobs:
     
     steps:
 
-    - name: Check PowerShell version
-      run: |
-        Write-Host "PowerShell version: $($PSVersionTable.PSVersion)"
-
     - name: Checkout code
       uses: actions/checkout@v4
       
@@ -50,6 +46,12 @@ jobs:
       ENV_SUFFIX: ${{ github.ref_name == 'release/test' && 'BOI4I_TEST' || github.ref_name == 'release/prelive' && 'BOI4I_PRELIVE' || 'BOI4I_PROD' }}
     
     steps:
+
+
+    - name: Check PowerShell version
+      run: |
+        Write-Host "PowerShell version: $($PSVersionTable.PSVersion)"
+
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
