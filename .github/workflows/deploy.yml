@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+
     - name: Checkout code
       uses: actions/checkout@v4
       
@@ -45,6 +46,7 @@ jobs:
       ENV_SUFFIX: ${{ github.ref_name == 'release/test' && 'BOI4I_TEST' || github.ref_name == 'release/prelive' && 'BOI4I_PRELIVE' || 'BOI4I_PROD' }}
     
     steps:
+
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
@@ -61,6 +63,24 @@ jobs:
         echo "  DEPLOY_PASSWORD_${{ env.ENV_SUFFIX }}"
         echo "  DEPLOY_PATH_${{ env.ENV_SUFFIX }}"
         echo "  APP_POOL_${{ env.ENV_SUFFIX }}"
+        
+        # Validate required secrets are set
+        $deployPath = "${{ secrets[format('DEPLOY_PATH_{0}', env.ENV_SUFFIX)] }}"
+        $appPool = "${{ secrets[format('APP_POOL_{0}', env.ENV_SUFFIX)] }}"
+        
+        echo "Actual values:"
+        echo "  Deploy Path: '$deployPath'"
+        echo "  App Pool: '$appPool'"
+        
+        if ([string]::IsNullOrWhiteSpace($deployPath)) {
+          Write-Error "DEPLOY_PATH_${{ env.ENV_SUFFIX }} secret is not set or is empty"
+          exit 1
+        }
+        
+        if ([string]::IsNullOrWhiteSpace($appPool)) {
+          Write-Error "APP_POOL_${{ env.ENV_SUFFIX }} secret is not set or is empty"
+          exit 1
+        }
 
     - name: Create deployment package
       run: |
@@ -70,6 +90,7 @@ jobs:
       run: |
         
         try {
+
           # Copy the deployment package to the remote server
           Copy-Item -Path "./deployment-package.zip" -Destination "C:\Temp\deployment-package.zip" 
           
@@ -78,8 +99,49 @@ jobs:
           Invoke-Command -ScriptBlock {
             param($DeployPath, $AppPool, $RefName)
             
-            # Import required modules
-            Import-Module WebAdministration
+            # Import required modules with error handling
+            Write-Host "Importing WebAdministration module..."
+            try {
+              Import-Module WebAdministration -Force -ErrorAction Stop
+              Write-Host "WebAdministration module imported successfully"
+            } catch {
+              Write-Host "Error importing WebAdministration module: $($_.Exception.Message)"
+              Write-Host "Checking if IIS Management Tools are installed..."
+              
+              # Check if IIS Management Console is available
+              $iisModulePath = "${env:ProgramFiles}\IIS\PowerShell\Snapin\Microsoft.IIS.PowerShell.Provider.dll"
+              if (Test-Path $iisModulePath) {
+                Write-Host "Found IIS PowerShell provider at: $iisModulePath"
+                try {
+                  Import-Module $iisModulePath -ErrorAction Stop
+                  Write-Host "IIS PowerShell provider imported successfully"
+                } catch {
+                  Write-Host "Failed to import IIS PowerShell provider: $($_.Exception.Message)"
+                  throw "IIS Management Tools are not properly installed or configured"
+                }
+              } else {
+                Write-Host "IIS Management Tools not found. Checking alternative paths..."
+                
+                # Try alternative import methods
+                try {
+                  Add-PSSnapin WebAdministration -ErrorAction Stop
+                  Write-Host "WebAdministration snapin added successfully"
+                } catch {
+                  Write-Host "Failed to add WebAdministration snapin: $($_.Exception.Message)"
+                  throw "IIS Management Tools are not installed. Please install IIS Management Console."
+                }
+              }
+            }
+            
+            # Verify WebAdministration commands are available
+            Write-Host "Verifying WebAdministration commands are available..."
+            try {
+              $testCommand = Get-Command Get-WebAppPoolState -ErrorAction Stop
+              Write-Host "WebAdministration commands verified successfully"
+            } catch {
+              Write-Host "Error: WebAdministration commands are not available: $($_.Exception.Message)"
+              throw "WebAdministration module is not properly loaded. Cannot proceed with IIS operations."
+            }
             
             # Enable long path support for this PowerShell session
             try {
@@ -94,31 +156,46 @@ jobs:
               Write-Host "Could not check long path support status: $($_.Exception.Message)"
             }
             
-            # Stop the application pool
-            Write-Host "Stopping application pool: $AppPool"
+            # Validate application pool exists before trying to stop it
+            Write-Host "Checking if application pool exists: $AppPool"
             try {
-              Stop-WebAppPool -Name $AppPool -ErrorAction Stop
-              Write-Host "Application pool stopped successfully"
+              $appPoolExists = Get-WebAppPoolState -Name $AppPool -ErrorAction Stop
+              Write-Host "Application pool '$AppPool' exists and is in state: $($appPoolExists.Value)"
             } catch {
-              if ($_.Exception.Message -like "*already stopped*") {
-                Write-Host "Application pool is already stopped"
-              } else {
-                Write-Host "Warning: Could not stop application pool: $($_.Exception.Message)"
+              Write-Host "Warning: Application pool '$AppPool' does not exist. Skipping application pool operations."
+              $appPoolExists = $null
+            }
+            
+            if ($appPoolExists) {
+              # Stop the application pool
+              Write-Host "Stopping application pool: $AppPool"
+              try {
+                Stop-WebAppPool -Name $AppPool -ErrorAction Stop
+                Write-Host "Application pool stopped successfully"
+              } catch {
+                if ($_.Exception.Message -like "*already stopped*") {
+                  Write-Host "Application pool is already stopped"
+                } else {
+                  Write-Host "Warning: Could not stop application pool: $($_.Exception.Message)"
+                }
               }
             }
             
-            # Stop the website
-            Write-Host "Stopping website..."
-            try {
-              $siteName = (Get-WebAppPoolState -Name $AppPool).ApplicationPool
-              $sites = Get-Website | Where-Object { $_.ApplicationPool -eq $AppPool }
-              foreach ($site in $sites) {
-                Write-Host "Stopping website: $($site.Name)"
-                Stop-Website -Name $site.Name -ErrorAction Stop
-                Write-Host "Website '$($site.Name)' stopped successfully"
+            # Stop the website (only if application pool exists)
+            if ($appPoolExists) {
+              Write-Host "Stopping website..."
+              try {
+                $sites = Get-Website | Where-Object { $_.ApplicationPool -eq $AppPool }
+                foreach ($site in $sites) {
+                  Write-Host "Stopping website: $($site.Name)"
+                  Stop-Website -Name $site.Name -ErrorAction Stop
+                  Write-Host "Website '$($site.Name)' stopped successfully"
+                }
+              } catch {
+                Write-Host "Warning: Could not stop website: $($_.Exception.Message)"
               }
-            } catch {
-              Write-Host "Warning: Could not stop website: $($_.Exception.Message)"
+            } else {
+              Write-Host "Skipping website stop operations - application pool does not exist"
             }
             
             # Wait for application to fully stop
@@ -219,27 +296,35 @@ jobs:
               Write-Host "Warning: web.config not found at $webConfigPath"
             }
             
-            # Start the application pool
-            Write-Host "Starting application pool: $AppPool"
-            try {
-              Start-WebAppPool -Name $AppPool -ErrorAction Stop
-              Write-Host "Application pool started successfully"
-            } catch {
-              Write-Host "Error starting application pool: $($_.Exception.Message)"
-              throw
+            # Start the application pool (only if it exists)
+            if ($appPoolExists) {
+              Write-Host "Starting application pool: $AppPool"
+              try {
+                Start-WebAppPool -Name $AppPool -ErrorAction Stop
+                Write-Host "Application pool started successfully"
+              } catch {
+                Write-Host "Error starting application pool: $($_.Exception.Message)"
+                throw
+              }
+            } else {
+              Write-Host "Skipping application pool start - application pool does not exist"
             }
             
-            # Start the website
-            Write-Host "Starting website..."
-            try {
-              $sites = Get-Website | Where-Object { $_.ApplicationPool -eq $AppPool }
-              foreach ($site in $sites) {
-                Write-Host "Starting website: $($site.Name)"
-                Start-Website -Name $site.Name -ErrorAction Stop
-                Write-Host "Website '$($site.Name)' started successfully"
+            # Start the website (only if application pool exists)
+            if ($appPoolExists) {
+              Write-Host "Starting website..."
+              try {
+                $sites = Get-Website | Where-Object { $_.ApplicationPool -eq $AppPool }
+                foreach ($site in $sites) {
+                  Write-Host "Starting website: $($site.Name)"
+                  Start-Website -Name $site.Name -ErrorAction Stop
+                  Write-Host "Website '$($site.Name)' started successfully"
+                }
+              } catch {
+                Write-Host "Warning: Could not start website: $($_.Exception.Message)"
               }
-            } catch {
-              Write-Host "Warning: Could not start website: $($_.Exception.Message)"
+            } else {
+              Write-Host "Skipping website start operations - application pool does not exist"
             }
             
             # Wait for application to start
