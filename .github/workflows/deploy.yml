@@ -14,6 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+
+    - name: Check PowerShell version
+      run: |
+        Write-Host "PowerShell version: $($PSVersionTable.PSVersion)"
+
     - name: Checkout code
       uses: actions/checkout@v4
       
