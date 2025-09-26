@@ -88,6 +88,10 @@ jobs:
       run: |
         
         try {
+
+          # Import IIS module
+          Import-Module WebAdministration -ErrorAction Stop
+
           # Copy the deployment package to the remote server
           Copy-Item -Path "./deployment-package.zip" -Destination "C:\Temp\deployment-package.zip" 
           
