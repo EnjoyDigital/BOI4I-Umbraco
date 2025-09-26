@@ -81,6 +81,19 @@ jobs:
             # Import required modules
             Import-Module WebAdministration
             
+            # Enable long path support for this PowerShell session
+            try {
+              $registryPath = "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem"
+              $longPathEnabled = Get-ItemProperty -Path $registryPath -Name "LongPathsEnabled" -ErrorAction SilentlyContinue
+              if ($longPathEnabled -and $longPathEnabled.LongPathsEnabled -eq 1) {
+                Write-Host "Long path support is already enabled"
+              } else {
+                Write-Host "Long path support is not enabled - this may cause issues with very long filenames"
+              }
+            } catch {
+              Write-Host "Could not check long path support status: $($_.Exception.Message)"
+            }
+            
             # Stop the application pool
             Write-Host "Stopping application pool: $AppPool"
             try {
@@ -93,6 +106,24 @@ jobs:
                 Write-Host "Warning: Could not stop application pool: $($_.Exception.Message)"
               }
             }
+            
+            # Stop the website
+            Write-Host "Stopping website..."
+            try {
+              $siteName = (Get-WebAppPoolState -Name $AppPool).ApplicationPool
+              $sites = Get-Website | Where-Object { $_.ApplicationPool -eq $AppPool }
+              foreach ($site in $sites) {
+                Write-Host "Stopping website: $($site.Name)"
+                Stop-Website -Name $site.Name -ErrorAction Stop
+                Write-Host "Website '$($site.Name)' stopped successfully"
+              }
+            } catch {
+              Write-Host "Warning: Could not stop website: $($_.Exception.Message)"
+            }
+            
+            # Wait for application to fully stop
+            Write-Host "Waiting 5 seconds for application to fully stop..."
+            Start-Sleep -Seconds 5
             
             # Create backup only for staging environment
             if (Test-Path $DeployPath) {
@@ -177,6 +208,19 @@ jobs:
             } catch {
               Write-Host "Error starting application pool: $($_.Exception.Message)"
               throw
+            }
+            
+            # Start the website
+            Write-Host "Starting website..."
+            try {
+              $sites = Get-Website | Where-Object { $_.ApplicationPool -eq $AppPool }
+              foreach ($site in $sites) {
+                Write-Host "Starting website: $($site.Name)"
+                Start-Website -Name $site.Name -ErrorAction Stop
+                Write-Host "Website '$($site.Name)' started successfully"
+              }
+            } catch {
+              Write-Host "Warning: Could not start website: $($_.Exception.Message)"
             }
             
             # Wait for application to start
