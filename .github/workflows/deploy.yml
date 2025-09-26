@@ -158,10 +158,15 @@ jobs:
             
             # Validate application pool exists before trying to stop it
             Write-Host "Checking if application pool exists: $AppPool"
-            $appPoolExists = Get-WebAppPoolState -Name $AppPool -ErrorAction SilentlyContinue
-            if (-not $appPoolExists) {
+            try {
+              $appPoolExists = Get-WebAppPoolState -Name $AppPool -ErrorAction Stop
+              Write-Host "Application pool '$AppPool' exists and is in state: $($appPoolExists.Value)"
+            } catch {
               Write-Host "Warning: Application pool '$AppPool' does not exist. Skipping application pool operations."
-            } else {
+              $appPoolExists = $null
+            }
+            
+            if ($appPoolExists) {
               # Stop the application pool
               Write-Host "Stopping application pool: $AppPool"
               try {
@@ -176,18 +181,21 @@ jobs:
               }
             }
             
-            # Stop the website
-            Write-Host "Stopping website..."
-            try {
-              $siteName = (Get-WebAppPoolState -Name $AppPool).ApplicationPool
-              $sites = Get-Website | Where-Object { $_.ApplicationPool -eq $AppPool }
-              foreach ($site in $sites) {
-                Write-Host "Stopping website: $($site.Name)"
-                Stop-Website -Name $site.Name -ErrorAction Stop
-                Write-Host "Website '$($site.Name)' stopped successfully"
+            # Stop the website (only if application pool exists)
+            if ($appPoolExists) {
+              Write-Host "Stopping website..."
+              try {
+                $sites = Get-Website | Where-Object { $_.ApplicationPool -eq $AppPool }
+                foreach ($site in $sites) {
+                  Write-Host "Stopping website: $($site.Name)"
+                  Stop-Website -Name $site.Name -ErrorAction Stop
+                  Write-Host "Website '$($site.Name)' stopped successfully"
+                }
+              } catch {
+                Write-Host "Warning: Could not stop website: $($_.Exception.Message)"
               }
-            } catch {
-              Write-Host "Warning: Could not stop website: $($_.Exception.Message)"
+            } else {
+              Write-Host "Skipping website stop operations - application pool does not exist"
             }
             
             # Wait for application to fully stop
@@ -288,27 +296,35 @@ jobs:
               Write-Host "Warning: web.config not found at $webConfigPath"
             }
             
-            # Start the application pool
-            Write-Host "Starting application pool: $AppPool"
-            try {
-              Start-WebAppPool -Name $AppPool -ErrorAction Stop
-              Write-Host "Application pool started successfully"
-            } catch {
-              Write-Host "Error starting application pool: $($_.Exception.Message)"
-              throw
+            # Start the application pool (only if it exists)
+            if ($appPoolExists) {
+              Write-Host "Starting application pool: $AppPool"
+              try {
+                Start-WebAppPool -Name $AppPool -ErrorAction Stop
+                Write-Host "Application pool started successfully"
+              } catch {
+                Write-Host "Error starting application pool: $($_.Exception.Message)"
+                throw
+              }
+            } else {
+              Write-Host "Skipping application pool start - application pool does not exist"
             }
             
-            # Start the website
-            Write-Host "Starting website..."
-            try {
-              $sites = Get-Website | Where-Object { $_.ApplicationPool -eq $AppPool }
-              foreach ($site in $sites) {
-                Write-Host "Starting website: $($site.Name)"
-                Start-Website -Name $site.Name -ErrorAction Stop
-                Write-Host "Website '$($site.Name)' started successfully"
+            # Start the website (only if application pool exists)
+            if ($appPoolExists) {
+              Write-Host "Starting website..."
+              try {
+                $sites = Get-Website | Where-Object { $_.ApplicationPool -eq $AppPool }
+                foreach ($site in $sites) {
+                  Write-Host "Starting website: $($site.Name)"
+                  Start-Website -Name $site.Name -ErrorAction Stop
+                  Write-Host "Website '$($site.Name)' started successfully"
+                }
+              } catch {
+                Write-Host "Warning: Could not start website: $($_.Exception.Message)"
               }
-            } catch {
-              Write-Host "Warning: Could not start website: $($_.Exception.Message)"
+            } else {
+              Write-Host "Skipping website start operations - application pool does not exist"
             }
             
             # Wait for application to start
