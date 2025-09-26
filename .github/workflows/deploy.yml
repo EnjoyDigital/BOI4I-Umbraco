@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - release/test
-      - release/staging
+      - release/prelive
 
 env:
   DOTNET_VERSION: '8.0.x'
@@ -34,7 +34,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: boi4i-app-${{ github.ref_name == 'release/test' && 'release-test' || github.ref_name == 'release/staging' && 'release-staging' || github.ref_name }}
+        name: boi4i-app-${{ github.ref_name == 'release/test' && 'release-test' || github.ref_name == 'release/prelive' && 'release-prelive' || github.ref_name }}
         path: ./publish/
 
   deploy:
@@ -42,13 +42,13 @@ jobs:
     runs-on: [self-hosted, windows]
     environment: ${{ github.ref_name }}
     env:
-      ENV_SUFFIX: ${{ github.ref_name == 'release/test' && 'BOI4I_TEST' || github.ref_name == 'release/staging' && 'BOI4I_STAGING' || 'BOI4I_PROD' }}
+      ENV_SUFFIX: ${{ github.ref_name == 'release/test' && 'BOI4I_TEST' || github.ref_name == 'release/prelive' && 'BOI4I_PRELIVE' || 'BOI4I_PROD' }}
     
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
-        name: boi4i-app-${{ github.ref_name == 'release/test' && 'release-test' || github.ref_name == 'release/staging' && 'release-staging' || github.ref_name }}
+        name: boi4i-app-${{ github.ref_name == 'release/test' && 'release-test' || github.ref_name == 'release/prelive' && 'release-prelive' || github.ref_name }}
         path: ./publish/
 
     - name: Debug environment
@@ -125,9 +125,9 @@ jobs:
             Write-Host "Waiting 5 seconds for application to fully stop..."
             Start-Sleep -Seconds 5
             
-            # Create backup only for staging environment
+            # Create backup only for prelive environment
             if (Test-Path $DeployPath) {
-              if ($RefName -like "*staging*") {
+              if ($RefName -like "*prelive*") {
                 $backupPath = "C:\Backups\$RefName-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
                 Write-Host "Creating backup at: $backupPath"
                 New-Item -ItemType Directory -Path "C:\Backups" -Force | Out-Null
@@ -173,7 +173,7 @@ jobs:
               # Determine environment based on branch name
               $environment = switch ($RefName.ToLower()) {
                 { $_ -like "*test*" } { "Test" }
-                { $_ -like "*staging*" } { "Production" }
+                { $_ -like "*prelive*" } { "Prelive" }
               }
               
               Write-Host "Setting ASPNETCORE_ENVIRONMENT to: $environment"
