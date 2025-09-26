@@ -1,6 +1,6 @@
 ﻿@inherits UmbracoViewPage<CampaignLanding>
-<partial name="/Views/Shared/Hero.cshtml" />
 <partial name="/Views/Shared/Breadcrumb.cshtml" />
+<partial name="/Views/Shared/Hero.cshtml" />
 
 <section class="campaign-landing">
 	<div class="campaign-landing__main">
@@ -14,11 +14,16 @@
 	@if (Model.SidebarResources != null)
 	{
 		<div class="campaign-landing__sidebar">
-			@Model.SidebarTitle.SurroundWith(@"<h2 class=""h3 campaign-landing__sidebar-title"">","</h2>")
+			@Model.SidebarTitle.SurroundWith(@"<h2 class=""h2 campaign-landing__sidebar-title"">","</h2>")
 			@await Html.GetBlockListHtmlAsync(Model, "sidebarResources")
 		</div>
 	}
 </section>
+@if (Model.HasValue("contentBlockFullWidth"))
+{
+	@await Html.GetBlockListHtmlAsync(Model, "contentBlockFullWidth")
+}
+
 
 @if (Model.Pods != null)
 {

@@ -1,192 +1,126 @@
+.umb-block-list {
+  + .promotional-pod {
+    margin-top: -40px;
+
+    @include media($small) {
+      margin-top: -20px;
+    }
+  }
+
+  .promotional-pod:last-child {
+    margin-bottom: -40px;
+
+    @include media($small) {
+      margin-bottom: -20px;
+    }
+  }
+}
+
 .promotional-pod {
+  @include section-background($sky-blue);
+  position: relative;
+  padding: var(--sectionPaddingTop) 0 var(--sectionPaddingBottom);
+  background-color: $sky-blue;
+
+  &.u-bg--light-teal {
+    background-color: $light-teal;
+    @include section-background($light-teal);
+  }
+
+  &.u-bg--light-blue {
+    background-color: $light-blue;
+    @include section-background($light-blue);
+  }
+
+  &.u-bg--light-lime {
+    background-color: $light-lime;
+    @include section-background($light-lime);
+  }
+
+  &.u-bg--light-honey {
+    background-color: $light-honey;
+    @include section-background($light-honey);
+  }
+}
+
+.promotional-pod__inner {
+  position: relative;
   width: 100%;
   max-width: $max-desktop;
-  margin: 40px auto;
-  padding: 0 10px;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin: 0 auto;
 
-  @include media($max-desktop) {
-    padding: 0 20px;
+  @include media-min($max-tablet) {
+    flex-direction: row;
+    align-items: center;
   }
 
-  @include media($small) {
-    margin: 20px auto;
-  }
-}
-
-.umb-block-list {
-  .promotional-pod {
-    padding: 0;
-  }
-}
-
-.promotional-pod-inner {
-  position: relative;
-  background-color: $dark-blue;
-
-  @include media($small) {
-    padding-bottom: 35%;
-  }
-}
-
-.promotional-pod__content {
-  position: relative;
-  width: 100%;
-  max-width: 78%;
-  background-color: $blue;
-  padding: 50px 50px 50px 9%;
-  z-index: 1;
-
-  ul {
-    list-style: none;
-    padding-left: 30px;
-
-    @include media($small) {
-      padding-left: 20px;
-    }
-
-    li {
-      position: relative;
-      display: block;
-      color: inherit;
-      margin: 15px 0;
-
-      span.list-bullets,
-      span.list-ticks {
-        position: relative;
-        display: block;
-        padding-left: 20px;
-      }
-
-      span.list-bullets {
-        &:before {
-          content: '';
-          position: absolute;
-          top: 7px;
-          left: 0;
-          width: 7px;
-          height: 8px;
-          background-image: url(/assets/dist/images/icons/sprite-icon-bullet-white.svg);
-          background-size: 7px 8px;
-          background-repeat: no-repeat;
-          background-position: center;
-        }
-      }
-
-      span.list-ticks {
-        padding-left: 25px;
-
-        &:before {
-          content: '';
-          position: absolute;
-          top: 4px;
-          left: 0;
-          width: 18px;
-          height: 15px;
-          background-image: url(/assets/dist/images/icons/sprite-icon-tick-white.svg);
-          background-size: 18px 15px;
-          background-repeat: no-repeat;
-          background-position: center;
-        }
-      }
-    }
-  }
-
-  .promotional-pod.-has-image & {
-    max-width: 68%;
-  }
-
-  @include media($medium) {
-    max-width: 75%;
-
-    .promotional-pod.-has-image & {
-      max-width: 65%;
-    }
-  }
-
-  @include media($small) {
-    max-width: none;
+  .promotional-pod.-no-image & {
+    display: block;
     text-align: center;
-    padding: 30px 30px 20px;
-
-    .promotional-pod.-has-image & {
-      max-width: none;
-    }
-
-    > * {
-      position: relative;
-      z-index: 1;
-    }
-  }
-
-  &:after {
-    content: '';
-    padding-left: 37%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 1px;
-    transform: translateX(100%);
-    background-position: left center;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
-    background-image: url('/assets/dist/images/icons/promo-chevron@3x.png');
-
-    @include media($small) {
-      height: 0;
-      width: 100%;
-      padding-top: 37%;
-      padding-left: 0;
-      top: auto;
-      bottom: 0;
-      right: 0;
-      transform: translateY(75%);
-      background-size: 100% auto;
-      background-image: url('/assets/dist/images/icons/promo-chevron-vertical@3x.png');
-    }
-  }
-
-  > * {
-    color: $white;
-    max-width: 560px;
-  }
-
-  .button {
-    margin-top: 20px;
-  }
-}
-
-.promotional-pod__title {
-  @include font-size(32);
-  display: block;
-  max-width: 560px;
-  color: $white;
-  font-family: $BankofIreland-Bold;
-  margin-bottom: 10px;
-
-  @include media($small) {
-    @include font-size(26);
+    max-width: $med-large;
   }
 }
 
 .promotional-pod__image {
-  width: 100%;
-  max-width: 32%;
-  height: 100%;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-
-  @include media($medium) {
-    max-width: 35%;
+  @include media($max-tablet) {
+    width: 100%;
   }
 
-  @include media($small) {
-    max-width: none;
-    height: 0;
-    padding-top: 35%;
+  .promotional-pod.-has-image & {
+    @include media-min($max-tablet) {
+      width: 50%;
+      flex-shrink: 0;
+    }
+
+    img {
+      max-width: none;
+      width: 100%;
+    }
   }
+
+  .promotional-pod.-is-illustration & {
+    max-width: 160px;
+  }
+}
+
+.promotional-pod__content {
+  color: $text-dark;
+
+  .button {
+    margin-top: 32px;
+  }
+}
+
+.promotional-pod__subtext {
+  @include last-child-no-bottom();
+
+  ul {
+    list-style: none;
+    padding-left: 10px;
+
+    li {
+      position: relative;
+      display: block;
+      margin: 15px 0;
+      padding-left: 16px;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 0;
+        width: 4px;
+        height: 4px;
+        background-color: $text;
+        border-radius: 100%;
+      }
+    }
+  }
+}
+
+.promotional-pod__title {
+  margin-bottom: 1rem;
 }

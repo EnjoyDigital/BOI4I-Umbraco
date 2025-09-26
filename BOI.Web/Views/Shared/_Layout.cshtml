@@ -31,8 +31,8 @@
 
     <a href="#" class="back-to-top" id="backToTop">
         Back to top
-        <svg class="[ icon ]" aria-hidden="true">
-            <use xlink:href="#sprite-icon-arrow-up"></use>
+        <svg class="[ icon icon-chevron-up-thick ]" aria-hidden="true">
+            <use xlink:href="#sprite-icon-chevron-up-thick"></use>
         </svg>
     </a>
 
@@ -40,8 +40,8 @@
     {
         <a class="common-print js-print-products" href="" title="Save page as PDF">
             Save page as PDF
-            <svg class="[ icon icon-clock -white ]" aria-hidden="true">
-                <use xlink:href="#sprite-icon-pdf-document-icon"></use>
+            <svg class="[ icon icon-pdf-document -white ]" aria-hidden="true">
+                <use xlink:href="#sprite-icon-pdf-document"></use>
             </svg>
             <span class="common-print-message">
                 Save page as PDF
@@ -63,7 +63,7 @@
     <script type="text/javascript" src="/App_Plugins/UmbracoForms/Assets/themes/default/umbracoForms.js"></script>
     @Html.RenderUnobtrusiveAjaxScript()
     <div class="svg-sprite" style="display: none">
-        <partial name="SVG_Sprite" />
+        @Html.Partial("~/Views/Shared/SvgSprite.cshtml");
     </div>
 
 </body>

@@ -1,51 +1,42 @@
-.child-page-block {
-  width: 100%;
-  max-width: $max-desktop;
-  margin: 40px auto;
-  padding: 0 10px;
-
-  @include media($max-desktop) {
-    padding: 0 20px;
-  }
-
-  @include media($small) {
-    margin: 20px auto;
-  }
-}
-
 .umb-block-list {
   .child-page-block {
-    padding: 0;
+    padding: #{fluid(24, 40)} 0 #{fluid(40, 56)};
   }
 }
 
 .child-page-block__title {
-  margin-bottom: 0;
+  margin-bottom: #{fluid(24, 32)};
 }
 
 .child-page-block-listing {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto;
+  gap: #{fluid(24, 32)};
+  height: 100%;
+  padding-bottom: #{fluid(40, 56)};
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  @include media-min($max-mobile) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include media-min($large) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .child-page-block-item {
+    border-radius: 8px;
+  }
 }
 
 .child-page-block-item {
-  margin: 24px 24px 0 0;
-  width: calc(33.33% - 16px);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
   background-color: $white;
-
-  &:last-child {
-    margin-right: 0;
-  }
-
-  @include media($large) {
-    width: 100%;
-    margin-right: 0;
-  }
-
-  @include media($large,#{$small+1}) {
-    display: flex;
-    align-items: center;
-  }
 
   .campaign-landing & {
     width: 100%;
@@ -59,110 +50,43 @@
 }
 
 .child-page-block-item__icon-wrapper {
-  position: relative;
-  width: 100%;
-  background-color: $grey-3;
-  padding: 40px 0;
-  height: 130px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding-bottom: 16px;
 
-  @include media($large,#{$small+1}) {
-    height: 100%;
-    width: 150px;
-    flex-shrink: 0;
-    margin-right: 50px;
+  img {
+    max-width: 48px;
+    min-width: 38px;
+    height: auto; 
   }
 
-  @include media($tiny) {
-    padding: 20px 0;
-  }
-
-  .campaign-landing & {
-    @include media($large,#{$medium+1}) {
-      margin-right: 80px;
-    }
-
-    @include media-min($medium) {
-      height: 100%;
-      width: 150px;
-      flex-shrink: 0;
-      margin-right: 50px;
+  &.-is-illustration {
+    img {
+      max-width: 80px;
+      min-width: 60px;
     }
   }
+}
 
-  &:after {
-    content: '';
-    width: 100%;
-    padding-top: 26%;
-    position: absolute;
-    bottom: 1px;
-    left: 0;
-    transform: translateY(100%);
-    background-image: url(/assets/dist/images/icons/chevron-vertical-grey.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
+.child-page-block-item__title {
+  display: block;
+  margin-bottom: 0;
+  color: $text-dark;
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 600;
+  font-family: $OpenSans;
 
-    @include media($large,#{$small+1}) {
-      display: none;
-    }
-
-    .campaign-landing & {
-      @include media-min($small) {
-        display: none;
-      }
-    }
-  }
-
-  img:not(.child-page-block-item__chevron) {
-    max-height: 60px;
-    width: auto;
-  }
-
-  .child-page-block-item__chevron {
+  p {
     display: none;
-
-    @include media($large,#{$small+1}) {
-      display: block;
-      position: absolute;
-      top: 0;
-      right: 1px;
-      transform: translateX(100%);
-      width: auto;
-      height: 100%;
-    }
-
-    .campaign-landing & {
-      @include media-min($small) {
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 1px;
-        transform: translateX(100%);
-        width: auto;
-        height: 100%;
-      }
-    }
   }
 }
 
 .child-page-block-item__content {
   position: relative;
-  padding: 0 40px 56px;
-  z-index: 1;
   display: flex;
-  flex-direction:column;
-  align-items:center;
-
-  @include media($large,#{$small+1}) {
-    padding: 40px;
-  }
-
-  @include media($small) {
-    padding: 0 40px 40px;
-  }
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 0;
+  z-index: 1;
 
   .campaign-landing & {
     @include media-min($medium) {
@@ -170,21 +94,106 @@
     }
   }
 
-  p {
-    margin-bottom: 0;
-  }
-
-  .button {
-    margin-top: 30px;
+  .rich-text {
+    padding: 8px 0 24px;
   }
 }
 
-.child-page-block-item__title {
-  display: block;
-  margin-bottom: 15px;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 24px;
-  text-align: center;
-  margin-bottom: 0;
+.child-page-block-item__cta {
+  @include button;
+  margin-top: auto;
+}
+
+.child-page-block-item__inner-list-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.rich-text .child-page-block-item__inner-list,
+.child-page-block-item__inner-list {
+  padding: 16px 0 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    column-gap: 8px;
+    margin: 0;
+    color: $text-dark;
+    font-weight: 600;
+
+    &:not(:last-child) {
+      padding-bottom: 16px;
+    }
+  }
+}
+
+/* Pod Group (homepage / service block) */
+.pod-group {
+  .child-page-block {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 100%;
+  }
+
+  .child-page-block-listing {
+    display: block;
+    padding-bottom: 0;
+  }
+
+  .child-page-block-item {
+    padding: 0;
+    height: 100%;
+  }
+
+  .child-page-block-item__icon-wrapper {
+    padding: #{fluid(24, 40)} #{fluid(24, 40)} 16px;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    @include media($max-mobile) {
+      img {
+        max-width: 120px;
+        margin: 0;
+      }
+    }
+
+    @include media($tiny) {
+      img {
+        max-width: none;
+      }
+    }
+  }
+
+  .child-page-block-item__content {
+    padding: 0 #{fluid(24, 32)} #{fluid(24, 56)};
+
+    .rich-text {
+      padding: 32px 0;
+    }
+
+    .button {
+      margin-top: 0;
+    }
+  }
+
+  .child-page-block-item__title {
+    font-size: 32px;
+    line-height: 44px;
+  }
+
+  .child-page-block-item__cta {
+    @include button;
+  }
 }

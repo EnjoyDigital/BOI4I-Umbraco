@@ -69,3 +69,6 @@ Thumbs.db
 /BOI.Core/bin
 /BOI.Core/obj
 /BOI.Web/Properties/launchSettings.json
+/BOI.Web/uSync/v9/Content
+/BOI.Web/uSync/v9/Media
+BOI.Web/Smidge

@@ -1,8 +1,8 @@
 ﻿@inherits UmbracoViewPage<SolicitorResultsViewModel>
 @using BOI.Core.Web.Constants
 
-<partial name="/Views/Shared/Hero.cshtml" />
 <partial name="/Views/Shared/Breadcrumb.cshtml" />
+<partial name="/Views/Shared/Hero.cshtml" />
 
 
 @if (Model.HasValue("content"))
@@ -13,7 +13,7 @@
 <div class="umb-block-list">
     <div class="lookup-form-block solicitor-lookup">
         <div class="lookup-form-block-content solicitor-lookup-content">
-            <h2 class="lookup-form-block__title">@Model.FormTitle</h2>
+            <h2 class="lookup-form-block__title h2">@Model.FormTitle</h2>
 
             <form id="solicitor-lookup" action="@Model.ListingUrl" class="lookup-form solicitor-lookup-form">
                 <fieldset>

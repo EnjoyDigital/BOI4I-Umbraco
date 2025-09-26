@@ -1,19 +1,8 @@
 .how-it-works-block {
   width: 100%;
   max-width: $max-desktop;
-  margin: 40px auto;
-  padding: 30px 10px 40px;
-  border-top: 1px solid $grey-2;
-  border-bottom: 1px solid $grey-2;
-
-  @include media($max-desktop) {
-    padding: 30px 20px 40px;
-  }
-
-  @include media($small) {
-    padding: 10px 20px 20px;
-    margin: 20px auto;
-  }
+  margin: 0 auto;
+  padding: var(--sectionPaddingTop) 0 var(--sectionPaddingBottom);
 
   > h3 {
     margin-bottom: 0.5rem;
@@ -22,47 +11,39 @@
       margin-top: 0;
     }
   }
-}
 
-.umb-block-list {
-  .how-it-works-block {
-    padding: 30px 0 40px;
-
-    @include media($max-desktop) {
-      padding: 30px 0 40px;
-    }
-
-    @include media($small) {
-      padding: 10px 0 20px;
-    }
+  > :last-child {
+    padding-bottom: 0;
   }
 }
 
 .how-it-works-item {
   position: relative;
+  display: flex;
+  align-items: flex-start;
+  column-gap: #{fluid(12, 18)};
   padding-top: 0;
-  padding-left: 90px;
-  margin-top: 30px;
-
-  @include media($tiny) {
-    padding-left: 68px;
-  }
 
   ul {
     li {
-      margin: 17px 0;
+      position: relative;
+      display: block;
+      margin: 15px 0;
 
       span.list-ticks {
-        padding-left: 32px;
+        padding-left: 25px;
 
         &:before {
-          width: 24px;
-          height: 24px;
-          top: 0;
-          border-radius: 6px 0 6px 0;
-          background-color: $teal;
-          background-image: url(/assets/dist/images/icons/sprite-icon-tick-black.svg);
-          background-size: 15px 12px;
+          content: '';
+          position: absolute;
+          top: 6px;
+          left: 0;
+          width: 15px;
+          height: 11px;
+          background-image: url(/assets/dist/images/icons/sprite-icon-checkbox-tick.svg);
+          background-size: 15px 11px;
+          background-repeat: no-repeat;
+          background-position: center;
         }
       }
     }
@@ -70,30 +51,22 @@
 }
 
 .how-it-works-item__step-number {
-  position: absolute;
-  top: 2px;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 64px;
-  height: 64px;
-  background-color: $blue;
-  border-radius: 100% 100% 0 100%;
-  color: $white;
-  font-size: 24px;
-  line-height: 32px;
-  font-weight: 700;
+  width: 28px;
+  font-size: 48px;
+  line-height: 44px;
+  font-weight: 300;
+  color: $text-dark;
+}
 
-  @include media($tiny) {
-    width: 48px;
-    height: 48px;
-    font-size: 18px;
-    line-height: 24px;
-  }
+.how-it-works-item__content {
+  @include last-child-no-bottom();
 }
 
 .how-it-works-item__title {
   display: block;
   margin-bottom: 10px;
+  color: $text-dark;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 30px;
 }

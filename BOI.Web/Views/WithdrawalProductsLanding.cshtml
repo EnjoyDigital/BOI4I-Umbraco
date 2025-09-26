@@ -1,10 +1,11 @@
-﻿@inherits UmbracoViewPage<ProductsLandingResultsViewModel>
+﻿@using Umbraco.Cms.Core.Strings
+@inherits UmbracoViewPage<ProductsLandingResultsViewModel>
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<partial name="/Views/Shared/Hero.cshtml" />
 <partial name="/Views/Shared/Breadcrumb.cshtml" />
+<partial name="/Views/Shared/Hero.cshtml" />
 
 @if (Model.Content != null || Model.HelpToBuyLogos != null)
 {
@@ -35,16 +36,16 @@
                     {
                         foreach (var groupedByLTVResult in groupedByLTVResults)
                         {
-                            <table class="product-table -withdrawn">
-                                <caption class="product-table-caption">
-                                    <h3 class="product-table-caption__title">Withdrawing - @groupedByLTVResult.Key</h3>
-                                    <a class="print-products js-print-products" href="" title="Click to print products">
-                                        <svg class="[ icon icon-print -blue ]" aria-hidden="true">
-                                            <use xlink:href="#sprite-icon-print"></use>
-                                        </svg>
-                                        <span>Print products</span>
-                                    </a>
-                                </caption>
+                            <div class="product-table-caption">
+                                <h3 class="product-table-caption__title" id="table-caption-@groupedByLTVResult.Key.ToCleanString(shortStringHelper, CleanStringType.UrlSegment)">Withdrawing - @groupedByLTVResult.Key</h3>
+                                <a class="print-products js-print-products" href="" title="Click to print products">
+                                    <svg class="[ icon icon-print-alt -blue ]" aria-hidden="true">
+                                        <use xlink:href="#sprite-icon-print-alt"></use>
+                                    </svg>
+                                    <span>Print products</span>
+                                </a>
+                            </div>
+                            <table class="product-table -withdrawn" aria-labelledby="table-caption-@groupedByLTVResult.Key.ToCleanString(shortStringHelper, CleanStringType.UrlSegment)">
                                 <thead>
                                     <tr>
                                         <th class="withdrawal-date">Withdrawal Date</th>

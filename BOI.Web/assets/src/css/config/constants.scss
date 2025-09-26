@@ -1,7 +1,7 @@
 // Widths
 $column: 70;
 $margin: 15;
-$max-width: (1170 + $margin*2);
+$max-width: (1170 + $margin * 2);
 
 //1380 wide with 15px margin means $column = 85
 
@@ -10,15 +10,13 @@ $max-width: (1170 + $margin*2);
 
 $tiny: 420px;
 $small: 568px;
+$small-med: 640px;
 $medium: 768px;
-$small-medium: 767px;
-$med-large: 860px; 
+$med-large: 860px;
 $large: 980px;
 $large-huge: 1023px;
 $huge: 1200px;
 $mega: 1400px;
-
-
 
 $base-font-size: 15;
 $max-desktop: 1200px; // this is the same as $max-width, but it includes px unit.
@@ -31,35 +29,44 @@ $max-lg-desktop: 1366px;
 
 $max-mobile-nav: 768px; // you can use this if your mobile nav will look completely different to your desktop nav and you'd like to separate that sass
 
-
 // Colours
 
-$white: #FFF;
+$white: #fff;
 $black: #000;
 
-$text: #353535;
+$text: #333333; // was #666666
+$text-dark: #333333;
+$text-placeholder: #505050;
 
-$blue: #0000FF;
-$teal: #00FFC5;
+$blue: #0000ff;
+$blue-2: #0000c2;
+$light-teal: #86FBAD;
+$light-lime: #C4FB50;
+$light-honey: #FFD6B2;
 
-$dark-blue: #00067B;
+$dark-blue: #00067b;
 $navy-blue: #333795;
-$pale-blue: #B4B5ED;
+$pale-blue: #b4b5ed;
+$sky-blue: #b2dbff;
+$light-blue: $sky-blue;
 
 $red: #ff0000;
 $dark-red: #cb0000;
+$xdark-red: #B20001;
 
-$light-grey: #F1F1F1;
-$grey: #E6E6E6;
+$light-grey: #f1f1f1;
+$grey: #e6e6e6;
 $grey-2: #d2d2d2;
 $grey-3: #f3f3f3;
 $grey-4: #e0e0e0;
 $grey-5: #ccc;
 $grey-6: #979797;
 $grey-7: #7f7f7f;
-$grey-8: #b3b3b3;
+$grey-8: #bbbbbb;
 $grey-9: #f8f8f8;
 $grey-10: #dedede;
+$grey-11: #eceef6;
+$grey-12: #666666;
 
 // Loans/Overdraft Calculator (legacy variables)
 $calculator-grey: #dcdcdc;
@@ -67,10 +74,11 @@ $text-grey: #575757;
 $text-grey-light: #767676;
 $boi-bespoke-blue: #003b5c;
 $cyan: #00a6cf;
-$silver: #C0C0C0;
+$silver: #c0c0c0;
 
 //
 // Fonts
 //
 $BankofIreland-Regular: 'BankofIrelandSerif-Regular', serif;
 $BankofIreland-Bold: 'BankofIrelandSerif-Bold', serif;
+$OpenSans: 'Open Sans', sans-serif;

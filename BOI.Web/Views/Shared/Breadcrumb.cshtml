@@ -4,14 +4,13 @@
 }
 
 <div class="breadcrumbs">
-    <ul>
-        <li><a href="/" title="Homepage">Homepage</a></li>
-        @foreach (var crumb in BreadCrumb)
-        {
-            @:<li><a href="@crumb.Url()" title="@crumb.Displayname()" />@crumb.Displayname()</a></li>
-        }
-        <li>
-            <span>@Model.Displayname()</span>
-        </li>
-    </ul>
+    <nav class="breadcrumbs-inner">
+        <ul>
+            <li><a href="/" title="Homepage">Homepage</a></li>
+            @foreach (var crumb in BreadCrumb)
+            {
+                @:<li><a href="@crumb.Url()" title="@crumb.Displayname()" />@crumb.Displayname()</a></li>
+            }
+        </ul>
+    </nav>
 </div>

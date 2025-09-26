@@ -26,5 +26,7 @@
         public string ArticleName { get; set; }
         public string ArticleListingSummary { get; set; }
         public string ArticleUrl { get; set; }
+        public string ArticleImage { get; set; }
+
     }
 }

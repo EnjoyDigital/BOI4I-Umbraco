@@ -7,10 +7,10 @@
     }
 
     <div class="service-levels-pod">
-        <h2 class="h3">@Model.Title</h2>
+        <h2>@Model.Title</h2>
         <p>@Model.SubText</p>
 
-        <ul class="hero-area-quick-links__list">
+        <ul class="child-page-block-item__inner-list">
             @foreach (var serviceItem in Model.ServiceItems.OfType<ServiceLevelItem>())
             {
                 if(serviceItem == null)
@@ -21,7 +21,7 @@
                 <li>
                     @if (serviceItem.ServiceIcon != null)
                     {
-                        <div class="hero-area-quick-links__list-icon-wrap">
+                        <div class="child-page-block-item__inner-list-icon">
                             <img data-object-fit="cover"
                                 src="@serviceItem.ServiceIcon.Url()"
                                 alt="@serviceItem.ServiceIcon.GetImageAlternativeText()" />
@@ -30,7 +30,7 @@
                     <div class="service-levels-pod-item__copy">
                         <span>@serviceItem.ServiceTitle</span>
                         <time class="service-levels-pod-item__time" datetime="@serviceItem.ServiceDate.ToString("yyyy-MM-dd")">
-                            <svg class="[ icon icon-clock -white ]" aria-hidden="true">
+                            <svg class="[ icon icon-clock -text-grey ]" aria-hidden="true">
                                 <use xlink:href="#sprite-icon-clock"></use>
                             </svg>
                             @serviceSubText
@@ -42,7 +42,7 @@
 
         @if( (Model.CTalink?.Url.HasValue()).GetValueOrDefault())
         {
-            <a href="@Model.CTalink.Url" target="@Model.CTalink.Target">@Model.CTalink.Name</a>
+            <a href="@Model.CTalink.Url" target="@Model.CTalink.Target" aria-label="@Model.Title - @Model.CTalink.Name">@Model.CTalink.Name</a>
         }
     </div>
 }

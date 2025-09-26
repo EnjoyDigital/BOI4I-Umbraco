@@ -30,7 +30,7 @@ input {
   padding: 8px;
 
   @include placeholder-styles() {
-    color: rgba(0,0,0,0.5);
+    color: $text-placeholder;
   }
 
   &:focus {
@@ -49,26 +49,35 @@ input {
 }
 
 input[type=text],
+input[type=number],
 textarea {
-  border: 1px solid transparent;
-  background-color: $light-grey;
+  border: 1px solid $text;
+  border-radius: 8px;
+  background-color: $white;
   font-size: 16px;
   line-height: 22px;
-  padding: 12px 40px 12px 17px;
+  padding: 12px 50px 12px 17px;
   transition: border-color 0.25s ease, border-width 0.25s ease background-color 0.25s ease;
+  color: $text-dark;
 
-  &:hover:not(:focus):not(.input-validation-error) {
-    border-color: $grey-2;
+  &:hover:not(:focus):not(.input-validation-error):not(:disabled):not([disabled="true"]) {
+    border-color: $text;
   }
 
-  &:focus {
+  &:hover:not(:disabled):not([disabled="true"]) {
     border-color: $blue;
-    color: $blue;
+  }
 
-    @include placeholder-styles() {
-      color: $blue;
-      opacity: 0.5;
-    }
+  &:focus-within {
+    border-color: $dark-blue;
+    border-width: 2px;
+    padding: 11px 49px 11px 16px;
+  }
+
+  &:disabled,
+  &[disabled="true"] {
+    border-color: $grey-8;
+    cursor: not-allowed;
   }
 
   &.input-validation-error,
@@ -82,6 +91,7 @@ textarea {
     border-color: $red;
     background-image: url(/assets/dist/images/icons/sprite-icon-cross-red.svg);
     background-size: 12px;
+    padding: 11px 49px 11px 16px;
   }
 
   &.valid {
@@ -105,112 +115,114 @@ select {
 }
 
 select {
-    appearance: none;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 22px;
-    padding: 12px 50px 12px 17px;
-    background-color: $light-grey;
-    border: 1px solid transparent;
-    margin: 0;
-    outline: none;
-    transition: border-color 0.25s ease, background-color 0.25s ease;
+  appearance: none;
+  margin: 0;
+  padding: 12px 50px 12px 17px;
+  background-color: $white;
+  border: 1px solid $text;
+  border-radius: 8px;
+  outline: none;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: $text-dark;
 
-    &::-ms-expand {
-        display: none;
-    }
+  &::-ms-expand {
+    display: none;
+  }
 
-    &:hover {
-        border-color: $grey-2;
-    }
+  &:hover {
+    border-color: $blue;
+  }
+
+  &:focus-within {
+    border-color: $dark-blue;
+    border-width: 2px;
+    padding: 11px 49px 11px 16px;
+  }
+
+  &:disabled {
+    border-color: $grey-8;
+    cursor: not-allowed;
+  }
+  
+  &:not([multiple]) {
+    background-image: linear-gradient(
+      45deg,
+      transparent 27%,
+      $blue 27%,
+      $blue 34%,
+      transparent 34%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 27%,
+      $blue 27%,
+      $blue 34%,
+      transparent 34%
+    );
+    background-size: 18px 12px;
+    background-position: right 22px center, right 22px center;
+    background-repeat: no-repeat;
 
     &:focus-within {
-        color: white;
-        background-color: blue;
+      background-image: linear-gradient(
+        45deg,
+        transparent 66%,
+        $blue 66%,
+        $blue 73%,
+        transparent 73%
+      ),
+      linear-gradient(
+        -45deg,
+        transparent 66%,
+        $blue 66%,
+        $blue 73%,
+        transparent 73%
+      );          
     }
 
     &:disabled {
-      cursor: not-allowed;
+      background-image: linear-gradient(
+        45deg,
+        transparent 66%,
+        $grey-8 66%,
+        $grey-8 73%,
+        transparent 73%
+      ),
+      linear-gradient(
+        -45deg,
+        transparent 66%,
+        $grey-8 66%,
+        $grey-8 73%,
+        transparent 73%
+      );
     }
+  }
 
-    &:not([multiple]) {
-        background-image: linear-gradient(
-            45deg,
-            transparent 27%,
-            $blue 27%,
-            $blue 34%,
-            transparent 34%
-          ),
-          linear-gradient(
-            -45deg,
-            transparent 27%,
-            $blue 27%,
-            $blue 34%,
-            transparent 34%
-          );
-        background-size: 18px 12px;
-        background-position: right 22px center, right 22px center;
-        background-repeat: no-repeat;
-
-        &:focus-within {
-          background-color: blue;
-          background-image: linear-gradient(
-              45deg,
-              transparent 66%,
-              $white 66%,
-              $white 73%,
-              transparent 73%
-            ),
-            linear-gradient(
-              -45deg,
-              transparent 66%,
-              $white 66%,
-              $white 73%,
-              transparent 73%
-            );          
-        }
-
-        &:disabled {
-          background-image: linear-gradient(
-              45deg,
-              transparent 66%,
-              $grey-5 66%,
-              $grey-5 73%,
-              transparent 73%
-            ),
-            linear-gradient(
-              -45deg,
-              transparent 66%,
-              $grey-5 66%,
-              $grey-5 73%,
-              transparent 73%
-            );
-        }
-    }
-
-    select[multiple] {
-        padding-right: 17px;
-
-        option {
-            white-space: normal;
-        }
-    }
+  select[multiple] {
+    padding-right: 17px;
 
     option {
-      font-size: 16px;
-      line-height: 20px;
-      background-color: $light-grey;
-      color: $black;
-
-      &:hover {
-        background-color: $grey;
-        box-shadow: 0 0 10px 100px $black inset;
-      }
-
-      &:checked {
-        background-color: $grey-2;
-      }
+      white-space: normal;
     }
+  }
+
+  option {
+    font-size: 16px;
+    line-height: 20px;
+    background-color: $light-grey;
+    color: $black;
+
+    &:hover {
+      background-color: $grey;
+      box-shadow: 0 0 10px 100px $black inset;
+    }
+
+    &:checked {
+      background-color: $grey-2;
+    }
+  }
 }
 
 input[type=radio],
@@ -222,7 +234,6 @@ input[type=checkbox] {
 .radio-wrapper,
 .checkbox-wrapper {
   label {
-    @include font-size(13);
     position: relative;
     padding-left: 32px;
     margin-bottom: 15px;
@@ -234,7 +245,7 @@ input[type=checkbox] {
   &.inline {
     label {
       display: inline-block;
-      margin-right: 30px;
+      margin-right: 16px;
     }
   } 
 }
@@ -250,8 +261,8 @@ input[type=checkbox] {
       left: 0;
       background-color: $white;
       border-radius: 100%;
-      border: 6px solid $white;
-      box-shadow: 0 0 0 1px $grey-8;
+      border: 4px solid $white;
+      box-shadow: 0 0 0 1px $grey-12;
       box-sizing: border-box;
       transition: background-color 0.2s ease;
     }
@@ -269,24 +280,55 @@ input[type=checkbox] {
       background-color: $blue;
     }
   }
+
+  &.inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding-left: 0;
+      margin-right: 0;
+
+      &::before {
+        position: relative;
+        display: block;
+        top: unset;
+        left: unset;
+      }
+    }
+  }
+
+  &:not(.inline) {
+    label {
+      display: inline-block;
+    }
+  }
 }
 
 .checkbox-wrapper {
     label {
-        &:before {
-            content: '';
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            top: -2px;
-            left: 0;
-            background-color: $white;
-            border: 1px solid $grey-8;
-            box-sizing: border-box;
-            background-size: 13px auto;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+      color: $text-dark;
+
+      &:before {
+        content: '';
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        top: 0;
+        left: 0;
+        background-color: $white;
+        border: 1px solid $grey-12;
+        border-radius: 4px;
+        box-sizing: border-box;
+        background-size: 16px auto;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
     }
 
     input[type=checkbox]:focus-visible + label,
@@ -298,7 +340,9 @@ input[type=checkbox] {
     input[type=checkbox]:checked + label,
     input[type=checkbox]:checked + input + label {
         &:before {
-            background-image: url(/assets/dist/images/icons/sprite-icon-checkbox-tick-blue.svg);
+          background-color: $blue;
+          border-color: $blue;
+          background-image: url(/assets/dist/images/icons/sprite-icon-checkbox-tick-white.svg);
         }
     }
 }
@@ -309,7 +353,7 @@ input[type=checkbox] {
   margin-top: 10px;
   padding-left: 18px;
   color: $red;
-  background-image: url(/assets/dist/images/icons/sprite-icon-alert-red.svg);
+  background-image: url(/assets/dist/images/icons/sprite-icon-alert-xdark-red.svg);
   background-repeat: no-repeat;
   background-position: left top 4px;
   background-size: 12px;
@@ -331,5 +375,168 @@ input[type=checkbox] {
     .multiplechoice, .radiobuttons, .singlechoice, .dataconsent {
       width: 100%;
     }*/
+  }
+}
+
+/* Calculators */
+.calculator-form {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 24px;
+
+  @include media-min($small) {
+    grid-template-columns: repeat(2, minmax(0, 438px));
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .field {
+    &:not(:last-child) {
+      margin-bottom: 24px;
+    }
+
+    + h4 {
+      margin-top: 24px;
+
+      @include media-min($small) {
+        margin-top: 56px;
+      }
+    }
+
+    &.button-wrapper {
+      margin-top: auto;
+    }
+    
+    &.error {
+      input {
+        border: 2px solid $xdark-red;
+      }
+
+      select {
+        border: 2px solid $xdark-red;
+    
+        &:not([multiple]) {
+          background-image: linear-gradient(
+            45deg,
+            transparent 27%,
+            $xdark-red 27%,
+            $xdark-red 34%,
+            transparent 34%
+          ),
+          linear-gradient(
+            -45deg,
+            transparent 27%,
+            $xdark-red 27%,
+            $xdark-red 34%,
+            transparent 34%
+          );
+        }
+      }
+    }
+  }
+
+  .calculation,
+  .calculation .text-right {
+    display: grid;
+    grid-template-columns: auto;
+    row-gap: 24px;
+
+    @include media-min($small) {
+      grid-template-columns: repeat(2, minmax(0, 438px));
+    }
+  }
+
+  .calculation {
+    padding: 24px;
+    border-radius: 8px;
+    background-color: $white; 
+    grid-template-columns: auto;
+
+    @include media-min($large) {
+      grid-template-columns: 1fr minmax(0, 414px);
+      column-gap: 32px;
+      justify-content: space-between;
+    }
+
+    .text-right {
+      column-gap: 8px;
+      row-gap: 12px;
+
+      @include media($small) {
+        justify-content: unset;
+
+        .button {
+          width: 100%;
+        }
+      }
+    }
+
+    h4 {
+      margin-bottom: 1.5rem;
+      font-size: 32px;
+      line-height: 1;
+    }
+
+    #final-amount {
+      font-size: 24px;
+      line-height: 30px;
+      font-weight: 600;
+      color: $text-dark;
+    }
+
+    .fee-info {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding-top: 12px;
+
+      &__icon {
+        flex-shrink: 0;
+        color: $text-dark;
+
+        svg {
+          width: 24px;
+          height: 24px;
+        }
+      }
+
+      &__content {
+        @include last-child-no-bottom();
+
+        > span {
+          display: block;
+          font-size: 18px;
+          font-weight: 700;
+          color: $text-dark;
+        }
+      }
+    }
+  }
+
+  .calculation-wrapper {
+    @include media-min($small) {
+      grid-column: span 2;
+    }
+
+    &.error {
+      .calculation {
+        h4 {
+          font-size: 16px;     
+        }
+      }
+    }
+  }
+
+  #min-loan {
+    font-size: 40px;
+    line-height: 1;
+    font-weight: 600;
+    color: $text-dark;
   }
 }

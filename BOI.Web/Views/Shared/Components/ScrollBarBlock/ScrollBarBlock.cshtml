@@ -9,10 +9,23 @@
                 var notificationContent = (RichTextBlock)notification.Content;
 
                 <div class="scroll-bar__inner">
-                    <img alt='Alert Icon' src="~/assets/dist/images/icons/icon-alert-teal.svg">
-                    <div class="scroll-bar__inner--text">@Html.Raw(notificationContent.RichText)</div>
+                    <div class="scroll-bar__icon">
+                        <svg class="[ icon icon-info-filled ]" aria-hidden="true">
+                            <use xlink:href="#sprite-icon-info-filled"></use>
+                        </svg>
+                    </div>
+                    <div class="scroll-bar__inner-content">
+                        <div class="scroll-bar__inner-title">Title</div>
+                        <div class="scroll-bar__inner-text">@Html.Raw(notificationContent.RichText)</div>
+                    </div>
                 </div>
             }
+
+            <button type="button" aria-label="Close notifcation" title="Close notifcation" class="scroll-bar__close js-close-notification-bar">
+                <svg class="[ icon icon-close -blue ]" aria-hidden="true">
+                    <use xlink:href="#sprite-icon-close"></use>
+                </svg>
+            </button>
         </div>
     </div>
 }

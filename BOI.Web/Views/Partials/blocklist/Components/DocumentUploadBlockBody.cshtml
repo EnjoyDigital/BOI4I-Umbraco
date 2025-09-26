@@ -1,0 +1,40 @@
+﻿@inherits UmbracoViewPage<IDocumentUploadBlock>
+@{
+    if ((Model?.Documents.NullOrEmpty()).GetValueOrDefault())
+    {
+        return;
+    }
+
+   
+        @if (!Model.SubText.ToString().IsNullOrWhiteSpace())
+        {
+            @Model.SubText
+        }
+
+        <div class="document-download-block @(Model.SubText != null ? "document-download-block--has-subtext" : null)">
+
+            @foreach (var childPage in Model.Documents.OfType<BlockListItem<DocumentUploadItem>>())
+            {
+                var documentDownloadItem = (DocumentUploadItem)childPage.Content;
+                if(documentDownloadItem ==null)
+                {
+                    continue;
+                }
+
+                <div class="document-download-block-item @(documentDownloadItem.Document == null ? "-no-hover" : "")">
+                    <svg class="[ icon icon-pdf-document -blue ]" aria-hidden="true">
+                        <use xlink:href="#sprite-icon-pdf-document"></use>
+                    </svg>
+                    <span class="document-download-block-item__title">@documentDownloadItem.Title</span>
+
+                    @if (documentDownloadItem.Document != null)
+                    {
+                        <a href="@documentDownloadItem.Document.Url()" class="overlay-link" target="_blank" download="@documentDownloadItem.Title">Download<span class="sr-only"> @documentDownloadItem.Title</span></a>
+                        <p aria-hidden="true"><strong>Download</strong></p>
+                    }
+
+                </div>
+            }
+        </div>
+ 
+}

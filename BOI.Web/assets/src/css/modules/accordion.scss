@@ -1,6 +1,9 @@
 .accordion {
   display: block;
-  margin-top: 16px;
+  margin-top: 8px;
+  border: 1px solid $grey-8;
+  border-radius: 8px;
+  background-color: $white;
 
   /* for rich-text spacing purposes */
   +*:not(.accordion) {
@@ -8,34 +11,11 @@
   }
 
   &.active {
-
     >.accordion-heading {
-      background-color: $dark-blue;
-      color: $white;
-
-      .notice {
-        color: $white;
-        border-color: $white;
-      }
-
-      .icon {
-        fill: $white;
-      }
-
       .toggle {
-        border-color: $white;
-
-        &:before,
-        &:after {
-          background-color: $white;
-        }
-
-        &:before {
-          transform: translate(-50%, -50%) rotate(-90deg);
-        }
-
-        &:after {
-          transform: translate(-50%, -50%) rotate(180deg);
+        &::before {
+          transform: rotate(45deg) scale(-1);
+          top: 11px;
         }
       }
     }
@@ -47,15 +27,32 @@
   align-items: center;
   width: 100%;
   position: relative;
-  padding: 20px 58px 21px 30px;
-  color: $text;
-  background-color: $white;
-  font-size: 15px;
-  line-height: 23px;
+  padding: 16px 60px 16px 16px;
+  border-radius: 8px;
+  color: $blue;
+  font-size: 18px;
+  line-height: 28px;
   font-weight: 600;
   text-align: left;
   cursor: pointer;
+  isolation: isolate;
   transition: background-color 0.3s ease, color 0.3s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    transform: translate(-50%,-50%);
+    background-color: $grey-11;
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
 
   .notice {
     font-size: 0.8em;
@@ -68,97 +65,76 @@
     transition: color 0.3s ease, border-color 0.3s ease;
   }
 
-  .icon {
-    transform: translateY(6px);
-    display: inline-block;
-    margin-left: 10px;
-    transition: all 0.3s ease;
-
-    &:hover {
-        transform: translateY(6px) scale(1.2);
-    }
-  }
-
-  @include media($small) {
-    padding: 14px 58px 12px 20px;
-    font-size: 16px; 
-    line-height: 24px; 
-  } 
-
-  &:hover,
-  &:focus-visible {
-    background-color: $blue;
-    color: $white;
-
-    .icon {
-        fill: $white;
-    }
-
-    .notice {
-      color: $white;
-      border-color: $white;
-    }
-
-    .toggle {
-      border-color: $white;
-
-      &:before,
-      &:after {
-        background-color: $white;
-      }
-    }
-  }
-
   .toggle {
     position: absolute;
-    width: 32px;
-    height: 32px;
-    border-radius: 100%;
-    border: 1px solid $blue;
+    width: 28px;
+    height: 28px;
     top: 50%;
-    right: 25px;
+    right: 16px;
     transform: translateY(-50%);
     background-color: transparent; 
     backface-visibility: hidden; 
-    transition: border-color 0.3s ease;
 
-    @include media($small) {
-      right: 15px;
-    }
-
-    &:before,
-    &:after {
-      content: "";
-      background-color: $blue;
+    &::before {
+      content: '';
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transition: transform 0.3s ease, background-color 0.3s ease;
+      top: 5px;
+      left: 8px;
+      width: 10px;
+      height: 10px;
+      border-bottom: 2px solid $blue;
+      border-right: 2px solid $blue;
+      transform: rotate(45deg);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $blue;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  &:hover,
+  &:active {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 1px;
+    text-underline-position: under;
+  }
+
+  &:active {
+    color: $dark-blue;
+
+    &::before {
+      opacity: 1;
     }
 
-    &:before {
-      height: 16px;
-      width: 1px;
-    }
-
-    &:after { 
-      width: 16px;
-      height: 1px; 
+    .toggle {
+      &::before {
+        border-color: $dark-blue;
+      }
     }
   }
 }
 
 .accordion-content {
+  position: relative;
   display: none;
-  padding: 25px 30px;
-  background-color: $white;
+  padding: 16px 16px 24px;
+  color: $text;
 
-  @include media($small) {
-    padding: 15px 20px;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    height: 1px;
+    background-color: $grey-8;
+    transform: translateX(-50%);
   }
 
-  >* {
+  > * {
     &:first-child {
       margin-top: 0;
     }
@@ -166,52 +142,66 @@
     &:last-child {
       margin-bottom: 0;
     }
-  } 
+  }
+
+  > .accordion {
+    .accordion-heading,
+    .accordion-content {
+      background-color: $grey-11;
+    }
+  }
 }
 
 .accordion-copylink {
-    position: relative;
+  @include simple-link-style();
+  position: relative;
+  font-weight: 600;
+  color: $blue;
 
-    button {
-        display: flex;
-        align-items: center;
-        padding: 0;
+  button {
+    display: flex;
+    align-items: center;
+    padding: 0;
 
-        svg {
-            flex-shrink: 0;
-            width: 16px;
-            height: 16px;
-            margin-right: 7px;
-        }
+    svg {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      margin-right: 7px;
     }
+  }
 }
 
 .accordion-copylink-alert {
+  position: absolute;
+  bottom: calc(100% + 17px);
+  left: 0;
+  display: flex;
+  align-items: center;
+  color: $white;
+  background-color: $blue;
+  padding: 10px 13px;
+
+  &::after {
+    content: '';
     position: absolute;
-    bottom: calc(100% + 17px);
-    left: 0;
-    display: flex;
-    align-items: center;
-    color: $white;
-    background-color: $blue;
-    padding: 10px 13px;
+    top: 100%;
+    left: 10px;
+    border: 10px solid transparent;
+    border-top: 8px solid $blue;
+    border-bottom: 0;
+  }
 
-    &::after {
-        content: '';
-        position: absolute;
-        top: 100%;
-        left: 10px;
-        border: 10px solid transparent;
-        border-top: 8px solid $blue;
-        border-bottom: 0;
-    }
+  svg {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-right: 7px;
+  }
+}
 
-    svg {
-        flex-shrink: 0;
-        width: 18px;
-        height: 18px;
-        margin-right: 7px;
-    }
+.accordion + .accordion-copylink {
+  margin-top: 16px;
 }
 
 /* Accordions within accordions */
@@ -235,32 +225,30 @@
 
 /* Background-color variant */
 .results-area,
-.criteria-category,
-.accordion-content {
-    .accordion:not(.active) {
-        .accordion-heading:not(:hover):not(:focus-visible) {
-            background-color: $light-grey;
-        }
-    }
-
-    .accordion-content {
-        background-color: $light-grey;
-    }
-}
-
-.results-area,
 .criteria-category {
-  .accordion-content > {
-    .accordion:not(.active) {
-      .accordion-heading:not(:hover):not(:focus-visible){
-        background-color: $white;
-      }
-    }
-
-    .accordion {
+  .accordion-content {
+    > .accordion {
+      .accordion-heading,
       .accordion-content {
-        background-color: $white;
+        background-color: $grey-11;
       }
     }
   }
 }
+
+// .results-area,
+// .criteria-category {
+//   .accordion-content > {
+//     .accordion:not(.active) {
+//       .accordion-heading:not(:hover):not(:focus-visible){
+//         background-color: $white;
+//       }
+//     }
+
+//     .accordion {
+//       .accordion-content {
+//         background-color: $white;
+//       }
+//     }
+//   }
+// }

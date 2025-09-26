@@ -1,9 +1,10 @@
 .error-container {
   position: relative;
-  padding-top: 40px;
+  padding-bottom: #{fluid(75, 150)};
 
   .umb-block-list {
     position: relative;
+    margin-bottom: 0;
   }
 }
 

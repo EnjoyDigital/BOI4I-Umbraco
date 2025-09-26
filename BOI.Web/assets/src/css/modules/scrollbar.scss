@@ -1,45 +1,49 @@
 .scroll-bar {
-    background-color: $dark-blue;
-    padding: 10px 20px;
-    height: 185px;
-    transition: all ease-in-out 0.65s;
+    position: relative;
+    padding-left: var(--sectionPaddingX);
+    padding-right: var(--sectionPaddingX);
+    background-color: $white;
+    padding-top: 24px;
+    z-index: 1;
+    // transition: all ease-in-out 0.65s;
+
+    @include media-min($max-mobile-nav) {
+        padding-top: 0;
+    }
 
     &__wrapper {
-        max-width: $max-desktop;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        padding-top: 40px;
-        text-align: center;
         position: relative;
+        display: flex;
+        align-items: start;
+        gap: 8px;
+        max-width: 1138px;
+        margin: 0 auto;
+        padding: 14px 18px;
+        border: 2px solid $text-dark;
+        border-left-width: 10px;
+        border-radius: 8px;
+        color: $text-dark;
     }
 
     &__inner {
-        transition: all .5s ease-in;
-        display: flex;
-        position: absolute;
-        opacity: 0;
-        z-index: 0;
-        visibility: hidden;
-        top: 0;
+        // transition: all .5s ease-in;
+        display: none;
         align-items: flex-start;
-        justify-content: center;
-        margin-top: 50px;
+        justify-content: flex-start;
+        gap: 8px;
+        width: 100%;
 
-        &--title {
-            color: $white;
-            font-weight: 600;
-            margin: 0 5px 0 10px;
-            font-size: 0.9em;
+        &-title {
+            font-size: 18px;
+            font-weight: 700;
         }
 
-        &--text {
-            color: $white;
-            font-size: 0.9em;
+        &-text {
+            color: $text;
 
             p {
                 margin-bottom: 0;
+                color: inherit;
 
                 a {
                     color: $white;
@@ -47,42 +51,32 @@
             }
         }
 
-        img {
-            margin-bottom: 5px;
+        &.active {
+            display: flex;
         }
     }
 
-    .active {
-        opacity: 1;
-        visibility: visible;
-        z-index: 1;
-    }
+    &__icon {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
 
-    @media(min-width: 350px) {
-        height: 165px;
-    }
-    
-    @media(min-width:$min-desktop) {
-        padding: 14px 10px;
-        height: 90px;
-
-        &__wrapper {
-            padding-top: 0;
-            height: 20px;
-        }
-
-        &__inner {
-            padding-top: 0;
-            margin-top: 0;
-
-            img {
-                margin-right: 6px;
-            }
+        .icon {
+            width: 100%;
+            height: 100%;
         }
     }
 
-    @media(min-width: $large) {
-        height: auto;
-    }
+    &__close {
+        width: 24px;
+        height: 24px;
+        margin-left: auto;
+        padding: 0;
+        flex-shrink: 0;
 
+        .icon {
+            width: 100%;
+            height: 100%;
+        }
+    }
 }

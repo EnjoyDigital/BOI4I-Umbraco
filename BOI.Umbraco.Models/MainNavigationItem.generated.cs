@@ -58,6 +58,14 @@ namespace BOI.Umbraco.Models
 		public virtual global::Umbraco.Cms.Core.Models.Blocks.BlockListModel ChildNavigationItems => this.Value<global::Umbraco.Cms.Core.Models.Blocks.BlockListModel>(_publishedValueFallback, "childNavigationItems");
 
 		///<summary>
+		/// Mobile icon: The icon shown to the left of navigation items on mobile devices
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]
+		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
+		[ImplementPropertyType("mobileIcon")]
+		public virtual global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent MobileIcon => this.Value<global::Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent>(_publishedValueFallback, "mobileIcon");
+
+		///<summary>
 		/// Navigation Item
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "13.8.1+dcbbed4")]

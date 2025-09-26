@@ -70,9 +70,6 @@
 
 .cta-popup-links {
     margin-bottom: 30px;
-    a {
-        margin-bottom: 10px;
-    }
 }
 
 .cta-popup {
@@ -81,35 +78,60 @@
     z-index: 9999;
     width: 100%;
     bottom: 0;
+    max-height: 100vh;
+    max-height: 100dvh;
 
     &__inner {
-        background-color: #E6E6E6;
+        background-color: $white;
         max-width: 750px;
         // max-height: 630px;
-        padding: 20px;
-        margin: 0 10px;
+        border-radius: 16px;
     }
 
     &__header {
+        position: sticky;
+        top: 0;
         display: flex;
-        flex-direction: column-reverse;
-
-        p {
-            background-color: $blue;
-            color: $white;
-            margin: 0;
-            padding: 12px 20px;
-            flex-grow: 1;
-            font-weight: bold;
-        }
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 16px 16px #{fluid(16, 24)};
+        background-color: $white;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        z-index: 1;
 
         button {
-            min-width: 93px;
-            margin-bottom: 20px;
-            align-self: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            padding: 0;
+
+            .icon {
+                width: 32px;
+                height: 32px;
+            }
         }
 
-        margin-bottom: 20px;
+        &.reduce {
+            border-color: $grey-8;
+            box-shadow: 0 2px 2px rgba($black, 0.08);
+
+            .cta-popup__header-title {
+                font-size: 18px;
+                line-height: 28px;
+            }
+        }
+    }
+
+    &__header-title {
+        margin-bottom: 0;
+        font-size: #{fluid(18, 28)};
+        line-height: #{fluid(28, 40)};
+        font-weight: 600;
+        color: $text-dark;
+        transition: font-size 0.25s ease, line-height 0.25s ease;
     }
 
     &__text {
@@ -118,7 +140,36 @@
         overflow-x: hidden;
         min-height: 215px;
         max-height: 430px;
-        padding: 15px 35px 15px 20px;
+        padding: 0 0 16px;
+        border-radius: 16px 16px 0 0;
+
+        @include media($small) {
+            max-height: 55vh;
+        }
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        
+        // &::-webkit-scrollbar-track {
+        //     background-color: $grey-8;
+        //     border-radius: 8px;
+        // }
+
+        // &::-webkit-scrollbar {
+        //     background-color: $grey-12;
+        //     width: 6px;
+        // }
+
+        // &::-webkit-scrollbar-thumb {
+        //     background-color: $grey-10;
+        //     border-radius: 8px;
+        //     cursor: pointer;
+        // }
+
+        .rich-text {
+            padding: 0 #{fluid(16, 24)};
+        }
     }
 
     &__footer {
@@ -126,7 +177,12 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        margin-top: 20px;
+        padding: 16px 16px 16px #{fluid(16, 24)};
+        transition: box-shadow 0.25s ease;
+        
+        &.shadow {
+            box-shadow: 0 -2px 2px rgba($black, 0.08);
+        }
 
         .checkbox-wrapper {
             label {
@@ -146,18 +202,6 @@
 
     @media(min-width: $min-desktop) {
         padding: 30px;
-
-        &__header {
-            flex-direction: row;
-
-            p {
-                margin-right: 20px;
-            }
-
-            button {
-                margin-bottom: 0;
-            }
-        }
 
         &__footer {
             flex-direction: row;

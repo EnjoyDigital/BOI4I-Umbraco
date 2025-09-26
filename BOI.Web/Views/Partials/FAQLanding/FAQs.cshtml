@@ -13,8 +13,8 @@
         <div class="product-table-caption">
             <span class="h3 product-table-caption__title">@Faqs.Count() @FaqsResultText</span>
             <a class="print-products js-print-products" href="" title="Click to download FAQ PDF">
-                <svg class="[ icon icon-print -blue ]">
-                    <use xlink:href="#sprite-icon-pdf-document-icon"></use>
+                <svg class="[ icon icon-print-alt -blue ]" aria-hidden="true">
+                    <use xlink:href="#sprite-icon-print-alt"></use>
                 </svg>
                 <span>Download FAQ PDF</span>
             </a>
@@ -27,32 +27,38 @@
 
                 @foreach (var criteria in groupedFaq.OrderBy(y => y.SortOrder))
                 {
-                    <div class="accordion" id="@criteria.NameId">
-                        <div class="accordion-heading">
+                    var criteriaId = criteria.NameId;
+                    var headingId = $"{criteriaId}-heading";
+                    var contentId = $"{criteriaId}-content";
+                    <div class="accordion" id="@criteriaId">
+                        <button class="accordion-heading" id="@headingId" aria-controls="@contentId" aria-expanded="false">
                             @criteria.FAQQuestion
                             <i class="toggle"></i>
-                        </div>
-                        <div class="accordion-content rich-text">
+                        </button>
+                        <div class="accordion-content rich-text" id="@contentId" aria-labelledby="@headingId">
                             @Html.Raw(criteria.FAQAnswer)
 
                             @if (criteria.FAQTabs != null && criteria.FAQTabs.Any())
                             {
                                 foreach (var tab in criteria.FAQTabs)
                                 {
-                                    <div class="accordion" id="@tab.FAQTabQuestion.ToLower().ToCleanString(shortStringHelper, CleanStringType.UrlSegment)">
-                                        <div class="accordion-heading">
+                                    var tabId = tab.FAQTabQuestion.ToLower().ToCleanString(shortStringHelper, CleanStringType.UrlSegment);
+                                    var tabHeadingId = $"{tabId}-heading";
+                                    var tabContentId = $"{tabId}-content";
+                                    <div class="accordion" id="@tabId">
+                                        <button class="accordion-heading" id="@tabHeadingId" aria-controls="@tabContentId" aria-expanded="false">
                                             @tab.FAQTabQuestion
                                             <i class="toggle"></i>
-                                        </div>
-                                        <div class="accordion-content rich-text">
+                                        </button>
+                                        <div class="accordion-content rich-text" id="@tabContentId" aria-labelledby="@tabHeadingId">
                                             @Html.Raw(tab.FAQAnswer)
 
-                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this FAQ"))" />
+                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new { Text = "Link to this FAQ", AriaLabel = $"Copy link to FAQ: {tab.FAQTabQuestion} to clipboard" })" />
                                         </div>
                                     </div>
                                 }
                             }
-                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this FAQ"))" />
+                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new { Text = "Link to this FAQ", AriaLabel = $"Copy link to FAQ group: {criteria.FAQQuestion} to clipboard" })" />
                         </div>
                     </div>
                 }

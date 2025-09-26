@@ -4,9 +4,12 @@
   as the CMS, richtext.scss will only be used by the site, not the cms
 */
 
-h2, .h2,
-h3, .h3,
-h4, .h4,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
 h5 {
   margin-top: 1rem;
 
@@ -19,10 +22,13 @@ h5 {
   }
 }
 
-@media(min-width: $max-tablet) {
-  h2, .h2,
-  h3, .h3,
-  h4, .h4,
+@media (min-width: $max-tablet) {
+  h2,
+  .h2,
+  h3,
+  .h3,
+  h4,
+  .h4,
   h5 {
     margin-top: 2rem;
 
@@ -40,9 +46,12 @@ h5 {
   margin: 0 0 10px 10px;
 }
 
-p,li {
+p,
+li {
   a {
-    @include link-style-fill-bar(rgba($blue,0.3), $blue);
+    // @include link-style-fill-bar(rgba($blue,0.3), $blue);
+    @include simple-link-style();
+    color: $blue;
   }
 }
 
@@ -54,7 +63,66 @@ img {
   margin: 2rem 20px 2rem 0;
 }
 
+ul,
+ol {
+  margin-bottom: 2rem;
+}
+
+ul {
+  list-style: none;
+  padding-left: 10px;
+
+  li {
+    position: relative;
+    display: block;
+    margin: 15px 0;
+
+    span.list-bullets,
+    span.list-ticks {
+      position: relative;
+      display: block;
+      padding-left: 16px;
+    }
+
+    span.list-bullets {
+      &:before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 0;
+        width: 4px;
+        height: 4px;
+        background-color: $text;
+        border-radius: 100%;
+      }
+    }
+
+    span.list-ticks {
+      padding-left: 25px;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 6px;
+        left: 0;
+        width: 15px;
+        height: 11px;
+        background-image: url(/assets/dist/images/icons/sprite-icon-checkbox-tick.svg);
+        background-size: 15px 11px;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+  }
+}
+
+ol {
+  list-style: decimal outside;
+  padding-left: 1.5em;
+}
+
 table {
+  height: auto!important;
   width: 100%;
   display: table;
   table-layout: fixed;
@@ -69,121 +137,101 @@ table {
     display: block;
   }
 
-  th, td {
-    padding: 17px 25px;
-    text-align: center;
-    min-width: 200px;
+  tr {
+    width: auto !important; // override inline styles
+    height: auto !important; // override inline styles
+  }
 
-    &.features-text {
-      ul {
-        text-align: left;
-        padding-left: 0;
-        margin-bottom: 0;
-      }
+  th,
+  td {
+    min-width: 200px;
+    width: auto !important; // override inline styles
+    height: auto !important; // override inline styles
+    padding: 16px 16px 10px;
+    text-align: left;
+    font-size: 14px;
+    line-height: 20px;
+    color: $text-dark;
+
+    p,li {
+      color: inherit;
+    }
+  }
+
+  th {
+    p {
+      margin-bottom: 0;
     }
   }
 
   td {
-    background-color: $white;
+    padding: 8px 16px;
+    vertical-align: top;
 
-    &:not(:last-child) {
-      border-right: 1px solid $grey;
+    a,
+    p a,
+    li a {
+      @include simple-link-style();
+      color: $blue;
     }
   }
 
   thead th,
-  tbody th {
-    background-color: $dark-blue;
-    color: $white;
-    padding-top: 21px;
-    padding-bottom: 21px;
-
-    &:not(:last-child) {
-      border-right: 1px solid rgba($white,0.4);
-    }
-  }
-
-  thead {
-    tr {
-      td {
-        background-color: $dark-blue;
-        color: $white;
-      }
-    }
+  tbody th,
+  thead tr td {
+    background-color: $white;
+    color: $text-dark;
+    vertical-align: bottom;
+    border-bottom: 2px solid $grey-8;
   }
 
   tbody {
     tr {
-      &:not(:last-child) {
+      &:nth-child(odd) {
         td {
-          border-bottom: 1px solid $grey;
+          background-color: $grey-11;
+        }
+      }
+
+      &:nth-child(even) {
+        td {
+          background-color: $white;
+        }
+      }
+
+      @include media-min($max-mobile) {
+        &:last-child {
+          td {
+            border-bottom: 2px solid $grey-8;
+          }
         }
       }
     }
   }
-}
 
-ul,ol {
-  margin-bottom: 2rem;
-}
-
-ul {
-  list-style: none;
-  padding-left: 30px;
-
-  @include media($small) {
+  ul {
+    list-style: disc;
     padding-left: 20px;
-  }
-  
-  li {
-    position: relative;
-    display: block;
-    margin: 15px 0;
+    margin-bottom: 0;
 
-    span.list-bullets,
-    span.list-ticks {
-      position: relative;
-      display: block;
-      padding-left: 20px;
-    }
+    li {
+      display: list-item;
+      margin: 0;
 
-    span.list-bullets {
-      &:before {
-        content: '';
-        position: absolute;
-        top: 7px;
-        left: 0;
-        width: 7px;
-        height: 8px;
-        background-image: url(/assets/dist/images/icons/sprite-icon-bullet-blue.svg);
-        background-size: 7px 8px;
-        background-repeat: no-repeat;
-        background-position: center;
+      &:not(:last-child) {
+        margin-bottom: 0.5rem;
       }
-    }
 
-    span.list-ticks {
-      padding-left: 25px;
+      // in case these aren't removed via the CMS
+      span.list-bullets {
+        padding-left: 0;
 
-      &:before {
-        content: '';
-        position: absolute;
-        top: 4px;
-        left: 0;
-        width: 18px;
-        height: 15px;
-        background-image: url(/assets/dist/images/icons/sprite-icon-tick-blue.svg);
-        background-size: 18px 15px;
-        background-repeat: no-repeat;
-        background-position: center;
+        &::before {
+          display: none;
+        }
       }
     }
   }
-}
-
-ol {
-  list-style: decimal outside;
-  padding-left: 1.5em;
 }
 
 /* TODO: Add blockquote styling */

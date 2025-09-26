@@ -15,8 +15,8 @@
         <div class="product-table-caption">
             <span class="h3 product-table-caption__title">@BespokeProducts.Count() @BespokeProductsResultText</span>
             <a class="print-products js-print-products" href="" title="Click to download criteria PDF">
-                <svg class="[ icon icon-print -blue ]">
-                    <use xlink:href="#sprite-icon-pdf-document-icon"></use>
+                <svg class="[ icon icon-print-alt -blue ]" aria-hidden="true">
+                    <use xlink:href="#sprite-icon-print-alt"></use>
                 </svg>
                 <span>Download Criteria PDF</span>
             </a>
@@ -48,7 +48,7 @@
                 @foreach (var criteria in groupedBespokeProduct.OrderBy(y => y.SortOrder))
                 {
                     <div class="accordion" id="@criteria.NameId">
-                        <div class="accordion-heading">
+                        <button id="Accordion-@criteria.NameId-heading" class="accordion-heading" aria-controls="Accordion-@criteria.NameId-content">
                             @criteria.CriteriaName
 
                             @if (!string.IsNullOrWhiteSpace(criteria.CriteriaUpdatedDate))
@@ -60,8 +60,8 @@
                             }
 
                             <i class="toggle"></i>
-                        </div>
-                        <div class="accordion-content rich-text">
+                        </button>
+                        <div id="Accordion-@criteria.NameId-content" class="accordion-content rich-text" role="region" aria-labelledby="Accordion-@criteria.NameId-heading">
                             @Html.Raw(criteria.BodyText)
 
                             @if (criteria.CriteriaTabs != null && criteria.CriteriaTabs.Any())
@@ -83,13 +83,13 @@
                                         <div class="accordion-content rich-text">
                                             @Html.Raw(tab.BodyText)
 
-                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+                                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new {Text ="Link to this criteria", AriaLabel = $"Copy link to {criteria.CriteriaName} - {tab.CriteriaTabName} to clipboard"})" />
 @*                                             @{ Html.RenderPartial("AccordionLink", "Link to this criteria"); } *@
                                         </div>
                                     </div>
                                 }
                             }
-                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new string("Link to this criteria"))" />
+                            <partial name="~/Views/Partials/AccordionLink.cshtml" model="@(new {Text ="Link to this criteria", AriaLabel = $"Copy link to {criteria.CriteriaName} to clipboard"})" />
 
 @*                             @{ Html.RenderPartial("AccordionLink", "Link to this criteria"); }
  *@

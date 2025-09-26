@@ -8,34 +8,56 @@ export default function Navigation() {
     var $searchButton = document.querySelector('.header-bottom__menu--search');
     var $siteSearch = document.querySelector('.site-search');
     var $searchBox = document.querySelector('.search-bar');
-    var $searchClose = document.querySelector('.search-bar__icons--grey');
+    var $searchClose = document.querySelector('.js-close-site-search');
     var $headerBottom = document.querySelector('.header-bottom__menu');
-    var $mobileSubmenu = document.querySelectorAll('.show-submenu');
+    var $mobileSubmenu = document.querySelectorAll('header .show-submenu');
     var $mobileMenu = document.querySelectorAll('.header-bottom__menu--menu');
     if ($button) {
         $button.addEventListener('click', function() {
             if ($mobileNav.classList.contains('nav-active')) {
+                $nav.classList.remove('nav-active');
+                toggleLockedFocus(false);
                 $mobileNav.classList.remove('nav-active');
                 $mobileTop.classList.remove('nav-active');
                 $searchBox.classList.remove('search-active');
                 $main.style.position = "static";
                 $button.setAttribute('aria-label', 'Open main menu');
                 $button.setAttribute('aria-expanded', false);
-                $button.innerHTML = '<img src="/assets/dist/images/icons/icon-hamburger.svg">';
+                $button.innerHTML = '<svg class="[ icon icon-burger-menu -blue ]" aria-hidden="true"><use xlink:href="#sprite-icon-burger-menu"></use></svg>Menu';
             } else {
+                $nav.classList.add('nav-active');
+                toggleLockedFocus(true);
                 $mobileNav.classList.add('nav-active');
                 $mobileTop.classList.add('nav-active');
                 $searchBox.classList.add('search-active');
                 $main.style.position = "fixed";
                 $button.setAttribute('aria-label', 'Close main menu');
                 $button.setAttribute('aria-expanded', true);
-                $button.innerHTML = '<img src="/assets/dist/images/icons/icon-mobile-menu-close.svg">';
-                while ($mobileTop.childNodes.length > 0) { 
-                    $headerBottom.appendChild($mobileTop.childNodes[0]);
+                $button.innerHTML = '<svg class="[ icon icon-cross-alt -blue ]" aria-hidden="true"><use xlink:href="#sprite-icon-cross-alt"></use></svg>Close';
+                while ($mobileTop.childNodes.length > 0) {
+                    $headerBottom.insertBefore($mobileTop.childNodes[0], $headerBottom.firstChild);
                 }
-                while ($searchBox.childNodes.length > 0) {
-                    $headerBottom.appendChild($siteSearch.childNodes[0]);
+                while ($siteSearch.childNodes.length > 0) {
+                    $headerBottom.insertBefore($siteSearch.childNodes[0], $headerBottom.firstChild);
                 }
+            }
+        });
+    }
+
+    // Lock focus on mobile nav to prevent tabbing to other elements- achieved via the inert property
+    function toggleLockedFocus(isLocked) {
+        const excludedTags = ['SCRIPT', 'STYLE', 'META', 'LINK', 'TITLE', 'NOSCRIPT', 'HEAD', 'BASE', 'TEMPLATE', 'SLOT'];
+
+        // Get all sibling elements- assumes <header> is a direct child of <body>
+        const siblings = Array.from($nav.parentNode.children).filter(el => el !== $nav);
+
+        siblings.forEach(function(sibling) {
+            if (excludedTags.indexOf(sibling.tagName) === -1) {
+                if (isLocked) {
+                  sibling.setAttribute('inert', '');
+              } else {
+                  sibling.removeAttribute('inert');
+              }
             }
         });
     }
@@ -51,7 +73,8 @@ export default function Navigation() {
         });
     }
 
-    $searchClose.addEventListener('click', function () {
+    $searchClose.addEventListener('click', function (e) {
+        e.preventDefault();
         $searchButton.setAttribute('aria-expanded', false);
         $searchBox.classList.remove('search-active');
         $mobileNav.classList.add('bottom-nav-active');
@@ -62,13 +85,14 @@ export default function Navigation() {
 
     function mobileSubmenu() {
         for (let i = 0; i < $mobileSubmenu.length; i++) {
-            $mobileSubmenu[i].parentElement.addEventListener('focusout', function (e) {
+            $mobileSubmenu[i].addEventListener('focusout', function (e) {
                 // If focus is still in the parent, do nothing
-                if ($mobileSubmenu[i].parentElement.contains(e.relatedTarget)) return;
+                if ($mobileSubmenu[i].contains(e.relatedTarget)) return;
 
                 // If on mobile do nothing
                 if ($(window).width() < 768) return;
 
+                var $button = e.target;
                 var $parent = $mobileSubmenu[i].parentElement;
                 var $sibling = $mobileSubmenu[i].nextElementSibling;
                 var $topLevelLink = $mobileSubmenu[i].previousElementSibling;
@@ -76,10 +100,11 @@ export default function Navigation() {
                 $sibling.style.display = "";
                 $parent.classList.remove('submenu-open');
                 $headerBottom.style.height = "auto";
-                $topLevelLink.setAttribute('aria-expanded', false)
+                $button.setAttribute('aria-expanded', false);
+                $topLevelLink.setAttribute('aria-expanded', false);
             });
 
-            $mobileSubmenu[i].parentElement.addEventListener('click', function (e) {
+            $mobileSubmenu[i].addEventListener('click', function (e) {
                 if (e.detail == 1) { //is actually a click event, not a keyboard event in disguise
                     if (typeof (e.target.href) != 'undefined') {
                         if (e.target.href == '' || e.target.href.slice(-1) == '#') {
@@ -92,27 +117,35 @@ export default function Navigation() {
                         e.preventDefault();
                     }
                 }
+                var $button = e.target;
                 var $parent = $mobileSubmenu[i].parentElement;
                 var $sibling = $mobileSubmenu[i].nextElementSibling;
                 var $topLevelLink = $mobileSubmenu[i].previousElementSibling;
+
+                if ($parent.classList.contains('submenu-listing__heading')) {
+                    $sibling = $parent.nextElementSibling;
+                }
 
                 if ($parent.classList.contains('submenu-open')) {
                     $sibling.style.display = "";
                     $parent.classList.remove('submenu-open');
                     $headerBottom.style.height = "auto";
-                    $topLevelLink.setAttribute('aria-expanded', false)
+                    $button.setAttribute('aria-expanded', false);
+                    $topLevelLink.setAttribute('aria-expanded', false);                    
                 } else {
                     $sibling.style.display = "flex";
                     $parent.classList.add('submenu-open');
-                    $headerBottom.style.height = "calc(100% + 140px)";
-                    $topLevelLink.setAttribute('aria-expanded', true)
+                    // $headerBottom.style.height = "calc(100% - 120px)";
+                    console.log({$button})
+                    $button.setAttribute('aria-expanded', true);
+                    $topLevelLink.setAttribute('aria-expanded', true);                    
                 }
             });
         }
     }
 
     function stickyNavigation() { 
-        if (window.scrollY > 200) {
+        if (window.scrollY > 0) {
             $nav.classList.add('nav-scroll');
         } else {
             $nav.classList.remove('nav-scroll');

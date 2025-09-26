@@ -2,7 +2,17 @@
 
 <form action="@Model.ListingUrl" class="product-filters">
     <fieldset>
-        <legend class="h3 product-filters__title js-toggle-product-filters">@Model.FiltersTitle</legend>
+        <legend class="product-filters__title js-toggle-product-filters">
+            <span>@Model.FiltersTitle</span>
+            <div class="product-filters__title-icon">
+                <svg class="[ icon icon-cross-alt ]" aria-hidden="true">
+                    <use xlink:href="#sprite-icon-cross-alt"></use>
+                </svg>
+                <svg class="[ icon icon-filter ]" aria-hidden="true">
+                    <use xlink:href="#sprite-icon-filter"></use>
+                </svg>
+            </div>
+        </legend>
 
         <div class="product-filters-inner js-product-filters">
 
@@ -33,12 +43,12 @@
                 </div>
             </div>
 
-            <div class="product-filters-input-wrap">
+            <div class="product-filters-input-wrap product-filters-input-wrap--update-button">
                 <button class="button" id=""><span>Update</span></button>
             </div>
 
             <div class="product-filters-input-wrap">
-                <button class="button -blue-outline" id="productClear"><span>Clear</span></button>
+                <button class="button button--secondary" id="productClear"><span>Clear</span></button>
             </div>
 
         </div>

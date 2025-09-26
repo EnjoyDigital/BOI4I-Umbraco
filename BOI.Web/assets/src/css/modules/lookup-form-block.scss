@@ -2,21 +2,8 @@
   width: 100%;
   max-width: $max-desktop;
   display: flex;
+  gap: #{fluid(24, 40)}; 
   align-items: center;
-  padding: 40px 9% 50px;
-  background-color: $teal;
-
-  @include media($large) {
-    padding: 40px;
-  }
-
-  @include media($medium) {
-    padding: 30px;
-  }
-
-  @include media($small) {
-    padding: 24px;
-  }
 
   p {
     position: relative;
@@ -37,20 +24,6 @@
       top: 3px;
       left: 0;
     }
-  }
-}
-
-.lookup-form-block__title {
-  display: block;
-  font-size: 32px;
-  line-height: 38px;
-  font-family: $BankofIreland-Bold;
-  color: $blue;
-  margin-bottom: 1.5rem;
-
-  @include media($small) {
-    font-size: 26px;
-    line-height: 32px;
   }
 }
 

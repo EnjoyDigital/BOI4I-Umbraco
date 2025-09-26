@@ -4,7 +4,6 @@
     return;
 }
 <div class="hero-area-quick-links">
-    <h2 class="hero-area-quick-links__title">Quick Links</h2>
     <ul class="hero-area-quick-links__list">
         @foreach (var link in Model.QuickLink)
         {
@@ -14,6 +13,10 @@
                 continue;
             }
             <li>
+                @if ((linkContent.QuickLink?.Url.HasValue()).GetValueOrDefault())
+                {
+                    <a href="@linkContent.QuickLink.Url" target="@linkContent.QuickLink.Target" title="@linkContent.QuickLink.Name"></a>
+                }
                 @* TODO: Need to add BE field for CMS user to add an icon *@
                 @if (linkContent.QuickLinkIcon != null)
                 {
@@ -21,10 +24,10 @@
                         <img src="@linkContent.QuickLinkIcon.Url()" alt="@linkContent.QuickLinkIcon.GetImageAlternativeText()" />
                     </div>
                 }
-                @if ((linkContent.QuickLink?.Url.HasValue()).GetValueOrDefault())
-                {
-                    <a href="@linkContent.QuickLink.Url" target="@linkContent.QuickLink.Target">@linkContent.QuickLink.Name</a>
-                }
+                <div>
+                    <span class="hero-area-quick-links__list-title">@(!linkContent.Title.NullOrEmpty() ? linkContent.Title : linkContent.QuickLink.Name)</span>
+                    <span  class="hero-area-quick-links__list-text">@linkContent.Text</span>
+                </div>
             </li>
         }
     </ul>

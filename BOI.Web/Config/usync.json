@@ -1,0 +1,21 @@
+{
+  "$schema": "./App_Plugins/uSync/config/appsettings-usync-schema.json",
+  "uSync": {
+    "Settings": {
+      "ExportOnSave": "Settings",
+      "UIEnabledGroups": "All"
+    },
+    "Sets": {
+      "Default": {
+        "DisabledHandlers": [ "DictionaryHandler", "DomainHandler", "RelationTypeHandler" ],
+        "HandlerDefaults": {
+         
+          "UseFlatStructure": false
+        }
+      },
+      "HandlerSets": {
+        "FailOnMissingParent": true
+      }
+    }
+  }
+}

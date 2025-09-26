@@ -8,7 +8,10 @@
 
    
         <div class="child-page-block">
-            <h3 class="child-page-block__title">@Model.Title</h3>
+            @if (!Model.Title.NullOrEmpty())
+            {
+                <h3 class="child-page-block__title">@Model.Title</h3>
+            }
 
             <div class="child-page-block-listing">
                 @foreach (var childPage in Model.ChildPages.OfType<BlockListItem<ChildPageItem>>())
@@ -16,33 +19,64 @@
                     var childPageItem = (ChildPageItem)childPage?.Content;
                     if(childPageItem == null)
                     { continue; }
+                    var title = childPageItem.ChildTitle.ToString().StripHTMLPTags();
+                    var cleanTitle = title.StripHTML();
 
                     <div class="child-page-block-item">
                         @if (childPageItem.ChildIcon != null)
                         {
-                            <div class="child-page-block-item__icon-wrapper">
+
+                        var useIllustration = childPageItem.Value<bool>("useIllustration");
+                            var iconWrapperClass = useIllustration ? "child-page-block-item__icon-wrapper -is-illustration" : "child-page-block-item__icon-wrapper";
+                            
+                            <div class="@iconWrapperClass">
                                  <img data-object-fit="cover"
                                     src="@childPageItem.ChildIcon.Url()"
-                                    alt="@childPageItem.ChildIcon.GetImageAlternativeText()" /> 
-
-                                <img src="/assets/dist/images/icons/chevron-grey.png" alt="" class="child-page-block-item__chevron" />
+                                    alt="@childPageItem.ChildIcon.GetImageAlternativeText()" />
                             </div>
                         }
 
                         <div class="child-page-block-item__content">
-                            <h2 class="child-page-block-item__title">
-                                @{
-                                    var title = childPageItem.ChildTitle.ToString().StripHTMLPTags();
-                                }
+                            <h2 class="child-page-block-item__title">                               
                                 @Html.Raw(title)
                             </h2>
                             <div class="rich-text">
                                 @Html.Raw(childPageItem.ChildSubText)
+
+                                @* TODO: T177668 - Not sure whether this will be made into a new field. 
+                                 * At the moment the below is just added straight into the RTE field.
+                                <ul class="child-page-block-item__inner-list">
+                                    <li>
+                                        <div class="child-page-block-item__inner-list-icon">
+                                            <img src="" alt="" role="presentation" />
+                                        </div>
+                                        <span>Holistic assessment</span>
+                                    </li>
+                                    <li>
+                                        <div class="child-page-block-item__inner-list-icon">
+                                            <img src="" alt="" role="presentation" />
+                                        </div>
+                                        <span>Contractors</span>
+                                    </li>
+                                    <li>
+                                        <div class="child-page-block-item__inner-list-icon">
+                                            <img src="" alt="" role="presentation" />
+                                        </div>
+                                        <span>Self employed</span>
+                                    </li>
+                                    <li>
+                                        <div class="child-page-block-item__inner-list-icon">
+                                            <img src="" alt="" role="presentation" />
+                                        </div>
+                                        <span>Employed</span>
+                                    </li>
+                                </ul>
+                                *@
                             </div>
 
                             @if ((childPageItem.CTalink?.Url.HasValue()).GetValueOrDefault())
                             {
-                                <a href="@childPageItem.CTalink.Url" target="@childPageItem.CTalink.Target" class="button">
+                                <a href="@childPageItem.CTalink.Url" target="@childPageItem.CTalink.Target" class="child-page-block-item__cta" aria-label="@cleanTitle - @childPageItem.CTalink.Name">
                                     <span>@childPageItem.CTalink.Name</span>
                                 </a>
                             }

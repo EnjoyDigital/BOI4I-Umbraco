@@ -1,7 +1,7 @@
 ﻿@inherits UmbracoViewPage<ServiceUpdates>
 
-<partial name="~/Views/Shared/Hero.cshtml" />
 <partial name="~/Views/Shared/Breadcrumb.cshtml" />
+<partial name="~/Views/Shared/Hero.cshtml" />
 
 <div class="umb-block-list">
     @Html.GetBlockListHtml(Model, "content")
@@ -19,19 +19,17 @@
                         {
                             <img src="@service.ServiceIcon.GetCropUrl()" alt="@service.ServiceIcon.GetImageAlternativeText()" />
                         }
-
-                        <div>
-                            <span class="service-levels-item__title h5">@(service.ServiceTitle.IsNullOrWhiteSpace() ? service.Name : service.ServiceTitle)</span>
-
-                            <p>
-                                <svg class="[ icon icon-clock -white ]" aria-hidden="true">
-                                    <use xlink:href="#sprite-icon-clock"></use>
-                                </svg>
-                                @serviceSubText
-                            </p>
-                        </div>
                     </div>
                     <div class="service-levels-item__body">
+                        <span class="service-levels-item__title">@(service.ServiceTitle.IsNullOrWhiteSpace() ? service.Name : service.ServiceTitle)</span>
+
+                        <p class="service-levels-item__datetime">
+                            <svg class="[ icon icon-clock -text-grey ]" aria-hidden="true">
+                                <use xlink:href="#sprite-icon-clock"></use>
+                            </svg>
+                            @serviceSubText
+                        </p>
+
                         <p>@(service.ServiceBodyText.IsNullOrWhiteSpace() ? "" : service.ServiceBodyText)</p>
                     </div>
                 </div>

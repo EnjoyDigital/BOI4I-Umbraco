@@ -1,11 +1,25 @@
+.form.pod {
+  padding-top: var(--sectionPaddingTop);
+  padding-bottom: var(--sectionPaddingBottom);
+}
+
+.rich-text {
+  + .form.pod {
+    padding-top: 0;
+  }
+}
+
+.umbraco-forms-form {
+  padding: 0;
+
+  .checkboxlist,
+  .radiobuttonlist {
+    padding: 0 0 12px;
+  }
+}
+
 .umbraco-forms-page {
-  background-color: $white;
-  padding: 42px 80px 48px;
-  margin-top: 40px;
-
   @include media($medium) {
-    padding: 42px 50px;
-
     .row-fluid {
       [class*="col-md"] {
         width: 100%;
@@ -13,19 +27,15 @@
      }
   }
 
-  @include media($small) {
-    padding: 30px;
-    margin-top: 25px;
-  }
-
-  @include media($tiny) {
-    padding: 20px;
+  .row-fluid {
+    @include media-min($max-mobile) {
+      margin-left: -1.25%;
+      margin-right: -1.25%;
+    }
   }
 }
 
-.umbraco-forms__form-name {
-  text-align: center;
-  
+.umbraco-forms__form-name {  
   @include media-min($small) {
     + fieldset {
       margin-top: 50px;
@@ -34,19 +44,8 @@
 }
 
 .umbraco-forms-caption {
-  text-align: center;
-  font-size: 2em;
-  color: $blue;
-  margin: 20px 0;
+  @extend h2;
 }
-
-.umbraco-forms-fieldset {
-  legend {
-    text-align: center;
-    font-weight: 800;
-  }
-}
-
 
 .umbraco-forms-field-wrapper {
   margin-bottom: 24px;
@@ -54,10 +53,10 @@
 
 .umbraco-forms-label {
   margin-bottom: 16px;
-}
-
-.umbraco-forms-indicator {
-  color: $blue;
+  color: $text-dark;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600 !important; // override inline styles
 }
 
 .umbraco-forms-tooltip.help-block {

@@ -14,8 +14,8 @@
 
 }
 
-<partial name="~/Views/Shared/Hero.cshtml" />
 <partial name="~/Views/Shared/Breadcrumb.cshtml" />
+<partial name="~/Views/Shared/Hero.cshtml" />
 
 @if (videos.NotNullAndAny())
 {
@@ -29,39 +29,7 @@
             <partial name="~/Views/Partials/MediaLibrary/Videos.cshtml" model=@videos />
         </div>
         <div class="load-more">
-            <button class="button @(videoCount <= 3 ? "hidden" : string.Empty)" id="more-videos" data-listing="1" data-count="@videoCount" data-container=".video-container">View more videos</button>
-        </div>
-    </section>
-}
-
-@if (articles.NotNullAndAny())
-{
-    <section class="container media-group">
-        <div class="media-description">
-            <h3 class="-blue-text">Articles</h3>
-            <p>@articleCount Articles</p>
-        </div>
-        <div class="group-container article-container">
-            <partial name="~/Views/Partials/MediaLibrary/Articles.cshtml" model=@articles />
-        </div>
-        <div class="load-more">
-            <button class="button @(articleCount <= 3 ? "hidden" : string.Empty)" id="more-articles" data-listing="1" data-count="@articleCount" data-container=".article-container">View more articles</button>
-        </div>
-    </section>
-}
-
-@if (Model.Documents.NotNullAndAny())
-{
-    <section class="container media-group">
-        <div class="media-description">
-            <h3 class="-blue-text">PDF Documents</h3>
-            <p>@Model.Documents.Count() PDF Documents</p>
-        </div>
-        <div class="group-container documents-container">
-            <partial name="~/Views/Partials/MediaLibrary/Documents.cshtml" model=@Model.Documents.Take(3) />
-        </div>
-        <div class="load-more">
-            <button class="button @(Model.Documents.Count() <= 3 ? "hidden" : string.Empty)" id="more-documents" data-listing="1" data-count="@Model.Documents.Count()" data-container=".documents-container">View more PDF Documents</button>
+            <button class="button @(videoCount <= 3 ? "hidden" : string.Empty)" id="more-videos" data-listing="1" data-count="@videoCount" data-container=".video-container"><span>View more videos</span></button>
         </div>
     </section>
 }
@@ -77,7 +45,39 @@
             <partial name="~/Views/Partials/MediaLibrary/Podcasts.cshtml" Model=@podcasts />
         </div>
         <div class="load-more">
-            <button class="button @(podcastCount <= 3 ? "hidden" : string.Empty)" id="more-podcasts" data-listing="1" data-count="@podcastCount" data-container=".podcast-container">View more podcasts</button>
+            <button class="button @(podcastCount <= 3 ? "hidden" : string.Empty)" id="more-podcasts" data-listing="1" data-count="@podcastCount" data-container=".podcast-container"><span>View more podcasts</span></button>
+        </div>
+    </section>
+}
+
+@if (articles.NotNullAndAny())
+{
+    <section class="container media-group">
+        <div class="media-description">
+            <h3 class="-blue-text">Articles</h3>
+            <p>@articleCount Articles</p>
+        </div>
+        <div class="group-container article-container">
+            <partial name="~/Views/Partials/MediaLibrary/Articles.cshtml" model=@articles />
+        </div>
+        <div class="load-more">
+            <button class="button @(articleCount <= 3 ? "hidden" : string.Empty)" id="more-articles" data-listing="1" data-count="@articleCount" data-container=".article-container"><span>View more articles</span></button>
+        </div>
+    </section>
+}
+
+@if (Model.Documents.NotNullAndAny())
+{
+    <section class="container media-group">
+        <div class="media-description">
+            <h3 class="-blue-text">PDF Documents</h3>
+            <p>@Model.Documents.Count() PDF Documents</p>
+        </div>
+        <div class="group-container documents-container">
+            <partial name="~/Views/Partials/MediaLibrary/Documents.cshtml" model=@Model.Documents.Take(3) />
+        </div>
+        <div class="load-more">
+            <button class="button @(Model.Documents.Count() <= 3 ? "hidden" : string.Empty)" id="more-documents" data-listing="1" data-count="@Model.Documents.Count()" data-container=".documents-container"><span>View more PDF Documents</span></button>
         </div>
     </section>
 }

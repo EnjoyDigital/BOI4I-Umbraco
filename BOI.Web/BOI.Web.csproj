@@ -3,6 +3,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<Configurations>Debug;Release;Test</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 	  <Compile Remove="App_Data\TEMP\**" />
@@ -15,9 +16,7 @@
 	  <None Remove="Views\MacroPartials\**" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Remove="wwwroot\500-boi-net.core.dev.local.html" />
-	  <Content Remove="wwwroot\assets\dist\css\style.css" />
-	  <Content Remove="wwwroot\assets\dist\css\style.scss" />
+	  <Content Remove="wwwroot\500-boi-net.core.dev.local.html" />	  
 	  <Content Remove="wwwroot\assets\dist\images\logo-boi.svg" />
 	  <Content Remove="wwwroot\assets\dist\images\main-logo-boi-footer.svg" />
 	  <Content Remove="wwwroot\assets\dist\images\main-logo-boi.svg" />
@@ -134,7 +133,6 @@
 	  <None Include="Views\Partials\BdmFinder\BdmListing.cshtml" />
 	  <None Include="Views\Partials\SolicitorLookup\SolicitorLookUpResultList.cshtml" />
 	  <None Include="wwwroot\assets\dist\css\style.css" />
-	  <None Include="wwwroot\assets\dist\css\style.scss" />
 	  <None Include="wwwroot\assets\dist\images\icons\background-chevron.png" />
 	  <None Include="wwwroot\assets\dist\images\icons\chevron-grey.png" />
 	  <None Include="wwwroot\assets\dist\images\icons\chevron-overlay-hero-teal@3x.png" />
@@ -312,7 +310,6 @@
 
 	<ItemGroup>
 	  <Folder Include="App_Data\" />
-	  <Folder Include="Config\" />
 	  <Folder Include="wwwroot\assets\files\" />
 	</ItemGroup>
 

@@ -12,17 +12,23 @@
                     @foreach (var result in Model.Results.QueryResults)
                     {
                         <div class="news-article-block-item">
-                            <p class="news-article-block-item__title -blue-text">@result.ArticleName</p>
-                            @*<p class="title -blue-text">@result.ArticleName</p>*@
-                            <p class="">@result.ArticleListingSummary</p>
 
                             @if (!string.IsNullOrEmpty(result.ArticleUrl))
                             {
-                                <a href="@result.ArticleUrl" class="overlay-link">Download<span class="sr-only"> @result.ArticleName</span></a>
+                                <div class="news-article-block-item__image">
+                                    <a href="@result.ArticleUrl"><img src="@(result.ArticleImage.GetCropUrl(width:320, height:180))" alt="" loading="lazy" width="320" height="180" /></a>
+                                </div>
 
-                                <p class="news-article-block-item__cta"><strong>Read more</strong></p>
+                                <h3 class="news-article-block-item__title"><a href="@result.ArticleUrl">@result.ArticleName</a></h3>
+                            } 
+                            else 
+                            {
+                                <div class="news-article-block-item__image">
+                                    <img src="@(result.ArticleImage.GetCropUrl(width:320, height:180))" alt="" loading="lazy" width="320" height="180" />
+                                </div>
+                                <h3 class="news-article-block-item__title">@result.ArticleName</h3>
                             }
-
+                            <p>@result.ArticleListingSummary</p>
                         </div>
                     }
                 </div>

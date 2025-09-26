@@ -101,3 +101,8 @@ h6 {
 .fs-13 {
 	font-size: 13px;
 }
+
+/**umb_name:Dark Grey*/
+.-dark-grey-text {
+	color: #333333;
+}

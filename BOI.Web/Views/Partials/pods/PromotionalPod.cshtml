@@ -5,25 +5,40 @@
     {
         return;
     }
-    <div class="promotional-pod @(Model.Image != null ? "-has-image" : "")">
-        <div class="promotional-pod-inner">
+    
+    @* TODO: T185692. Need to add background-colour options:
+    - Light Teal: u-bg--light-teal
+    - Light Blue: u-bg--light-blue
+    - Light Lime: u-bg--light-lime
+    - Light Honey: u-bg--light-honey
+
+    Classes to be applied to the "promotional-pod" element.
+
+    TODO: If image is illustration, add class of "-is-illustration" to "promotional-pod" element
+    *@
+
+    <div class="promotional-pod @(Model.Image != null ? "-has-image" : "-no-image")">
+        <div class="promotional-pod__inner">
+            @if (Model.Image != null)
+            {
+                <div class="promotional-pod__image">
+                    <img src="@Model.Image.Url()" alt="@Model.Image.GetImageAlternativeText()" />
+                </div>
+            }
+
             <div class="promotional-pod__content">
                 <h2 class="promotional-pod__title">@Model.Title</h2>
-                @Model.SubText
+                <div class="promotional-pod__subtext">
+                    @Model.SubText
+                </div>
 
                 @if ((Model.CTalink?.Url.HasValue()).GetValueOrDefault())
                 {
-                    <a href="@Model.CTalink.Url" class="button -white-outline" target="@Model.CTalink.Target">
+                    <a href="@Model.CTalink.Url" class="button button--secondary" target="@Model.CTalink.Target">
                         <span>@Model.CTalink.Name</span>
                     </a>
                 }
             </div>
-
-            @if (Model.Image != null)
-            {
-                Context.ResponsiveBackground(Model.Image, new { desktop = "PromoPodDesktop", mobile = "PromoPodMobile" }, ".promotional-pod__image");
-            }
-            <div class="promotional-pod__image"></div>
         </div>
     </div>
 }

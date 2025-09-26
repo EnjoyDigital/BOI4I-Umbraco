@@ -11,26 +11,24 @@
 
 /* unit conversion used by font size */
 @function meta-unit($number, $unit) {
-
-  @if $unit == "px" {
-    @return $number+px;
+  @if $unit == 'px' {
+    @return $number + px;
   }
-  @if $unit == "%" {
-    @return $number+"%";
+  @if $unit == '%' {
+    @return $number + '%';
   }
-  @if $unit == "em" {
-    @return em($number)+px;
+  @if $unit == 'em' {
+    @return em($number) + px;
   }
-  @if $unit == "rem" {
+  @if $unit == 'rem' {
     @return calculateRem($number);
   }
 }
 
 /* media query mixins that use breakpoints set in constants.scss */
-@mixin media($max, $min: "") {
-
-  @if ( $min == "" ) {
-    @media screen and (max-width: #{$max} ){
+@mixin media($max, $min: '') {
+  @if ($min == '') {
+    @media screen and (max-width: #{$max} ) {
       @content;
     }
   } @else {
@@ -41,9 +39,23 @@
 }
 
 @mixin media-min($min) {
-  @media screen and (min-width: #{$min + 1} ){
+  @media screen and (min-width: #{$min + 1} ) {
     @content;
   }
+}
+
+@mixin sr-only {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
 }
 
 @mixin placeholder-styles() {
@@ -51,11 +63,13 @@
     @content;
   }
 
-  &:-moz-placeholder { /* Firefox 18- */
+  &:-moz-placeholder {
+    /* Firefox 18- */
     @content;
   }
 
-  &::-moz-placeholder {  /* Firefox 19+ */
+  &::-moz-placeholder {
+    /* Firefox 19+ */
     @content;
   }
 
@@ -66,15 +80,33 @@
 
 @mixin font-size($size, $line-height: ($size + 8)) {
   font-size: $size + px;
-  font-size: meta-unit($size,rem);
-  line-height: meta-unit($line-height,px);
-  line-height: meta-unit($line-height,rem);
+  font-size: meta-unit($size, rem);
+  line-height: meta-unit($line-height, px);
+  line-height: meta-unit($line-height, rem);
 }
 
-@mixin vertical-gradient($start,$end) {
+/* Fluid sizes - in pixels */
+@function fluid($min, $max, $minWidth: 420, $maxWidth: 1400) {
+  $minRem: $min / $base-font-size;
+  $maxRem: $max / $base-font-size;
+  $minWidthRem: $minWidth / $base-font-size;
+  $maxWidthRem: $maxWidth / $base-font-size;
+
+  $slope: ($maxRem - $minRem) / ($maxWidthRem - $minWidthRem);
+  $yAxisIntersection: -$minWidthRem * $slope + $minRem;
+
+  $clampMin: $minRem + rem;
+  $clampValOne: $yAxisIntersection + rem;
+  $clampValTwo: ($slope * 100) + vw;
+  $clampMax: $maxRem + rem;
+
+  @return clamp(#{$clampMin}, #{$clampValOne} + #{$clampValTwo}, #{$clampMax});
+}
+
+@mixin vertical-gradient($start, $end) {
   background: $end;
-  background: -webkit-linear-gradient($start,$end);
-  background: linear-gradient($start,$end);
+  background: -webkit-linear-gradient($start, $end);
+  background: linear-gradient($start, $end);
 }
 
 @mixin hide-text() {
@@ -87,7 +119,7 @@
   visibility: hidden;
   display: block;
   font-size: 0;
-  content: " ";
+  content: ' ';
   clear: both;
   height: 0;
 }
@@ -104,10 +136,10 @@
 // Cancel Transitions
 @mixin cancel-transitions() {
   -webkit-transition: none !important;
-  -moz-transition:    none !important;
-  -ms-transition:     none !important;
-  -o-transition:      none !important;
-  transition:     none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
 }
 
 /* Slightly lighten a color
@@ -137,7 +169,7 @@
   &:after {
     content: '';
     position: absolute;
-    bottom: -2px;
+    bottom: 0;
     left: 0;
     width: 100%;
     height: 1px;
@@ -164,11 +196,12 @@
   }
 }
 
-@mixin link-style-fill-bar($colour: rgba($white,0.5), $hover-color: $white) {
+@mixin link-style-fill-bar($colour: rgba($white, 0.5), $hover-color: $white) {
   position: relative; // in case this isn't already applied to the element
   text-decoration: none;
   padding-bottom: 2px;
-  background-image: linear-gradient(90deg, $hover-color, $hover-color), linear-gradient(90deg, $colour, $colour);
+  background-image: linear-gradient(90deg, $hover-color, $hover-color),
+    linear-gradient(90deg, $colour, $colour);
   background-position: 0% 100%;
   background-repeat: no-repeat;
   background-size: 0% 1px, 100% 1px;
@@ -186,5 +219,230 @@
         transform: scaleX(1);
       }
     }
+  }
+}
+
+@mixin simple-link-style($underline: underline) {
+  text-decoration: $underline;
+  text-underline-position: under;
+  text-underline-offset: 1px;
+  color: $blue;
+
+  &:hover {
+    color: $blue-2;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  &:active,
+  &:visited {
+    color: $dark-blue;
+    text-decoration: underline;
+  }
+
+  &:active {
+    background-color: $grey-8;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline-color: $blue;
+  }
+}
+
+@mixin button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 50px;
+  padding: 0 #{fluid(16, 32)};
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: $white;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 2px;
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &::before {
+    top: 0;
+    height: 45px;
+    background-color: $blue;
+    border-radius: 8px;
+    z-index: 1;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+  }
+
+  &::after {
+    bottom: 0;
+    height: 10px;
+    background-color: $dark-blue;
+    border-radius: 0 0 8px 8px;
+  }
+
+  > * {
+    position: relative;
+    top: -2px;
+    z-index: 1;
+    transition: transform 0.15s ease;
+  }
+
+  .icon {
+    color: $white;
+    fill: $white;
+    transition: transform 0.15s ease, color 0.15s ease, fill 0.15s ease;
+  }
+
+  &:not(.disabled):not([disabled]) {
+    &:hover {
+      &::before {
+        background-color: $blue-2;
+      }
+
+      > * {
+        color: $grey-11;
+      }
+
+      .icon {
+        fill: $grey-11;
+      }
+    }
+
+    &:active {
+      &::before {
+        background-color: $dark-blue;
+        transform: translateY(1px);
+      }
+
+      > * {
+        transform: translateY(1px);
+        color: $grey-8;
+      }
+    }
+
+    &:not(:active):focus,
+    &:not(:active):focus-visible {
+      outline: 2px solid $blue;
+      outline-offset: 2px;
+    }
+  }
+
+  &.disabled,
+  &[disabled],
+  &[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button--secondary {
+  @include button;
+
+  color: $blue;
+
+  &::before {
+    height: 47px;
+    background-color: $white;
+    border: 2px solid $blue;
+    transition: transform 0.15s ease, background-color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  &::after {
+    background-color: $blue;
+  }
+
+  .icon {
+    color: $blue;
+    fill: $blue;
+  }
+
+  &:not(.disabled):not([disabled]) {
+    &:hover {
+      color: $blue-2;
+
+      &::before {
+        background-color: $grey-11;
+        border-color: $blue-2;
+      }
+
+      &::after {
+        background-color: $blue-2;
+      }
+
+      > * {
+        color: $blue-2;
+      }
+
+      .icon {
+        fill: $blue-2;
+      }
+    }
+
+    &:active {
+      &::before {
+        background-color: $grey-8;
+        border-color: $dark-blue;
+        transform: translateY(2px);
+      }
+
+      > * {
+        transform: translateY(2px);
+        color: $dark-blue;
+      }
+    }
+  }
+
+  &.disabled,
+  &[disabled],
+  &[data-disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin section-background($colour: $white) {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 100%;
+    background-color: $colour;
+  }
+}
+
+@mixin icon-button-states() {
+  &:hover {
+    background-color: $grey-11;
+  }
+
+  &:active {
+    background-color: $grey-8;
+    border-color: $dark-blue;
+    color: $dark-blue;
+  }
+
+  &:not(:active):focus,
+  &:not(:active):focus-visible {
+    outline: 2px solid $blue;
+    outline-offset: 2px;
+    border-radius: 8px;
   }
 }

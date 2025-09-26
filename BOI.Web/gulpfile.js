@@ -76,6 +76,11 @@ const { gulp, src, dest, series, parallel, watch } = require('gulp'),
 
     svgSpriteSourcePath = './assets/src/images/icons/*.svg',
     svgSpriteOutputPath = './Views/Shared',
+    //
+    // Copy static assets (like vendor SVG sprites)
+    //
+    staticAssetsSourcePath = './assets/src/images/icons/**/*',
+    staticAssetsOutputPath = './wwwroot/assets/dist/images/icons',
     //watch view files for updates to auto-reload the page
     razorViewWatchPath = [
         './Views/**/*.cshtml',
@@ -95,14 +100,33 @@ exports.default = series(
         buildSass,
         buildRteSass,
         buildJs,
-        buildSvgSprite
+        buildSvgSprite,
+        copyStaticAssets
     ),
     parallel(
         watchFirstPaint,
         watchSass,
         watchRteSass,
         watchJs,
-        watchSvgIcons
+        watchSvgIcons,
+        watchStaticAssets
+    ),
+);
+
+exports.devSassOnly = series(
+    parallel(
+        firstPaint,
+        buildSass,
+        buildRteSass,
+        buildSvgSprite,
+        copyStaticAssets
+    ),
+    parallel(
+        watchFirstPaint,
+        watchSass,
+        watchRteSass,
+        watchSvgIcons,
+        watchStaticAssets
     ),
 );
 
@@ -111,7 +135,8 @@ exports.buildOnly = parallel(
     buildSass,
     buildRteSass,
     buildJs,
-    buildSvgSprite
+    buildSvgSprite,
+    copyStaticAssets
 )
 
 //
@@ -238,6 +263,14 @@ function buildSvgSprite() {
     });
 }
 
+function copyStaticAssets() {
+    return new Promise(function (resolve, reject) {
+        src(staticAssetsSourcePath, [allowEmpty = true])
+            .pipe(dest(staticAssetsOutputPath));
+        resolve();
+    });
+}
+
 // Watch Tasks
 function watchFirstPaint() {
     return new Promise(function (resolve, reject) {
@@ -280,6 +313,15 @@ function watchSvgIcons() {
     return new Promise(function (resolve, reject) {
         watch([svgSpriteSourcePath], series(
             buildSvgSprite
+        ));
+        resolve();
+    });
+}
+
+function watchStaticAssets() {
+    return new Promise(function (resolve, reject) {
+        watch([staticAssetsSourcePath], series(
+            copyStaticAssets
         ));
         resolve();
     });

@@ -2,13 +2,14 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  row-gap: 24px;
 }
 
 .bdm-item {
   width: 100%;
-  background-color: $grey-3;
+  background-color: $white;
   padding: 24px 24px 40px;
-  margin-bottom: 24px;
+  border-radius: 8px;
 
   &.no-results {
       width: calc(100%);
@@ -27,12 +28,6 @@
 
   @include media-min($large) {
     width: calc(50% - 12px);
-  }
-
-  @include media($medium) {
-    &:last-child {
-      margin-bottom: 0;
-    }
   }
 
   @include media($small) {
@@ -116,7 +111,8 @@
 .bdm-item-detail__name {
   font-size: 18px;
   line-height: 24px;
-  font-weight: 700;
+  font-weight: 600;
+  color: $text-dark;
 
   @include media($tiny) {
     font-size: 16px;

@@ -4,39 +4,11 @@
     {
         return;
     }
-
    
-        if (!Model.SubText.ToString().IsNullOrWhiteSpace())
-        {
-            <div class="rich-text">
-                @Model.SubText
-            </div>
-        }
+    <div class="document-download-block-wrapper">
 
-        <div class="document-download-block">
-
-            @foreach (var childPage in Model.Documents.OfType<BlockListItem<DocumentUploadItem>>())
-            {
-                var documentDownloadItem = (DocumentUploadItem)childPage.Content;
-                if(documentDownloadItem ==null)
-                {
-                    continue;
-                }
-
-                <div class="document-download-block-item @(documentDownloadItem.Document == null ? "-no-hover" : "")">
-                    <svg class="[ icon icon-pdf-document-icon -blue ]" aria-hidden="true">
-                        <use xlink:href="#sprite-icon-pdf-document-icon"></use>
-                    </svg>
-                    <span class="document-download-block-item__title">@documentDownloadItem.Title</span>
-
-                    @if (documentDownloadItem.Document != null)
-                    {
-                        <a href="@documentDownloadItem.Document.Url()" class="overlay-link" target="_blank" download="@documentDownloadItem.Title">Download<span class="sr-only"> @documentDownloadItem.Title</span></a>
-                        <p><strong>Download</strong></p>
-                    }
-
-                </div>
-            }
-        </div>
-    
+        <partial name="/views/partials/blocklist/components/DocumentUploadBlockBody.cshtml" model="Model" />
+       
+      
+    </div>
 }

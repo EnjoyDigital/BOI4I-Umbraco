@@ -8,13 +8,21 @@
 //
 @import "config/constants"; // Widths, heights etc all re-usable
 @import "config/mixins"; // Re-usable mixins - CSS3 etc..
+@import "config/utilities"; // Re-usable utility classes
+
+:root {
+  --sectionPaddingX: 16px;
+  --sectionPaddingTop: #{fluid(20, 32)};
+  --sectionPaddingBottom: #{fluid(20, 32)};
+}
 
 //
 // Vendor
 //
-@import '../../node_modules/pikaday/css/pikaday';
+@import 'vendor/pikaday';
 @import "vendor/slick/slick";    // Site footer
 @import "vendor/magnificPopup/maginificpopup";
+@import 'vendor/plyr';
 
 
 //
@@ -70,6 +78,7 @@
 @import "pods/pod-group"; // Pod Group styles
 @import "pods/service-levels-pod"; // Service Levels Pod styles
 @import "pods/bdm-pod"; // Service Levels Pod styles
+@import "pods/homepage-service"; // Homepage Service pod
 
 //
 // Products
@@ -81,6 +90,11 @@
 // Contact
 //
 @import "contact/contact-detail-block"; // Contact Detail Block styles
+
+//
+// News
+//
+@import "news/newsListing"; // News Listing styles
 
 //
 // Criteria

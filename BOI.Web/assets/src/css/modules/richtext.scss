@@ -1,18 +1,11 @@
 .rich-text {
-  padding: 20px 0;
-
-  h2 {
-    color: $blue;
-  }
+  // padding: var(--sectionPaddingTop) var(--sectionPaddingX) var(--sectionPaddingBottom);
+  padding: var(--sectionPaddingTop) 0 var(--sectionPaddingBottom);
 
   > * {
     &:last-child:not(img) {
       margin-bottom: 0;
     }
-  }
-
-  @media(min-width: $max-desktop) {
-    padding: 30px 0;
   }
 
   /* We're using an inner-outer file structure here so that the umbraco text 
@@ -21,5 +14,5 @@
     as the CMS, the code here will only be used by the site, not the cms. So code
     being used by the CMS text editor should NOT be put here
   */
-  @import 'richtext-rte';		
+  @import 'richtext-rte';
 }

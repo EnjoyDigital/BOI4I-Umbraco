@@ -84,7 +84,8 @@ namespace BOI.Core.Search.Queries.Elastic
             {
                 ArticleName = r.Name,
                 ArticleListingSummary = r.ListingSummary,
-                ArticleUrl = r.Url
+                ArticleUrl = r.Url,
+                ArticleImage = r.ListingImage
             }).ToList();
 
             results = new NewsArticlesResults

@@ -1,6 +1,6 @@
 ﻿export default function Footer() {
     // addActiveStates()
-    // clickHandlers()
+    clickHandlers()
 
     scrollToTop();
 }
@@ -19,3 +19,16 @@ $(document).on('mouseenter', '.common-print', function (e) {
 $(document).on('mouseleave', '.common-print', function (e) {
     $(this).removeClass('active');
 });
+
+function clickHandlers() {
+    $('footer .show-submenu').on('click', function() {
+        const $this = $(this);
+        const $parent = $this.parents('.subheader');
+
+        console.log('$this', $this);
+        console.log('$parent', $parent);
+
+        $parent.toggleClass('active');
+        $parent.siblings('li').toggle();
+    });
+};

@@ -1,0 +1,35 @@
+#########################
+## Sample Sass Lint File
+#########################
+# Linter Options
+options:
+  # Don't merge default rules
+  merge-default-rules: false
+# Rule Configuration
+rules:
+  extends-before-mixins: 2
+  extends-before-declarations: 2
+  placeholder-in-extend: 2
+  no-warn: 1
+  no-debug: 1
+  no-ids: 0
+  no-important: 0
+  bem-depth:
+    - 1
+    -
+      max-depth: 1
+  property-sort-order:
+    - 0
+    -
+      order: concentric
+  no-misspelled-properties:
+    - 1
+    -
+      extra-properties:
+        - overflow-scrolling
+        - gap
+        - row-gap
+        - column-gap
+        - aspect-ratio
+        - text-underline-offset
+        - text-decoration-thickness

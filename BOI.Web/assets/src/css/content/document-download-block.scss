@@ -1,210 +1,183 @@
-.document-download-block {
-  display: flex;
-  width: 100%;
-  max-width: $max-desktop;
-  margin: 20px auto;
-  padding: 0 10px;
-  flex-wrap: wrap;
-
-  @include media($max-desktop) {
-    margin: 20px auto;
-    padding: 0 20px;
-  }
-
-  @include media($large) {
-    flex-wrap: wrap;
-  }
-
-  .campaign-landing & {
-    flex-wrap: wrap;
+.rich-text {
+  + .document-download-root {
+    padding-top: 0;
   }
 }
 
-.umb-block-list {
-  > .document-download-block {
-    padding: 0;
-  
-    @include media($max-desktop) {
-      margin: 20px auto;
-      padding: 0;
+.document-download-root {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 32px;
+  padding: var(--sectionPaddingTop) 0 var(--sectionPaddingBottom);
+
+  @include media-min($small-med) {
+    grid-template-columns: repeat(2, 1fr);
+
+    .document-download-block-wrapper {
+      &:first-child:last-child {
+        grid-column: span 2;
+      }
     }
   }
+}
+
+.document-download-block-wrapper {
+  @include media($small-med) {
+    + .document-download-block-wrapper {
+      padding-top: 0;
+    }
+  }
+
+  ~ *:not(.document-download-block-wrapper) {
+    &::before {
+      @include cf();
+    }
+  }
+
+  > h2 {
+    margin-bottom: 1rem;
+  }
+
+  > p {
+    a {
+      @include simple-link-style();
+      color: $blue;
+      font-weight: 600;
+    }
+  }
+}
+
+.document-download-block {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: $max-desktop;
+  margin: 0 auto;
 }
 
 .document-download-block-item {
   position: relative;
-  margin: 24px 24px 0 0;
-  padding: 20px 20px 25px;
-  width: calc(25% - 24px);
-  background-color: $white;
-  border: 1px solid $teal;
-  text-align: center;
-  transition: background-color 0.25s ease, border-color 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  column-gap: 4px;
+  width: fit-content;
+  text-align: left;
+  padding: 8px 0;
+  margin: 0;
+  background-color: transparent;
+  border: none;
+  color: $blue;
 
-  &:last-child {
-    margin-right: 0;
+  &:first-child {
+    margin-top: 0;
   }
 
-  @include media($large) {
-    width: calc(50% - 12px);
-
-    &:nth-child(2n) {
-      margin-right: 0;
-    }
+  .icon {
+    flex-shrink: 0;
   }
 
-  @include media($small) {
-    width: 100%;
-    margin-right: 0;
+  .icon-link {
+    width: 22px;
+    height: 22px;
   }
 
   .icon-pdf-document-icon {
-    width: 32px;
-    height: 42px;
-    transition: fill 0.25s ease;
+    width: 24px;
+    height: 24px;
+  }
+
+  > span {
+    @include simple-link-style();
   }
 
   p {
-    display: inline-block;
-    margin-bottom: 0;
-    padding-bottom: 2px;
-    border-bottom: 2px solid rgba($blue,0.3);
-    transition: color 0.25s ease, border-color 0.25s ease;
+    display: none;
   }
 
-  &:not(.-no-hover):hover {
-    background-color: $blue;
-    border-color: $blue;
+  &:hover {
+    background-color: transparent;
+    color: $blue-2;
 
-    p,
-    .document-download-block-item__title {
-      color: $white;
-    }
-
-    p {
-      border-color: $white;
-    }
-
-    .icon-pdf-document-icon {
-      fill: $white;
+    .document-download-block-item__title,
+    > span {
+      color: $blue-2;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
     }
   }
 
-  .campaign-landing & {
-    @include media-min($small) {
-      width: calc(50% - 12px);
+  &:active,
+  &:visited {
+    .document-download-block-item__title,
+    > span {
+      color: $dark-blue;
+      text-decoration: underline;
+    }
+  }
 
-      &:nth-child(2n) {
-        margin-right: 0;
-      }
+  &:active {
+    .document-download-block-item__title,
+    > span {
+      background-color: $grey-8;
+      text-decoration: underline;
+      text-decoration-thickness: 3px;
+    }
+  }
+
+  &:focus,
+  &:focus-visible {
+    .document-download-block-item__title,
+    > span {
+      outline-color: $blue;
     }
   }
 }
 
 .document-download-block-item__title {
-  display: block;
-  margin: 15px 0;
+  margin: 0;
   font-weight: 600;
-  transition: color 0.25s ease;
+}
+
+.document-download-cta-block__title {
+  display: block;
+  margin: 0;
+  padding: 0;
+  color: $text-dark;
+  font-weight: 600;
+
+  + .document-download-block {
+    margin-top: 0;
+    padding-top: 0;
+  }
 }
 
 /* Sidebar specific styles */
 .campaign-landing__sidebar,
 .pod-group {
-  .document-download-block {
+  .document-download-block-wrapper {
     display: block;
-    padding: 40px 30px 0;
-    background-color: $white;
+    padding-top: 0;
+    padding-bottom: 24px;
 
-    + .document-download-block {
-      margin-top: 0;
-      padding-top: 0;
+    + .document-download-block-wrapper {
+      margin-top: -12px;
     }
 
-    &:last-child {
-      padding-bottom: 40px;
-    }
-  }
-
-  .document-download-block-item {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    text-align: left;
-    padding: 13px 15px;
-    margin: 0;
-    border: none;
-    border-top: 1px solid $teal;
-    border-bottom: 1px solid $teal;
-    margin-bottom: -1px;
-
-    &:first-child {
+    .document-download-block {
       margin-top: 0;
     }
 
-    .icon {
-      margin-right: 20px;
-      flex-shrink: 0;
-    }
+    @include media-min($small-med) {
+      width: 100%;
+      float: none;
 
-    .icon-link {
-      width: 22px;
-      height: 22px;
-    }
-
-    .icon-pdf-document-icon {
-      fill: $text;
-      width: 22px;
-      height: 29px;
-    }
-
-    > span {
-      @include link-style();
-
-      &:after {
-        background-color: $blue;
-      }
-    }
-
-    p {
-      display: none;
-    }
-
-    &:hover {
-      background-color: $white;
-      border-color: $teal;
-
-      .document-download-block-item__title {
-        color: inherit;
+      &:nth-child(odd) {
+        padding-right: 0;
       }
 
-      .icon {
-        fill: inherit;
+      &:nth-child(even) {
+        padding-left: 0;
       }
-
-      > span {
-        &:after {
-          transform: scaleX(1);
-        }
-      }
-    }
-  }
-
-  .document-download-block-item__title {
-    margin: 0;
-    font-weight: 400;
-  }
-
-  .document-download-cta-block__title {
-    display: block;
-    margin: 24px auto 0;
-    padding: 30px 10px 25px;
-    background-color: $white;
-    text-align: center;
-
-    + .document-download-block {
-      margin-top: 0;
-      padding-top: 0;
     }
   }
 }
@@ -212,5 +185,15 @@
 .campaign-landing__sidebar {
   .document-download-block {
     margin: 24px 0 0;
+  }
+
+  .document-download-block-wrapper {
+    &:first-of-type {
+      .document-download-block-item {
+        &:first-child {
+          padding-top: 0;
+        }
+      }
+    }
   }
 }

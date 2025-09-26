@@ -1,52 +1,45 @@
 .breadcrumbs {
+  background-color: $white;
+}
+
+.breadcrumbs-inner {
   position: relative;
   width: 100%;
-  max-width: $max-desktop;
+  max-width: $mega;
   margin: 0 auto;
-  padding: 10px 10px 0;
+  padding: 16px 10px;
+  background-color: $white;
 
   @include media($max-desktop) {
     padding: 10px 20px 0;
   }
 
-  @include media($medium) {
-    padding: 0 20px;
-    margin-bottom: 20px;
-  }
-
   ul {
     width: 100%;
+    display: flex;
+    column-gap: 24px;
     margin: 0;
-    padding: 0 0 10px;
     list-style: none;
-    font-size: 0;
-    border-bottom: 1px solid $grey-5;
 
     li {
       position: relative;
-      display: inline-block;
-      font-size: 14px;
-      line-height: 20px;
+      font-size: 16px;
+      line-height: 24px;
+      color: $blue;
+      font-weight: 600;
 
-      &:not(:last-child) {
-        padding-right: 18px;
-        margin-right: 22px;
-
-        &:after {
-          content: '';
-          position: absolute;
-          right: 0;
-          top: 50%;
-          width: 9px;
-          height: 9px;
-          border-top: 1px solid $grey-6;
-          border-right: 1px solid $grey-6;
-          transform: rotate(45deg) translateY(-50%) translateY(-2px);
-        }
+      &:after {
+        content: '/';
+        position: absolute;
+        top: 50%;
+        right: -12px;
+        transform: translate(50%,-50%);
+        color: $grey-12;
       }
 
       > a {
-        @include link-style();
+        @include simple-link-style(none);
+        color: $blue;
 
         &:after {
           background-color: $blue;
