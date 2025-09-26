@@ -47,11 +47,6 @@ jobs:
     
     steps:
 
-
-    - name: Check PowerShell version
-      run: |
-        Write-Host "PowerShell version: $($PSVersionTable.PSVersion)"
-
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
@@ -96,9 +91,6 @@ jobs:
         
         try {
 
-          # Import IIS module
-          Import-Module WebAdministration -ErrorAction Stop
-
           # Copy the deployment package to the remote server
           Copy-Item -Path "./deployment-package.zip" -Destination "C:\Temp\deployment-package.zip" 
           
@@ -110,7 +102,7 @@ jobs:
             # Import required modules with error handling
             Write-Host "Importing WebAdministration module..."
             try {
-              Import-Module WebAdministration -ErrorAction Stop
+              Import-Module WebAdministration -Force -ErrorAction Stop
               Write-Host "WebAdministration module imported successfully"
             } catch {
               Write-Host "Error importing WebAdministration module: $($_.Exception.Message)"
@@ -166,7 +158,7 @@ jobs:
             
             # Validate application pool exists before trying to stop it
             Write-Host "Checking if application pool exists: $AppPool"
-            $appPoolExists = Get-WebAppPool -Name $AppPool -ErrorAction SilentlyContinue
+            $appPoolExists = Get-WebAppPoolState -Name $AppPool -ErrorAction SilentlyContinue
             if (-not $appPoolExists) {
               Write-Host "Warning: Application pool '$AppPool' does not exist. Skipping application pool operations."
             } else {
