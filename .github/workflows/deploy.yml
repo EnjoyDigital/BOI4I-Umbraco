@@ -136,7 +136,7 @@ jobs:
             # Verify WebAdministration commands are available
             Write-Host "Verifying WebAdministration commands are available..."
             try {
-              $testCommand = Get-Command Get-WebAppPool -ErrorAction Stop
+              $testCommand = Get-Command Get-WebAppPoolState -ErrorAction Stop
               Write-Host "WebAdministration commands verified successfully"
             } catch {
               Write-Host "Error: WebAdministration commands are not available: $($_.Exception.Message)"
