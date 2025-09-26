@@ -6,60 +6,67 @@
 		<Configurations>Debug;Release;Test</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Compile Remove="App_Data\TEMP\**" />
-	  <Compile Remove="Views\MacroPartials\**" />
-	  <Content Remove="App_Data\TEMP\**" />
-	  <Content Remove="Views\MacroPartials\**" />
-	  <EmbeddedResource Remove="App_Data\TEMP\**" />
-	  <EmbeddedResource Remove="Views\MacroPartials\**" />
-	  <None Remove="App_Data\TEMP\**" />
-	  <None Remove="Views\MacroPartials\**" />
+		<Compile Remove="App_Data\TEMP\**" />
+		<Compile Remove="Views\MacroPartials\**" />
+		<Content Remove="App_Data\TEMP\**" />
+		<Content Remove="Views\MacroPartials\**" />
+		<EmbeddedResource Remove="App_Data\TEMP\**" />
+		<EmbeddedResource Remove="Views\MacroPartials\**" />
+		<None Remove="App_Data\TEMP\**" />
+		<None Remove="Views\MacroPartials\**" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Remove="wwwroot\500-boi-net.core.dev.local.html" />	  
-	  <Content Remove="wwwroot\assets\dist\images\logo-boi.svg" />
-	  <Content Remove="wwwroot\assets\dist\images\main-logo-boi-footer.svg" />
-	  <Content Remove="wwwroot\assets\dist\images\main-logo-boi.svg" />
-	  <Content Remove="wwwroot\assets\dist\images\small-logo-boi.svg" />
+		<Content Remove="wwwroot\500-boi-net.core.dev.local.html" />
+		<Content Remove="wwwroot\assets\dist\images\logo-boi.svg" />
+		<Content Remove="wwwroot\assets\dist\images\main-logo-boi-footer.svg" />
+		<Content Remove="wwwroot\assets\dist\images\main-logo-boi.svg" />
+		<Content Remove="wwwroot\assets\dist\images\small-logo-boi.svg" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Remove=".gitignore" />
+		<None Remove=".gitignore" />
 	</ItemGroup>
 	<ItemGroup>
 		<_ContentIncludedByDefault Remove="appsettings.Test.json" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Include="App_Plugins\BdmUpload\backoffice\BdmUpload\import.html" />
-	  <Content Include="App_Plugins\BdmUpload\backoffice\lang\en-GB.xml" />
-	  <Content Include="App_Plugins\BdmUpload\backoffice\lang\en-US.xml" />
-	  <Content Include="App_Plugins\EdAdmin\backoffice\EdAdmin\hreflang.html" />
-	  <Content Include="App_Plugins\EdAdmin\backoffice\EdAdmin\memberExport.html" />
-	  <Content Include="App_Plugins\EdAdmin\backoffice\EdAdmin\metaData.html" />
-	  <Content Include="App_Plugins\EdAdmin\dashboard.html" />
-	  <Content Include="App_Plugins\EdAdmin\lang\en-GB.xml" />
-	  <Content Include="App_Plugins\EdAdmin\lang\en-US.xml" />
-	  <Content Include="App_Plugins\ElasticSearchPublishContentApp\view.html" />
-	  <Content Include="App_Plugins\Meganav\backoffice\components\meganavActions.html" />
-	  <Content Include="App_Plugins\Meganav\backoffice\components\meganavAdd.html" />
-	  <Content Include="App_Plugins\Meganav\backoffice\components\meganavItemType.html" />
-	  <Content Include="App_Plugins\Meganav\backoffice\components\meganavPreview.html" />
-	  <Content Include="App_Plugins\Meganav\backoffice\dialogs\itemTypeDialog.html" />
-	  <Content Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.html" />
-	  <Content Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.link.html" />
-	  <Content Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.settings.html" />
-	  <Content Include="App_Plugins\Meganav\backoffice\meganav.css" />
-	  <Content Include="App_Plugins\Meganav\backoffice\propertyeditors\configuration.html" />
-	  <Content Include="App_Plugins\Meganav\backoffice\propertyeditors\editor.html" />
-	  <Content Include="App_Plugins\Meganav\lang\en.xml" />
-	  <Content Include="App_Plugins\Meganav\lib\angular-ui-tree.min.css" />
-	  <Content Include="App_Plugins\Product\backoffice\Product\exports.html" />
-	  <Content Include="App_Plugins\Product\backoffice\Product\import.html" />
-	  <Content Include="App_Plugins\Product\lang\en-GB.xml" />
-	  <Content Include="App_Plugins\Product\lang\en-US.xml" />
-	  <Content Include="App_Plugins\SolicitorUpload\backoffice\SolicitorUpload\import.html" />
-	  <Content Include="App_Plugins\SolicitorUpload\lang\en-GB.xml" />
-	  <Content Include="App_Plugins\SolicitorUpload\lang\en-US.xml" />
-	  <Content Include="App_Plugins\TwoFactorProviders\twoFactorProviderGoogleAuthenticator.html" />
+		<None Include="App_Plugins\BdmUpload\backoffice\BdmUpload\import.html" />
+		<None Include="App_Plugins\BdmUpload\backoffice\lang\en-GB.xml" />
+		<None Include="App_Plugins\BdmUpload\backoffice\lang\en-US.xml" />
+		<None Include="App_Plugins\EdAdmin\backoffice\EdAdmin\hreflang.html">
+		</None>
+		<None Include="App_Plugins\EdAdmin\backoffice\EdAdmin\memberExport.html">
+		</None>
+		<None Include="App_Plugins\EdAdmin\backoffice\EdAdmin\metaData.html">
+		</None>
+		<None Include="App_Plugins\EdAdmin\dashboard.html">
+		</None>
+		<None Include="App_Plugins\EdAdmin\lang\en-GB.xml">
+		</None>
+		<None Include="App_Plugins\EdAdmin\lang\en-US.xml">
+		</None>
+		<None Include="App_Plugins\ElasticSearchPublishContentApp\view.html">
+		</None>
+		<None Include="App_Plugins\Meganav\backoffice\components\meganavActions.html" />
+		<None Include="App_Plugins\Meganav\backoffice\components\meganavAdd.html" />
+		<None Include="App_Plugins\Meganav\backoffice\components\meganavItemType.html" />
+		<None Include="App_Plugins\Meganav\backoffice\components\meganavPreview.html" />
+		<None Include="App_Plugins\Meganav\backoffice\dialogs\itemTypeDialog.html" />
+		<None Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.html" />
+		<None Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.link.html" />
+		<None Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.settings.html" />
+		<None Include="App_Plugins\Meganav\backoffice\meganav.css" />
+		<None Include="App_Plugins\Meganav\backoffice\propertyeditors\configuration.html" />
+		<None Include="App_Plugins\Meganav\backoffice\propertyeditors\editor.html" />
+		<None Include="App_Plugins\Meganav\lang\en.xml" />
+		<None Include="App_Plugins\Meganav\lib\angular-ui-tree.min.css" />
+		<None Include="App_Plugins\Product\backoffice\Product\exports.html" />
+		<None Include="App_Plugins\Product\backoffice\Product\import.html" />
+		<None Include="App_Plugins\Product\lang\en-GB.xml" />
+		<None Include="App_Plugins\Product\lang\en-US.xml" />
+		<None Include="App_Plugins\SolicitorUpload\backoffice\SolicitorUpload\import.html" />
+		<None Include="App_Plugins\SolicitorUpload\lang\en-GB.xml" />
+		<None Include="App_Plugins\SolicitorUpload\lang\en-US.xml" />
+		<None Include="App_Plugins\TwoFactorProviders\twoFactorProviderGoogleAuthenticator.html" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -91,202 +98,202 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Include="App_Plugins\BdmUpload\backoffice\17724310" />
-	  <None Include="App_Plugins\BdmUpload\backoffice\bdmfinder sample file.csv" />
-	  <None Include="App_Plugins\BdmUpload\backoffice\bdmfinder sample file.xlsx" />
-	  <None Include="App_Plugins\BdmUpload\backoffice\bdmfinder_sample_file.xlsx" />
-	  <None Include="App_Plugins\BdmUpload\backoffice\BdmUpload\dataViewer.controller.js" />
-	  <None Include="App_Plugins\BdmUpload\backoffice\F6E04310" />
-	  <None Include="App_Plugins\BdmUpload\bdmUpload.resource.js" />
-	  <None Include="App_Plugins\BdmUpload\package.manifest" />
-	  <None Include="App_Plugins\EdAdmin\backoffice\EdAdmin\js\hrefLang.controller.js" />
-	  <None Include="App_Plugins\EdAdmin\backoffice\EdAdmin\js\memberExport.controller.js" />
-	  <None Include="App_Plugins\EdAdmin\backoffice\EdAdmin\js\metaData.controller.js" />
-	  <None Include="App_Plugins\EdAdmin\edAdmin.resource.js" />
-	  <None Include="App_Plugins\EdAdmin\package.manifest" />
-	  <None Include="App_Plugins\ElasticSearchPublishContentApp\controller.js" />
-	  <None Include="App_Plugins\ElasticSearchPublishContentApp\ElasticSearchPublish.resource.js" />
-	  <None Include="App_Plugins\ElasticSearchPublishContentApp\package.manifest" />
-	  <None Include="App_Plugins\Meganav\backoffice\components\meganavActions.component.js" />
-	  <None Include="App_Plugins\Meganav\backoffice\components\meganavAdd.component.js" />
-	  <None Include="App_Plugins\Meganav\backoffice\components\meganavItemType.component.js" />
-	  <None Include="App_Plugins\Meganav\backoffice\components\meganavPreview.component.js" />
-	  <None Include="App_Plugins\Meganav\backoffice\dialogs\itemTypeDialog.controller.js" />
-	  <None Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.controller.js" />
-	  <None Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.link.controller.js" />
-	  <None Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.settings.controller.js" />
-	  <None Include="App_Plugins\Meganav\backoffice\helpers\dialogHelper.service.js" />
-	  <None Include="App_Plugins\Meganav\backoffice\helpers\localizationHelper.service.js" />
-	  <None Include="App_Plugins\Meganav\backoffice\propertyeditors\configuration.controller.js" />
-	  <None Include="App_Plugins\Meganav\backoffice\propertyeditors\editor.controller.js" />
-	  <None Include="App_Plugins\Meganav\lib\angular-ui-tree.min.js" />
-	  <None Include="App_Plugins\Meganav\package.manifest" />
-	  <None Include="App_Plugins\Product\backoffice\Product\dataViewer.controller.js" />
-	  <None Include="App_Plugins\Product\backoffice\Product\productExport.controller.js" />
-	  <None Include="App_Plugins\Product\package.manifest" />
-	  <None Include="App_Plugins\Product\Product.resource.js" />
-	  <None Include="App_Plugins\SolicitorUpload\backoffice\SolicitorUpload\dataViewer.controller.js" />
-	  <None Include="App_Plugins\SolicitorUpload\package.manifest" />
-	  <None Include="App_Plugins\SolicitorUpload\SolicitorUpload.resource.js" />
-	  <None Include="App_Plugins\TwoFactorProviders\package.manifest" />
-	  <None Include="App_Plugins\TwoFactorProviders\twoFactorProviderGoogleAuthenticator.controller.js" />
-	  <None Include="Views\Partials\BdmFinder\BdmListing.cshtml" />
-	  <None Include="Views\Partials\SolicitorLookup\SolicitorLookUpResultList.cshtml" />
-	  <None Include="wwwroot\assets\dist\css\style.css" />
-	  <None Include="wwwroot\assets\dist\images\icons\background-chevron.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\chevron-grey.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\chevron-overlay-hero-teal@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\chevron-overlay-hero@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\chevron-overlay-vertical-teal@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\chevron-overlay-vertical@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\chevron-overlay.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\chevron-overlay@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\chevron-vertical-dark-blue.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\chevron-vertical-grey-dedede@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\chevron-vertical-grey.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\chevron-vertical-teal.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\android-icon-144x144.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\android-icon-192x192.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\android-icon-36x36.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\android-icon-48x48.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\android-icon-72x72.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\android-icon-96x96.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-114x114.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-120x120.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-144x144.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-152x152.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-180x180.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-57x57.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-60x60.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-72x72.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-76x76.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-precomposed.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\favicon-16x16.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\favicon-32x32.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\favicon-96x96.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\favicon.ico" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\ms-icon-144x144.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\ms-icon-150x150.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\ms-icon-310x310.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\favicon\ms-icon-70x70.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\gallery-chevron.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\horizontal-scroll.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\icon-affordability-calculator@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\icon-alert-teal.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\icon-alert.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\icon-application-to-offer@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\icon-arrow-crumb.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\icon-criteria-lookup-lending-criteria@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\icon-hamburger.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\icon-mobile-menu-close.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\icon-pop-up-close.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\icon-print.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\icon-remove.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\icon-search.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\icon-telephony-services@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\promo-chevron-vertical@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\promo-chevron@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\small-logo-boi.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-alert-red.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-alert-white.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-alert.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-arrow-back.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-arrow-dd-blue.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-arrow-dd.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-arrow-up-blue.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-arrow-up.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-bdm-finder.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-bullet-blue.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-bullet-white.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-checkbox-tick-blue.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-checkbox-tick.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-chevron-overlay.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-clock.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-close-black.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-close.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-closing-soon.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-cross-red.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-cross.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-cta-arrow-black-left.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-cta-arrow-black.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-cta-arrow-white.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-cta-arrow.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-cta-search-white.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-download.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-dropdown-arrow-up.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-dropdown-arrow.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-email.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-external-link.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-facebook.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-gallery-arrow-right.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-info.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-instagram.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-link.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-linkedin.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-loading.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-map-pin.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-minus.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-new.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-pdf-document-icon.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-phone.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-pin-one.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-plus.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-print.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-product-specifications-capacity.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-product-specifications-dimensions.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-product-specifications-weight.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-ral-colour-wheel.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-ral-paintbrush.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-remove.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-reset.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-search.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-social-facebook.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-social-houzz.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-social-instagram.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-social-pinterest.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-social-twitter.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-social-youtube.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-tick-black.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-tick-blue.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-tick-white.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-twitter.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-whatsapp.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-zoom-white.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-icon-zoom.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-linkedin.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-mobile-navigation-menu-arrow-back.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-mobile-navigation-menu-arrow.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\sprite-small-logo-boi.svg" />
-	  <None Include="wwwroot\assets\dist\images\icons\tick-in-box.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\video-chevron-bottom.png" />
-	  <None Include="wwwroot\assets\dist\images\icons\video-chevron-tablet.gif" />
-	  <None Include="wwwroot\assets\dist\images\icons\video-chevron.png" />
-	  <None Include="wwwroot\assets\dist\images\logo-boi.svg" />
-	  <None Include="wwwroot\assets\dist\images\logos\bank-of-ireland-logo-default.svg" />
-	  <None Include="wwwroot\assets\dist\images\main-logo-boi-footer.svg" />
-	  <None Include="wwwroot\assets\dist\images\main-logo-boi.svg" />
-	  <None Include="wwwroot\assets\dist\images\small-logo-boi.svg" />
-	  <None Include="wwwroot\assets\dist\images\sprite\sprite.png" />
-	  <None Include="wwwroot\assets\dist\images\sprite\sprite.svg" />
-	  <None Include="wwwroot\assets\dist\images\static-only\106.png" />
-	  <None Include="wwwroot\assets\dist\images\static-only\bdm-finder-hero.jpg" />
-	  <None Include="wwwroot\assets\dist\images\static-only\bdm-grey-profile-image.png" />
-	  <None Include="wwwroot\assets\dist\images\static-only\bdm-profile-image-1.jpg" />
-	  <None Include="wwwroot\assets\dist\images\static-only\bdm-profile-image-2.jpg" />
-	  <None Include="wwwroot\assets\dist\images\static-only\footer-banner@2x.jpg" />
-	  <None Include="wwwroot\assets\dist\images\static-only\home-hero.jpg" />
-	  <None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-1@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-2@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-3@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-4@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-5@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-6@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-7@3x.png" />
-	  <None Include="wwwroot\assets\dist\images\static-only\img-full-width.jpg" />
-	  <None Include="wwwroot\assets\dist\images\static-only\img-gallery.jpg" />
-	  <None Include="wwwroot\assets\dist\images\static-only\img-main-banner@2x.png" />
-	  <None Include="wwwroot\assets\dist\images\static-only\img-video.jpg" />
+		<None Include="App_Plugins\BdmUpload\backoffice\17724310" />
+		<None Include="App_Plugins\BdmUpload\backoffice\bdmfinder sample file.csv" />
+		<None Include="App_Plugins\BdmUpload\backoffice\bdmfinder sample file.xlsx" />
+		<None Include="App_Plugins\BdmUpload\backoffice\bdmfinder_sample_file.xlsx" />
+		<None Include="App_Plugins\BdmUpload\backoffice\BdmUpload\dataViewer.controller.js" />
+		<None Include="App_Plugins\BdmUpload\backoffice\F6E04310" />
+		<None Include="App_Plugins\BdmUpload\bdmUpload.resource.js" />
+		<None Include="App_Plugins\BdmUpload\package.manifest" />
+		<None Include="App_Plugins\EdAdmin\backoffice\EdAdmin\js\hrefLang.controller.js" />
+		<None Include="App_Plugins\EdAdmin\backoffice\EdAdmin\js\memberExport.controller.js" />
+		<None Include="App_Plugins\EdAdmin\backoffice\EdAdmin\js\metaData.controller.js" />
+		<None Include="App_Plugins\EdAdmin\edAdmin.resource.js" />
+		<None Include="App_Plugins\EdAdmin\package.manifest" />
+		<None Include="App_Plugins\ElasticSearchPublishContentApp\controller.js" />
+		<None Include="App_Plugins\ElasticSearchPublishContentApp\ElasticSearchPublish.resource.js" />
+		<None Include="App_Plugins\ElasticSearchPublishContentApp\package.manifest" />
+		<None Include="App_Plugins\Meganav\backoffice\components\meganavActions.component.js" />
+		<None Include="App_Plugins\Meganav\backoffice\components\meganavAdd.component.js" />
+		<None Include="App_Plugins\Meganav\backoffice\components\meganavItemType.component.js" />
+		<None Include="App_Plugins\Meganav\backoffice\components\meganavPreview.component.js" />
+		<None Include="App_Plugins\Meganav\backoffice\dialogs\itemTypeDialog.controller.js" />
+		<None Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.controller.js" />
+		<None Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.link.controller.js" />
+		<None Include="App_Plugins\Meganav\backoffice\dialogs\settingsDialog.settings.controller.js" />
+		<None Include="App_Plugins\Meganav\backoffice\helpers\dialogHelper.service.js" />
+		<None Include="App_Plugins\Meganav\backoffice\helpers\localizationHelper.service.js" />
+		<None Include="App_Plugins\Meganav\backoffice\propertyeditors\configuration.controller.js" />
+		<None Include="App_Plugins\Meganav\backoffice\propertyeditors\editor.controller.js" />
+		<None Include="App_Plugins\Meganav\lib\angular-ui-tree.min.js" />
+		<None Include="App_Plugins\Meganav\package.manifest" />
+		<None Include="App_Plugins\Product\backoffice\Product\dataViewer.controller.js" />
+		<None Include="App_Plugins\Product\backoffice\Product\productExport.controller.js" />
+		<None Include="App_Plugins\Product\package.manifest" />
+		<None Include="App_Plugins\Product\Product.resource.js" />
+		<None Include="App_Plugins\SolicitorUpload\backoffice\SolicitorUpload\dataViewer.controller.js" />
+		<None Include="App_Plugins\SolicitorUpload\package.manifest" />
+		<None Include="App_Plugins\SolicitorUpload\SolicitorUpload.resource.js" />
+		<None Include="App_Plugins\TwoFactorProviders\package.manifest" />
+		<None Include="App_Plugins\TwoFactorProviders\twoFactorProviderGoogleAuthenticator.controller.js" />
+		<None Include="Views\Partials\BdmFinder\BdmListing.cshtml" />
+		<None Include="Views\Partials\SolicitorLookup\SolicitorLookUpResultList.cshtml" />
+		<None Include="wwwroot\assets\dist\css\style.css" />
+		<None Include="wwwroot\assets\dist\images\icons\background-chevron.png" />
+		<None Include="wwwroot\assets\dist\images\icons\chevron-grey.png" />
+		<None Include="wwwroot\assets\dist\images\icons\chevron-overlay-hero-teal@3x.png" />
+		<None Include="wwwroot\assets\dist\images\icons\chevron-overlay-hero@3x.png" />
+		<None Include="wwwroot\assets\dist\images\icons\chevron-overlay-vertical-teal@3x.png" />
+		<None Include="wwwroot\assets\dist\images\icons\chevron-overlay-vertical@3x.png" />
+		<None Include="wwwroot\assets\dist\images\icons\chevron-overlay.png" />
+		<None Include="wwwroot\assets\dist\images\icons\chevron-overlay@3x.png" />
+		<None Include="wwwroot\assets\dist\images\icons\chevron-vertical-dark-blue.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\chevron-vertical-grey-dedede@3x.png" />
+		<None Include="wwwroot\assets\dist\images\icons\chevron-vertical-grey.png" />
+		<None Include="wwwroot\assets\dist\images\icons\chevron-vertical-teal.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\android-icon-144x144.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\android-icon-192x192.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\android-icon-36x36.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\android-icon-48x48.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\android-icon-72x72.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\android-icon-96x96.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-114x114.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-120x120.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-144x144.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-152x152.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-180x180.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-57x57.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-60x60.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-72x72.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-76x76.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon-precomposed.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\apple-icon.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\favicon-16x16.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\favicon-32x32.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\favicon-96x96.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\favicon.ico" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\ms-icon-144x144.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\ms-icon-150x150.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\ms-icon-310x310.png" />
+		<None Include="wwwroot\assets\dist\images\icons\favicon\ms-icon-70x70.png" />
+		<None Include="wwwroot\assets\dist\images\icons\gallery-chevron.png" />
+		<None Include="wwwroot\assets\dist\images\icons\horizontal-scroll.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\icon-affordability-calculator@3x.png" />
+		<None Include="wwwroot\assets\dist\images\icons\icon-alert-teal.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\icon-alert.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\icon-application-to-offer@3x.png" />
+		<None Include="wwwroot\assets\dist\images\icons\icon-arrow-crumb.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\icon-criteria-lookup-lending-criteria@3x.png" />
+		<None Include="wwwroot\assets\dist\images\icons\icon-hamburger.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\icon-mobile-menu-close.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\icon-pop-up-close.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\icon-print.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\icon-remove.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\icon-search.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\icon-telephony-services@3x.png" />
+		<None Include="wwwroot\assets\dist\images\icons\promo-chevron-vertical@3x.png" />
+		<None Include="wwwroot\assets\dist\images\icons\promo-chevron@3x.png" />
+		<None Include="wwwroot\assets\dist\images\icons\small-logo-boi.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-alert-red.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-alert-white.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-alert.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-arrow-back.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-arrow-dd-blue.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-arrow-dd.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-arrow-up-blue.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-arrow-up.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-bdm-finder.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-bullet-blue.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-bullet-white.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-checkbox-tick-blue.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-checkbox-tick.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-chevron-overlay.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-clock.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-close-black.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-close.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-closing-soon.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-cross-red.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-cross.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-cta-arrow-black-left.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-cta-arrow-black.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-cta-arrow-white.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-cta-arrow.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-cta-search-white.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-download.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-dropdown-arrow-up.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-dropdown-arrow.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-email.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-external-link.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-facebook.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-gallery-arrow-right.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-info.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-instagram.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-link.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-linkedin.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-loading.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-map-pin.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-minus.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-new.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-pdf-document-icon.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-phone.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-pin-one.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-plus.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-print.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-product-specifications-capacity.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-product-specifications-dimensions.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-product-specifications-weight.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-ral-colour-wheel.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-ral-paintbrush.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-remove.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-reset.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-search.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-social-facebook.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-social-houzz.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-social-instagram.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-social-pinterest.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-social-twitter.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-social-youtube.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-tick-black.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-tick-blue.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-tick-white.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-twitter.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-whatsapp.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-zoom-white.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-icon-zoom.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-linkedin.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-mobile-navigation-menu-arrow-back.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-mobile-navigation-menu-arrow.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\sprite-small-logo-boi.svg" />
+		<None Include="wwwroot\assets\dist\images\icons\tick-in-box.png" />
+		<None Include="wwwroot\assets\dist\images\icons\video-chevron-bottom.png" />
+		<None Include="wwwroot\assets\dist\images\icons\video-chevron-tablet.gif" />
+		<None Include="wwwroot\assets\dist\images\icons\video-chevron.png" />
+		<None Include="wwwroot\assets\dist\images\logo-boi.svg" />
+		<None Include="wwwroot\assets\dist\images\logos\bank-of-ireland-logo-default.svg" />
+		<None Include="wwwroot\assets\dist\images\main-logo-boi-footer.svg" />
+		<None Include="wwwroot\assets\dist\images\main-logo-boi.svg" />
+		<None Include="wwwroot\assets\dist\images\small-logo-boi.svg" />
+		<None Include="wwwroot\assets\dist\images\sprite\sprite.png" />
+		<None Include="wwwroot\assets\dist\images\sprite\sprite.svg" />
+		<None Include="wwwroot\assets\dist\images\static-only\106.png" />
+		<None Include="wwwroot\assets\dist\images\static-only\bdm-finder-hero.jpg" />
+		<None Include="wwwroot\assets\dist\images\static-only\bdm-grey-profile-image.png" />
+		<None Include="wwwroot\assets\dist\images\static-only\bdm-profile-image-1.jpg" />
+		<None Include="wwwroot\assets\dist\images\static-only\bdm-profile-image-2.jpg" />
+		<None Include="wwwroot\assets\dist\images\static-only\footer-banner@2x.jpg" />
+		<None Include="wwwroot\assets\dist\images\static-only\home-hero.jpg" />
+		<None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-1@3x.png" />
+		<None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-2@3x.png" />
+		<None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-3@3x.png" />
+		<None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-4@3x.png" />
+		<None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-5@3x.png" />
+		<None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-6@3x.png" />
+		<None Include="wwwroot\assets\dist\images\static-only\img-award-placeholder-7@3x.png" />
+		<None Include="wwwroot\assets\dist\images\static-only\img-full-width.jpg" />
+		<None Include="wwwroot\assets\dist\images\static-only\img-gallery.jpg" />
+		<None Include="wwwroot\assets\dist\images\static-only\img-main-banner@2x.png" />
+		<None Include="wwwroot\assets\dist\images\static-only\img-video.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -295,22 +302,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Update="Views\Shared\Pagination.cshtml">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="Views\Shared\_LayoutPayAsYouGrowCalculator.cshtml">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Update="wwwroot\assets\dist\images\icons\favicon\manifest.json">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
+		<Content Update="Views\Shared\Pagination.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Content Update="Views\Shared\_LayoutPayAsYouGrowCalculator.cshtml">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Content Update="wwwroot\assets\dist\images\icons\favicon\manifest.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="App_Data\" />
-	  <Folder Include="wwwroot\assets\files\" />
+		<Folder Include="App_Data\" />
+		<Folder Include="wwwroot\assets\files\" />
 	</ItemGroup>
 
 	<!-- Keep this as false if ModelsBuilder mode is InMemoryAuto -->
