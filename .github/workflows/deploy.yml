@@ -135,7 +135,26 @@ jobs:
               } else {
                 Write-Host "Skipping backup for test environment"
               }
-              Get-ChildItem -Path $DeployPath -Recurse | Remove-Item -Force -Recurse
+              
+              # Remove existing files with error handling for long paths
+              Write-Host "Removing existing files from deployment path..."
+              try {
+                Get-ChildItem -Path $DeployPath -Recurse | Remove-Item -Force -Recurse
+                Write-Host "Successfully removed existing files"
+              } catch {
+                Write-Host "Standard removal failed, trying robocopy method for long paths..."
+                try {
+                  # Use robocopy to handle long paths - create empty dir and mirror it to target
+                  $emptyDir = "C:\Temp\empty_$(Get-Random)"
+                  New-Item -ItemType Directory -Path $emptyDir -Force | Out-Null
+                  robocopy $emptyDir $DeployPath /MIR /NFL /NDL /NJH /NJS /NC /NS /NP
+                  Remove-Item $emptyDir -Force -Recurse
+                  Write-Host "Successfully removed files using robocopy"
+                } catch {
+                  Write-Host "Warning: Could not remove all files: $($_.Exception.Message)"
+                  Write-Host "Continuing with deployment..."
+                }
+              }
             } else {
               Write-Host "Creating deployment directory: $DeployPath"
               New-Item -ItemType Directory -Path $DeployPath -Force | Out-Null
