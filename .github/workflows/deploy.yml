@@ -1,4 +1,4 @@
-name: Build and Deploy Bank of Ireland Calculators
+name: Build and Deploy BOI4I
 
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: bank-calculators-app-${{ github.ref_name == 'release/test' && 'release-test' || github.ref_name == 'release/staging' && 'release-staging' || github.ref_name }}
+        name: boi4i-app-${{ github.ref_name == 'release/test' && 'release-test' || github.ref_name == 'release/staging' && 'release-staging' || github.ref_name }}
         path: ./publish/
 
   deploy:
@@ -42,13 +42,13 @@ jobs:
     runs-on: [self-hosted, windows]
     environment: ${{ github.ref_name }}
     env:
-      ENV_SUFFIX: ${{ github.ref_name == 'release/test' && 'TEST' || github.ref_name == 'release/staging' && 'STAGING' || 'PROD' }}
+      ENV_SUFFIX: ${{ github.ref_name == 'release/test' && 'BOI4I_TEST' || github.ref_name == 'release/staging' && 'BOI4I_STAGING' || 'BOI4I_PROD' }}
     
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
-        name: bank-calculators-app-${{ github.ref_name == 'release/test' && 'release-test' || github.ref_name == 'release/staging' && 'release-staging' || github.ref_name }}
+        name: boi4i-app-${{ github.ref_name == 'release/test' && 'release-test' || github.ref_name == 'release/staging' && 'release-staging' || github.ref_name }}
         path: ./publish/
 
     - name: Debug environment
